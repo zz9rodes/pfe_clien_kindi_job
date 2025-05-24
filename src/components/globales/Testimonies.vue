@@ -48,7 +48,7 @@ import { ref } from 'vue';
           name: 'Sarah Johnson',
           role: 'Ceo',
           avatar: 'https://i.pinimg.com/736x/3b/37/69/3b3769f1be8b2a41f7f02eabdbba4916.jpg',
-          quote: 'KindiCare made finding the perfect childcare center for my child so easy. The app is intuitive and the information provided is comprehensive. I found a great daycare within days!',
+          quote: 'KindiJob made finding the perfect childJob center for my child so easy. The app is intuitive and the information provided is comprehensive. I found a great dayJob within days!',
         },
         {
           name: 'Michael Chen',

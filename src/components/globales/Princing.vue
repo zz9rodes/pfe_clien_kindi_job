@@ -149,10 +149,8 @@ const plans = ref([
   },
 ])
 
-console.log(plans.value[0]);
 
 const selectedPlan = ref(plans.value[0]);
-console.log(selectedPlan.value);
 
 const togglePlan = (planId) => {
   selectedPlan.value = plans.value.find((plan) => plan.id === planId);

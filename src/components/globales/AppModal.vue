@@ -2,7 +2,7 @@
     <div>
         <Teleport to="#modal">
             <Transition name="modal">
-                <div class=" bg-modal" v-if="isOpen" @click.self="HandleOnClickOutSide">
+                <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50" v-if="isOpen" @click.self="HandleOnClickOutSide">
                     <Apploader v-if="isLoader" />
                     <slot v-else></slot>
                 </div>
@@ -12,7 +12,7 @@
 </template>
 
 <script setup>
-import { ref, defineProps,defineEmits } from 'vue'
+import {  defineProps,defineEmits } from 'vue'
 import Apploader from './Apploader.vue';
 
 
@@ -30,6 +30,7 @@ const props = defineProps({
 const emit=defineEmits(['closeModal'])
 
 const HandleOnClickOutSide=()=>{
+    
     if(!props.isLoader){
         emit('closeModal')
     }

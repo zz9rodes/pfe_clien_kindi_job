@@ -25,15 +25,15 @@
 
 const services= [
         {
-          title: 'Find Childcare',
-          description: 'Search for childcare centers near you with detailed information.',
+          title: 'Find ChildJob',
+          description: 'Search for childJob centers near you with detailed information.',
           bgColor: 'bg-[#e4097f]/10',
           iconColor: 'text-[#e4097f]',
           iconPath: 'M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'
         },
         {
           title: 'Calculate Subsidy',
-          description: 'Estimate your childcare subsidy with our easy-to-use calculator.',
+          description: 'Estimate your childJob subsidy with our easy-to-use calculator.',
           bgColor: 'bg-[#00a3e0]/10',
           iconColor: 'text-[#00a3e0]',
           iconPath: 'M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z'
@@ -47,7 +47,7 @@ const services= [
         },
         {
           title: 'Book Tours',
-          description: 'Schedule visits to childcare centers directly through the app.',
+          description: 'Schedule visits to childJob centers directly through the app.',
           bgColor: 'bg-[#00a3e0]/10',
           iconColor: 'text-[#00a3e0]',
           iconPath: 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z'

@@ -218,16 +218,16 @@
       </div>
     </div>
 
-    <div class="pt-6 border-t border-gray-100">
-      <button @click="applyFilters"
-        class="w-full bg-[#e4097f] text-white py-3 px-6 rounded-xl font-semibold hover:shadow-lg hover:scale-105 transition-all duration-200 flex items-center justify-center">
-        <svg class="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
-        </svg>
-        Apply ({{ activeFiltersCount }})
-      </button>
-    </div>
+     <div class="pt-6 mt-6 border-t border-gray-100">
+        <button @click="applyFilters"
+          class="w-full bg-[#e4097f] text-white py-2 px-6 rounded-md font-semibold hover:shadow-lg hover:scale transition-all duration-200 flex items-center justify-center gap-2">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+          </svg>
+          Apply ({{ activeFiltersCount }})
+        </button>
+      </div>
   </div>
 </template>
 
@@ -293,12 +293,12 @@ const dataFilter = ref({
     { id: 'toronto', name: 'Toronto', count: 321 }
   ],
   categories: [
-    { id: 'childcare', name: 'Childcare Worker', count: 1546 },
+    { id: 'childJob', name: 'ChildJob Worker', count: 1546 },
     { id: 'teacher', name: 'Early Childhood Teacher', count: 1203 },
     { id: 'assistant', name: 'Teaching Assistant', count: 987 },
     { id: 'coordinator', name: 'Program Coordinator', count: 756 },
     { id: 'director', name: 'Center Director', count: 543 },
-    { id: 'nurse', name: 'Childcare Nurse', count: 432 },
+    { id: 'nurse', name: 'ChildJob Nurse', count: 432 },
     { id: 'cook', name: 'Kitchen Staff', count: 321 }
   ],
   jobTypes: [

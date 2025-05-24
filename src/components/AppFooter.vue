@@ -3,7 +3,7 @@
       <div class="container px-4 mx-auto">
         <div class="grid grid-cols-2 gap-8 md:grid-cols-4">
           <div>
-            <h3 class="mb-4 font-semibold">About KindiCare</h3>
+            <h3 class="mb-4 font-semibold">About KindiJob</h3>
             <ul class="space-y-2">
               <li>
                 <a href="#" class="text-sm text-gray-400 hover:text-white">
@@ -17,7 +17,7 @@
               </li>
               <li>
                 <a href="#" class="text-sm text-gray-400 hover:text-white">
-                  Careers
+                  Jobers
                 </a>
               </li>
               <li>
@@ -33,7 +33,7 @@
             <ul class="space-y-2">
               <li>
                 <a href="#" class="text-sm text-gray-400 hover:text-white">
-                  Find Childcare
+                  Find ChildJob
                 </a>
               </li>
               <li>
@@ -114,12 +114,12 @@
               <div class="relative">
                 <span class="text-xl font-bold tracking-tight text-white">KINDI</span>
                 <div class="inline-flex items-center">
-                  <span class="text-[#00a3e0] font-bold text-xl tracking-tight">CARE</span>
+                  <span class="text-[#00a3e0] font-bold text-xl tracking-tight">Job</span>
                   <div class="absolute -top-1 right-0 w-3 h-3 bg-[#00a3e0] rounded-full"></div>
                 </div>
               </div>
             </a>
-            <p class="mt-2 text-sm text-gray-400">© 2023 KindiCare. All rights reserved.</p>
+            <p class="mt-2 text-sm text-gray-400">© 2023 KindiJob. All rights reserved.</p>
           </div>
 
           <div class="flex space-x-6">
