@@ -3,11 +3,19 @@ import AboutView from '../views/ListJobs.vue'
 import HomeView from '@/views/HomeView.vue'
 import LisCompanies from '@/views/LisCompanies.vue'
 import ListFreelancers from '@/views/ListFreelancers.vue'
+import RegisterForm from '@/components/authFom/registerForm.vue'
+import LoginForm from '@/components/authFom/loginForm.vue'
+import BaseLayout from '@/views/BaseLayout.vue'
+import forgotPasswordForm from '@/components/authFom/forgotPasswordForm.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
+      name:"home-",
+      component:BaseLayout,
+      children:[
+              {
+      path: '/home',
       name: 'home',
       component: HomeView,
     },
@@ -26,6 +34,27 @@ const router = createRouter({
       path:'/list-freelancers',
       name:'freelancers',
       component:ListFreelancers
+
+    }
+      ]
+  },
+,
+     {
+      path:'/auth/login',
+      name:'login',
+      component:LoginForm
+
+    },
+     {
+      path:'/auth/register',
+      name:'register',
+      component:RegisterForm
+
+    },
+    {
+      path:'/auth/password-forgot',
+      name:'password_forgot',
+      component:forgotPasswordForm
 
     }
   ],
