@@ -6,8 +6,8 @@ AppHeaderSticky
 </script>
 
 <template>
- <AppHeaderSticky/>
+ <!-- <AppHeaderSticky/> -->
   <RouterView  />
-  <AppFooter/> 
+  <!-- <AppFooter/>  -->
 </template>
 <style scoped></style>
