@@ -4,7 +4,7 @@
     <main class="flex-1">
 
 
-      <AppInputFilter :showToggleModal="false" />
+      <AppInputJobsFilter :showToggleModal="false" />
 
       <div class="container px-4 mx-auto mt-16">
         <div class="flex border-b border-gray-200">
@@ -74,7 +74,7 @@ import MostRatingJobs from '../components/globales/MostRatingJobs.vue'
 import OursSercices from '../components/globales/OursSercices.vue'
 import Princing from '../components/globales/Princing.vue'
 import Testimonies from '@/components/globales/Testimonies.vue'
-import AppInputFilter from '@/components/AppInputFilter.vue'
+import AppInputJobsFilter from '@/components/AppInputJobsFilter.vue'
 import AppModal from '@/components/globales/AppModal.vue'
 import UseLocation from '@/components/globales/UseLocation.vue'
 

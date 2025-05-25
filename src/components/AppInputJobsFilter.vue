@@ -1,5 +1,5 @@
 <template>
-  <div class="container px-4 mx-auto mt-8">
+  <div class="container px-4 mx-auto mt-8 ">
     <div class="overflow-hidden bg-gray-100 rounded-3xl">
       <div class="flex flex-col-reverse">
         <div class="w-full p-4 lg:p-8 ">

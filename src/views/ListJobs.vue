@@ -9,7 +9,7 @@
     </div>
   </AppModal>
   <div class="flex flex-col min-h-screen mt-24 bg-white">
-    <AppInputFilter
+    <AppInputJobsFilter
       :showToggleModal="true"
       @filter="HandleFilterJobs"
       @open-modal="HandleToogleModal"
@@ -30,6 +30,7 @@
               Recommended for you
             </h2>
           </div>
+          
           <div class="grid grid-cols-1 gap-6 mb-10 md:grid-cols-2">
             <div
               class="group flex overflow-hidden relative group transition duration-700 rounded-[2px] ease-in-out bg-white border border-gray-300 shadow-sm hover:shadow-md hover:cursor-pointer"
@@ -136,7 +137,7 @@
 <script setup>
 import { ref } from "vue";
 import JobFilter from "@/components/globales/JobFilter.vue";
-import AppInputFilter from "@/components/AppInputFilter.vue";
+import AppInputJobsFilter from "@/components/AppInputJobsFilter.vue";
 import JobCard from "@/components/JobCard.vue";
 import AppModal from "@/components/globales/AppModal.vue";
 import LargeAppFilter from "@/components/globales/LargeAppFilter.vue";
