@@ -12,55 +12,56 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      name:"home-",
-      component:BaseLayout,
-      children:[
-              {
-      path: '/home',
-      name: 'home',
-      component: HomeView,
-    },
-    {
-      path: '/list-jobs',
-      name: 'jobs',
-      component: AboutView,
-    },
-    {
-      path:'/list-companies',
-      name:'companies',
-      component:LisCompanies
+      path: '/',
+      redirect: '/home',
+      component: BaseLayout,
+      children: [
+        {
+          path: '/home',
+          name: 'home',
+          component: HomeView,
+        },
+        {
+          path: '/list-jobs',
+          name: 'jobs',
+          component: AboutView,
+        },
+        {
+          path: '/list-companies',
+          name: 'companies',
+          component: LisCompanies
 
-    },
-    {
-      path:'/list-freelancers',
-      name:'freelancers',
-      component:ListFreelancers
+        },
+        {
+          path: '/list-freelancers',
+          name: 'freelancers',
+          component: ListFreelancers
 
-    }
+        }
       ]
-  },
-,
-     {
-      path:'/auth/login',
-      name:'login',
-      component:LoginForm
-
     },
-     {
-      path:'/auth/register',
-      name:'register',
-      component:RegisterForm
+    ,
+    {
+      path: '/auth/login',
+      name: 'login',
+      component: LoginForm
 
     },
     {
-      path:'/auth/password-forgot',
-      name:'password_forgot',
-      component:forgotPasswordForm
+      path: '/auth/register',
+      name: 'register',
+      component: RegisterForm
+
     },
-     {
-      path:'/auth/reset-password',
-      name:'reset_password',
-      component:ResetPasswordForm
+    {
+      path: '/auth/password-forgot',
+      name: 'password_forgot',
+      component: forgotPasswordForm
+    },
+    {
+      path: '/auth/reset-password',
+      name: 'reset_password',
+      component: ResetPasswordForm
     }
   ],
 })
