@@ -25,7 +25,7 @@ const router = createRouter({
     {
       path:'/list-freelancers',
       name:'freelancers',
-      component:LisCompanies
+      component:ListFreelancers
 
     }
   ],
