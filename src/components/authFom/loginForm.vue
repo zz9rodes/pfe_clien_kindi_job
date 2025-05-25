@@ -97,9 +97,7 @@
 
     <!-- Right Side - Login Form -->
     <div class="flex items-center justify-center flex-1 p-8 bg-white">
-
       <div class="w-full max-w-md space-y-8">
-
         <!-- Header -->
         <div class="space-y-2 text-center">
           <h2 class="text-3xl font-bold text-gray-900">Hello !</h2>
@@ -150,13 +148,10 @@
           </div>
 
           <div class="text-right">
-            <a
-              href="#"
-              @click="$emit('navigate', 'forgot-password')"
-              class="text-sm font-medium hover:text-[#e4097f]"
-            >
-              Forgot your password ?
-            </a>
+
+            <router-link :to="{name:'password_forgot'}" class="text-sm font-medium hover:text-[#e4097f]">
+                            Forgot your password ?
+            </router-link>
           </div>
 
           <div class="flex items-center group">
@@ -198,15 +193,11 @@
             {{ isLoading ? "Connexion..." : "Se connecter" }}
           </button>
 
-          <div class="text-sm text-center">
+          <div class="text-sm text-start">
             <span class="text-gray-600">don't have an account ? </span>
-            <a
-              href="#"
-              @click="$emit('navigate', 'register')"
-              class="p-1 font-medium text-[#e4097f] hover:bg-[#e4097f] hover:text-white"
-            >
-              Sing Up
-            </a>
+             <router-link :to="{name:'register'}"  class="p-1 font-medium text-[#e4097f] hover:bg-[#e4097f] hover:text-white">
+                            Sing Up
+            </router-link>
           </div>
         </div>
       </div>

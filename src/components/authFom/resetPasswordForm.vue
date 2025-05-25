@@ -94,10 +94,8 @@
       </div>
     </div>
 
-    <!-- Right Side - Form -->
     <div class="flex items-center justify-center flex-1 p-8 bg-white">
       <div class="w-full max-w-md space-y-8">
-        <!-- Email Sent Success State -->
         <div v-if="emailSent" class="space-y-8">
           <div class="space-y-4 text-center">
             <div
@@ -128,12 +126,12 @@
 
             <div class="p-4 border rounded-md bg-amber-50">
               <h4 class="mb-2 text-sm font-medium text-amber-900">
-                Can’t Find the Email?
+                Can't Find the Email?
               </h4>
               <ul class="space-y-2 text-sm text-amber-700">
                 <li class="flex items-start">
                   <span
-                    class="bg-amber-200 text-amber-200 text-amber-800 rounded-full w-5 h-5 flex items-center justify-center text-xs font-medium mr-3 mt-0.5 flex-shrink-0"
+                    class="bg-amber-200  text-amber-800 rounded-full w-5 h-5 flex items-center justify-center text-xs font-medium mr-3 mt-0.5 flex-shrink-0"
                     >1</span
                   >
                   Check your spam or junk folder
@@ -147,7 +145,7 @@
                 </li>
                 <li class="flex items-start">
                   <span
-                    class="bg-amber-200 text-amber-800 rounded-full w-5 h-5 rounded-full items-center justify-center text-xs font-medium mr-3 mt-0.5 flex-shrink-0"
+                    class="bg-amber-200 text-amber-800  w-5 h-5 rounded-full items-center justify-center text-xs font-medium mr-3 mt-0.5 flex-shrink-0"
                     >3</span
                   >
                   The email may take a few minutes to arrive
@@ -156,13 +154,6 @@
             </div>
 
             <div class="space-y-4">
-              <button
-                @click="handleResend"
-                :disabled="isLoading"
-                class="w-full px-6 py-2 text-gray-700 transition-colors border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {{ isLoading ? "Processing..." : "Resend Email" }}
-              </button>
 
               <button
                 type="button"
@@ -190,27 +181,42 @@
           <div class="space-y-6">
             <div class="space-y-2">
               <label
-                for="email"
+                for="confirm"
                 class="block text-sm font-medium text-gray-700"
               >
-                Work Email <span class="text-red-500">*</span>
+                Password <span class="text-red-500">*</span>
               </label>
               <input
-                id="email"
-                v-model="formData.email"
-                type="email"
-                placeholder="john.doe@company.com"
+                id="confirm"
+                v-model="formData.password"
+                type="password"
+                placeholder="••••••••••••"
                 class="w-full px-4 py-2 transition-colors border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-[#e4097f]"
                 required
               />
-              <span class="text-sm text-red-600" v-if="formErrors.email">{{
-                formErrors.email[0]
-              }}</span>
+              
+            </div>
+
+             <div class="space-y-2">
+              <label
+                for="confirmPassword"
+                class="block text-sm font-medium text-gray-700"
+              >
+                Confirm password <span class="text-red-500">*</span>
+              </label>
+              <input
+                id="confirmPassword"
+                v-model="formData.confirmPassword"
+                type="password"
+                placeholder="••••••••••••"
+                class="w-full px-4 py-2 transition-colors border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-[#e4097f]"
+                required
+              />
+             
             </div>
 
             <button
-              @click="handleSubmit"
-              :disabled="isLoading || !formData.email"
+              :disabled="isLoading || !formData.password  ||!formData.confirmPassword"
               class="w-full px-6 py-2 font-semibold text-white transition-colors rounded-md bg-[#e4097f] hover:bg-[#d10871] disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {{ isLoading ? "Processing..." : "Send Instructions" }}
@@ -219,7 +225,6 @@
             <div class="text-center">
               <button
                 type="button"
-                @click="$emit('navigate', 'login')"
                 class="flex items-center justify-center mx-auto text-sm text-gray-600 transition-colors hover:text-gray-800"
               >
                 <router-link
@@ -234,7 +239,7 @@
 
             <div class="p-6 rounded-md bg-gray-50">
               <h4 class="mb-3 text-sm font-medium text-gray-900">
-                How It Works
+                Password Criteria:
               </h4>
               <ol class="space-y-2 text-sm text-gray-600">
                 <li class="flex items-start">
@@ -242,37 +247,24 @@
                     class="bg-pink-100 text-[#e4097f] rounded-full w-5 h-5 flex items-center justify-center text-xs font-medium mr-3 mt-0.5 flex-shrink-0"
                     >1</span
                   >
-                  Enter your work email address
+                  At least 8 characters
+
                 </li>
                 <li class="flex items-start">
                   <span
                     class="bg-pink-100 text-[#e4097f] rounded-full w-5 h-5 flex items-center justify-center text-xs font-medium mr-3 mt-0.5 flex-shrink-0"
                     >2</span
                   >
-                  Click "Send Instructions"
+                  One uppercase and one lowercase letter
                 </li>
                 <li class="flex items-start">
                   <span
                     class="bg-pink-100 text-[#e4097f] rounded-full w-5 h-5 flex items-center justify-center text-xs font-medium mr-3 mt-0.5 flex-shrink-0"
                     >3</span
                   >
-                  Check your inbox
+                  One number and one special character
                 </li>
-                <li class="flex items-start">
-                  <span
-                    class="bg-pink-100 text-[#e4097f] rounded-full w-5 h-5 flex items-center justify-center text-xs font-medium mr-3 mt-0.5 flex-shrink-0"
-                    >4</span
-                  >
-                  Follow the secure link in the email
-                </li>
-                <li class="flex items-start">
-                  <span
-                    class="bg-pink-100 text-[#e4097f] rounded-full w-5 h-5 flex items-center justify-center text-xs font-medium mr-3 mt-0.5 flex-shrink-0"
-                    >5</span
-                  >
-                  Create your new password
-                </li>
-              </ol>
+               </ol>
             </div>
           </div>
         </div>
@@ -296,69 +288,13 @@ import {
   Lock,
   RefreshCw,
 } from "lucide-vue-next";
-import { validateEmail } from "@/vineValidation/authForm";
 
 // Reactive data
 const formData = ref({
-  email: "",
+  password: "",
+  confirmPassword:""
 });
 const isLoading = ref(false);
-const emailSent = ref(false);
-const formErrors = ref({
-  email: [],
-});
 
-// Emits
-const emit = defineEmits(["navigate"]);
 
-// Methods
-const handleSubmit = async () => {
-  isLoading.value = true;
-  formErrors.value.email = [];
-
-  // Validate email
-  const validationResult = await validateEmail({
-    email: formData.value.email,
-  });
-
-  if (!validationResult.isValid) {
-    formErrors.value.email = validationResult.errors.email || [];
-    setTimeout(() => {
-      formErrors.value.email = [];
-    }, 2000);
-    isLoading.value = false;
-    return;
-  }
-
-  // Simulate API call
-  try {
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    emailSent.value = true;
-  } catch (error) {
-    formErrors.value.email = ["Failed to send email. Please try again."];
-    setTimeout(() => {
-      formErrors.value.email = [];
-    }, 2000);
-  } finally {
-    isLoading.value = false;
-  }
-};
-
-const handleResend = async () => {
-  isLoading.value = true;
-  formErrors.value.email = [];
-
-  // Simulate API call
-  try {
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-  } catch (error) {
-    formErrors.value.email = ["Failed to resend email. Please try again."];
-    setTimeout(() => {
-      formErrors.value.email = [];
-    }, 2000);
-  } finally {
-    isLoading.value = false;
-  }
-};
 </script>
-```
