@@ -398,24 +398,34 @@
                 >{{ formErrors.confirmPassword[0] }}</span
               >
             </div>
-            <div class="p-4 border rounded-md bg-amber-50 border-amber-200">
-              <h4 class="mb-2 text-sm font-medium text-amber-900">
+          <div class="p-6 rounded-md bg-gray-50">
+              <h4 class="mb-3 text-sm font-medium text-gray-900">
                 Password Criteria:
               </h4>
-              <ul class="space-y-1 text-xs text-amber-700">
-                <li class="flex items-center">
-                  <Check class="w-3 h-3 mr-2 text-amber-600" />
+              <ol class="space-y-2 text-sm text-gray-600">
+                <li class="flex items-start">
+                  <span
+                    class="bg-pink-100 text-[#e4097f] rounded-full w-5 h-5 flex items-center justify-center text-xs font-medium mr-3 mt-0.5 flex-shrink-0"
+                    >1</span
+                  >
                   At least 8 characters
+
                 </li>
-                <li class="flex items-center">
-                  <Check class="w-3 h-3 mr-2 text-amber-600" />
+                <li class="flex items-start">
+                  <span
+                    class="bg-pink-100 text-[#e4097f] rounded-full w-5 h-5 flex items-center justify-center text-xs font-medium mr-3 mt-0.5 flex-shrink-0"
+                    >2</span
+                  >
                   One uppercase and one lowercase letter
                 </li>
-                <li class="flex items-center">
-                  <Check class="w-3 h-3 mr-2 text-amber-600" />
+                <li class="flex items-start">
+                  <span
+                    class="bg-pink-100 text-[#e4097f] rounded-full w-5 h-5 flex items-center justify-center text-xs font-medium mr-3 mt-0.5 flex-shrink-0"
+                    >3</span
+                  >
                   One number and one special character
                 </li>
-              </ul>
+               </ol>
             </div>
           </div>
 
@@ -601,13 +611,10 @@
           <!-- Login Link -->
           <div class="pt-4 text-sm text-center">
             <span class="text-gray-600">Already have an account? </span>
-            <a
-              href="#"
-              @click="$emit('navigate', 'login')"
-              class="font-medium text-[#e4097f]"
-            >
-              Log in
-            </a>
+
+            <router-link :to="{name:'login'}"  class="p-1 font-medium text-[#e4097f] hover:bg-[#e4097f] hover:text-white">
+                             Log in
+            </router-link>
           </div>
         </div>
       </div>

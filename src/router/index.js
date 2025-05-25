@@ -7,6 +7,7 @@ import RegisterForm from '@/components/authFom/registerForm.vue'
 import LoginForm from '@/components/authFom/loginForm.vue'
 import BaseLayout from '@/views/BaseLayout.vue'
 import forgotPasswordForm from '@/components/authFom/forgotPasswordForm.vue'
+import ResetPasswordForm from '@/components/authFom/resetPasswordForm.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -55,7 +56,11 @@ const router = createRouter({
       path:'/auth/password-forgot',
       name:'password_forgot',
       component:forgotPasswordForm
-
+    },
+     {
+      path:'/auth/reset-password',
+      name:'reset_password',
+      component:ResetPasswordForm
     }
   ],
 })
