@@ -693,7 +693,6 @@ const progress = computed(() => (currentStep.value / totalSteps) * 100);
 const emit = defineEmits(["navigate"]);
 
 const nextStep = async () => {
-  console.log("ici");
   if (currentStep.value < totalSteps) {
     let validationResult;
 
