@@ -1,6 +1,6 @@
 <template>
   <AppModal @closeModal="toggleOpenModal" :isOpen="isModalOpen" :isLoader="false">
-    <sendRegistrationEmail @close="toggleOpenModal" />
+    <sendRegistrationEmail @close="toggleOpenModal()" />
   </AppModal>
   <header
     class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 bg-white bg-opacity-90 backdrop-blur-sm">

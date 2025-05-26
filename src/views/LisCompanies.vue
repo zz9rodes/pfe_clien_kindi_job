@@ -78,13 +78,11 @@ const searchFilters = ref({
 const jobResults = ref([]);
 
 const performJobSearch = (searchData) => {
-    console.log('Search performed:', searchData);
     jobResults.value = ['Job 1', 'Job 2', 'Job 3'];
 };
 
 
 const handleFiltersUpdate = (filter) => {
-    console.log('new filters');
     console.log(filter);
 }
 
