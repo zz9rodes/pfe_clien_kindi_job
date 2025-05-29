@@ -11,6 +11,7 @@ import ResetPasswordForm from '@/components/authFom/resetPasswordForm.vue'
 import AccountDashboard from '@/views/AccountLayout.vue'
 import AccountProfile from '@/views/accountProfile.vue'
 import CompanieDetail from '@/views/CompanieDetail.vue'
+import ListNews from '@/views/ListNews.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -58,6 +59,11 @@ const router = createRouter({
           path: 'companie-details',
           name: 'companie_details',
           component: CompanieDetail,
+        },
+        {
+          path: 'list-news',
+          name: 'list_news',
+          component: ListNews,
         },
       ]
     }

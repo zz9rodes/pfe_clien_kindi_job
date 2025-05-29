@@ -8,7 +8,7 @@
       />
     </div>
   </AppModal>
-  <div class="flex flex-col min-h-screen mt-24 bg-white">
+  <div class="flex flex-col h-full mt-24 overflow-auto ">
     <AppInputJobsFilter
       :showToggleModal="true"
       @filter="HandleFilterJobs"

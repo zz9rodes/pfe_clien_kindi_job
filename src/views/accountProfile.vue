@@ -111,7 +111,7 @@
 
             <!-- Onglet Childcare Subsidy Settings -->
             <div v-if="activeTab === 'signature'">
-                <drawSigrature/>
+              <drawSigrature />
             </div>
           </div>
         </div>
@@ -135,7 +135,7 @@ const activeTab = ref("profile");
 const tabs = [
   { id: "profile", name: "Profile", icon: UserIcon },
   { id: "companies", name: "Companies Information", icon: UsersIcon },
-  { id: 'signature', name: 'Sign Agreement', icon: PenToolIcon } 
+  { id: 'signature', name: 'Sign Agreement', icon: PenToolIcon }
 ];
 
 const children = ref([
