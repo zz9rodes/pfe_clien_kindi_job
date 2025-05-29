@@ -163,7 +163,7 @@
       </div>
 
       <!-- Le Menu Pour Les  Screen  Mobile  -->
-      <div class="p-1">
+      <div class="p-1 sm:hidden">
         <nav
           class="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-gray-200 sm:hidden"
         >
@@ -196,7 +196,7 @@
       </div>
 
       <!-- Section Du Contenue Principal -->
-      <RouterView class="pt-[70px] pb-[100px] sm:pb-0 px-8 overflow-auto">
+      <RouterView class="pt-[70px] pb-[100px] sm:pb-0  overflow-auto main-frame ">
       </RouterView>
 
       <AppOvarleyBottom @close-modal="toggleUserMenu" :isOpen="isUserMenuOpen">
@@ -494,6 +494,43 @@ const setActiveMobileItem = (index) => {
 
   100% {
     stroke-dashoffset: -100;
+  }
+}
+
+
+
+
+/*  */
+
+
+
+
+.main-frame {
+  --sb-track-color: #ffffff;
+  --sb-thumb-color: #ffffff;
+  --sb-size: 9px;
+}
+
+.main-frame::-webkit-scrollbar {
+  width: var(--sb-size);
+  display: none;
+}
+
+.main-frame::-webkit-scrollbar-track {
+  background: var(--sb-track-color);
+  border-radius: 3px;
+}
+
+.main-frame::-webkit-scrollbar-thumb {
+  background: var(--sb-thumb-color);
+  border-radius: 3px;
+  
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  .main-frame {
+    scrollbar-color: var(--sb-thumb-color)
+                     var(--sb-track-color);
   }
 }
 </style>
