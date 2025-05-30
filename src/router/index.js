@@ -16,6 +16,9 @@ import Form_Create_or_Update_Cv_Profile from '@/views/Form_Create_or_Update_Cv_P
 import Portofolio from '@/views/Portofolio.vue'
 import Form_Create_Job_Offers from '@/views/Form_Create_Job_Offers.vue'
 import JobOffersDetails from '@/views/JobOffersDetails.vue'
+import FormContractCreator from '@/views/FormContractCreator.vue'
+import ContractPreview from '@/views/ContractPreview.vue'
+import CompanieTeamMember from '@/components/compnanies/CompanieTeamMember.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -65,6 +68,11 @@ const router = createRouter({
           component: CompanieDetail,
         },
         {
+          path: 'team-members',
+          name: 'team_members',
+          component: CompanieTeamMember,
+        },
+        {
           path: 'list-news',
           name: 'list_news',
           component: ListNews,
@@ -79,9 +87,18 @@ const router = createRouter({
           name: 'create_job',
           component: Form_Create_Job_Offers,
         },
+        {
+          path: 'contract_creator',
+          name: 'contract_creator',
+          component: FormContractCreator,
+        },
+         {
+          path: 'contract_preview',
+          name: 'contract_preview',
+          component: ContractPreview,
+        },
       ]
-    }
-    ,
+    },
     {
       path: '/auth/login',
       name: 'login',
@@ -104,7 +121,7 @@ const router = createRouter({
       name: 'reset_password',
       component: ResetPasswordForm
     },
-     {
+    {
       path: '/portofolio',
       name: 'portofolio',
       component: Portofolio

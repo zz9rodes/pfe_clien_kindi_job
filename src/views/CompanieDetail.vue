@@ -121,7 +121,9 @@
         </div>
 
         <div class="grid grid-cols-1 gap-6 mt-8 md:grid-cols-2 lg:grid-cols-4">
-          <div
+          <TeamMemberCard   v-for="member in members"
+            :key="member.name" :member="member"/>
+          <!-- <div
             v-for="member in members"
             :key="member.name"
             class="p-2 text-center bg-white border rounded-lg"
@@ -151,7 +153,7 @@
               <p class="mb-2 text-sm text-gray-600">{{ member.position }}</p>
               <p class="text-xs text-gray-500">{{ member.department }}</p>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -175,6 +177,7 @@ import {
 } from "lucide-vue-next";
 import AboutCompanie from "@/components/compnanies/AboutCompanie.vue";
 import JobCard from "@/components/JobCard.vue";
+import TeamMemberCard from "@/components/TeamMemberCard.vue";
 
 const activeTab = ref("about");
 
