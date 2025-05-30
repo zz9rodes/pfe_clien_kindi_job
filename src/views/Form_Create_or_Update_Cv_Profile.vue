@@ -7,13 +7,23 @@
           <h1 class="text-3xl font-bold text-gray-900">Create Your CV Profile</h1>
           <p class="mt-1 text-gray-600">Complete your professional profile</p>
         </div>
-        <button
+        <div class="flex gap-2 wrap">
+              <button
+          @click="PreviewProfile"
+          :disabled="isSaving"
+          class="px-6 py-2 font-medium text-white transition-colors bg-gray-500 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+         Preview
+        </button>
+            <button
           @click="saveProfile"
           :disabled="isSaving"
           class="px-6 py-2 font-medium text-white transition-colors bg-[#e4097f] rounded-lg hover:bg-[#e4097f] disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {{ isSaving ? 'Saving...' : 'Save' }}
         </button>
+        </div>
+    
       </div>
 
       <div class="space-y-6">
@@ -529,6 +539,11 @@ const saveProfile = async () => {
   } finally {
     isSaving.value = false
   }
+}
+
+
+const PreviewProfile=()=>{
+  
 }
 </script>
 

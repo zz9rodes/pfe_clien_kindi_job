@@ -118,8 +118,8 @@
           class="absolute bottom-0 left-0 right-0 p-2 border-t border-gray-200"
         >
           <div class="relative group">
-            <a
-              href="/profile"
+            <router-link
+            :to="{name:'profile'}"
               class="flex items-center px-3 py-3 text-gray-600 transition-all duration-200 rounded-lg hover:bg-gray-50 hover:text-gray-900"
             >
               <!-- User Avatar -->
@@ -146,7 +146,7 @@
                   John Doe
                 </div>
               </div>
-            </a>
+            </router-link>
 
             <!-- Profile Tooltip -->
             <div

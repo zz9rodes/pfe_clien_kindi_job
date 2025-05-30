@@ -23,7 +23,7 @@
       <!-- Search bar and Tools -->
       <div class="flex items-center justify-end sm:gap-5  gap-3 p-1 flex-[3] ">
         <div v-for="(item, index) in HeaderMenu" :key="item.title" class="relative ">
-          <a :href="item.link" :class="[
+          <router-link :to="{ name: item.link }" :class="[
             'flex items-center px-1 py-2 rounded-md transition-all duration-200 relative overflow-hidden',
             item.active ? 'bg-[#fff0fb] text-[#db147f] shadow-sm' : '',
           ]" @click="setActiveItem(index)">
@@ -38,7 +38,7 @@
                 {{ item.title }}
               </span>
             </div>
-          </a>
+          </router-link>
         </div>
         <!--  -->
         <div @click="handleOpenSearchModal"
@@ -99,21 +99,21 @@ const HeaderMenu = ref([
   {
     icon: BadgeJapaneseYenIcon,
     title: "Browse Jobs Offers",
-    link: "#",
+    link: "l_jobs",
     active: true,
     badge: null,
   },
   {
     icon: NewspaperIcon,
     title: "News",
-    link: "#",
+    link: "list_news",
     active: false,
     badge: null,
   },
   {
     icon: MessageCircleMore,
     title: "Chat",
-    link: "#",
+    link: "jobs",
     active: false,
     badge: null,
   }

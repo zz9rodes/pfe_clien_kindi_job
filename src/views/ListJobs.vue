@@ -1,27 +1,16 @@
 <template>
   <AppModal @closeModal="HandleToogleModal" :isOpen="isOpenModal" :isLoader="false">
     <div class="block lg:hidden">
-      <LargeAppFilter
-        :initialActiveFilters="savedFilters"
-        @filters-changed="handleFiltersChange"
-        @close="HandleToogleModal"
-      />
+      <LargeAppFilter :initialActiveFilters="savedFilters" @filters-changed="handleFiltersChange"
+        @close="HandleToogleModal" />
     </div>
   </AppModal>
-  <div class="flex flex-col h-full mt-24 overflow-auto ">
-    <AppInputJobsFilter
-      :showToggleModal="true"
-      @filter="HandleFilterJobs"
-      @open-modal="HandleToogleModal"
-      @searchvalue-changed="handleSearchValueChange"
-      :show-title="false"
-    />
+  <div class="flex flex-col h-full py-24 overflow-auto">
+    <AppInputJobsFilter :showToggleModal="true" @filter="HandleFilterJobs" @open-modal="HandleToogleModal"
+      @searchvalue-changed="handleSearchValueChange" :show-title="false" />
     <div class="container flex flex-1 px-4 mx-auto mt-8">
       <div class="hidden filter-bar lg:block">
-        <JobFilter
-          :initialActiveFilters="savedFilters"
-          @filters-changed="handleFiltersChange"
-        />
+        <JobFilter :initialActiveFilters="savedFilters" @filters-changed="handleFiltersChange" />
       </div>
       <main class="flex-1 bg-gray-50">
         <div class="container px-4 py-6 mx-auto">
@@ -30,26 +19,14 @@
               Recommended for you
             </h2>
           </div>
-          
+
           <div class="grid grid-cols-1 gap-6 mb-10 md:grid-cols-2">
             <div
-              class="group flex overflow-hidden relative group transition duration-700 rounded-[2px] ease-in-out bg-white border border-gray-300 shadow-sm hover:shadow-md hover:cursor-pointer"
-            >
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                class="absolute hidden group-hover:block text-yellow-50 right-2 top-2"
-              >
-                <path
-                  d="M20 4L8 16M20 4V14M20 4H10"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
+              class="group flex overflow-hidden relative group transition duration-700 rounded-[2px] ease-in-out bg-white border border-gray-300 shadow-sm hover:shadow-md hover:cursor-pointer">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                class="absolute hidden group-hover:block text-yellow-50 right-2 top-2">
+                <path d="M20 4L8 16M20 4V14M20 4H10" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" />
               </svg>
               <div class="flex-1 p-4">
                 <div class="text-xs text-[#e4097f] font-medium mb-1">
@@ -68,32 +45,17 @@
                 </p>
               </div>
               <div class="w-1/3">
-                <img
-                  src="https://i.pinimg.com/736x/66/48/88/66488884b59ad0f601763ce6bfdeb599.jpg"
-                  alt="Nature Play Kitchen"
-                  class="object-cover w-full h-full"
-                />
+                <img src="https://i.pinimg.com/736x/66/48/88/66488884b59ad0f601763ce6bfdeb599.jpg"
+                  alt="Nature Play Kitchen" class="object-cover w-full h-full" />
               </div>
             </div>
 
             <div
-              class="flex group overflow-hidden relative transition duration-700 rounded-[2px] ease-in-out bg-white border border-gray-300 shadow-sm hover:shadow-md hover:cursor-pointer"
-            >
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                class="absolute hidden text-yellow-50 right-2 top-2 group-hover:block"
-              >
-                <path
-                  d="M20 4L8 16M20 4V14M20 4H10"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
+              class="flex group overflow-hidden relative transition duration-700 rounded-[2px] ease-in-out bg-white border border-gray-300 shadow-sm hover:shadow-md hover:cursor-pointer">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                class="absolute hidden text-yellow-50 right-2 top-2 group-hover:block">
+                <path d="M20 4L8 16M20 4V14M20 4H10" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" />
               </svg>
               <div class="flex-1 p-4">
                 <div class="text-xs text-[#e4097f] font-medium mb-1">
@@ -111,22 +73,15 @@
                 </p>
               </div>
               <div class="w-1/3">
-                <img
-                  src="https://i.pinimg.com/736x/66/48/88/66488884b59ad0f601763ce6bfdeb599.jpg"
-                  alt="Injuries at ChildJob"
-                  class="object-cover w-full h-full"
-                />
+                <img src="https://i.pinimg.com/736x/66/48/88/66488884b59ad0f601763ce6bfdeb599.jpg"
+                  alt="Injuries at ChildJob" class="object-cover w-full h-full" />
               </div>
             </div>
           </div>
 
           <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            <JobCard
-              v-for="job in jobs"
-              :key="job.id"
-              :job="job"
-              @bookmark="handleBookmark"
-            />
+            <JobCard @click="()=>ShowJobDetail(job.id)" v-for="job in jobs" :key="job.id" :job="job"
+              @bookmark="handleBookmark" />
           </div>
         </div>
       </main>
@@ -136,11 +91,15 @@
 
 <script setup>
 import { ref } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import JobFilter from "@/components/globales/JobFilter.vue";
 import AppInputJobsFilter from "@/components/AppInputJobsFilter.vue";
 import JobCard from "@/components/JobCard.vue";
 import AppModal from "@/components/globales/AppModal.vue";
 import LargeAppFilter from "@/components/globales/LargeAppFilter.vue";
+
+const router = useRouter();
+const route = useRoute()
 
 const jobs = [
   {
@@ -331,11 +290,11 @@ const jobs = [
     bookmarked: true,
   },
 ];
-const isOpenModal=ref(false)
+const isOpenModal = ref(false);
 
-const HandleToogleModal=()=>{
-  isOpenModal.value=!isOpenModal.value
-}
+const HandleToogleModal = () => {
+  isOpenModal.value = !isOpenModal.value;
+};
 
 const savedFilters = ref({
   location: ["paris", "london"],
@@ -365,4 +324,15 @@ const handleSearchValueChange = (searchQuery) => {
 const HandleFilterJobs = () => {
   console.log(savedFilters.value);
 };
+
+const ShowJobDetail = async (id) => {
+
+  if (route.name == 'l_jobs') {
+    router.push({ name: "account_jobs_details", params: { id: id } })
+
+  }
+  else {
+     router.push({ name: 'jobs_details', params: { id: id } });
+  }
+}
 </script>

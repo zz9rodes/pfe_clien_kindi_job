@@ -1,32 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gray-50">
-    <!-- Header -->
-    <header class="sticky top-0 z-10 bg-white border-b border-gray-200">
-      <div class="px-6 py-4 mx-auto max-w-7xl">
-        <div class="flex items-center justify-between">
-          <div class="flex items-center gap-4">
-            <button @click="$router.back()" class="text-gray-600 hover:text-gray-900">
-              <ArrowLeftIcon class="w-5 h-5" />
-            </button>
-            <h1 class="text-lg font-semibold text-gray-900">Back to offers</h1>
-          </div>
-          <div class="flex items-center gap-3">
-            <button class="text-gray-600 hover:text-gray-900">
-              <ShareIcon class="w-5 h-5" />
-            </button>
-            <button 
-              @click="toggleSave"
-              :class="[
-                'p-2 rounded-lg transition-colors',
-                isSaved ? 'text-red-600 bg-red-50' : 'text-gray-600 hover:bg-gray-100'
-              ]"
-            >
-              <HeartIcon :class="['w-5 h-5', isSaved ? 'fill-current' : '']" />
-            </button>
-          </div>
-        </div>
-      </div>
-    </header>
+  <div class="min-h-screen py-24 bg-gray-50">
 
     <div class="px-6 py-8 mx-auto max-w-7xl">
       <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">

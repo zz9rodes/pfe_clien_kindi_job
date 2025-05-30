@@ -19,16 +19,16 @@
       </div>
 
       <nav class="items-center hidden space-x-6 md:flex">
-        <a href="#" class="text-gray-700 hover:text-[#e4097f] text-sm font-medium transition-colors">
-          Search
-        </a>
-        <a href="#" class="text-gray-700 hover:text-[#e4097f] text-sm font-medium flex items-center transition-colors">
+        <router-link  :to="{ name: 'companies' }" class="text-gray-700 hover:text-[#e4097f] text-sm font-medium transition-colors">
+         Companies
+        </router-link>
+        <router-link  :to="{ name: 'jobs' }" class="text-gray-700 hover:text-[#e4097f] text-sm font-medium flex items-center transition-colors">
           Jobs
           <span class="ml-1 bg-[#00a3e0] text-white text-xs px-2 py-0.5 rounded-full">New!</span>
-        </a>
-        <a href="#" class="text-gray-700 hover:text-[#e4097f] text-sm font-medium transition-colors">
-          About Us
-        </a>
+        </router-link>
+        <router-link  :to="{ name: 'freelancers' }" href="#" class="text-gray-700 hover:text-[#e4097f] text-sm font-medium transition-colors">
+          Talens
+        </router-link  >
       </nav>
 
       <div class="items-center hidden space-x-4 md:flex">

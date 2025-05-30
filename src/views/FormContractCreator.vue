@@ -303,6 +303,11 @@ const availableRequiredFields = ref([
     value: 'AccountPhoneNumber',
     label: 'Téléphone',
     description: 'Numéro de téléphone du compte'
+  },
+  {
+    value: 'CompanieName',
+    label: 'Companie Name',
+    description: 'Nom de la companie'
   }
 ])
 
