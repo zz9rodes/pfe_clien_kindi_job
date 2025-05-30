@@ -65,7 +65,6 @@
 
             </div>
 
-            <!-- Onglet My Children -->
             <div v-if="activeTab === 'children'">
               <div class="flex flex-col mb-6 sm:flex-row sm:items-center sm:justify-between lg:mb-8">
                 <h1 class="mb-4 text-2xl font-bold text-gray-900 lg:text-3xl sm:mb-0">
@@ -109,9 +108,13 @@
               </div>
             </div>
 
-            <!-- Onglet Childcare Subsidy Settings -->
             <div v-if="activeTab === 'signature'">
               <drawSigrature />
+            </div>
+
+            <div v-if="activeTab === 'cv_profile'">
+              <!-- <drawSigrature /> -->
+               <Form_Create_or_Update_Cv_Profile/>
             </div>
           </div>
         </div>
@@ -123,10 +126,10 @@
 <script setup>
 import { ref } from "vue";
 
-import { UserIcon, UsersIcon, Plus, BabyIcon, CreditCardIcon, CameraIcon, BuildingIcon, UploadIcon, MapPinIcon, GlobeIcon, PenToolIcon } from 'lucide-vue-next'
+import { UserIcon, UsersIcon, Plus, BabyIcon, CreditCardIcon, CameraIcon, BuildingIcon, UploadIcon, MapPinIcon, GlobeIcon, PenToolIcon, FileUserIcon } from 'lucide-vue-next'
 import FormCreateOrUpdateCompanie from "@/components/profile/FormCreateOrUpdateCompanie.vue";
 import drawSigrature from "@/components/profile/drawSigrature.vue";
-
+import Form_Create_or_Update_Cv_Profile from "./Form_Create_or_Update_Cv_Profile.vue";
 import AccountDetail from "@/components/profile/accountDetail.vue";
 import CompanieCard from "@/components/CompanieCard.vue";
 
@@ -135,7 +138,8 @@ const activeTab = ref("profile");
 const tabs = [
   { id: "profile", name: "Profile", icon: UserIcon },
   { id: "companies", name: "Companies Information", icon: UsersIcon },
-  { id: 'signature', name: 'Sign Agreement', icon: PenToolIcon }
+  { id: 'signature', name: 'Sign Agreement', icon: PenToolIcon },
+  { id: 'cv_profile', name: 'Cv Profile', icon: FileUserIcon }
 ];
 
 const children = ref([

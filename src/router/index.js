@@ -12,6 +12,10 @@ import AccountDashboard from '@/views/AccountLayout.vue'
 import AccountProfile from '@/views/accountProfile.vue'
 import CompanieDetail from '@/views/CompanieDetail.vue'
 import ListNews from '@/views/ListNews.vue'
+import Form_Create_or_Update_Cv_Profile from '@/views/Form_Create_or_Update_Cv_Profile.vue'
+import Portofolio from '@/views/Portofolio.vue'
+import Form_Create_Job_Offers from '@/views/Form_Create_Job_Offers.vue'
+import JobOffersDetails from '@/views/JobOffersDetails.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -65,6 +69,16 @@ const router = createRouter({
           name: 'list_news',
           component: ListNews,
         },
+         {
+          path: 'create_cv_profile',
+          name: 'create_cv_profile',
+          component: Form_Create_or_Update_Cv_Profile,
+        },
+        {
+          path: 'create_job',
+          name: 'create_job',
+          component: Form_Create_Job_Offers,
+        },
       ]
     }
     ,
@@ -89,6 +103,16 @@ const router = createRouter({
       path: '/auth/reset-password',
       name: 'reset_password',
       component: ResetPasswordForm
+    },
+     {
+      path: '/portofolio',
+      name: 'portofolio',
+      component: Portofolio
+    },
+    {
+      path: '/jobs_details',
+      name: 'jobs_details',
+      component: JobOffersDetails
     }
   ],
 })
