@@ -76,7 +76,6 @@ const handleImageUpload = (e) => {
 };
 
 const handleCloseModal=()=>{
-  console.log("ici");
   
   emit('close')
 }

@@ -20,6 +20,9 @@ import FormContractCreator from "@/views/FormContractCreator.vue";
 import ContractPreview from "@/views/ContractPreview.vue";
 import CompanieTeamMember from "@/components/compnanies/CompanieTeamMember.vue";
 import TestPreviewContract from "@/views/TestPreviewContract.vue";
+import ListContract from "@/views/ListContract.vue";
+import FormUpdateContract from "@/views/FormUpdateContract.vue";
+import ExempleUpdatContract from "@/views/ExempleUpdatContract.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -118,9 +121,24 @@ const router = createRouter({
           component: ContractPreview,
         },
         {
+          path: "contract_list",
+          name: "contract_list",
+          component: ListContract,
+        },
+        {
           path: "testcontract_preview",
           name: "testcontract_preview",
           component: TestPreviewContract,
+        },
+         {
+          path: "update_contract",
+          name: "update_contract",
+          component: FormUpdateContract,
+        },
+         {
+          path: "ex",
+          name: "ex",
+          component: ExempleUpdatContract,
         },
       ],
     },

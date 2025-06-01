@@ -7,17 +7,12 @@
           <p class="mt-1 text-gray-600">Rédigez votre contrat avec articles et clauses personnalisés</p>
         </div>
         <div class="flex items-center gap-3">
-          <button
-            @click="previewContract"
-            class="px-6 py-2 font-medium text-gray-700 transition-colors bg-gray-100 rounded-lg hover:bg-gray-200"
-          >
+          <button @click="toggleOpenModal"
+            class="px-6 py-2 font-medium text-gray-700 transition-colors bg-gray-100 rounded-lg hover:bg-gray-200">
             Aperçu
           </button>
-          <button
-            @click="saveContract"
-            :disabled="isSaving"
-            class="px-6 py-2 font-medium text-white transition-colors bg-[#db147f] rounded-lg hover:bg-[#db147f] disabled:opacity-50 disabled:cursor-not-allowed"
-          >
+          <button @click="saveContract" :disabled="isSaving"
+            class="px-6 py-2 font-medium text-white transition-colors bg-[#db147f] rounded-lg hover:bg-[#db147f] disabled:opacity-50 disabled:cursor-not-allowed">
             {{ isSaving ? 'Sauvegarde...' : 'Sauvegarder' }}
           </button>
         </div>
@@ -30,30 +25,22 @@
           <div class="space-y-4">
             <div>
               <label class="block mb-1 text-sm font-medium text-gray-700">Titre du contrat *</label>
-              <input
-                v-model="contract.title"
-                type="text"
+              <input v-model="contract.title" type="text"
                 placeholder="Ex: Contrat de travail CDI, Contrat de prestation..."
                 class="w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#db147f] focus:border-[#db147f]"
-                required
-              />
+                required />
             </div>
-            
+
             <div>
               <label class="block mb-1 text-sm font-medium text-gray-700">Description générale *</label>
               <div class="relative">
-                <textarea
-                  v-model="contract.textDescription"
-                  placeholder="Décrivez l'objet et le contexte de ce contrat..."
-                  rows="4"
+                <textarea v-model="contract.textDescription"
+                  placeholder="Décrivez l'objet et le contexte de ce contrat..." rows="4"
                   class="w-full px-3 py-2 pr-12 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-[#db147f] focus:border-[#db147f]"
-                  ref="descriptionTextarea"
-                ></textarea>
-                <button
-                  @click="(e) => toggleFieldSelector(e, 'description', null, null, $refs.descriptionTextarea)"
+                  ref="descriptionTextarea"></textarea>
+                <button @click="(e) => toggleFieldSelector(e, 'description', null, null, $refs.descriptionTextarea)"
                   class="absolute p-2 text-gray-400 transition-colors rounded-md top-2 right-2 hover:text-gray-600 hover:bg-gray-100"
-                  title="Insérer un champ"
-                >
+                  title="Insérer un champ">
                   <PlusIcon class="w-4 h-4" />
                 </button>
               </div>
@@ -61,116 +48,52 @@
           </div>
         </div>
 
-        <!-- <div class="p-6 bg-white border border-gray-200 rounded-lg">
-          <h2 class="mb-4 text-xl font-semibold text-gray-900">Informations de l'entreprise</h2>
-          <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-            <div>
-              <label class="block mb-1 text-sm font-medium text-gray-700">Nom de l'entreprise *</label>
-              <input
-                v-model="companyData.CompanyName"
-                type="text"
-                placeholder="Nom de votre entreprise"
-                class="w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#db147f] focus:border-[#db147f]"
-                required
-              />
-            </div>
-            <div>
-              <label class="block mb-1 text-sm font-medium text-gray-700">Ville *</label>
-              <input
-                v-model="companyData.city"
-                type="text"
-                placeholder="Ville"
-                class="w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#db147f] focus:border-[#db147f]"
-                required
-              />
-            </div>
-            <div>
-              <label class="block mb-1 text-sm font-medium text-gray-700">Pays *</label>
-              <input
-                v-model="companyData.country"
-                type="text"
-                placeholder="Pays"
-                class="w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#db147f] focus:border-[#db147f]"
-                required
-              />
-            </div>
-            <div>
-              <label class="block mb-1 text-sm font-medium text-gray-700">URL du logo (optionnel)</label>
-              <input
-                v-model="companyData.LogoUrl"
-                type="url"
-                placeholder="https://example.com/logo.png"
-                class="w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#db147f] focus:border-[#db147f]"
-              />
-            </div>
-          </div>
-        </div> -->
-
-      
 
 
         <!-- Articles and Clauses -->
         <div class="p-6 bg-white border border-gray-200 rounded-lg">
           <div class="flex items-center justify-between mb-4">
             <h2 class="text-xl font-semibold text-gray-900">Articles et clauses</h2>
-            <button
-              @click="addArticle"
-              class="px-4 py-2 text-sm font-medium text-gray-700 transition-colors bg-gray-100 rounded-lg hover:bg-gray-200"
-            >
+            <button @click="addArticle"
+              class="px-4 py-2 text-sm font-medium text-gray-700 transition-colors bg-gray-100 rounded-lg hover:bg-gray-200">
               + Ajouter un article
             </button>
           </div>
-          
+
           <div v-if="contract.articlesAndClauses.length === 0" class="py-8 text-center text-gray-500">
             <FileTextIcon class="w-12 h-12 mx-auto mb-3 text-gray-300" />
             <p>Aucun article ajouté. Commencez par ajouter votre premier article.</p>
           </div>
 
           <div class="space-y-6">
-            <div
-              v-for="(article, index) in contract.articlesAndClauses"
-              :key="index"
-              class="p-6 transition-colors border-2 border-gray-300 border-dashed rounded-lg hover:border-gray-400"
-            >
+            <div v-for="(article, index) in contract.articlesAndClauses" :key="index"
+              class="p-6 transition-colors border-2 border-gray-300 border-dashed rounded-lg hover:border-gray-400">
               <div class="flex items-center justify-between mb-4">
                 <h3 class="font-medium text-gray-900">Article {{ index + 1 }}</h3>
-                <button
-                  @click="removeArticle(index)"
-                  class="p-1 text-red-600 hover:text-red-700"
-                >
+                <button @click="removeArticle(index)" class="p-1 text-red-600 hover:text-red-700">
                   <XIcon class="w-4 h-4" />
                 </button>
               </div>
-              
+
               <div class="space-y-4">
                 <!-- Article Title -->
                 <div>
                   <label class="block mb-1 text-sm font-medium text-gray-700">Titre de l'article *</label>
-                  <input
-                    v-model="article.title"
-                    type="text"
-                    placeholder="Ex: Objet du contrat, Durée, Rémunération..."
+                  <input v-model="article.title" type="text" placeholder="Ex: Objet du contrat, Durée, Rémunération..."
                     class="w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#db147f] focus:border-[#db147f]"
-                    required
-                  />
+                    required />
                 </div>
 
                 <!-- Article Text -->
                 <div>
                   <label class="block mb-1 text-sm font-medium text-gray-700">Texte de l'article *</label>
                   <div class="relative">
-                    <textarea
-                      v-model="article.text"
-                      placeholder="Rédigez le contenu de cet article..."
-                      rows="4"
+                    <textarea v-model="article.text" placeholder="Rédigez le contenu de cet article..." rows="4"
                       class="w-full px-3 py-2 pr-12 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-[#db147f] focus:border-[#db147f]"
-                      :ref="el => setArticleTextareaRef(el, index)"
-                    ></textarea>
-                    <button
-                      @click="(e) => toggleFieldSelector(e, 'article', index, null, getArticleTextareaRef(index))"
+                      :ref="el => setArticleTextareaRef(el, index)"></textarea>
+                    <button @click="(e) => toggleFieldSelector(e, 'article', index, null, getArticleTextareaRef(index))"
                       class="absolute p-2 text-gray-400 transition-colors rounded-md top-2 right-2 hover:text-gray-600 hover:bg-gray-100"
-                      title="Insérer un champ"
-                    >
+                      title="Insérer un champ">
                       <PlusIcon class="w-4 h-4" />
                     </button>
                   </div>
@@ -180,41 +103,28 @@
                 <div>
                   <div class="flex items-center justify-between mb-2">
                     <label class="block text-sm font-medium text-gray-700">Éléments de l'article (optionnel)</label>
-                    <button
-                      @click="addArticleItem(index)"
-                      class="text-sm font-medium text-[#db147f] hover:text-[#db147f]"
-                    >
+                    <button @click="addArticleItem(index)"
+                      class="text-sm font-medium text-[#db147f] hover:text-[#db147f]">
                       + Ajouter un élément
                     </button>
                   </div>
-                  
+
                   <div v-if="article.items && article.items.length > 0" class="space-y-2">
-                    <div
-                      v-for="(item, itemIndex) in article.items"
-                      :key="itemIndex"
-                      class="flex items-center gap-2"
-                    >
+                    <div v-for="(item, itemIndex) in article.items" :key="itemIndex" class="flex items-center gap-2">
                       <span class="text-sm text-gray-400">{{ itemIndex + 1 }}.</span>
                       <div class="relative flex-1">
-                        <input
-                          v-model="article.items[itemIndex]"
-                          type="text"
+                        <input v-model="article.items[itemIndex]" type="text"
                           placeholder="Ex: Point spécifique, condition particulière..."
                           class="w-full px-3 py-2 pr-10 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#db147f] focus:border-[#db147f]"
-                          :ref="el => setItemInputRef(el, index, itemIndex)"
-                        />
+                          :ref="el => setItemInputRef(el, index, itemIndex)" />
                         <button
                           @click="(e) => toggleFieldSelector(e, 'item', index, itemIndex, getItemInputRef(index, itemIndex))"
                           class="absolute p-1 text-gray-400 transition-colors transform -translate-y-1/2 rounded top-1/2 right-2 hover:text-gray-600 hover:bg-gray-100"
-                          title="Insérer un champ"
-                        >
+                          title="Insérer un champ">
                           <PlusIcon class="w-3 h-3" />
                         </button>
                       </div>
-                      <button
-                        @click="removeArticleItem(index, itemIndex)"
-                        class="p-2 text-red-600 hover:text-red-700"
-                      >
+                      <button @click="removeArticleItem(index, itemIndex)" class="p-2 text-red-600 hover:text-red-700">
                         <XIcon class="w-4 h-4" />
                       </button>
                     </div>
@@ -228,20 +138,13 @@
     </div>
 
     <!-- Field Selector Dropdown -->
-    <div 
-      v-if="showFieldSelector" 
-      :style="{ top: selectorPosition.top + 'px', left: selectorPosition.left + 'px' }"
-      class="fixed z-50 w-64 bg-white border border-gray-200 rounded-lg shadow-lg"
-    >
+    <div v-if="showFieldSelector" :style="{ top: selectorPosition.top + 'px', left: selectorPosition.left + 'px' }"
+      class="fixed z-50 w-64 bg-white border border-gray-200 rounded-lg shadow-lg">
       <div class="p-2">
         <div class="px-2 py-1 mb-2 text-xs text-gray-500">Sélectionner un champ</div>
         <div class="overflow-y-auto max-h-48">
-          <button
-            v-for="field in availableRequiredFields"
-            :key="field.value"
-            @click="selectField(field.value)"
-            class="w-full p-2 text-sm text-left transition-colors rounded hover:bg-gray-50"
-          >
+          <button v-for="field in availableRequiredFields" :key="field.value" @click="selectField(field.value)"
+            class="w-full p-2 text-sm text-left transition-colors rounded hover:bg-gray-50">
             <div class="font-medium text-gray-900">{{ field.label }}</div>
             <div class="text-xs text-gray-500">{{ field.description }}</div>
             <div class="mt-1 text-xs text-[#db147f]">{{ field.value }}</div>
@@ -250,13 +153,13 @@
       </div>
     </div>
 
-    <!-- Contract Preview Modal -->
-    <div v-if="showPreview" class="fixed inset-0 z-50 bg-black/50">
-      <div class="flex items-center justify-center min-h-screen p-4">
+  
+    <AppModal @closeModal="toggleOpenModal" :isOpen="isModalOpen" :isLoader="false">
+      <div class="flex items-center justify-center min-h-screen">
         <div class="w-full max-w-6xl bg-white rounded-lg shadow-xl max-h-[95vh] overflow-hidden">
           <div class="flex items-center justify-between p-6 border-b border-gray-200">
             <h2 class="text-xl font-semibold text-gray-900">Aperçu du contrat</h2>
-            <button @click="showPreview = false" class="text-gray-400 hover:text-gray-600">
+            <button @click="toggleOpenModal()" class="text-gray-400 hover:text-gray-600">
               <XIcon class="w-6 h-6" />
             </button>
           </div>
@@ -267,11 +170,12 @@
               :title="contract.title"
               :companyData="companyData"
               :UserData="userData"
+              :isLive="false"
             />
           </div>
         </div>
       </div>
-    </div>
+    </AppModal>
   </div>
 </template>
 
@@ -279,6 +183,7 @@
 import { ref, computed, nextTick, onMounted, onBeforeUnmount } from 'vue'
 import { XIcon, FileTextIcon, PlusIcon } from 'lucide-vue-next'
 import ContractPreview from './ContractPreview.vue'
+import AppModal from '@/components/globales/AppModal.vue'
 
 // Reactive data
 const isSaving = ref(false)
@@ -287,6 +192,16 @@ const showFieldSelector = ref(false)
 const selectorPosition = ref({ top: 0, left: 0 })
 const activeElement = ref(null)
 const descriptionTextarea = ref(null)
+
+
+const isModalOpen = ref(false);
+
+const toggleOpenModal = () => {
+  isModalOpen.value = !isModalOpen.value;
+  console.log("value");
+};
+
+
 
 // Refs for dynamic elements
 const articleTextareaRefs = ref({})
@@ -308,8 +223,8 @@ const companyData = ref({
   country: 'Cameroon',
   languageAttachment: 'fr',
   RegisteredNumber: 'RC/DLA/2023/B/12987',
-  admin:{
-    name:"Ze Baby"
+  admin: {
+    name: "Ze Baby"
   }
 });
 
@@ -392,27 +307,27 @@ const getItemInputRef = (articleIndex, itemIndex) => {
 // Methods
 const toggleFieldSelector = (event, type, articleIndex = null, itemIndex = null, targetElement = null) => {
   event.stopPropagation()
-  
+
   if (showFieldSelector.value) {
     showFieldSelector.value = false
     return
   }
-  
+
   const button = event.currentTarget
   const rect = button.getBoundingClientRect()
-  
+
   selectorPosition.value = {
     top: rect.bottom + 5 + window.scrollY,
     left: rect.left - 200 + window.scrollX
   }
-  
+
   activeElement.value = {
     type,
     articleIndex,
     itemIndex,
     element: targetElement
   }
-  
+
   showFieldSelector.value = true
 }
 
@@ -423,7 +338,7 @@ const selectField = (fieldValue) => {
     const beforeCursor = element.value.substring(0, cursorPos)
     const afterCursor = element.value.substring(cursorPos)
     const newValue = beforeCursor + `{{${fieldValue}}}` + afterCursor
-    
+
     if (activeElement.value.type === 'description') {
       contract.value.textDescription = newValue
     } else if (activeElement.value.type === 'article') {
@@ -431,14 +346,14 @@ const selectField = (fieldValue) => {
     } else if (activeElement.value.type === 'item') {
       contract.value.articlesAndClauses[activeElement.value.articleIndex].items[activeElement.value.itemIndex] = newValue
     }
-    
+
     nextTick(() => {
       const newCursorPos = beforeCursor.length + `{{${fieldValue}}}`.length
       element.focus()
       element.setSelectionRange(newCursorPos, newCursorPos)
     })
   }
-  
+
   showFieldSelector.value = false
 }
 
@@ -476,7 +391,7 @@ const previewContract = () => {
 
 const saveContract = async () => {
   isSaving.value = true
-  
+
   try {
     const cleanedContract = {
       ...contract.value,
@@ -484,11 +399,11 @@ const saveContract = async () => {
       userData: { ...userData.value },
       articlesAndClauses: processedClauses.value
     }
-    
+
     await new Promise(resolve => setTimeout(resolve, 1500))
     console.log('Contract saved:', cleanedContract)
     console.log(cleanedContract);
-        
+
   } catch (error) {
     console.error('Error saving contract:', error)
   } finally {

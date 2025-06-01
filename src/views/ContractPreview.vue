@@ -213,7 +213,7 @@ const processText = (text) => {
 }
 
 const toggleOpenModal = () => {
-  if(isLive){
+  if(props.isLive){
       isModalOpen.value = !isModalOpen.value
   }
 }
