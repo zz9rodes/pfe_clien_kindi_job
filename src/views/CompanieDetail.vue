@@ -85,7 +85,13 @@
         <div
           class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between"
         >
-          <div class="flex items-center space-x-4">
+        <div  @click="GoToNewCreateJob">
+          <button class="new-job flex gap-1  bg-[#db147f] text-white rounded-md px-3 py-2">
+            <Plus/>
+            <span>New Job</span>
+          </button>
+        </div>
+          <!-- <div class="flex items-center space-x-4">
             <select
               class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#db147f] focus:border-transparent"
             >
@@ -95,16 +101,22 @@
               <option>San Francisco</option>
               <option>London</option>
             </select>
-          </div>
+          </div> -->
         </div>
 
         <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          <JobCard
-            v-for="job in jobs"
-            :key="job.id"
-            :job="job"
-            @bookmark="handleBookmark"
-          />
+          <div class="flex flex-col "  v-for="job in jobs"   :key="job.id">
+            <div class=" text-end" @click="GoToUpdateCreateJob">
+              <button class="px-3 py-1 bg-[#db147f] text-white rounded-lg">
+              edit
+              </button>
+            </div>
+              <JobCard
+              :job="job"
+              @bookmark="handleBookmark"
+              />
+          </div>
+          
         </div>
       </div>
 
@@ -174,10 +186,13 @@ import {
   TrendingUpIcon,
   ShieldIcon,
   ZapIcon,
+  Plus,
 } from "lucide-vue-next";
 import AboutCompanie from "@/components/compnanies/AboutCompanie.vue";
 import JobCard from "@/components/JobCard.vue";
 import TeamMemberCard from "@/components/TeamMemberCard.vue";
+import { useRouter } from "vue-router";
+const router=useRouter()
 
 const activeTab = ref("about");
 
@@ -373,6 +388,15 @@ const members = ref([
     position: "Ingénieur logiciel",
   },
 ]);
+
+
+const GoToNewCreateJob=()=>{
+  router.push({name:'create_job'})
+}
+
+const GoToUpdateCreateJob=()=>{
+  router.push({name:'update_job'})
+}
 </script>
 
 <style scoped>

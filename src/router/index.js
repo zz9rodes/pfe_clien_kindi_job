@@ -23,6 +23,8 @@ import TestPreviewContract from "@/views/TestPreviewContract.vue";
 import ListContract from "@/views/ListContract.vue";
 import FormUpdateContract from "@/views/FormUpdateContract.vue";
 import ExempleUpdatContract from "@/views/ExempleUpdatContract.vue";
+import FormCreateJob from "@/views/FormCreateJob.vue";
+import FormUpdateJobs from "@/views/FormUpdateJobs.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -136,9 +138,14 @@ const router = createRouter({
           component: FormUpdateContract,
         },
          {
-          path: "ex",
-          name: "ex",
-          component: ExempleUpdatContract,
+          path: "create_job",
+          name: "create_job",
+          component: FormCreateJob,
+        },
+        {
+          path: "update_job",
+          name: "update_job",
+          component: FormUpdateJobs,
         },
       ],
     },
