@@ -25,6 +25,7 @@ import FormUpdateContract from "@/views/FormUpdateContract.vue";
 import ExempleUpdatContract from "@/views/ExempleUpdatContract.vue";
 import FormCreateJob from "@/views/FormCreateJob.vue";
 import FormUpdateJobs from "@/views/FormUpdateJobs.vue";
+import ProjectManagement from "@/views/ProjectManagement.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -141,6 +142,11 @@ const router = createRouter({
           path: "create_job",
           name: "create_job",
           component: FormCreateJob,
+        },
+        {
+          path: "lis_projects",
+          name: "lis_projects",
+          component: ProjectManagement,
         },
         {
           path: "update_job",
