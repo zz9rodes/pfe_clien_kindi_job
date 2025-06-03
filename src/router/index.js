@@ -144,8 +144,8 @@ const router = createRouter({
           component: FormCreateJob,
         },
         {
-          path: "lis_projects",
-          name: "lis_projects",
+          path: "list_projects",
+          name: "list_projects",
           component: ProjectManagement,
         },
         {

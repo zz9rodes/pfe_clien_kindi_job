@@ -11,11 +11,11 @@
           <div 
             v-else
             :class="[
-              'fixed top-0 h-full bg-white shadow-xl transform transition-transform duration-300 ease-in-out',
+              'fixed top-0 h-full bg-white  shadow-xl transform transition-transform duration-300 ease-in-out',
               position === 'right' ? 'right-0' : 'left-0',
+              width ? 'w-auto md:min-w-['+width+']':'',
               drawerClasses
             ]"
-            :style="{ width: width }"
           >
             <slot></slot>
           </div>
