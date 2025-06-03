@@ -26,6 +26,7 @@ import ExempleUpdatContract from "@/views/ExempleUpdatContract.vue";
 import FormCreateJob from "@/views/FormCreateJob.vue";
 import FormUpdateJobs from "@/views/FormUpdateJobs.vue";
 import ProjectManagement from "@/views/ProjectManagement.vue";
+import ProjectTasksView from "@/views/ProjectTasksView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -147,6 +148,11 @@ const router = createRouter({
           path: "list_projects",
           name: "list_projects",
           component: ProjectManagement,
+        },
+        {
+          path: "project_tasks",
+          name: "project_tasks",
+          component: ProjectTasksView,
         },
         {
           path: "update_job",
