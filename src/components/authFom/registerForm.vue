@@ -105,7 +105,7 @@
                 Let's start with your personal information
               </p>
             </div>
-            <div class="space-y-2">
+            <div class="relative space-y-2">
               <label
                 for="email"
                 class="block text-sm font-medium text-gray-700"
@@ -120,12 +120,12 @@
                 class="w-full px-4 py-2 transition-colors border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-[#e4097f]"
                 required
               />
-              <span class="text-sm text-red-600" v-if="formErrors.email">{{
+              <span class="absolute left-0 text-sm text-red-600 top-[90%]" v-if="formErrors.email">{{
                 formErrors.email[0]
               }}</span>
             </div>
             <div class="grid grid-cols-2 gap-4">
-              <div class="space-y-2">
+              <div class="relative space-y-2">
                 <label
                   for="firstName"
                   class="block text-sm font-medium text-gray-700"
@@ -140,12 +140,12 @@
                   required
                 />
                 <span
-                  class="text-sm text-red-600"
+                  class="absolute left-0 text-sm text-red-600 top-[90%]"
                   v-if="formErrors.firstName"
                   >{{ formErrors.firstName[0] }}</span
                 >
               </div>
-              <div class="space-y-2">
+              <div class="relative space-y-2">
                 <label
                   for="lastName"
                   class="block text-sm font-medium text-gray-700"
@@ -159,12 +159,12 @@
                   class="w-full px-4 py-2 transition-colors border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-[#e4097f]"
                   required
                 />
-                <span class="text-sm text-red-600" v-if="formErrors.lastName">{{
+                <span class="absolute left-0 text-sm text-red-600 top-[90%]" v-if="formErrors.lastName">{{
                   formErrors.lastName[0]
                 }}</span>
               </div>
             </div>
-            <div class="space-y-2">
+            <div class="relative space-y-2">
               <label
                 for="phoneNumber"
                 class="block text-sm font-medium text-gray-700"
@@ -180,12 +180,12 @@
                 required
               />
               <span
-                class="text-sm text-red-600"
+                class="absolute left-0 text-sm text-red-600 top-[90%]"
                 v-if="formErrors.phoneNumber"
                 >{{ formErrors.phoneNumber[0] }}</span
               >
             </div>
-            <div class="space-y-2">
+            <div class="relative space-y-2">
               <label
                 for="dateOfBirth"
                 class="block text-sm font-medium text-gray-700"
@@ -200,7 +200,7 @@
                 required
               />
               <span
-                class="text-sm text-red-600"
+                class="absolute left-0 text-sm text-red-600 top-[90%]"
                 v-if="formErrors.dateOfBirth"
                 >{{ formErrors.dateOfBirth[0] }}</span
               >
@@ -215,22 +215,7 @@
               </h3>
               <p class="mt-1 text-gray-600">Help us get to know you better</p>
             </div>
-            <!-- <div class="space-y-2">
-              <label for="country" class="block text-sm font-medium text-gray-700">
-                Country <span class="text-red-500">*</span>
-              </label>
-              <select
-                id="country"
-                v-model="formData.country"
-                class="w-full px-4 py-2 transition-colors border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-[#e4097f]"
-                required
-              >
-                <option value="">Select your country</option>
-                <option v-for="country in countriesOfTheWorld" :key="country" :value="country">{{ country }}</option>
-              </select>
-              <span class="text-sm text-red-600" v-if="formErrors.country">{{ formErrors.country[0] }}</span>
-            </div> -->
-            <div class="space-y-2">
+              <div class="relative space-y-2">
               <label for="city" class="block text-sm font-medium text-gray-700">
                 Country
               </label>
@@ -240,11 +225,11 @@
                 placeholder="Yaoundé, Douala, Bamenda..."
                 class="w-full px-4 py-2 transition-colors border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-[#e4097f]"
               />
-              <span class="text-sm text-red-600" v-if="formErrors.country">{{
+              <span class="absolute left-0 text-sm text-red-600 top-[90%]" v-if="formErrors.country">{{
                 formErrors.country[0]
               }}</span>
             </div>
-            <div class="space-y-2">
+            <div class="relative space-y-2">
               <label for="city" class="block text-sm font-medium text-gray-700">
                 City
               </label>
@@ -254,11 +239,11 @@
                 placeholder="Yaoundé, Douala, Bamenda..."
                 class="w-full px-4 py-2 transition-colors border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-[#e4097f]"
               />
-              <span class="text-sm text-red-600" v-if="formErrors.city">{{
+              <span class="absolute left-0 text-sm text-red-600 top-[90%]" v-if="formErrors.city">{{
                 formErrors.city[0]
               }}</span>
             </div>
-            <div class="space-y-2">
+            <div class="relative space-y-2">
               <label
                 for="address"
                 class="block text-sm font-medium text-gray-700"
@@ -271,11 +256,11 @@
                 placeholder="123 Main St, Yaoundé, Cameroon"
                 class="w-full px-4 py-2 transition-colors border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-[#e4097f]"
               />
-              <span class="text-sm text-red-600" v-if="formErrors.address">{{
+              <span class="absolute left-0 text-sm text-red-600 top-[90%]" v-if="formErrors.address">{{
                 formErrors.address[0]
               }}</span>
             </div>
-            <div class="space-y-2">
+            <div class="relative space-y-2">
               <label
                 for="firstLanguage"
                 class="block text-sm font-medium text-gray-700"
@@ -298,12 +283,12 @@
                 </option>
               </select>
               <span
-                class="text-sm text-red-600"
+                class="absolute left-0 text-sm text-red-600 top-[90%]"
                 v-if="formErrors.firstLanguage"
                 >{{ formErrors.firstLanguage[0] }}</span
               >
             </div>
-            <div class="space-y-2">
+            <div class="relative space-y-2">
               <label
                 for="secondLanguage"
                 class="block text-sm font-medium text-gray-700"
@@ -325,7 +310,7 @@
                 </option>
               </select>
               <span
-                class="text-sm text-red-600"
+                class="absolute left-0 text-sm text-red-600 top-[90%]"
                 v-if="formErrors.secondLanguage"
                 >{{ formErrors.secondLanguage[0] }}</span
               >
@@ -338,7 +323,7 @@
               <h3 class="text-xl font-semibold text-gray-900">Security</h3>
               <p class="mt-1 text-gray-600">Create a secure password</p>
             </div>
-            <div class="space-y-2">
+            <div class="relative space-y-2">
               <label
                 for="password"
                 class="block text-sm font-medium text-gray-700"
@@ -363,11 +348,11 @@
                   <Eye v-else class="w-5 h-5" />
                 </button>
               </div>
-              <span class="text-sm text-red-600" v-if="formErrors.password">{{
+              <span class="absolute left-0 text-sm text-red-600 top-[90%]" v-if="formErrors.password">{{
                 formErrors.password[0]
               }}</span>
             </div>
-            <div class="space-y-2">
+            <div class="relative space-y-2">
               <label
                 for="confirmPassword"
                 class="block text-sm font-medium text-gray-700"
@@ -393,7 +378,7 @@
                 </button>
               </div>
               <span
-                class="text-sm text-red-600"
+                class="absolute left-0 text-sm text-red-600 top-[90%]"
                 v-if="formErrors.confirmPassword"
                 >{{ formErrors.confirmPassword[0] }}</span
               >
