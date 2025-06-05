@@ -1,9 +1,9 @@
 <template>
+    <AppModal  :isOpen="isModalOpen" :isLoader="true">
+  </AppModal>
   <div class="flex min-h-screen">
     <!-- Left Side - Brand Section -->
-    <div
-      class="relative hidden lg:flex lg:w-2/5 bg-gradient-to-br from-amber-50 to-orange-100"
-    >
+    <div class="relative hidden lg:flex lg:w-2/5 bg-gradient-to-br from-amber-50 to-orange-100">
       <div class="flex flex-col justify-between w-full p-12">
         <!-- Illustration and Content -->
         <div class="flex flex-col justify-center flex-1 space-y-8">
@@ -11,48 +11,34 @@
             <div class="relative">
               <div class="relative w-80 h-80">
                 <!-- Background -->
-                <div
-                  class="absolute inset-0 rounded-full bg-gradient-to-br from-green-100 to-blue-100 opacity-20"
-                ></div>
+                <div class="absolute inset-0 rounded-full bg-gradient-to-br from-green-100 to-blue-100 opacity-20">
+                </div>
                 <!-- Career growth elements -->
                 <div
-                  class="absolute flex items-center justify-center w-16 h-16 transform bg-white rounded-md shadow-lg top-8 left-8 rotate-12"
-                >
+                  class="absolute flex items-center justify-center w-16 h-16 transform bg-white rounded-md shadow-lg top-8 left-8 rotate-12">
                   <UserPlus class="w-8 h-8 text-green-600" />
                 </div>
                 <div
-                  class="absolute flex items-center justify-center w-20 transform bg-white rounded-md shadow-lg top-16 right-12 h-14 -rotate-6"
-                >
+                  class="absolute flex items-center justify-center w-20 transform bg-white rounded-md shadow-lg top-16 right-12 h-14 -rotate-6">
                   <Award class="w-8 h-8 text-purple-600" />
                 </div>
                 <div
-                  class="absolute flex items-center justify-center transform bg-white rounded-md shadow-lg bottom-20 left-12 w-18 h-18 rotate-6"
-                >
+                  class="absolute flex items-center justify-center transform bg-white rounded-md shadow-lg bottom-20 left-12 w-18 h-18 rotate-6">
                   <Rocket class="w-8 h-8 text-blue-600" />
                 </div>
                 <div
-                  class="absolute flex items-center justify-center w-16 h-16 transform bg-white rounded-md shadow-lg bottom-8 right-8 -rotate-12"
-                >
+                  class="absolute flex items-center justify-center w-16 h-16 transform bg-white rounded-md shadow-lg bottom-8 right-8 -rotate-12">
                   <Star class="w-8 h-8 text-amber-600" />
                 </div>
                 <!-- Central element -->
                 <div
-                  class="absolute flex items-center justify-center w-24 h-24 transform -translate-x-1/2 -translate-y-1/2 bg-[#e4097f] rounded-full shadow-xl top-1/2 left-1/2"
-                >
+                  class="absolute flex items-center justify-center w-24 h-24 transform -translate-x-1/2 -translate-y-1/2 bg-[#e4097f] rounded-full shadow-xl top-1/2 left-1/2">
                   <UserCheck class="w-12 h-12 text-white" />
                 </div>
                 <!-- Connecting lines -->
-                <svg
-                  class="absolute inset-0 w-full h-full"
-                  viewBox="0 0 320 320"
-                >
-                  <path
-                    d="M80 80 L160 160 M240 80 L160 160 M80 240 L160 160 M240 240 L160 160"
-                    stroke="#e5e7eb"
-                    stroke-width="2"
-                    stroke-dasharray="5,5"
-                    opacity="0.5"
-                  />
+                <svg class="absolute inset-0 w-full h-full" viewBox="0 0 320 320">
+                  <path d="M80 80 L160 160 M240 80 L160 160 M80 240 L160 160 M240 240 L160 160" stroke="#e5e7eb"
+                    stroke-width="2" stroke-dasharray="5,5" opacity="0.5" />
                 </svg>
               </div>
             </div>
@@ -70,17 +56,9 @@
         </div>
         <!-- Footer Links -->
         <div class="flex space-x-6 text-sm">
-          <a
-            href="#"
-            class="text-gray-600 transition-colors hover:text-gray-900"
-            >Privacy Policy</a
-          >
+          <a href="#" class="text-gray-600 transition-colors hover:text-gray-900">Privacy Policy</a>
           <span class="text-gray-400">•</span>
-          <a
-            href="#"
-            class="text-gray-600 transition-colors hover:text-gray-900"
-            >Terms of Use</a
-          >
+          <a href="#" class="text-gray-600 transition-colors hover:text-gray-900">Terms of Use</a>
         </div>
       </div>
     </div>
@@ -106,104 +84,58 @@
               </p>
             </div>
             <div class="relative space-y-2">
-              <label
-                for="email"
-                class="block text-sm font-medium text-gray-700"
-              >
+              <label for="email" class="block text-sm font-medium text-gray-700">
                 Email <span class="text-red-500">*</span>
               </label>
-              <input
-                id="email"
-                v-model="formData.email"
-                type="email"
-                placeholder="john.doe@company.com"
+              <input id="email" v-model="formData.email" type="email" placeholder="john.doe@company.com"
                 class="w-full px-4 py-2 transition-colors border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-[#e4097f]"
-                required
-              />
+                required />
               <span class="absolute left-0 text-sm text-red-600 top-[90%]" v-if="formErrors.email">{{
                 formErrors.email[0]
               }}</span>
             </div>
             <div class="grid grid-cols-2 gap-4">
               <div class="relative space-y-2">
-                <label
-                  for="firstName"
-                  class="block text-sm font-medium text-gray-700"
-                >
+                <label for="firstName" class="block text-sm font-medium text-gray-700">
                   First Name <span class="text-red-500">*</span>
                 </label>
-                <input
-                  id="firstName"
-                  v-model="formData.firstName"
-                  placeholder="John"
+                <input id="firstName" v-model="formData.firstName" placeholder="John"
                   class="w-full px-4 py-2 transition-colors border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-[#e4097f]"
-                  required
-                />
-                <span
-                  class="absolute left-0 text-sm text-red-600 top-[90%]"
-                  v-if="formErrors.firstName"
-                  >{{ formErrors.firstName[0] }}</span
-                >
+                  required />
+                <span class="absolute left-0 text-sm text-red-600 top-[90%]" v-if="formErrors.firstName">{{
+                  formErrors.firstName[0] }}</span>
               </div>
               <div class="relative space-y-2">
-                <label
-                  for="lastName"
-                  class="block text-sm font-medium text-gray-700"
-                >
+                <label for="lastName" class="block text-sm font-medium text-gray-700">
                   Last Name <span class="text-red-500">*</span>
                 </label>
-                <input
-                  id="lastName"
-                  v-model="formData.lastName"
-                  placeholder="Doe"
+                <input id="lastName" v-model="formData.lastName" placeholder="Doe"
                   class="w-full px-4 py-2 transition-colors border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-[#e4097f]"
-                  required
-                />
+                  required />
                 <span class="absolute left-0 text-sm text-red-600 top-[90%]" v-if="formErrors.lastName">{{
                   formErrors.lastName[0]
                 }}</span>
               </div>
             </div>
             <div class="relative space-y-2">
-              <label
-                for="phoneNumber"
-                class="block text-sm font-medium text-gray-700"
-              >
+              <label for="phoneNumber" class="block text-sm font-medium text-gray-700">
                 Phone Number <span class="text-red-500">*</span>
               </label>
-              <input
-                id="phoneNumber"
-                v-model="formData.phoneNumber"
-                type="tel"
-                placeholder="+1234567890"
+              <input id="phoneNumber" v-model="formData.phoneNumber" type="tel" placeholder="+1234567890"
                 class="w-full px-4 py-2 transition-colors border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-[#e4097f]"
-                required
-              />
-              <span
-                class="absolute left-0 text-sm text-red-600 top-[90%]"
-                v-if="formErrors.phoneNumber"
-                >{{ formErrors.phoneNumber[0] }}</span
-              >
+                required />
+              <span class="absolute left-0 text-sm text-red-600 top-[90%]" v-if="formErrors.phoneNumber">{{
+                formErrors.phoneNumber[0] }}</span>
             </div>
             <div class="relative space-y-2">
-              <label
-                for="dateOfBirth"
-                class="block text-sm font-medium text-gray-700"
-              >
+              <label for="dob" class="block text-sm font-medium text-gray-700">
                 Date of Birth <span class="text-red-500">*</span>
               </label>
-              <input
-                id="dateOfBirth"
-                v-model="formData.dateOfBirth"
-                type="date"
+              <input id="dob" v-model="formData.dob" type="date"
                 class="w-full px-4 py-2 transition-colors border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-[#e4097f]"
-                required
-              />
-              <span
-                class="absolute left-0 text-sm text-red-600 top-[90%]"
-                v-if="formErrors.dateOfBirth"
-                >{{ formErrors.dateOfBirth[0] }}</span
-              >
+                required />
+              <span class="absolute left-0 text-sm text-red-600 top-[90%]" v-if="formErrors.dob">{{
+                formErrors.dob[0] }}</span>
             </div>
           </div>
 
@@ -215,16 +147,12 @@
               </h3>
               <p class="mt-1 text-gray-600">Help us get to know you better</p>
             </div>
-              <div class="relative space-y-2">
+            <div class="relative space-y-2">
               <label for="city" class="block text-sm font-medium text-gray-700">
                 Country
               </label>
-              <input
-                id="city"
-                v-model="formData.country"
-                placeholder="Yaoundé, Douala, Bamenda..."
-                class="w-full px-4 py-2 transition-colors border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-[#e4097f]"
-              />
+              <input id="city" v-model="formData.country" placeholder="Yaoundé, Douala, Bamenda..."
+                class="w-full px-4 py-2 transition-colors border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-[#e4097f]" />
               <span class="absolute left-0 text-sm text-red-600 top-[90%]" v-if="formErrors.country">{{
                 formErrors.country[0]
               }}</span>
@@ -233,87 +161,50 @@
               <label for="city" class="block text-sm font-medium text-gray-700">
                 City
               </label>
-              <input
-                id="city"
-                v-model="formData.city"
-                placeholder="Yaoundé, Douala, Bamenda..."
-                class="w-full px-4 py-2 transition-colors border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-[#e4097f]"
-              />
+              <input id="city" v-model="formData.city" placeholder="Yaoundé, Douala, Bamenda..."
+                class="w-full px-4 py-2 transition-colors border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-[#e4097f]" />
               <span class="absolute left-0 text-sm text-red-600 top-[90%]" v-if="formErrors.city">{{
                 formErrors.city[0]
               }}</span>
             </div>
             <div class="relative space-y-2">
-              <label
-                for="address"
-                class="block text-sm font-medium text-gray-700"
-              >
+              <label for="address" class="block text-sm font-medium text-gray-700">
                 Full Address
               </label>
-              <input
-                id="address"
-                v-model="formData.address"
-                placeholder="123 Main St, Yaoundé, Cameroon"
-                class="w-full px-4 py-2 transition-colors border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-[#e4097f]"
-              />
+              <input id="address" v-model="formData.location.title" placeholder="123 Main St, Yaoundé, Cameroon"
+                class="w-full px-4 py-2 transition-colors border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-[#e4097f]" />
               <span class="absolute left-0 text-sm text-red-600 top-[90%]" v-if="formErrors.address">{{
                 formErrors.address[0]
               }}</span>
             </div>
             <div class="relative space-y-2">
-              <label
-                for="firstLanguage"
-                class="block text-sm font-medium text-gray-700"
-              >
+              <label for="firstLangage" class="block text-sm font-medium text-gray-700">
                 First Language <span class="text-red-500">*</span>
               </label>
-              <select
-                id="firstLanguage"
-                v-model="formData.firstLanguage"
+              <select id="firstLangage" v-model="formData.firstLangage"
                 class="w-full px-4 py-2 transition-colors border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-[#e4097f]"
-                required
-              >
+                required>
                 <option value="">Select your first language</option>
-                <option
-                  v-for="language in languesProfessionnelles"
-                  :key="language"
-                  :value="language"
-                >
+                <option v-for="language in languesProfessionnelles" :key="language" :value="language">
                   {{ language }}
                 </option>
               </select>
-              <span
-                class="absolute left-0 text-sm text-red-600 top-[90%]"
-                v-if="formErrors.firstLanguage"
-                >{{ formErrors.firstLanguage[0] }}</span
-              >
+              <span class="absolute left-0 text-sm text-red-600 top-[90%]" v-if="formErrors.firstLangage">{{
+                formErrors.firstLangage[0] }}</span>
             </div>
             <div class="relative space-y-2">
-              <label
-                for="secondLanguage"
-                class="block text-sm font-medium text-gray-700"
-              >
+              <label for="secondLangage" class="block text-sm font-medium text-gray-700">
                 Second Language
               </label>
-              <select
-                id="secondLanguage"
-                v-model="formData.secondLanguage"
-                class="w-full px-4 py-2 transition-colors border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-[#e4097f]"
-              >
+              <select id="secondLangage" v-model="formData.secondLangage"
+                class="w-full px-4 py-2 transition-colors border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-[#e4097f]">
                 <option value="">Select your second language</option>
-                <option
-                  v-for="language in languesProfessionnelles"
-                  :key="language"
-                  :value="language"
-                >
+                <option v-for="language in languesProfessionnelles" :key="language" :value="language">
                   {{ language }}
                 </option>
               </select>
-              <span
-                class="absolute left-0 text-sm text-red-600 top-[90%]"
-                v-if="formErrors.secondLanguage"
-                >{{ formErrors.secondLanguage[0] }}</span
-              >
+              <span class="absolute left-0 text-sm text-red-600 top-[90%]" v-if="formErrors.secondLangage">{{
+                formErrors.secondLangage[0] }}</span>
             </div>
           </div>
 
@@ -324,26 +215,16 @@
               <p class="mt-1 text-gray-600">Create a secure password</p>
             </div>
             <div class="relative space-y-2">
-              <label
-                for="password"
-                class="block text-sm font-medium text-gray-700"
-              >
+              <label for="password" class="block text-sm font-medium text-gray-700">
                 Password <span class="text-red-500">*</span>
               </label>
               <div class="relative">
-                <input
-                  id="password"
-                  v-model="formData.password"
-                  :type="showPassword ? 'text' : 'password'"
+                <input id="password" v-model="formData.password" :type="showPassword ? 'text' : 'password'"
                   placeholder="••••••••••••"
                   class="w-full px-4 py-2 pr-12 transition-colors border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-[#e4097f]"
-                  required
-                />
-                <button
-                  type="button"
-                  @click="showPassword = !showPassword"
-                  class="absolute text-gray-400 transform -translate-y-1/2 right-3 top-1/2 hover:text-gray-600"
-                >
+                  required />
+                <button type="button" @click="showPassword = !showPassword"
+                  class="absolute text-gray-400 transform -translate-y-1/2 right-3 top-1/2 hover:text-gray-600">
                   <EyeOff v-if="showPassword" class="w-5 h-5" />
                   <Eye v-else class="w-5 h-5" />
                 </button>
@@ -353,73 +234,52 @@
               }}</span>
             </div>
             <div class="relative space-y-2">
-              <label
-                for="confirmPassword"
-                class="block text-sm font-medium text-gray-700"
-              >
+              <label for="confirmPassword" class="block text-sm font-medium text-gray-700">
                 Confirm Password <span class="text-red-500">*</span>
               </label>
               <div class="relative">
-                <input
-                  id="confirmPassword"
-                  v-model="formData.confirmPassword"
-                  :type="showConfirmPassword ? 'text' : 'password'"
-                  placeholder="••••••••••••"
+                <input id="confirmPassword" v-model="formData.confirmPassword"
+                  :type="showConfirmPassword ? 'text' : 'password'" placeholder="••••••••••••"
                   class="w-full px-4 py-2 pr-12 transition-colors border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-[#e4097f]"
-                  required
-                />
-                <button
-                  type="button"
-                  @click="showConfirmPassword = !showConfirmPassword"
-                  class="absolute text-gray-400 transform -translate-y-1/2 right-3 top-1/2 hover:text-gray-600"
-                >
+                  required />
+                <button type="button" @click="showConfirmPassword = !showConfirmPassword"
+                  class="absolute text-gray-400 transform -translate-y-1/2 right-3 top-1/2 hover:text-gray-600">
                   <EyeOff v-if="showConfirmPassword" class="w-5 h-5" />
                   <Eye v-else class="w-5 h-5" />
                 </button>
               </div>
-              <span
-                class="absolute left-0 text-sm text-red-600 top-[90%]"
-                v-if="formErrors.confirmPassword"
-                >{{ formErrors.confirmPassword[0] }}</span
-              >
+              <span class="absolute left-0 text-sm text-red-600 top-[90%]" v-if="formErrors.confirmPassword">{{
+                formErrors.confirmPassword[0] }}</span>
             </div>
-          <div class="p-6 rounded-md bg-gray-50">
+            <div class="p-6 rounded-md bg-gray-50">
               <h4 class="mb-3 text-sm font-medium text-gray-900">
                 Password Criteria:
               </h4>
               <ol class="space-y-2 text-sm text-gray-600">
                 <li class="flex items-start">
                   <span
-                    class="bg-pink-100 text-[#e4097f] rounded-full w-5 h-5 flex items-center justify-center text-xs font-medium mr-3 mt-0.5 flex-shrink-0"
-                    >1</span
-                  >
+                    class="bg-pink-100 text-[#e4097f] rounded-full w-5 h-5 flex items-center justify-center text-xs font-medium mr-3 mt-0.5 flex-shrink-0">1</span>
                   At least 8 characters
 
                 </li>
                 <li class="flex items-start">
                   <span
-                    class="bg-pink-100 text-[#e4097f] rounded-full w-5 h-5 flex items-center justify-center text-xs font-medium mr-3 mt-0.5 flex-shrink-0"
-                    >2</span
-                  >
+                    class="bg-pink-100 text-[#e4097f] rounded-full w-5 h-5 flex items-center justify-center text-xs font-medium mr-3 mt-0.5 flex-shrink-0">2</span>
                   One uppercase and one lowercase letter
                 </li>
                 <li class="flex items-start">
                   <span
-                    class="bg-pink-100 text-[#e4097f] rounded-full w-5 h-5 flex items-center justify-center text-xs font-medium mr-3 mt-0.5 flex-shrink-0"
-                    >3</span
-                  >
+                    class="bg-pink-100 text-[#e4097f] rounded-full w-5 h-5 flex items-center justify-center text-xs font-medium mr-3 mt-0.5 flex-shrink-0">3</span>
                   One number and one special character
                 </li>
-               </ol>
+              </ol>
             </div>
           </div>
 
           <!-- Step 4: Confirmation -->
           <div v-if="currentStep === 4" class="space-y-6">
             <div class="text-center">
-              <div
-                class="flex items-center justify-center w-16 h-16 mx-auto mb-4 bg-[#e4097f] rounded-full"
-              >
+              <div class="flex items-center justify-center w-16 h-16 mx-auto mb-4 bg-[#e4097f] rounded-full">
                 <Check class="w-8 h-8 text-white" />
               </div>
               <h3 class="text-xl font-semibold text-gray-900">Almost Done!</h3>
@@ -427,12 +287,8 @@
             </div>
             <div class="p-6 space-y-4 rounded-md bg-gray-50">
               <div class="flex justify-between">
-                <span class="text-sm font-medium text-gray-700"
-                  >Full Name:</span
-                >
-                <span class="text-sm text-gray-900"
-                  >{{ formData.firstName }} {{ formData.lastName }}</span
-                >
+                <span class="text-sm font-medium text-gray-700">Full Name:</span>
+                <span class="text-sm text-gray-900">{{ formData.firstName }} {{ formData.lastName }}</span>
               </div>
               <div class="flex justify-between">
                 <span class="text-sm font-medium text-gray-700">Email:</span>
@@ -453,105 +309,61 @@
               <div class="flex justify-between">
                 <span class="text-sm font-medium text-gray-700">Address:</span>
                 <span class="text-sm text-gray-900">{{
-                  formData.address || "Not specified"
+                  formData.location.title || "Not specified"
                 }}</span>
               </div>
               <div class="flex justify-between">
-                <span class="text-sm font-medium text-gray-700"
-                  >First Language:</span
-                >
+                <span class="text-sm font-medium text-gray-700">First Language:</span>
                 <span class="text-sm text-gray-900">{{
-                  formData.firstLanguage || "Not specified"
+                  formData.firstLangage || "Not specified"
                 }}</span>
               </div>
               <div class="flex justify-between">
-                <span class="text-sm font-medium text-gray-700"
-                  >Second Language:</span
-                >
+                <span class="text-sm font-medium text-gray-700">Second Language:</span>
                 <span class="text-sm text-gray-900">{{
-                  formData.secondLanguage || "Not specified"
+                  formData.secondLangage || "Not specified"
                 }}</span>
               </div>
               <div class="flex justify-between">
-                <span class="text-sm font-medium text-gray-700"
-                  >Location (Lat, Long):</span
-                >
-                <span class="text-sm text-gray-900"
-                  >{{ formData.location.lat }},
-                  {{ formData.location.long }}</span
-                >
+                <span class="text-sm font-medium text-gray-700">Location (Lat, Long):</span>
+                <span class="text-sm text-gray-900">{{ formData.location.lat }},
+                  {{ formData.location.long }}</span>
               </div>
             </div>
             <div class="space-y-4">
               <div class="flex items-center group">
-                <input
-                  type="checkbox"
-                  id="terms"
-                  v-model="acceptTerms"
-                  class="sr-only"
-                />
+                <input type="checkbox" id="terms" v-model="acceptTerms" class="sr-only" />
                 <label for="terms" class="flex items-center cursor-pointer">
                   <div
                     class="w-4 h-4 border border-gray-300 rounded-md flex items-center justify-center transition-all group-hover:border-[#e4097f]"
                     :class="{
                       'bg-[#e4097f] border-[#e4097f]': acceptTerms,
-                    }"
-                  >
-                    <svg
-                      v-if="acceptNewsletter"
-                      class="w-3 h-3 text-white"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="3"
-                        d="M5 13l4 4L19 7"
-                      />
+                    }">
+                    <svg v-if="acceptNewsletter" class="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24"
+                      stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
                   <label for="terms" class="ml-3 text-sm text-gray-700">
                     I accept the
-                    <a href="#" class="font-medium text-[#e4097f]"
-                      >terms of use</a
-                    >
+                    <a href="#" class="font-medium text-[#e4097f]">terms of use</a>
                     and
-                    <a href="#" class="font-medium text-[#e4097f]"
-                      >Privacy Policy</a
-                    >
+                    <a href="#" class="font-medium text-[#e4097f]">Privacy Policy</a>
                   </label>
                 </label>
               </div>
 
               <div class="flex items-center group">
-                <input
-                  type="checkbox"
-                  id="remember"
-                  v-model="acceptNewsletter"
-                  class="sr-only"
-                />
+                <input type="checkbox" id="remember" v-model="acceptNewsletter" class="sr-only" />
                 <label for="remember" class="flex items-center cursor-pointer">
                   <div
                     class="w-4 h-4 border border-gray-300 rounded-md flex items-center justify-center transition-all group-hover:border-[#e4097f]"
                     :class="{
                       'bg-[#e4097f] border-[#e4097f]': acceptNewsletter,
-                    }"
-                  >
-                    <svg
-                      v-if="acceptNewsletter"
-                      class="w-3 h-3 text-white"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="3"
-                        d="M5 13l4 4L19 7"
-                      />
+                    }">
+                    <svg v-if="acceptNewsletter" class="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24"
+                      stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
                   <label for="newsletter" class="ml-2 text-sm text-gray-700">
@@ -565,31 +377,18 @@
 
           <!-- Navigation Buttons -->
           <div class="flex justify-between pt-6">
-            <button
-              type="button"
-              @click="prevStep"
-              :disabled="currentStep === 1"
-              class="flex items-center px-6 py-2 text-gray-700 transition-colors border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
+            <button type="button" @click="prevStep" :disabled="currentStep === 1"
+              class="flex items-center px-6 py-2 text-gray-700 transition-colors border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
               <ArrowLeft class="w-4 h-4 mr-2" />
               Prev
             </button>
-            <button
-              v-if="currentStep < totalSteps"
-              type="button"
-              @click="nextStep"
-              class="flex items-center px-6 py-2 font-semibold text-white transition-colors rounded-md bg-[#e4097f] hover:bg-[#e4097f]"
-            >
+            <button v-if="currentStep < totalSteps" type="button" @click="nextStep"
+              class="flex items-center px-6 py-2 font-semibold text-white transition-colors rounded-md bg-[#e4097f] hover:bg-[#e4097f]">
               Next
               <ArrowRight class="w-4 h-4 ml-2" />
             </button>
-            <button
-              v-else
-              type="button"
-              @click="handleSubmit"
-              :disabled="isLoading || !acceptTerms"
-              class="flex items-center px-6 py-2 font-semibold text-white transition-colors rounded-md bg-[#e4097f] disabled:opacity-50 disabled:cursor-not-allowed"
-            >
+            <button v-else type="button" @click="handleSubmit" :disabled="isLoading || !acceptTerms"
+              class="flex items-center px-6 py-2 font-semibold text-white transition-colors rounded-md bg-[#e4097f] disabled:opacity-50 disabled:cursor-not-allowed">
               {{ isLoading ? "Processing..." : "Create my account" }}
             </button>
           </div>
@@ -597,8 +396,9 @@
           <div class="pt-4 text-sm text-center">
             <span class="text-gray-600">Already have an account? </span>
 
-            <router-link :to="{name:'login'}"  class="p-1 font-medium text-[#e4097f] hover:bg-[#e4097f] hover:text-white">
-                             Log in
+            <router-link :to="{ name: 'login' }"
+              class="p-1 font-medium text-[#e4097f] hover:bg-[#e4097f] hover:text-white">
+              Log in
             </router-link>
           </div>
         </div>
@@ -627,6 +427,20 @@ import {
   validateSecondStep,
   validateThirdStep,
 } from "@/vineValidation/authForm";
+import { useAuthStore } from "@/stores/auth";
+import { useRouter,useRoute } from "vue-router";
+import AppModal from "../globales/AppModal.vue";
+const router=useRouter()
+const route=useRoute()
+
+const auth = useAuthStore()
+
+const isModalOpen = ref(false);
+
+const toggleOpenModal = () => {
+  isModalOpen.value = !isModalOpen.value;
+};
+
 
 const currentStep = ref(1);
 const totalSteps = 4;
@@ -642,15 +456,15 @@ const formData = ref({
   lastName: "",
   email: "",
   phoneNumber: "",
-  dateOfBirth: "",
+  dob: "",
   password: "",
   confirmPassword: "",
   country: "",
   city: "",
-  address: "",
-  firstLanguage: "",
-  secondLanguage: "",
+  firstLangage: "",
+  secondLangage: "",
   location: {
+    title: "",
     lat: "0",
     long: "0",
   },
@@ -661,20 +475,18 @@ const formErrors = ref({
   lastName: [],
   email: [],
   phoneNumber: [],
-  dateOfBirth: [],
+  dob: [],
   password: [],
   confirmPassword: [],
   country: [],
   city: [],
   address: [],
-  firstLanguage: [],
-  secondLanguage: [],
+  firstLangage: [],
+  secondLangage: [],
 });
 
-// Computed
 const progress = computed(() => (currentStep.value / totalSteps) * 100);
 
-// Emits
 const emit = defineEmits(["navigate"]);
 
 const nextStep = async () => {
@@ -692,7 +504,7 @@ const nextStep = async () => {
         lastName: formData.value.lastName,
         email: formData.value.email,
         phoneNumber: formData.value.phoneNumber,
-        dateOfBirth: formData.value.dateOfBirth,
+        dob: formData.value.dob,
       });
 
       if (!validationResult.isValid) {
@@ -711,9 +523,9 @@ const nextStep = async () => {
       validationResult = await validateSecondStep({
         country: formData.value.country,
         city: formData.value.city,
-        address: formData.value.address,
-        firstLanguage: formData.value.firstLanguage,
-        secondLanguage: formData.value.secondLanguage,
+        address: formData.value.location.title,
+        firstLangage: formData.value.firstLangage,
+        secondLangage: formData.value.secondLangage,
       });
 
       if (!validationResult.isValid) {
@@ -763,16 +575,31 @@ const prevStep = () => {
 };
 
 const handleSubmit = async () => {
-  isLoading.value = true;
-  try {
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    console.log("Registration data:", formData.value);
-  } catch (error) {
-    console.error("Submission error:", error);
-  } finally {
-    isLoading.value = false;
+  toggleOpenModal()
+
+  const {password,email,...RestData}=formData.value
+
+  const payloadData={
+    user:{
+      email:email,
+      password:password
+    },
+    account:{
+      ...RestData,
+      accountType:route.params.type
+    }
   }
-};
+
+  const data = await auth.register(payloadData)
+  
+  toggleOpenModal()
+  
+  if (data?.success) {
+  
+    router.push({ name: 'login' })
+  }
+
+}
 
 async function getGeolocation() {
   if (navigator.geolocation) {
@@ -814,7 +641,7 @@ async function fetchLocationInfo(lat, lng) {
       `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`
     );
     const data = await response.json();
-    formData.value.address = data.display_name || "";
+    formData.value.location.title = data.display_name || "";
     formData.value.country = data.address.country || "";
     formData.value.city =
       data.address.city || data.address.town || data.address.village || "";

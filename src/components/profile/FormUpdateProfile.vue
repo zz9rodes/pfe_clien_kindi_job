@@ -52,14 +52,14 @@
                         formErrors.phoneNumber[0] }}</span>
                 </div>
                 <div class="relative space-y-2">
-                    <label for="dateOfBirth" class="block text-sm font-medium text-gray-700">
+                    <label for="dob" class="block text-sm font-medium text-gray-700">
                         Date of Birth <span class="text-red-500">*</span>
                     </label>
-                    <input id="dateOfBirth" v-model="formData.dateOfBirth" type="date"
+                    <input id="dob" v-model="formData.dob" type="date"
                         class="w-full px-4 py-2 transition-colors border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-[#e4097f]"
                         required />
-                    <span class="absolute top-[90%] left-0 text-sm text-red-600" v-if="formErrors.dateOfBirth">{{
-                        formErrors.dateOfBirth[0] }}</span>
+                    <span class="absolute top-[90%] left-0 text-sm text-red-600" v-if="formErrors.dob">{{
+                        formErrors.dob[0] }}</span>
                 </div>
 
                 <div class="space-y-6 ">
@@ -92,10 +92,10 @@
                             v-if="formErrors.address">{{ formErrors.address[0] }}</span>
                     </div>
                     <div class="relative space-y-2">
-                        <label for="firstLanguage" class="block text-sm font-medium text-gray-700">
+                        <label for="firstLangage" class="block text-sm font-medium text-gray-700">
                             First Language <span class="text-red-500">*</span>
                         </label>
-                        <select id="firstLanguage" v-model="formData.firstLanguage"
+                        <select id="firstLangage" v-model="formData.firstLangage"
                             class="w-full px-4 py-2 transition-colors border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-[#e4097f]"
                             required>
                             <option value="">Select your first language</option>
@@ -104,13 +104,13 @@
                             </option>
                         </select>
                         <span class="text-sm text-red-600 absolute top-[90%] left-0 "
-                            v-if="formErrors.firstLanguage">{{ formErrors.firstLanguage[0] }}</span>
+                            v-if="formErrors.firstLangage">{{ formErrors.firstLangage[0] }}</span>
                     </div>
                     <div class="relative space-y-2">
-                        <label for="secondLanguage" class="block text-sm font-medium text-gray-700">
+                        <label for="secondLangage" class="block text-sm font-medium text-gray-700">
                             Second Language
                         </label>
-                        <select id="secondLanguage" v-model="formData.secondLanguage"
+                        <select id="secondLangage" v-model="formData.secondLangage"
                             class="w-full px-4 py-2 transition-colors border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-[#e4097f]">
                             <option value="">Select your second language</option>
                             <option v-for="language in languesProfessionnelles" :key="language" :value="language">
@@ -118,7 +118,7 @@
                             </option>
                         </select>
                         <span class="absolute top-[90%] left-0 text-sm "
-                            v-if="formErrors.secondLanguage">{{ formErrors.secondLanguage[0] }}</span>
+                            v-if="formErrors.secondLangage">{{ formErrors.secondLangage[0] }}</span>
                     </div>
                 </div>
             </div>
@@ -151,14 +151,14 @@ const formErrors = ref({
     lastName: [],
     email: [],
     phoneNumber: [],
-    dateOfBirth: [],
+    dob: [],
     password: [],
     confirmPassword: [],
     country: [],
     city: [],
     address: [],
-    firstLanguage: [],
-    secondLanguage: [],
+    firstLangage: [],
+    secondLangage: [],
 });
 
 
