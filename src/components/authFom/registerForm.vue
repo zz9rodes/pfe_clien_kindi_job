@@ -465,8 +465,8 @@ const formData = ref({
   secondLangage: "",
   location: {
     title: "",
-    lat: "0",
-    long: "0",
+    lat: 0,
+    long: 0,
   },
 });
 
@@ -575,9 +575,13 @@ const prevStep = () => {
 };
 
 const handleSubmit = async () => {
+      console.log(formData.value);
+
   toggleOpenModal()
 
-  const {password,email,...RestData}=formData.value
+  const {password,email,location,...RestData}=formData.value
+  console.log(RestData);
+
 
   const payloadData={
     user:{
@@ -586,10 +590,13 @@ const handleSubmit = async () => {
     },
     account:{
       ...RestData,
+      address:location,
       accountType:route.params.type
     }
   }
 
+  console.log(payloadData);
+  
   const data = await auth.register(payloadData)
   
   toggleOpenModal()

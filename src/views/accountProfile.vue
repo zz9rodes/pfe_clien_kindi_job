@@ -179,21 +179,12 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
-
-const router = useRouter();
-const route = useRoute();
-
+import { useAuthStore } from "@/stores/auth";
 import {
   UserIcon,
   UsersIcon,
   Plus,
   BabyIcon,
-  CreditCardIcon,
-  CameraIcon,
-  BuildingIcon,
-  UploadIcon,
-  MapPinIcon,
-  GlobeIcon,
   PenToolIcon,
   FileUserIcon,
 } from "lucide-vue-next";
@@ -202,6 +193,12 @@ import drawSigrature from "@/components/profile/drawSigrature.vue";
 import Form_Create_or_Update_Cv_Profile from "./Form_Create_or_Update_Cv_Profile.vue";
 import AccountDetail from "@/components/profile/accountDetail.vue";
 import CompanieCard from "@/components/CompanieCard.vue";
+
+
+const router = useRouter();
+const route = useRoute();
+
+const auth=useAuthStore()
 
 const activeTab =
   route?.params?.tab == "companies" ? ref(route?.params?.tab) : ref("profile");
@@ -230,23 +227,25 @@ const children = ref([
   },
 ]);
 
-const userData = {
-  email: "admin@demo.com",
-  slug: "john-doe",
-  firstName: "John",
-  lastName: "Nyada",
-  phoneNumber: "0123456789",
-  dob: new Date("1990-05-20"),
-  accountType: "BASIC",
-  country: "Cameroon",
-  city: "Douala",
-  avatarUrl: null,
-  address: null ?? "Not Provide",
-  firstLangage: "English" ?? "Not Provide",
-  secondLangage: null ?? "Not Provide",
-  frontIdCard: null,
-  backIdCard: null,
-};
+// const userData = {
+//   email: "admin@demo.com",
+//   slug: "john-doe",
+//   firstName: "John",
+//   lastName: "Nyada",
+//   phoneNumber: "0123456789",
+//   dob: new Date("1990-05-20"),
+//   accountType: "BASIC",
+//   country: "Cameroon",
+//   city: "Douala",
+//   avatarUrl: null,
+//   address: null ?? "Not Provide",
+//   firstLangage: "English" ?? "Not Provide",
+//   secondLangage: null ?? "Not Provide",
+//   frontIdCard: null,
+//   backIdCard: null,
+// };
+
+const userData=auth.user
 
 const companies = ref([
   {
