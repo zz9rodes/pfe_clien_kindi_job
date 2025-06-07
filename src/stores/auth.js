@@ -1,10 +1,12 @@
 import { ref, unref } from "vue";
 import { defineStore,acceptHMRUpdate } from "pinia";
-import { useRouter } from "vue-router";
+// import { useRouter } from "vue-router";
 import { Notyf } from "notyf";
 import "notyf/notyf.min.css";
-const router = useRouter();
+import { useRouter } from 'vue-router';
+const router=useRouter()
 
+console.log(router)
 export const useAuthStore = defineStore("auth", () => {
   const user = localStorage.getItem("user")
     ? ref(JSON.parse(localStorage.getItem("user")))
@@ -36,13 +38,19 @@ export const useAuthStore = defineStore("auth", () => {
         console.log(responseData)
         console.log(responseData?.statusCode);
         
-        switch (responseData?.statusCode) {
+        switch (responseData?.statusCode ?? responseData.status) {
           case 422:
             notyf.error(responseData.errors?.[0]?.message || "Erreur serveur");
           break;
 
           case 500:
             notyf.error(responseData.message || "Erreur serveur");
+          break;
+
+          case 404:
+            notyf.error("Entity Not Found");
+            console.log(router)
+            // router.push({name:"profile"})
           break;
 
           default:

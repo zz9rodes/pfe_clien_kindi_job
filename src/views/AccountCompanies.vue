@@ -11,7 +11,7 @@
                 </div>
 
                 <div
-                  v-if="companies.length > 0"
+                  v-if="companies.length < 0"
                   class="p-6 text-center rounded-lg bg-gray-50"
                 >
                   <UsersIcon
@@ -54,48 +54,38 @@
 </template>
 
 <script setup>
-import {ref } from 'vue'
+import {onMounted, ref } from 'vue'
 import CompanieCard from '@/components/CompanieCard.vue';
 import { useAuthStore } from '@/stores/auth';
 import { useRouter } from 'vue-router';
 import FormCreateOrUpdateCompanie from '@/components/profile/FormCreateOrUpdateCompanie.vue';
-// FormCreateOrUpdateCompanie
 
 const router=useRouter()
 
 const auth=useAuthStore()
 const  OpenFormCreateCompanie = ref(false);
 
-const companies = ref([
-  {
-    id: 8,
-    name: "Creative Agency Plus",
-    category: "Marketing",
-    industry: "Digital Marketing, Advertising, Content Creation",
-    location: "Nantes, Rennes",
-    employeeCount: "< 15 employees",
-    jobsCount: "Internships available",
-    image:
-      "https://i.pinimg.com/736x/bd/53/9d/bd539da7853d7450133d4da4647a3b44.jpg",
-    logo: "https://i.pinimg.com/736x/5e/11/66/5e1166411c8c9bbe3fa91fa81a6f0e52.jpg",
-    isFollowed: false,
-  },
-  {
-    id: 4,
-    name: "TechCorp Solutions",
-    category: "Technology",
-    industry: "Software Development, AI, Machine Learning",
-    location: "Lyon, France",
-    employeeCount: "50-100 employees",
-    jobsCount: "5 jobs",
-    image:
-      "https://i.pinimg.com/736x/23/06/63/2306632032cd363320922c345e300ceb.jpg?height=200&width=300",
-    logo: "https://i.pinimg.com/736x/5f/87/16/5f8716a5c1ad120d1cbcaa3007d1e1f5.jpg?height=40&width=60",
-    isFollowed: false,
-  },
-]);
+const companies = ref([]);
 
 const viewCompany = async (id) => {
   router.push({ name: "companie_details", params: { id: id } });
 };
+
+const HandleGetCompaniedetail= async ()=>{
+    
+
+    const data= await auth.api('GET','/company_request')
+
+    if(data.success){
+            console.log( data.data.companies)
+
+        companies.value= data.data.companies.length > 0 ? data.data.companies : data.data.request
+    }
+    console.log(companies.value)
+
+}
+
+onMounted( async()=>{
+   await  HandleGetCompaniedetail()
+})
 </script>

@@ -37,12 +37,9 @@
               </nav>
             </div>
           </div>
-          
-          <RouterView class="flex-[1]  lg:p-8 overflow-auto p-4">
 
-            
-          </RouterView>
-          </div>
+          <RouterView class="flex-[1] lg:p-8 overflow-auto p-4"> </RouterView>
+        </div>
       </div>
     </div>
   </div>
@@ -50,7 +47,7 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { useRouter, useRoute,RouterView } from "vue-router";
+import { useRouter, useRoute, RouterView } from "vue-router";
 import {
   UserIcon,
   UsersIcon,
@@ -59,38 +56,60 @@ import {
   FileUserIcon,
 } from "lucide-vue-next";
 
-
 const router = useRouter();
 const route = useRoute();
-
-
 
 const activeTab =
   route?.params?.tab == "companies" ? ref(route?.params?.tab) : ref("profile");
 
 const tabs = [
-  { id: "profile_details", name: "Profile", icon: UserIcon,route:'profile_details' },
-  { id: "profile_companies", name: "Companies Information", icon: UsersIcon,route:'profile_companies' },
-  { id: "signature", name: "Sign Agreement", icon: PenToolIcon,route:'signature' },
-  { id: "cv_profile", name: "Cv Profile", icon: FileUserIcon ,route:'cv_profile'},
+  {
+    id: "profile_details",
+    name: "Profile",
+    icon: UserIcon,
+    route: "profile_details",
+  },
+  {
+    id: "profile_companies",
+    name: "Companies Information",
+    icon: UsersIcon,
+    route: "profile_companies",
+  },
+  {
+    id: "signature",
+    name: "Sign Agreement",
+    icon: PenToolIcon,
+    route: "signature",
+  },
+  {
+    id: "cv_profile",
+    name: "Cv Profile",
+    icon: FileUserIcon,
+    route: "cv_profile",
+  },
 ];
+
 
 const ToogleActiveTab = (tabId) => {
   activeTab.value = tabId;
   route.params.tab = tabId;
-  const t=tabs.filter((tab)=>{
-    return tab.id===activeTab.value
-  })
-     router.push({name:t[0].route})
+  const t = tabs.filter((tab) => {
+    return tab.id === activeTab.value;
+  });
+  router.push({ name: t[0].route });
 };
 
-const validTabs = ["profile_details", "profile_companies", "signature", "cv_profile"];
+const validTabs = [
+  "profile_details",
+  "profile_companies",
+  "signature",
+  "cv_profile",
+];
 
 onMounted(() => {
-  console.log(route)
+  console.log(route);
   const tabParam = route.name;
-  activeTab.value = validTabs.includes(tabParam) ? tabParam  : "profile_details";
-
+  activeTab.value = validTabs.includes(tabParam) ? tabParam : "profile_details";
 });
 </script>
 

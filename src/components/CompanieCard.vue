@@ -6,17 +6,17 @@
                             class="absolute z-10 hidden w-5 h-5 text-gray-600 group-hover:block right-2 top-2" />
 
                         <div class="relative h-32 overflow-hidden">
-                            <img :src="company.image" :alt="company.name" class="object-cover w-full h-full" />
+                            <img :src="company.coverUrl" :alt="company.name" class="object-cover w-full h-full" />
 
                         </div>
                         <div class="relative h-16 p-1 bg-white rounded ">
-                            <img style="border-color: rgb(222, 222, 222) !important;" :src="company.logo"
-                                :alt="`${company.name} logo`"
+                            <img style="border-color: rgb(222, 222, 222) !important;" :src="company.avatarUrl"
+                                :alt="`${company.avatarUrl} logo`"
                                 class="w-16 h-16 top-[-25px] border-gray-50 border rounded-sm left-[20px] absolute " />
                         </div>
                         <div class="flex-1 p-4">
                             <div class="text-xs text-[#e4097f] font-medium mb-1">
-                                {{ company.category.toUpperCase() }}
+                                {{ company.industry.toUpperCase() }}
                             </div>
                             <h3 class="mb-2 text-lg font-bold">
                                 {{ company.name }}
