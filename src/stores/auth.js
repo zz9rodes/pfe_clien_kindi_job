@@ -13,7 +13,7 @@ export const useAuthStore = defineStore("auth", () => {
 
   async function api(method, url, payload = {}, notify = true) {
     const notyf = new Notyf({ position: { x: "right", y: "top" }, duration: 3000 });
-
+    console.log("la methode : ",method)
     try {
       const response = await fetch(`http://localhost:3333/v1/api${url}`, {
         method,

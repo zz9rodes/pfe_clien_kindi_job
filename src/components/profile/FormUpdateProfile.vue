@@ -227,7 +227,7 @@ import { defineProps, ref } from "vue";
 import { languesProfessionnelles } from "@/helpers/language";
 import { useAuthStore } from "@/stores/auth";
 import moment from "moment";
-
+import { defineEmits } from "vue";
 const props = defineProps({
   accountProfile: {
     type: Object,
@@ -235,7 +235,7 @@ const props = defineProps({
   },
 });
 
-
+const emit=defineEmits(['close'])
 const auth=useAuthStore()
 
 const formData = ref({
@@ -279,6 +279,9 @@ const HandlerUpdateProfile= async()=>{
       console.log(data)
     if(data.success){
         // formData.value.avatarUrl = newFile.url;
+        // auth.authenticate(data.)
     }
+
+    emit('close')
 }
 </script>

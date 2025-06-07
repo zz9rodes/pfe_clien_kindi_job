@@ -27,6 +27,9 @@ import FormCreateJob from "@/views/FormCreateJob.vue";
 import FormUpdateJobs from "@/views/FormUpdateJobs.vue";
 import ProjectManagement from "@/views/ProjectManagement.vue";
 import ProjectTasksView from "@/views/ProjectTasksView.vue";
+import DrawSigrature from "@/components/profile/drawSigrature.vue";
+import AccountDetail from "@/components/profile/accountDetail.vue";
+import AccountCompanies from "@/views/AccountCompanies.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -66,12 +69,36 @@ const router = createRouter({
     {
       path: "/account",
       name: "account",
+      redirect:{name:"profile"},
       component: AccountDashboard,
       children: [
         {
           path: "profile",
           name: "profile",
           component: AccountProfile,
+          redirect:{name:'profile_details'},
+          children:[
+            {
+              path:"details",
+              name:"profile_details",
+              component:AccountDetail,
+            },
+            {
+              path:'companies',
+              name:"profile_companies",
+              component:AccountCompanies
+            },
+              {
+              path:"cv_profile",
+              name:"cv_profile",
+              component:Form_Create_or_Update_Cv_Profile
+            },
+            {
+              path:"signature",
+              name:"signature",
+              component:DrawSigrature
+            }
+          ]
         },
         {
           path: "companies",
