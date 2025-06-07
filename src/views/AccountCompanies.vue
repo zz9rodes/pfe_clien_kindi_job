@@ -1,5 +1,5 @@
 <template>
-     <div v-if="!OpenFormCreateCompanie" class="py-1">
+     <div v-if="!OpenFormCreateCompanie" class="w-full py-1">
                 <div
                   class="flex flex-col mb-6 sm:flex-row sm:items-center sm:justify-between lg:mb-8"
                 >
@@ -49,7 +49,7 @@
               <FormCreateOrUpdateCompanie
                 @close-form="OpenFormCreateCompanie = false"
                 v-else
-                class="mt-4"
+                class="w-full mt-4"
               />
 </template>
 
@@ -74,7 +74,7 @@ const viewCompany = async (id) => {
 const HandleGetCompaniedetail= async ()=>{
     
 
-    const data= await auth.api('GET','/company_request')
+    const data= await auth.api('GET','/company_request',{},false)
 
     if(data.success){
             console.log( data.data.companies)

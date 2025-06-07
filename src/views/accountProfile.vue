@@ -38,7 +38,7 @@
             </div>
           </div>
 
-          <RouterView class="flex-[1] lg:p-8 overflow-auto p-4"> </RouterView>
+          <RouterView class="flex-[1] lg:py-8 lg:pl-8 overflow-auto p4 pt-10 "> </RouterView>
         </div>
       </div>
     </div>
