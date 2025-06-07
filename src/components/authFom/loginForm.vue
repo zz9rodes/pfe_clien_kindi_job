@@ -1,4 +1,6 @@
 <template>
+      <AppModal  :isOpen="isModalOpen" :isLoader="true">
+  </AppModal>
   <div class="flex min-h-screen">
     <!-- Left Side - Brand Section -->
     <div
@@ -195,8 +197,8 @@
 
           <div class="text-sm text-start">
             <span class="text-gray-600">don't have an account ? </span>
-             <router-link :to="{name:'register'}"  class="p-1 font-medium text-[#e4097f] hover:bg-[#e4097f] hover:text-white">
-                            Sing Up
+             <router-link :to="{name:'home'}"  class="p-1 font-medium text-[#e4097f] hover:bg-[#e4097f] hover:text-white">
+                            Go Home
             </router-link>
           </div>
         </div>
@@ -207,17 +209,21 @@
 
 <script setup>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { useAuthStore } from "@/stores/auth";
+const auth = useAuthStore()
+
 import {
   Briefcase,
   Eye,
   EyeOff,
-  Globe,
-  ChevronDown,
   Search,
   Users,
   Target,
   TrendingUp,
 } from "lucide-vue-next";
+
+const router=useRouter()
 
 const email = ref("");
 const password = ref("");
@@ -225,18 +231,31 @@ const rememberMe = ref(false);
 const showPassword = ref(false);
 const isLoading = ref(false);
 
+
 const emit = defineEmits(["navigate"]);
 
-const handleSubmit = async () => {
-  isLoading.value = true;
+const isModalOpen = ref(false);
 
-  setTimeout(() => {
-    isLoading.value = false;
-    console.log("Login attempt:", {
-      email: email.value,
-      password: password.value,
-      rememberMe: rememberMe.value,
-    });
-  }, 2000);
-};
+  const toggleOpenModal = () => {
+    isModalOpen.value = !isModalOpen.value;
+  };
+
+const handleSubmit = async () => {
+  toggleOpenModal()
+
+
+  const payloadData={
+      email:email.value,
+      password:password.value
+  }
+
+  const data = await auth.login(payloadData)
+  
+  toggleOpenModal()
+  
+  if (data?.success) {
+    router.push({ name: 'profile' })
+  }
+
+}
 </script>

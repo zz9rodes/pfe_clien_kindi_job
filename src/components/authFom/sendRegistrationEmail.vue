@@ -1,4 +1,7 @@
 <template>
+  <AppModal @closeModal="toggleOpenModal" :isOpen="isModalOpen" :isLoader="false">
+    <sendRegistrationEmail @close="toggleOpenModal()" />
+  </AppModal>
   <div class="bg-white mx-3 rounded-md w-96 shadow-lg max-h-[80vh] overflow-y-auto modal-container">
     <!-- Header -->
     <div class="sticky top-0 z-10 flex items-center justify-between p-6 bg-white border-b border-gray-100">
@@ -23,18 +26,18 @@
 
     <div class="p-6">
       <div class="">
-         <label for="account_type" class="block mb-3 text-sm font-medium text-gray-700">
-              Account Type : <span class="text-red-500">*</span>
-            </label>
+        <label for="account_type" class="block mb-3 text-sm font-medium text-gray-700">
+          Account Type : <span class="text-red-500">*</span>
+        </label>
         <div class="flex flex-wrap gap-2 mb-4">
-                  <button v-for="category in categories" :key="category" @click="handleCategoryClick(category)" :class="[
-          'px-4 py-2 rounded-full text-sm font-medium',
-          activeCategory === category
-            ? 'bg-[#e4097f] text-white'
-            : 'text-gray-700 bg-white border border-gray-300'
-        ]">
-          {{ category }}
-        </button>
+          <button v-for="category in categories" :key="category" @click="handleCategoryClick(category)" :class="[
+            'px-4 py-2 rounded-full text-sm font-medium',
+            activeCategory === category
+              ? 'bg-[#e4097f] text-white'
+              : 'text-gray-700 bg-white border border-gray-300'
+          ]">
+            {{ category }}
+          </button>
         </div>
 
         <div class="space-y-6 ">
@@ -61,16 +64,35 @@
 
 <script setup>
 import { ref, computed, watch } from 'vue'
-const categories = ['Personal', 'Companies'];
+const categories = ['companies', 'personnal'];
+import { useAuthStore } from "@/stores/auth";
+import { useRouter } from 'vue-router';
+import AppModal from '../globales/AppModal.vue';
 
+
+const auth = useAuthStore()
+const router=useRouter()
 
 const emit = defineEmits(['close'])
 
 const activeCategory = ref(categories[0])
+const email = ref('')
+
+const isModalOpen = ref(false);
+
+const toggleOpenModal = () => {
+  isModalOpen.value = !isModalOpen.value;
+};
+
+const handleSubmit = async () => {
 
 
-const handleSubmit = () => {
-
+  const payloadData = {
+    email: email.value,
+    accountType: activeCategory.value
+  }
+  const data = await auth.api('post','/auth/users/user_request', payloadData)
+  
   emit('close')
 }
 

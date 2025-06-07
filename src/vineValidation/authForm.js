@@ -5,7 +5,7 @@ export const FirstStepSchema = z.object({
   lastName: z.string().min(2, "last name required"),
   email: z.string().email("invalid email"),
   phoneNumber: z.string().regex(/^\d{9,15}$/, "invalid phone number"),
-  dateOfBirth: z.string().refine((val) => !isNaN(Date.parse(val)), {
+  dob: z.string().refine((val) => !isNaN(Date.parse(val)), {
     message: "invalid date",
   }).nullable(),
 });
@@ -18,8 +18,8 @@ export const SecondStepSchema = z.object({
   country: z.string().min(4, "country is required"),
   city: z.string().min(4, "city required"),
   address: z.string().min(4, "invalid address").nullable(),
-  firstLanguage: z.string().min(4, "first language required"),
-  secondLanguage: z.string().min(4, "second language required").nullable(),
+  firstLangage: z.string().min(4, "first language required"),
+  secondLangage: z.string().min(4, "second language required").nullable(),
 });
 
 export const ThirdStepSchema = z
