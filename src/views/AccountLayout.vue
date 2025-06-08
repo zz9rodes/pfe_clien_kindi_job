@@ -1,7 +1,7 @@
 <template>
   <AppModal @closeModal="toggleOpenModal" :isOpen="isModalOpen" :isLoader="false">
     <div
-      class="bg-white mx-3 rounded-md flex flex-col w-96 min-h-52 shadow-lg max-h-[70vh] overflow-y-auto modal-container">
+      class="mx-3 rounded-md flex flex-col w-96 min-h-52 shadow-lg max-h-[70vh] overflow-y-auto modal-container">
       <div
         class="relative py-2 justify-center items-center w-[200px ] border border-gray-300 focus:outline-none focus:placeholder-gray-400 focus:ring-1 focus:border-[#e4097f]">
         <input type="text" placeholder="What do you  looking for today?"
@@ -26,7 +26,7 @@
     </div>
   </AppModal>
   <accountHeader @open-search-modal="toggleOpenModal" />
-  <div class="h-screen">
+  <div class="h-screen ">
     <div class="flex h-full">
       <div id="desktopSideBar" :class="[
         ' shadow-lg   transition-all duration-300 ease-in relative z-[10] hidden sm:block  pt-[60px]',

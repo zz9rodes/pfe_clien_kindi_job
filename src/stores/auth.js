@@ -65,7 +65,7 @@ export const useAuthStore = defineStore("auth", () => {
       return responseData;
     } catch (error) {
       console.error("Erreur API:", error);
-      if (notify) notyf.error(error.message || "Erreur inconnue");
+     notyf.error(error.message || "Erreur inconnue");
       throw error;
     }
   }

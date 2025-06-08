@@ -30,10 +30,17 @@ import ProjectTasksView from "@/views/ProjectTasksView.vue";
 import DrawSigrature from "@/components/profile/drawSigrature.vue";
 import AccountDetail from "@/components/profile/accountDetail.vue";
 import AccountCompanies from "@/views/AccountCompanies.vue";
+import CompanyVersionsPage from "@/views/CompanyVersionsPage.vue";
+import CompanieVersionDemo from "@/views/CompanieVersionDemo.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    {
+      path: "/versions",
+      name: "versions",
+      component: CompanyVersionsPage,
+    },
     {
       path: "/",
       redirect: "/home",
@@ -69,36 +76,41 @@ const router = createRouter({
     {
       path: "/account",
       name: "account",
-      redirect:{name:"profile"},
+      redirect: { name: "profile" },
       component: AccountDashboard,
       children: [
         {
           path: "profile",
           name: "profile",
           component: AccountProfile,
-          redirect:{name:'profile_details'},
-          children:[
+          redirect: { name: "profile_details" },
+          children: [
             {
-              path:"details",
-              name:"profile_details",
-              component:AccountDetail,
+              path: "details",
+              name: "profile_details",
+              component: AccountDetail,
             },
             {
-              path:'companies',
-              name:"profile_companies",
-              component:AccountCompanies
-            },
-              {
-              path:"cv_profile",
-              name:"cv_profile",
-              component:Form_Create_or_Update_Cv_Profile
+              path: "companies/version/:versionId?",
+              name: "companie_versions",
+              component: CompanieVersionDemo,
             },
             {
-              path:"signature",
-              name:"signature",
-              component:DrawSigrature
-            }
-          ]
+              path: "companies",
+              name: "profile_companies",
+              component: AccountCompanies,
+            },
+            {
+              path: "cv_profile",
+              name: "cv_profile",
+              component: Form_Create_or_Update_Cv_Profile,
+            },
+            {
+              path: "signature",
+              name: "signature",
+              component: DrawSigrature,
+            },
+          ],
         },
         {
           path: "companies",
@@ -198,12 +210,12 @@ const router = createRouter({
       name: "register",
       component: RegisterForm,
       beforeEnter: (to, from, next) => {
-        if ((to.params.type !== 'personnal') && (to.params.type !== 'companies')) {
-          next({ name: 'home' })
+        if (to.params.type !== "personnal" && to.params.type !== "companies") {
+          next({ name: "home" });
         } else {
-          next()
+          next();
         }
-      }
+      },
     },
     {
       path: "/auth/password-forgot",
@@ -224,10 +236,10 @@ const router = createRouter({
 });
 
 const isAuthentificated = () => {
-  const token = ref(localStorage.getItem('token'));
+  const token = ref(localStorage.getItem("token"));
 
-  return token.value ? true : false
-}
+  return token.value ? true : false;
+};
 
 // router.beforeEach(async (to, from, next) => {
 //   console.log(to);
