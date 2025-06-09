@@ -34,6 +34,7 @@ import CompanyVersionsPage from "@/views/CompanyVersionsPage.vue";
 import CompanieVersionDemo from "@/views/CompanieVersionDemo.vue";
 import AdminDashBoard from "@/views/AdminDashBoard.vue";
 import CompanyDetailsPage from "@/components/compnanies/CompanyDetailsPage.vue";
+import AdminCompanieVersionView from "@/components/compnanies/AdminCompanieVersionView.vue";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -48,7 +49,18 @@ const router = createRouter({
           component: CompanyVersionsPage,
         },
         {
-          path: "companies/:companyId/details",
+          path: "companies_version/:companyId",
+          name: "companies_version",
+          component: AdminCompanieVersionView,
+        },
+         {
+          path: "companies_version/:companyId/details",
+          name: "companies_version_details",
+          component: CompanyDetailsPage,
+          props:{showAction:false,isVersion:true}
+        },
+        {
+          path: "companie_request/:companyId/details",
           name: "admin_companie_details",
           component: CompanyDetailsPage,
         }

@@ -16,15 +16,17 @@
           Êtes-vous sûr de vouloir rejeter cette demande ? Cette action est
           irréversible.
         </p>
-          <div class="mb-4 ">
-            <label class="block mb-1 text-sm font-medium text-gray-700">Description</label>
-            <textarea
-              v-model="desapproveMessage"
-              placeholder="Décrivez les raisons du Reject de cette Version"
-              rows="3"
-              class="w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-[#db147f] focus:border-[#db147f]"
-            ></textarea>
-          </div>
+        <div class="mb-4">
+          <label class="block mb-1 text-sm font-medium text-gray-700"
+            >Description</label
+          >
+          <textarea
+            v-model="desapproveMessage"
+            placeholder="Décrivez les raisons du Reject de cette Version"
+            rows="3"
+            class="w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-[#db147f] focus:border-[#db147f]"
+          ></textarea>
+        </div>
         <div class="flex space-x-3">
           <button
             @click="toggleOpenModal"
@@ -103,7 +105,7 @@
       </div>
 
       <!-- Actions d'approbation -->
-      <div class="absolute flex space-x-3 top-6 right-6">
+      <div v-if="showAction" class="absolute flex space-x-3 top-6 right-6">
         <button
           @click="toggleOpenModal"
           class="px-6 py-2 font-medium text-white transition-colors duration-200 bg-gray-400 rounded-lg"
@@ -111,6 +113,12 @@
           Rejeter
         </button>
         <button
+          :disabled="company.status == 'approved' ? true : false"
+          :class="
+            company.status == 'approved'
+              ? ' cursor-not-allowed bg-pink-300'
+              : 'cursor-pointer bg-[#db147f] '
+          "
           @click="() => toggleOpenModal('a')"
           class="px-6 py-2 font-medium text-white transition-colors duration-200 bg-[#db147f] rounded-lg"
         >
@@ -146,7 +154,7 @@
                     : 'bg-yellow-100 text-yellow-800',
                 ]"
               >
-                {{ company.isActive ? "Actif" : "En attente" }}
+                {{ company.status }}
               </span>
             </div>
 
@@ -325,7 +333,7 @@
         </div>
 
         <!-- Actions rapides -->
-        <div class="p-6 bg-white shadow-lg rounded-xl">
+        <div v-if="showAction" class="p-6 bg-white shadow-lg rounded-xl">
           <h2
             class="flex items-center mb-6 text-xl font-semibold text-gray-900"
           >
@@ -347,6 +355,12 @@
 
           <div class="space-y-3">
             <button
+              :disabled="company.status == 'approved' ? true : false"
+              :class="
+                company.status == 'approved'
+                  ? ' cursor-not-allowed bg-pink-300'
+                  : 'cursor-pointer bg-[#db147f] '
+              "
               @click="() => toggleOpenModal('a')"
               class="flex items-center justify-center w-full px-4 py-3 font-medium text-white transition-colors duration-200 bg-[#db147f] rounded-lg"
             >
@@ -384,6 +398,20 @@ import {
   MapPinIcon,
   Phone,
 } from "lucide-vue-next";
+import { boolean } from "zod";
+
+const props = defineProps({
+  showAction: {
+    type: Boolean,
+    required: false,
+    default: true,
+  },
+  isVersion: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
+});
 
 const route = useRoute();
 const router = useRouter();
@@ -409,8 +437,7 @@ const showConfirmModal = ref(false);
 const confirmAction = ref("");
 const isModalForApproved = ref(false);
 
-const desapproveMessage=ref("")
-
+const desapproveMessage = ref("");
 
 const goBack = () => {
   router.go(-1);
@@ -432,38 +459,41 @@ const cancelAction = () => {
   confirmAction.value = "";
 };
 
-const HandleConfirmReject = () => {
-  console.log("retourner ici dans le reject");
-
+const HandleConfirmReject = async () => {
   toggleOpenLoaderModal();
+  toggleOpenModal();
 
   const payload = {
     reason: desapproveMessage.value,
   };
 
-  console.log(company)
+  console.log(company);
 
   try {
-    const response = auth.api("post", `/company_request/${company.value.slug}/desapproved`, payload, true);
+    const response = await auth.api(
+      "post",
+      `/company_request/${company.value.slug}/desapproved`,
+      payload,
+      true
+    );
     console.log(response);
     if (response.success) {
-        toggleOpenLoaderModal();
-        toggleOpenModal()
-        goBack()
+      toggleOpenLoaderModal();
+      goBack();
     }
   } catch (error) {
     console.log(error);
     toggleOpenLoaderModal();
-    toggleOpenModal()
-    goBack()
-
-  } finally {
-
+    goBack();
   }
+
+  console.log(isLoading.value);
 };
 
 const HandleConfirmApproved = async () => {
   toggleOpenLoaderModal();
+  toggleOpenModal();
+
   try {
     const payload = {
       slug_request: company.value.slug,
@@ -471,19 +501,18 @@ const HandleConfirmApproved = async () => {
 
     const response = await auth.api("post", "/companies/create", payload, true);
     if (response.success) {
-          toggleOpenLoaderModal();
-    toggleOpenModal()
-    goBack()
+      toggleOpenLoaderModal();
+      goBack();
     }
   } catch (error) {
     console.log(error);
-        toggleOpenLoaderModal();
-    toggleOpenModal()
-    goBack()
-  } 
+    toggleOpenLoaderModal();
+    goBack();
+  }
 };
 
-const fetchCompanyDetails = async () => {
+const fetchCompanyRequestDetails = async () => {
+  console.log("RODES LA STARTS")
   toggleOpenLoaderModal();
   try {
     const companyId = route.params.companyId;
@@ -508,8 +537,42 @@ const fetchCompanyDetails = async () => {
   }
 };
 
+const fetchCompanyVersionDetails = async () => {
+  toggleOpenLoaderModal();
+  try {
+    const companyId = route.params.companyId;
+    const response = await auth.api(
+      "GET",
+      `/admin/companies/companies_versions/${companyId}`,
+      {},
+      false
+    );
+
+    console.log(response.success)
+    console.log(response.data)
+    console.log( company.value)
+    if (response.success && response.data) {
+      company.value = response.data.version;
+      admin.value = response.data.company.admin;
+    } else {
+      goBack();
+    }
+
+    console.log(company.value)
+  } catch (error) {
+    console.error("Error fetching company details:", error);
+    goBack();
+  } finally {
+    toggleOpenLoaderModal();
+  }
+};
+
 onMounted(() => {
-  fetchCompanyDetails();
+  if (!props.isVersion) {
+    fetchCompanyRequestDetails();
+  } else {
+    fetchCompanyVersionDetails();
+  }
 });
 </script>
 

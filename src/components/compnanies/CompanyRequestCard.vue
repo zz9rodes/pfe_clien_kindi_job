@@ -9,7 +9,7 @@
         <p class="text-sm text-gray-600">{{ request.industry }}</p>
       </div>
       <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-        En attente
+        {{request.status}}
       </span>
     </div>
 
@@ -75,7 +75,7 @@ const formatDate = (dateString) => {
 const router = useRouter()
 
 const viewDetails = () => {
-  router.push(`/admin/companies/${props.request.slug}/details`)
+  router.push(`/admin/companie_request/${props.request.slug}/details`)
 }
 </script>
 
