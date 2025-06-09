@@ -1,13 +1,9 @@
 <template>
   <div class="w-full">
-     <!-- Formulaire de création/modification -->
+    <!-- Formulaire de création/modification -->
     <div v-if="showFormCreateCompanie" class="w-full mt-4">
-      <FormCreateOrUpdateCompanie
-        :versionData="selectedVersion"
-        :isVersion="isVersionMode"
-        @close-form="closeForm"
-        @version-saved="handleVersionSaved"
-      />
+      <FormCreateOrUpdateCompanie :versionData="selectedVersion" :isVersion="isVersionMode" @close-form="closeForm"
+        @version-saved="handleVersionSaved" />
     </div>
     <div v-else class="min-h-screen bg-gray-50">
       <div class="p-6 mx-auto max-w-7xl">
@@ -17,10 +13,8 @@
             <ChevronLeftIcon class="w-5 h-5 mr-1" />
             Back
           </button>
-          <button
-            @click="OpenCreateNewVersionForm"
-            class="px-4 py-2 font-medium text-white bg-[#db147f] rounded-lg hover:bg-[#c41370] transition-colors"
-          >
+          <button @click="OpenCreateNewVersionForm"
+            class="px-4 py-2 font-medium text-white bg-[#db147f] rounded-lg hover:bg-[#c41370] transition-colors">
             <Plus class="inline-block w-4 h-4 mr-1" />
             New Vwesion
           </button>
@@ -46,50 +40,38 @@
             <div class="px-6 py-4 text-sm text-gray-500">{{ version.lastUpdated }}</div>
             <div class="flex items-center justify-center px-6 py-4">
               <div class="flex items-center">
-                <span 
-                  :class="[
-                    'px-2 py-1 text-xs font-medium rounded-full',
-                    !version.status ? 'text-gray-600 hover:bg-gray-100 hover:text-gray-800' : 'bg-[#fff0fb] text-[#db147f] shadow-sm'
-                  ]"
-                >
-                  {{ version.status ? "Activated" : "Unactive" }} 
+                <span :class="[
+                  'px-2 py-1 text-xs font-medium rounded-full',
+                  !version.status ? 'text-gray-600 hover:bg-gray-100 hover:text-gray-800' : 'bg-[#fff0fb] text-[#db147f] shadow-sm'
+                ]">
+                  {{ version.status ? "Activated" : "Unactive" }}
                 </span>
               </div>
             </div>
             <div class="flex items-center justify-center px-6 py-4">
               <div class="relative">
-                <button 
-                  @click="toggleActionMenu(version.id)"
-                  class="p-1 text-gray-400 transition-colors rounded-lg hover:text-gray-600 hover:bg-gray-100"
-                >
+                <button @click="toggleActionMenu(version.id)"
+                  class="p-1 text-gray-400 transition-colors rounded-lg hover:text-gray-600 hover:bg-gray-100">
                   <MoreVerticalIcon class="w-5 h-5" />
                 </button>
-                
+
                 <!-- Dropdown Menu -->
-                <div 
-                  v-if="activeActionMenu === version.id"
-                  class="absolute right-0 z-10 w-48 bg-white border border-gray-200 rounded-lg shadow-lg top-8"
-                >
+                <div v-if="activeActionMenu === version.id"
+                  class="absolute right-0 z-10 w-48 bg-white border border-gray-200 rounded-lg shadow-lg top-8">
                   <div class="py-1">
-                    <button
-                      @click="editVersion(version)"
-                      class="flex items-center w-full px-4 py-2 text-sm text-left text-gray-700 hover:bg-gray-50"
-                    >
+                    <button @click="editVersion(version)"
+                      class="flex items-center w-full px-4 py-2 text-sm text-left text-gray-700 hover:bg-gray-50">
                       <EditIcon class="w-4 h-4 mr-2" />
                       Modifier
                     </button>
-                    <button
-                      @click="toggleVersionStatus(version)"
-                      class="flex items-center w-full px-4 py-2 text-sm text-left text-gray-700 hover:bg-gray-50"
-                    >
+                    <button @click="toggleVersionStatus(version)"
+                      class="flex items-center w-full px-4 py-2 text-sm text-left text-gray-700 hover:bg-gray-50">
                       <ToggleLeftIcon v-if="!version.status" class="w-4 h-4 mr-2" />
                       <ToggleRightIcon v-else class="w-4 h-4 mr-2" />
                       {{ version.status ? 'Désactiver' : 'Activer' }}
                     </button>
-                    <button
-                      @click="deleteVersion(version)"
-                      class="flex items-center w-full px-4 py-2 text-sm text-left text-red-600 hover:bg-red-50"
-                    >
+                    <button @click="deleteVersion(version)"
+                      class="flex items-center w-full px-4 py-2 text-sm text-left text-red-600 hover:bg-red-50">
                       <TrashIcon class="w-4 h-4 mr-2" />
                       Supprimer
                     </button>
@@ -107,14 +89,14 @@
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue'
-import { 
-  ChevronLeftIcon, 
-  EditIcon, 
-  MoreVerticalIcon, 
-  Plus, 
-  ToggleLeftIcon, 
-  ToggleRightIcon, 
-  TrashIcon 
+import {
+  ChevronLeftIcon,
+  EditIcon,
+  MoreVerticalIcon,
+  Plus,
+  ToggleLeftIcon,
+  ToggleRightIcon,
+  TrashIcon
 } from 'lucide-vue-next'
 import FormCreateOrUpdateCompanie from '@/components/profile/FormCreateOrUpdateCompanie.vue'
 
