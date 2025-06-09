@@ -25,7 +25,7 @@
       </div>
     </div>
   </AppModal>
-  <accountHeader @open-search-modal="toggleOpenModal" />
+  <AdminHeader @open-search-modal="toggleOpenModal" />
   <div class="h-screen ">
     <div class="flex h-full">
       <div id="desktopSideBar" :class="[
@@ -173,7 +173,7 @@
 <script setup>
 import { ref } from "vue";
 import { RouterView } from "vue-router";
-import accountHeader from "@/components/accountDashboard/accountHeader.vue";
+import AdminHeader from "@/components/Admin/AdminHeader.vue";
 import AppModal from "@/components/globales/AppModal.vue";
 import AppOvarleyBottom from "@/components/globales/AppOvarleyBottom.vue";
 import {
@@ -181,10 +181,9 @@ import {
   Home,
   Heart,
   Calendar,
-  MessageCircleMore,
-  BarChart3,
-  Users,
-  FileText,
+  Receipt,
+  BellDot,
+  Building2
 } from "lucide-vue-next";
 
 // État de la sidebar
@@ -210,13 +209,6 @@ const menuItems = ref([
     badge: null,
   },
   {
-    icon: Heart,
-    title: "Contracts",
-    link: "#",
-    active: false,
-    badge: null,
-  },
-  {
     icon: Calendar,
     title: "Jobs",
     link: "#",
@@ -224,33 +216,26 @@ const menuItems = ref([
     badge: null,
   },
   {
-    icon: MessageCircleMore,
-    title: "Applies",
-    link: "#",
-    active: false,
-    badge: 3,
-  },
-  {
-    icon: Users,
-    title: "Projects",
+    icon: Building2,
+    title: "Companies",
     link: "#",
     active: false,
     badge: null,
   },
   {
-    icon: BarChart3,
-    title: "Invoices",
-    link: "#",
-    active: false,
-    badge: null,
-  },
-  {
-    icon: FileText,
+    icon: BellDot,
     title: "Reviews",
     link: "#",
     active: false,
     badge: null,
   },
+  {
+    icon: Receipt,
+    title: "Invoices",
+    link: "#",
+    active: false,
+    badge: null,
+  }
 ]);
 
 const MoibilemenuItems = ref([
@@ -262,14 +247,7 @@ const MoibilemenuItems = ref([
     badge: null,
   },
   {
-    icon: MessageCircleMore,
-    title: "Applies",
-    link: "#",
-    active: false,
-    badge: 3,
-  },
-  {
-    icon: BarChart3,
+    icon: Receipt,
     title: "Invoices",
     link: "#",
     active: false,
@@ -292,17 +270,8 @@ const OvarleyMenuItems = [
     active: false,
     badge: null,
   },
-
   {
-    icon: Users,
-    title: "Projects",
-    link: "#",
-    active: false,
-    badge: null,
-  },
-
-  {
-    icon: FileText,
+    icon: BellDot,
     title: "Reviews",
     link: "#",
     active: false,

@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full min-h-screen p-6">
+  <div class="w-full min-h-screen p-6 ">
     <div class="h-full">
       <div class="h-full rounded-lg">
         <div class="flex flex-col h-full lg:flex-row">
@@ -38,7 +38,7 @@
             </div>
           </div>
 
-          <RouterView class="flex-[1] lg:py-8 lg:pl-8 overflow-auto p4 pt-10 "> </RouterView>
+          <RouterView class="flex-[1] lg:py-8 lg:pl-8 overflow-auto p-4 pt-10 "> </RouterView>
         </div>
       </div>
     </div>
