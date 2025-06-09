@@ -42,7 +42,7 @@
 
     <!-- Features -->
     <div v-if="version.features && version.features.length > 0" class="mb-4">
-      <h4 class="mb-2 text-sm font-medium text-gray-700">Fonctionnalités :</h4>
+      <h4 class="mb-2 text-sm font-medium text-gray-700">industries :</h4>
       <div class="flex flex-wrap gap-1">
         <span
           v-for="feature in version.features.slice(0, 3)"
@@ -68,7 +68,7 @@
       </div>
       <div class="flex items-center">
         <ClockIcon class="w-3 h-3 mr-1" />
-        MAJ le {{ formatDate(version.updatedAt) }}
+        modifier le {{ formatDate(version.updatedAt) }}
       </div>
     </div>
 
@@ -78,8 +78,8 @@
         @click="$emit('edit', version)"
         class="px-3 py-1 text-sm font-medium text-[#db147f] bg-white border border-[#db147f] rounded-lg hover:bg-[#db147f] hover:text-white transition-colors"
       >
-        <EditIcon class="inline-block w-3 h-3 mr-1" />
-        Modifier
+        <EyeIcon class="inline-block w-4 h-4 mr-1" />
+        Voir
       </button>
       <button
         @click="$emit('delete', version.id)"
@@ -90,7 +90,6 @@
       </button>
     </div>
 
-    <!-- Indicateur visuel pour le statut -->
     <div 
       :class="[
         'absolute top-0 left-0 w-1 h-full rounded-l-lg',
@@ -101,7 +100,7 @@
 </template>
 
 <script setup>
-import { CalendarIcon, ClockIcon, EditIcon, TrashIcon } from 'lucide-vue-next'
+import { CalendarIcon, ClockIcon, EditIcon, TrashIcon ,EyeIcon} from 'lucide-vue-next'
 
 const props = defineProps({
   version: {

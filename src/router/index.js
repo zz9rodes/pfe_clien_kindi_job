@@ -32,14 +32,27 @@ import AccountDetail from "@/components/profile/accountDetail.vue";
 import AccountCompanies from "@/views/AccountCompanies.vue";
 import CompanyVersionsPage from "@/views/CompanyVersionsPage.vue";
 import CompanieVersionDemo from "@/views/CompanieVersionDemo.vue";
-
+import AdminDashBoard from "@/views/AdminDashBoard.vue";
+import CompanyDetailsPage from "@/components/compnanies/CompanyDetailsPage.vue";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: "/versions",
-      name: "versions",
-      component: CompanyVersionsPage,
+      path: "/admin/",
+      name: "admin",
+      component: AdminDashBoard,
+      children:[
+        {
+          path: "companies",
+          name: "admin_companies",
+          component: CompanyVersionsPage,
+        },
+        {
+          path: "companies/:companyId/details",
+          name: "admin_companie_details",
+          component: CompanyDetailsPage,
+        }
+      ]
     },
     {
       path: "/",
