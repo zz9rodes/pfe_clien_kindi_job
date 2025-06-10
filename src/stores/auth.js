@@ -13,6 +13,10 @@ export const useAuthStore = defineStore("auth", () => {
     : ref(null);
   const token = ref(localStorage.getItem("token"));
 
+    const userCompany = localStorage.getItem("company")
+    ? ref(JSON.parse(localStorage.getItem("company")))
+    : ref(null);
+
   async function api(method, url, payload = {}, notify = true) {
     const notyf = new Notyf({ position: { x: "right", y: "top" }, duration: 3000 });
     console.log("la methode : ",method)
@@ -139,7 +143,15 @@ export const useAuthStore = defineStore("auth", () => {
     user.value = result.user;
   }
 
-  return { user, api, login, register, logout, me, isAuthentificated };
+  function setCompany(company) {
+    localStorage.setItem(
+      "company",
+      JSON.stringify(company)
+    );
+    userCompany.value = company;
+  }
+
+  return { user, userCompany,api, login, register, logout,setCompany, me, isAuthentificated };
 });
 
 

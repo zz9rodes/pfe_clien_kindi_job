@@ -1,6 +1,6 @@
 <template>
 
-  <div class="flex flex-col ">
+  <div class="flex flex-col px-4 ">
       <AppModal @closeModal="toggleOpenModal" :isOpen="isModalOpen" :isLoader="false">
     <FormUpdateProfile @close="toggleOpenModal" :accountProfile="auth.user" />
   </AppModal>

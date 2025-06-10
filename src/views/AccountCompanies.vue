@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full ">
+  <div class="w-full px-4 ">
     <div v-if="!OpenFormCreateCompanie" class="w-full py-1">
       <div
         class="flex flex-col mb-6 sm:flex-row sm:items-center sm:justify-between lg:mb-8"
@@ -30,7 +30,7 @@
           v-for="company in companies"
           @click="viewCompany(company.id)"
           :key="company.id"
-          :company="company"
+          :company="company.activeDetails ? company.activeDetails : company"
         />
       </div>
     </div>
@@ -57,27 +57,26 @@ const auth = useAuthStore();
 const OpenFormCreateCompanie = ref(false);
 
 const companies = ref([]);
+const request=ref({})
 
 const viewCompany = async (id) => {
-  router.push({ name: "companie_details", params: { id: id } });
+  router.push({ name: "companie_versions"});
 };
 
 const HandleGetCompaniedetail = async () => {
-  const data = await auth.api("GET", "/company_request", {}, false);
+  const response = await auth.api("GET", "/company_request", {}, false);
 
-  if (data.success) {
-    console.log(data.data.companies);
+  if (response.success) {
+    console.log(response.data.companies);
 
     companies.value =
-      data.data.companies.length > 0 ? data.data.companies : data.data.request;
+      response.data.companies.length > 0 ? response.data.companies : response.data.request;
+    auth.setCompany(response.data)
   }
   console.log(companies.value);
 };
 
   const HandleResquestSave=(data)=>{
-    console.log("data")
-    console.log("HandleResquestSave")
-    console.log(data)
     companies.value.push(data)
   }
 

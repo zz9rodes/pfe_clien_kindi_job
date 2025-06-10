@@ -18,10 +18,10 @@
           class="bg-[#db147f] text-white px-6 py-2 rounded-lg hover:bg-[#c01370] transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
           <Save class="sm:hidden" />
           <span class="hidden sm:block">
-            {{ props.isVersion ? "Update Changes" : "Save Changes" }}
+            {{ props.isUpdate ? "Update Changes" : "Save Changes" }}
           </span>
         </button>
-        <button @click.prevent="SaveCompanieChange"
+         <button @click.prevent="SaveCompanieChange"
           class="bg-[#db147f] text-white px-6 py-2 rounded-lg hover:bg-[#c01370] transition-colors">
           <Save class="sm:hidden" />
           <span class="hidden sm:block"> Save Changes </span>
@@ -67,7 +67,7 @@
               <span> Cover Image </span>
               <div
                 class="flex items-center justify-center w-full h-20 bg-gray-100 border-2 border-gray-300 border-dashed rounded-lg">
-                <img class="rounded-lg size-full" v-if="companyForm.coverUrl" :src="companyForm.coverUrl" alt="" />
+                <img class="h-full rounded-lg" v-if="companyForm.coverUrl" :src="companyForm.coverUrl" alt="" />
                 <div v-else class="text-center">
                   <UploadIcon class="w-6 h-6 mx-auto mb-1 text-gray-400" />
                   <p class="text-xs text-gray-500">Upload Cover</p>
@@ -204,21 +204,40 @@
               <span class="text-red-400">*</span>
             </span>
 
-            {{ companyForm.certificateOfIncorporation }}
             <div class="flex justify-between gap-4">
               <label for="certificateOfIncorporation"
                 class="flex items-center justify-center w-20 h-20 bg-gray-100 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer">
                 <File class="w-8 h-8" :class="companyForm.certificateOfIncorporation
-                    ? 'text-[#db147f]'
-                    : 'text-gray-400'
+                  ? 'text-[#db147f]'
+                  : 'text-gray-400'
                   " />
               </label>
-              <input required type="file" id="certificateOfIncorporation"
+              <input   type="file" id="certificateOfIncorporation"
                 @change="(e) => handleFileUpload(e, 'certificate')" accept="application/pdf"
-                :v-model="companyForm.certificateOfIncorporation"
                 class="flex-1 mb-2 hidden px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#db147f] outline-none focus:border-transparent"
                 placeholder="Certificate number" />
             </div>
+              <a
+              v-if="companyForm.certificateOfIncorporation"
+                :href="companyForm.certificateOfIncorporation"
+                target="_blank"
+                class="inline-flex items-center px-4 py-2 mt-2 text-blue-700 transition-colors duration-200 rounded-lg bg-blue-50 hover:bg-blue-100"
+              >
+                <svg
+                  class="w-5 h-5 mr-2"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                  />
+                </svg>
+                Voir le certificat
+              </a>
           </div>
         </div>
       </div>
@@ -267,7 +286,7 @@ import { languesProfessionnelles } from "@/helpers/language";
 import { AppwriteuploadFile } from "@/app_write/files";
 import { useAuthStore } from "@/stores/auth";
 
-const emits = defineEmits(["close-form", "version-saved","request-saved"]);
+const emits = defineEmits(["close-form", "version-saved", "request-saved"]);
 
 const props = defineProps({
   versionData: {
@@ -278,11 +297,16 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  isUpdate:{
+     type: Boolean,
+     default: false,
+  }
 });
 
 const ActiveLocation = ref(false);
 const notyf = new Notyf({ position: { x: "right", y: "top" }, duration: 4000 });
 const isUploading = ref(false);
+const company=ref({})
 
 const auth = useAuthStore();
 const companyForm = ref({
@@ -355,8 +379,8 @@ const validateForm = () => {
 };
 
 const SaveCompanieChange = async () => {
-  if (true) {
-    companyForm.value = {
+if(true){
+  companyForm.value = {
       name: "Acme Corporation",
       industry: "Technology",
       description: "Leading provider of innovative tech solutions worldwide.",
@@ -376,46 +400,44 @@ const SaveCompanieChange = async () => {
         "https://fra.cloud.appwrite.io/v1/storage/buckets/6662f3050006440b1ab2/files/j8dV781g.OPygkLXCcKo4FIUZeUApmlQaQLT/view?project=6660582f001665b39635&mode=admin", // PDF à uploader manuellement
       isActive: false,
       slug: auth?.user?.account?.slug
-    };
   }
+}
   
+  console.log("dans le SaveCompanieChange ")
   if (!validateForm()) {
     return;
   }
+  
   try {
     isUploading.value = true;
 
     let data;
     if (props.isVersion) {
 
-      console.log("une version de companies")
-
       if (props.versionData) {
-        console.log("on update une version ")
         data = await auth.api(
           "put",
-          `/company_request/update/${formData.id}`,
-          formData
+          `/company_request/${props.versionData.slug}/update/`,
+          companyForm
         );
       }
       else {
 
-        console.log("on creee une version ")
-
+        console.log("rodes la start")
+        
         data = await auth.api(
-          "put",
-          `/company_request/create`,
+          "post",
+          `/companies/${auth.userCompany.companies[0].slug}/companies_versions/create`,
           companyForm
         );
       }
 
-      // notyf.success("Company information updated successfully!");
     } else {
-
+      console.log("juste un goozomor")
       data = await auth.api("post", "/company_request/create", companyForm);
-      if(data.success && data.data){
+      if (data.success && data.data) {
         console.log(companyForm.value)
-          emits("request-saved", companyForm.value);
+        emits("request-saved", companyForm.value);
       }
       emits('close-form')
     }
@@ -522,10 +544,11 @@ const handleFileUpload = async (e, type) => {
         if (type === "avatar") {
           companyForm.value.avatarUrl = newFile.url;
           console.log(companyForm.value.avatarUrl);
-        } else if ("cover") {
+        } else if (type ==="cover") {
           companyForm.value.coverUrl = newFile.url;
           console.log(companyForm.value.coverUrl);
         } else {
+          console.log("on a uploade les certificateOfIncorporation ")
           companyForm.value.certificateOfIncorporation = newFile.url;
         }
       } else {

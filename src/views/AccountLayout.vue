@@ -416,7 +416,7 @@ const setActiveMobileItem = (index) => {
 
 
 
-.main-frame {
+.main-frame,.modal-container {
   --sb-track-color: #ffffff;
   --sb-thumb-color: #ffffff;
   --sb-size: 9px;
