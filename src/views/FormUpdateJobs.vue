@@ -785,7 +785,7 @@ const fetchJobData = async () => {
       }
     }
   ],
-  image: "https://example.com/job-thumbnail.png"
+  image: "http://localhost:5173/account/companies/b9df3be9-a92e-4071-8d46-d4f82ead2a16/create_job"
 }
 
     

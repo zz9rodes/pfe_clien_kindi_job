@@ -1,58 +1,104 @@
 <template>
   <div class="w-full min-h-screen">
-    <div class="relative">
-      <div
-        class="relative overflow-hidden h-72 md:h-80 bg-gradient-to-r from-blue-600 to-purple-700"
-      >
-        <img
-          src="https://i.pinimg.com/736x/3e/81/89/3e81896faf555eb1f64231cefe643c6b.jpg"
-          alt="Company Cover"
-          class="object-cover w-full h-full"
-        />
-        <div
-          class="absolute inset-0 flex justify-center pt-20 bg-black sm:pt-p sm:justify-start bo bg-opacity-30 px-14"
+      <AppModal :isOpen="isUploading" :isLoader="true"> </AppModal>
+    <div class="relative h-64 bg-gradient-to-r from-blue-600 to-purple-600">
+      <img
+        :src="company?.activeDetails?.coverUrl"
+        :alt="`Couverture de ${company?.activeDetails?.name}`"
+        class="object-cover w-full h-full"
+      />
+      <div class="absolute inset-0 bg-black bg-opacity-30"></div>
+      <div class="absolute top-6 left-6">
+        <button
+          @click="goBack"
+          class="flex items-center px-4 py-2 text-white transition-all duration-200 bg-white rounded-lg bg-opacity-20 backdrop-blur-sm hover:bg-opacity-30"
         >
-          <div class="flex flex-col gap-4 pb-12 sm:items-end sm:flex-row">
-            <div class="flex-shrink-0">
-              <div
-                class="flex items-center justify-center w-20 h-20 bg-white border-4 border-white rounded-lg shadow-md md:w-24 md:h-24"
+          <svg
+            class="w-5 h-5 mr-2"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15 19l-7-7 7-7"
+            />
+          </svg>
+          Retour
+        </button>
+      </div>
+
+      <div v-if="showAction" class="absolute flex space-x-3 top-6 right-6">
+        <button
+          @click="toggleOpenModal"
+          class="px-6 py-2 font-medium text-white transition-colors duration-200 bg-gray-400 rounded-lg"
+        >
+          Rejeter
+        </button>
+        <button
+          :disabled="company == 'approved' ? true : false"
+          :class="
+            company == 'approved'
+              ? ' cursor-not-allowed bg-pink-300'
+              : 'cursor-pointer bg-[#db147f] '
+          "
+          @click="() => toggleOpenModal('a')"
+          class="px-6 py-2 font-medium text-white transition-colors duration-200 bg-[#db147f] rounded-lg"
+        >
+          Approuver
+        </button>
+      </div>
+    </div>
+    <div class="relative z-10 max-w-6xl px-6 mx-auto -mt-20 mb-[50px]">
+      <div class="p-8 mb-8 bg-white shadow-lg rounded-xl">
+        <div class="flex items-start space-x-6">
+          <div class="flex-shrink-0">
+            <img
+              :src="
+                company?.activeDetails?.avatarUrl || '/placeholder-company.png'
+              "
+              :alt="`Logo de ${company?.activeDetails?.name}`"
+              class="object-cover w-24 h-24 border-4 border-white shadow-lg rounded-xl"
+            />
+          </div>
+
+          <div class="flex-1">
+            <div class="flex items-center mb-2 space-x-3">
+              <h1 class="text-3xl font-bold text-gray-900">
+                {{ company?.activeDetails?.name }}
+              </h1>
+              <span
+                :class="[
+                  'px-3 py-1 rounded-full text-sm font-medium',
+                  company?.activeDetails?.isActive
+                    ? 'bg-green-100 text-green-800'
+                    : 'bg-yellow-100 text-yellow-800',
+                ]"
               >
-                <BuildingIcon class="w-12 h-12 text-gray-400 md:w-16 md:h-16" />
-              </div>
+                {{ company?.activeDetails?.status }}
+              </span>
             </div>
-            <div class="flex">
-              <div
-                class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between"
-              >
-                <div class="flex flex-col gap-2">
-                  <h1 class="mb-2 text-2xl font-bold text-white md:text-3xl">
-                    {{ company.name }}
-                  </h1>
-                  <div
-                    class="flex flex-wrap items-center gap-4 text-sm text-white"
-                  >
-                    <span class="flex items-center">
-                      <MapPinIcon class="w-4 h-4 mr-1" />
-                      {{ company.location }}
-                    </span>
-                    <span class="flex items-center">
-                      <UsersIcon class="w-4 h-4 mr-1" />
-                      {{ company.employeeCount }} employees
-                    </span>
-                  </div>
-                </div>
-              </div>
+
+            <div class="flex items-center mb-4 space-x-4 text-gray-600">
+              <span class="flex items-center">
+                <Building class="w-5 h-5 mr-4" />
+                {{ company?.activeDetails?.industry }}
+              </span>
+              <span class="flex items-center">
+                <MapPinIcon class="w-5 h-5 mr-4" />
+                {{ company?.activeDetails?.city }},
+                {{ company?.activeDetails?.country }}
+              </span>
             </div>
+
+          
           </div>
         </div>
       </div>
-
-      <div class="absolute -mt-32 mx-14 md:mx-8">
-        <div class="rounded-lg"></div>
-      </div>
     </div>
 
-    <!-- Navigation Tabs -->
     <div class="sticky top-0 z-10 border-b border-gray-20 bg-neutral-400">
       <div class="mx-4 md:mx-8">
         <nav class="flex space-x-8 overflow-x-auto">
@@ -72,55 +118,38 @@
         </nav>
       </div>
     </div>
-
-    <!-- Tab Content -->
     <div class="py-8 mx-4 md:mx-8">
-      <!-- About Tab -->
+      <!-- {{ company?.activeDetails }} -->
       <div v-if="activeTab === 'about'" class="space-y-8">
-        <AboutCompanie />
+        <AboutCompanie :employees="company?.guests" :company="company?.activeDetails" />
       </div>
 
-      <!-- Jobs Tab -->
       <div v-if="activeTab === 'jobs'" class="space-y-6">
         <div
           class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between"
         >
-        <div  @click="GoToNewCreateJob">
-          <button class="new-job flex gap-1  bg-[#db147f] text-white rounded-md px-3 py-2">
-            <Plus/>
-            <span>New Job</span>
-          </button>
-        </div>
-          <!-- <div class="flex items-center space-x-4">
-            <select
-              class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#db147f] focus:border-transparent"
+          <div @click="GoToNewCreateJob">
+            <button
+              class="new-job flex gap-1 bg-[#db147f] text-white rounded-md px-3 py-2"
             >
-              <option>All Locations</option>
-              <option>Remote</option>
-              <option>New York</option>
-              <option>San Francisco</option>
-              <option>London</option>
-            </select>
-          </div> -->
+              <Plus />
+              <span>New Job</span>
+            </button>
+          </div>
         </div>
 
         <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          <div class="flex flex-col "  v-for="job in jobs"   :key="job.id">
-            <div class=" text-end" @click="GoToUpdateCreateJob">
+          <div class="flex flex-col" v-for="job in jobs" :key="job.id">
+            <div class="text-end" @click="GoToUpdateCreateJob">
               <button class="px-3 py-1 bg-[#db147f] text-white rounded-lg">
-              edit
+                edit
               </button>
             </div>
-              <JobCard
-              :job="job"
-              @bookmark="handleBookmark"
-              />
+            <JobCard :job="job" @bookmark="handleBookmark" />
           </div>
-          
         </div>
       </div>
 
-      <!-- Team Tab -->
       <div v-if="activeTab === 'team'" class="space-y-8">
         <div class="text-center">
           <h2 class="mb-4 text-2xl font-semibold text-gray-900">
@@ -133,16 +162,19 @@
         </div>
 
         <div class="grid grid-cols-1 gap-6 mt-8 md:grid-cols-2 lg:grid-cols-4">
-          <TeamMemberCard   v-for="member in members"
-            :key="member.name" :member="member"/>
-          </div>
+          <TeamMemberCard
+            v-for="member in members"
+            :key="member.name"
+            :member="member"
+          />
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import {
   BuildingIcon,
   MapPinIcon,
@@ -160,11 +192,19 @@ import {
 import AboutCompanie from "@/components/compnanies/AboutCompanie.vue";
 import JobCard from "@/components/JobCard.vue";
 import TeamMemberCard from "@/components/TeamMemberCard.vue";
-import { useRouter } from "vue-router";
-const router=useRouter()
+import { useRouter, useRoute } from "vue-router";
+import { useAuthStore } from "@/stores/auth";
+import AppModal from "@/components/globales/AppModal.vue";
+const router = useRouter();
+const route = useRoute();
+const auth = useAuthStore();
+const isUploading=ref(false)
 
+
+const toggleLoader = () => {
+  isUploading.value = !isUploading.value;
+};
 const activeTab = ref("about");
-
 const tabs = [
   { id: "about", name: "About" },
   { id: "jobs", name: "Jobs" },
@@ -172,66 +212,7 @@ const tabs = [
   { id: "news", name: "News" },
 ];
 
-const company = ref({
-  name: "TechCorp Solutions",
-  location: "San Francisco, CA",
-  employeeCount: "500-1000",
-  founded: "2015",
-  industry: "Technology",
-  headquarters: "San Francisco, CA",
-  description:
-    "TechCorp Solutions is a leading technology company specializing in innovative software solutions and digital transformation services. We help businesses of all sizes leverage cutting-edge technology to achieve their goals and stay competitive in today's fast-paced digital landscape.",
-  values: [
-    {
-      title: "Innovation",
-      description: "We constantly push boundaries and embrace new technologies",
-      icon: ZapIcon,
-    },
-    {
-      title: "Excellence",
-      description: "We strive for the highest quality in everything we do",
-      icon: StarIcon,
-    },
-    {
-      title: "Growth",
-      description: "We believe in continuous learning and development",
-      icon: TrendingUpIcon,
-    },
-    {
-      title: "Integrity",
-      description: "We operate with transparency and ethical standards",
-      icon: ShieldIcon,
-    },
-  ],
-  benefits: [
-    "Health Insurance",
-    "Dental & Vision",
-    "Flexible Working Hours",
-    "Remote Work Options",
-    "Professional Development",
-    "Gym Membership",
-    "Free Lunch",
-    "Stock Options",
-    "Paid Time Off",
-    "Parental Leave",
-    "Learning Budget",
-    "Team Events",
-  ],
-  locations: [
-    {
-      city: "San Francisco",
-      address: "123 Tech Street, CA 94105",
-    },
-    {
-      city: "New York",
-      address: "456 Innovation Ave, NY 10001",
-    },
-    {
-      city: "London",
-      address: "789 Digital Lane, EC1A 1BB",
-    },
-  ],
-});
+const company = ref(null);
 
 const jobs = [
   {
@@ -358,14 +339,32 @@ const members = ref([
   },
 ]);
 
+const GoToNewCreateJob = () => {
+  console.log(route)
+  router.push({ name: "create_job",params:{companyId:route.params.companyId} });
+};
 
-const GoToNewCreateJob=()=>{
-  router.push({name:'create_job'})
-}
+const GoToUpdateCreateJob = () => {
+  router.push({ name: "update_job" });
+};
 
-const GoToUpdateCreateJob=()=>{
-  router.push({name:'update_job'})
-}
+const FecthCompanieDetails = async () => {
+  toggleLoader()
+  const companyId = route.params.companyId;
+
+  const response = await auth.api("GET", `/companies/${companyId}`, {}, false);
+  if (response.success) {
+    company.value = response.data;
+  }
+
+  console.log(response);
+  console.log(company.value);
+  toggleLoader()
+};
+
+onMounted(() => {
+  FecthCompanieDetails();
+});
 </script>
 
 <style scoped>

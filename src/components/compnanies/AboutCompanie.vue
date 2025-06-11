@@ -3,17 +3,17 @@
         <div class="space-y-8 lg:col-span-2">
             <div class="p-6 bg-white rounded-lg">
                 <h2 class="mb-4 text-xl font-semibold text-gray-900">
-                    About {{ company.name }}
+                    About {{ company?.name }} 
                 </h2>
                 <div class="prose prose-gray max-w-none">
                     <p class="mb-4 leading-relaxed text-gray-700">
-                        {{ company.description }}
+                        {{ company?.description }}
                     </p>
-                    <p class="leading-relaxed text-gray-700">
+                    <!-- <p class="leading-relaxed text-gray-700">
                         We are committed to innovation and excellence in everything we do.
                         Our team of passionate professionals works together to deliver
                         cutting-edge solutions that make a real difference in our industry.
-                    </p>
+                    </p> -->
                 </div>
             </div>
 
@@ -23,45 +23,46 @@
                     <div class="flex justify-between">
                         <span class="text-gray-600">Industry</span>
                         <span class="font-medium text-gray-900">{{
-                            company.industry
+                            company?.industry
                             }}</span>
                     </div>
                     <div class="flex justify-between">
                         <span class="text-gray-600">Company size</span>
-                        <span class="font-medium text-gray-900">{{ company.employeeCount }} employees</span>
+                        <span class="font-medium text-gray-900"> {{ employees?.length }} employees</span>
                     </div>
                     <div class="flex justify-between">
-                        <span class="text-gray-600">Founded</span>
-                        <span class="font-medium text-gray-900">{{ company.founded }}</span>
+                        <span class="text-gray-600">Register Since</span>
+                        <span class="font-medium text-gray-900">{{ moment( company?.createdAt ).format('MMM Do YYYY')}}</span>
                     </div>
-                    <div class="flex justify-between">
-                        <span class="text-gray-600">Headquarters</span>
-                        <span class="font-medium text-gray-900">{{
-                            company.headquarters
-                            }}</span>
-                    </div>
+                   
                 </div>
             </div>
 
             <!-- Locations -->
             <div class="p-6 bg-white border rounded-lg">
-                <h3 class="mb-4 font-semibold text-gray-900">Locations</h3>
-                <div class="space-y-3">
-                    <div v-for="location in company.locations" :key="location.city" class="flex items-start">
-                        <MapPinIcon class="flex-shrink-0 w-4 h-4 mt-1 mr-3 text-gray-400" />
+                <div class="inline-flex ">
+                    <MapPinIcon class="flex-shrink-0 w-4 h-4 mt-1 mr-3 text-gray-400" />
+                    <h3 class="mb-4 mr-3 text-lg font-semibold text-gray-900 ">Locations </h3>
+                </div>
+                <!-- <div class="space-y-3"> -->
+                    <div  class="flex items-start">
                         <div>
                             <div class="font-medium text-gray-900">
-                                {{ location.city }}
+                             <span class="pr-4 font-semibold">Country :</span>   {{ company?.country }}
                             </div>
+                            <div class="font-medium text-gray-900">
+                               <span  class="pr-4 font-semibold">City :</span>  {{ company?.city }}
+                            </div>
+
                             <div class="text-sm text-gray-600">
-                                {{ location.address }}
+                                <!-- {{ location.address }} -->
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                <!-- </div> -->
+            </div> 
 
-            <div class="flex justify-between border divide-x table-stats">
+            <!-- <div class="flex justify-between border divide-x table-stats">
                 <div class="p-6 ">
                     Teams Members
                     <span class="text-2xl font-bold ">
@@ -79,7 +80,7 @@
                         11
                     </span>
                 </div>
-            </div>
+            </div> -->
 
             <WordMap/>
             
@@ -104,9 +105,8 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref,defineProps } from "vue";
 import {
-    BuildingIcon,
     MapPinIcon,
     StarIcon,
     TrendingUpIcon,
@@ -115,6 +115,8 @@ import {
 } from "lucide-vue-next";
 import JobCard from "../JobCard.vue";
 import WordMap from "../globales/WordMap.vue";
+import moment from "moment";
+import { number } from "zod";
 
 const jobs = [
   {
@@ -161,66 +163,19 @@ const jobs = [
   } 
 ];
 
-const company = ref({
-    name: "TechCorp Solutions",
-    location: "San Francisco, CA",
-    employeeCount: "500-1000",
-    founded: "2015",
-    industry: "Technology",
-    headquarters: "San Francisco, CA",
-    description:
-        "TechCorp Solutions is a leading technology company specializing in innovative software solutions and digital transformation services. We help businesses of all sizes leverage cutting-edge technology to achieve their goals and stay competitive in today's fast-paced digital landscape.",
-    values: [
-        {
-            title: "Innovation",
-            description: "We constantly push boundaries and embrace new technologies",
-            icon: ZapIcon,
-        },
-        {
-            title: "Excellence",
-            description: "We strive for the highest quality in everything we do",
-            icon: StarIcon,
-        },
-        {
-            title: "Growth",
-            description: "We believe in continuous learning and development",
-            icon: TrendingUpIcon,
-        },
-        {
-            title: "Integrity",
-            description: "We operate with transparency and ethical standards",
-            icon: ShieldIcon,
-        },
-    ],
-    benefits: [
-        "Health Insurance",
-        "Dental & Vision",
-        "Flexible Working Hours",
-        "Remote Work Options",
-        "Professional Development",
-        "Gym Membership",
-        "Free Lunch",
-        "Stock Options",
-        "Paid Time Off",
-        "Parental Leave",
-        "Learning Budget",
-        "Team Events",
-    ],
-    locations: [
-        {
-            city: "San Francisco",
-            address: "123 Tech Street, CA 94105",
-        },
-        {
-            city: "New York",
-            address: "456 Innovation Ave, NY 10001",
-        },
-        {
-            city: "London",
-            address: "789 Digital Lane, EC1A 1BB",
-        },
-    ],
-});
+const props=defineProps({
+    company:{
+        type:Object,
+        required:true
+    },
+    employees:{
+        type:Array[Object],
+        required:true,
+        default:[]
+    }
+})
+
+// const company = ref(props.company);
 </script>
 
 <style></style>
