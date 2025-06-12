@@ -379,29 +379,6 @@ const validateForm = () => {
 };
 
 const SaveCompanieChange = async () => {
-if(true){
-  companyForm.value = {
-      name: "Acme Corporation",
-      industry: "Technology",
-      description: "Leading provider of innovative tech solutions worldwide.",
-      email: "contact@acmecorp.com",
-      phoneNumber: "+1 (555) 123-4567",
-      address: "123 Silicon Avenue, Tech City, USA",
-      firstLangage: "Anglais",
-      country: "United States",
-      city: "San Francisco",
-      avatarUrl:
-        "https://i.pinimg.com/736x/c0/1f/08/c01f08228303f3903fd8867c575a1956.jpg",
-      coverUrl:
-        "https://i.pinimg.com/736x/f8/98/74/f89874787ec776950bbc0173ce61febd.jpg",
-      socialStatus: "Private Company",
-      registrationNumber: "ACM-2023-001",
-      certificateOfIncorporation:
-        "https://fra.cloud.appwrite.io/v1/storage/buckets/6662f3050006440b1ab2/files/j8dV781g.OPygkLXCcKo4FIUZeUApmlQaQLT/view?project=6660582f001665b39635&mode=admin", // PDF à uploader manuellement
-      isActive: false,
-      slug: auth?.user?.account?.slug
-  }
-}
   
   console.log("dans le SaveCompanieChange ")
   if (!validateForm()) {

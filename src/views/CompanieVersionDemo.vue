@@ -18,17 +18,31 @@
             class="flex items-center text-gray-600 hover:text-gray-900"
           >
             <ChevronLeftIcon class="w-5 h-5 mr-1" />
-            Back
+            Back 
           </button>
-          <button
+          <div class="flex gap-3 ">
+                  <button
+                  v-if="versions.length>0"
+            :disabled="versions.length<=0 ? true : fasse"
+            :class=" versions.length<=0 ? ' cursor-not-allowed bg-[#d1abbe]' :' cursor-pointer bg-[#db147f]' "
+            @click="ViewsDetails(versions[0].slug)"
+            class="px-4 py-2 font-medium text-white transition-colors rounded-lg"
+          >
+          <Apple class="inline-block w-4 h-4 mr-1"/>
+            Show
+          </button>
+
+              <button
             :disabled="versions.length<=0 ? true : fasse"
             :class=" versions.length<=0 ? ' cursor-not-allowed bg-[#d1abbe]' :' cursor-pointer bg-[#db147f]' "
             @click="OpenCreateNewVersionForm"
             class="px-4 py-2 font-medium text-white transition-colors rounded-lg"
           >
             <Plus class="inline-block w-4 h-4 mr-1" />
-            New Vwesion
+             Version
           </button>
+          </div>
+      
         </div>
 
         <!-- Title -->
@@ -100,7 +114,14 @@
                     class="absolute right-0 z-10 w-48 bg-white border border-gray-200 rounded-lg shadow-lg top-8"
                   >
                     <div class="py-1">
-                    
+                       <button
+                       v-if="version.isActive"
+                        @click="ViewsDetails(versions[0].slug)"
+                        class="flex items-center w-full px-4 py-2 text-sm text-left text-blue-600 hover:bg-blue-50"
+                      >
+                        <Eye class="w-4 h-4 mr-2" />
+                        Show
+                      </button>
                       <button
                         @click="deleteVersion(version)"
                         class="flex items-center w-full px-4 py-2 text-sm text-left text-red-600 hover:bg-red-50"
@@ -197,6 +218,8 @@ import {
   MoreVerticalIcon,
   Plus,
   TrashIcon,
+  Eye,
+  Apple
 } from "lucide-vue-next";
 import FormCreateOrUpdateCompanie from "@/components/profile/FormCreateOrUpdateCompanie.vue";
 import { useAuthStore } from "@/stores/auth";
@@ -234,18 +257,13 @@ const editVersion = (version) => {
 };
 
 const deleteVersion = (version) => {
-  if (
-    confirm(
-      `Êtes-vous sûr de vouloir supprimer la version ${version.version} ?`
-    )
-  ) {
-    const index = versions.value.findIndex((v) => v.id === version.id);
-    if (index !== -1) {
-      versions.value.splice(index, 1);
-    }
-  }
   activeActionMenu.value = null;
 };
+
+const ViewsDetails=(versionId)=>{
+  console.log(versionId)
+  router.push({name:'companie_details',params:{companyId:versionId}})
+}
 
 const toggleActionMenu = (versionId) => {
   activeActionMenu.value =

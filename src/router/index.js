@@ -35,6 +35,7 @@ import CompanieVersionDemo from "@/views/CompanieVersionDemo.vue";
 import AdminDashBoard from "@/views/AdminDashBoard.vue";
 import CompanyDetailsPage from "@/components/compnanies/CompanyDetailsPage.vue";
 import AdminCompanieVersionView from "@/components/compnanies/AdminCompanieVersionView.vue";
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -142,10 +143,20 @@ const router = createRouter({
           redirect: "account/profile/?tab=companies",
           children: [
             {
-              path: ":id/companie-details",
+              path: ":companyId/companie-details",
               name: "companie_details",
               component: CompanieDetail,
             },
+            {
+            path: ":companyId/create_job",
+              name: "create_job",
+              component: Form_Create_Job_Offers,
+            },
+            {
+              path: ":companyId/update_job",
+              name: "update_job",
+              component: FormUpdateJobs,
+            }
           ],
         },
         {
@@ -174,11 +185,6 @@ const router = createRouter({
           component: Form_Create_or_Update_Cv_Profile,
         },
         {
-          path: "create_job",
-          name: "create_job",
-          component: Form_Create_Job_Offers,
-        },
-        {
           path: "contract_creator",
           name: "contract_creator",
           component: FormContractCreator,
@@ -204,11 +210,6 @@ const router = createRouter({
           component: FormUpdateContract,
         },
         {
-          path: "create_job",
-          name: "create_job",
-          component: FormCreateJob,
-        },
-        {
           path: "list_projects",
           name: "list_projects",
           component: ProjectManagement,
@@ -217,11 +218,6 @@ const router = createRouter({
           path: "project_tasks",
           name: "project_tasks",
           component: ProjectTasksView,
-        },
-        {
-          path: "update_job",
-          name: "update_job",
-          component: FormUpdateJobs,
         },
       ],
     },

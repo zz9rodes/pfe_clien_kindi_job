@@ -596,7 +596,7 @@
 
     <!-- Preview Modal -->
     <div v-if="showPreview" class="fixed inset-0 z-50 bg-black/50">
-      <div class="flex items-center justify-center min-h-screen p-4">
+      <div class="flex items-center justify-center min-h-screen p-4 bg-green-500">
         <div
           class="w-full max-w-4xl bg-white rounded-lg shadow-xl max-h-[95vh] overflow-hidden"
         >
@@ -785,7 +785,7 @@ const fetchJobData = async () => {
       }
     }
   ],
-  image: "https://example.com/job-thumbnail.png"
+  image: "http://localhost:5173/account/companies/b9df3be9-a92e-4071-8d46-d4f82ead2a16/create_job"
 }
 
     
