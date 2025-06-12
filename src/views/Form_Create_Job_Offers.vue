@@ -1,7 +1,7 @@
 <template>
   <div class="w-full min-h-screen bg-gray-50">
-  <AppModal  :isOpen="isModalOpen" :isLoader="true">
-  </AppModal>
+    <AppModal :isOpen="isModalOpen" :isLoader="true"> </AppModal>
+
     <div class="max-w-4xl p-6 mx-auto">
       <form @submit.prevent="saveJobOffer">
         <!-- Header with Save Button -->
@@ -12,6 +12,15 @@
               Post your job offer and find the ideal candidate
             </p>
           </div>
+
+          <button
+            type="button"
+            @click.prevent="previewJob"
+            class="px-6 py-2 font-medium text-gray-700 transition-colors bg-gray-100 rounded-lg hover:bg-gray-200"
+          >
+            Aperçu
+          </button>
+
           <button
             type="submit"
             :disabled="isSaving"
@@ -98,14 +107,20 @@
                   <label class="block mb-1 text-sm font-medium text-gray-700"
                     >Job Type *</label
                   >
-                  <select   
-                    id="jobType"           
+                  <select
+                    id="jobType"
                     required
                     v-model="jobOffer.job_type"
                     class="w-full px-3 py-2 text-gray-900 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#db147f] focus:border-[#db147f]"
-                  >                
-                    <option value="">select a job type</option> 
-                    <option  v-for="job_type in jobTypes" :key="job_type" :value="job_type">{{job_type.toLocaleLowerCase()}}</option>
+                  >
+                    <option value="">select a job type</option>
+                    <option
+                      v-for="job_type in jobTypes"
+                      :key="job_type"
+                      :value="job_type"
+                    >
+                      {{ job_type.toLocaleLowerCase() }}
+                    </option>
                   </select>
                 </div>
               </div>
@@ -166,25 +181,22 @@
                   <label class="block mb-1 text-sm font-medium text-gray-700"
                     >Gender</label
                   >
-                   <select   
-                    id="jobType"           
-                    required
-                    v-model="jobOffer.gender"
-                    class="w-full px-3 py-2 text-gray-900 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#db147f] focus:border-[#db147f]"
-                  >                
-                    <option value="">select a gender</option> 
-                    <option  v-for="gender in Genders" :key="gender" :value="gender">{{gender.toLocaleLowerCase()}}</option>
-                  </select>
-                  <!-- <select
+                  <select
+                    id="jobType"
                     required
                     v-model="jobOffer.gender"
                     class="w-full px-3 py-2 text-gray-900 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#db147f] focus:border-[#db147f]"
                   >
-                    <option value="">Select</option>
-                    <option value="ANY">All</option>
-                    <option value="MALE">Male</option>
-                    <option value="FEMALE">Female</option>
-                  </select> -->
+                    <option value="">select a gender</option>
+                    <option
+                      v-for="gender in Genders"
+                      :key="gender"
+                      :value="gender"
+                    >
+                      {{ gender.toLocaleLowerCase() }}
+                    </option>
+                  </select>
+                
                 </div>
               </div>
 
@@ -439,31 +451,40 @@
             </div>
           </div>
           <!-- Job Cover -->
-                    <div class="p-6 bg-white border border-gray-200 rounded-lg">
+          <div class="p-6 bg-white border border-gray-200 rounded-lg">
             <h2 class="mb-4 text-xl font-semibold text-gray-900">
               Cover Image
             </h2>
             <div>
-            <div>
+              <div>
                 <label for="cover">
-                  <span type="button"
-                    class="bg-[#fff0fb] cursor-pointer text-[#db147f] px-4 py-2 rounded-lg hover:bg-[#ffe6f7] transition-colors flex items-center">
+                  <span
+                    type="button"
+                    class="bg-[#fff0fb] cursor-pointer text-[#db147f] px-4 py-2 rounded-lg hover:bg-[#ffe6f7] transition-colors flex items-center"
+                  >
                     <UploadIcon class="w-4 h-4 mr-2" />
                     Upload Logo
                   </span>
                   <p class="mt-1 text-xs text-gray-500">PNG, JPG up to 2MB</p>
                 </label>
               </div>
-             <input @change="(e) => handleFileUpload(e)" type="file" accept="image/*" class="hidden"
-                name="cover" id="cover" />
-          
-            <div v-if="jobOffer.coverUrl">
-                            <div class="mt-4">
-                <img :src="jobOffer.coverUrl" class=" h-[200px] object-cover rounded-lg object-center">
-            </div>
-              </div>
+              <input
+                @change="(e) => handleFileUpload(e)"
+                type="file"
+                accept="image/*"
+                class="hidden"
+                name="cover"
+                id="cover"
+              />
 
-              
+              <div v-if="jobOffer.coverUrl">
+                <div class="mt-4">
+                  <img
+                    :src="jobOffer.coverUrl"
+                    class="h-[200px] object-cover rounded-lg object-center"
+                  />
+                </div>
+              </div>
             </div>
           </div>
           <!-- Status -->
@@ -476,20 +497,57 @@
                 >Status *</label
               >
 
-              <select   
-                    id="jobType"           
-                    required
-                    v-model="jobOffer.status"
-                    class="w-full px-3 py-2 text-gray-900 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#db147f] focus:border-[#db147f]"
-                  >                
-                    <option value="">select a gender</option> 
-                    <option  v-for="status in jobStatus" :key="status" :value="status">{{status.toLocaleLowerCase()}}</option>
-                  </select>
+              <select
+                id="jobType"
+                required
+                v-model="jobOffer.status"
+                class="w-full px-3 py-2 text-gray-900 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#db147f] focus:border-[#db147f]"
+              >
+                <option value="">select a gender</option>
+                <option
+                  v-for="status in jobStatus"
+                  :key="status"
+                  :value="status"
+                >
+                  {{ status.toLocaleLowerCase() }}
+                </option>
+              </select>
             </div>
           </div>
         </div>
       </form>
     </div>
+
+    <!-- Preview Modal -->
+    <AppModal
+      @close-modal="previewJob"
+      :isOpen="showPreview"
+      :isLoader="false"
+    >
+      <div class="flex items-center md:w-[80%] w-[95%] justify-center">
+        <div
+          class="w-full  bg-white rounded-lg shadow-xl max-h-[95vh] overflow-hidden"
+        >
+          <div
+            class="flex items-center justify-between p-6 border-b border-gray-200"
+          >
+            <h2 class="text-xl font-semibold text-gray-900">
+              Aperçu de l'offre d'emploi
+            </h2>
+            <button
+              @click="showPreview = false"
+              class="text-gray-400 hover:text-gray-600"
+            >
+              <XIcon class="w-6 h-6" />
+            </button>
+          </div>
+
+          <div class="overflow-y-auto max-h-[calc(95vh-120px)] p-6">
+            <JobPreview :jobData="jobOffer" />
+          </div>
+        </div>
+      </div>
+    </AppModal>
   </div>
 </template>
 
@@ -497,35 +555,43 @@
 import { ref } from "vue";
 import { UploadIcon, XIcon } from "lucide-vue-next";
 import { useAuthStore } from "@/stores/auth";
-import { useRouter,useRoute } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import { AppwriteuploadFile } from "@/app_write/files";
 import { Notyf } from "notyf";
+import JobPreview from "./JobPreview.vue";
+import AppModal from "@/components/globales/AppModal.vue";
 
 // Reactive data
 
-const router=useRouter()
-const route=useRoute()
+const router = useRouter();
+const route = useRoute();
 const isSaving = ref(false);
+const showPreview = ref(false);
 
 const notyf = new Notyf({ position: { x: "right", y: "top" }, duration: 4000 });
 
-const jobTypes=ref(['CDI', 'INTERNSHIP', 'FREELANCE'])
+const jobTypes = ref(["CDI", "INTERNSHIP", "FREELANCE"]);
 
-const Genders=ref(['MALE', 'FEMALE', 'BOTH'])
+const Genders = ref(["MALE", "FEMALE", "BOTH"]);
 
-const jobStatus=ref(['OPEN', 'CLOSE', 'DRAFT'])
+const jobStatus = ref(["OPEN", "CLOSE", "DRAFT"]);
 
 const isModalOpen = ref(false);
 
-const toggleOpenModal = () => {
-    isModalOpen.value = !isModalOpen.value;
+const previewJob = () => {
+  console.log("preview function");
+  showPreview.value = !showPreview.value;
 };
-const auth=useAuthStore()
+
+const toggleOpenModal = () => {
+  isModalOpen.value = !isModalOpen.value;
+};
+const auth = useAuthStore();
 
 const jobOffer = ref({
   title: "",
   country: "",
-  coverUrl:null,
+  coverUrl: null,
   city: "",
   description: "",
   industries: "",
@@ -544,72 +610,74 @@ const jobOffer = ref({
   steps: [],
 });
 
-jobOffer.value={
-    "id": 123,
-    "title": "Senior Frontend Developer",
-    "country": "France",
-    "city": "Paris",
-    "description": "We are looking for a passionate frontend developer with strong Vue.js experience.",
-    "industries": "Software Development",
-    "job_type": "CDI",
-    "price": {
-        "value": 50000,
-        "currency": "EUR"
+jobOffer.value = {
+  id: 123,
+  title: "Senior Frontend Developer",
+  country: "France",
+  city: "Paris",
+  description:
+    "We are looking for a passionate frontend developer with strong Vue.js experience.",
+  industries: "Software Development",
+  job_type: "CDI",
+  price: {
+    value: 50000,
+    currency: "EUR",
+  },
+  details: [
+    {
+      title: "Responsibilities",
+      items: [
+        "Develop reusable Vue.js components",
+        "Collaborate with backend team",
+        "Ensure accessibility and responsiveness",
+      ],
     },
-    "details": [
-        {
-            "title": "Responsibilities",
-            "items": [
-                "Develop reusable Vue.js components",
-                "Collaborate with backend team",
-                "Ensure accessibility and responsiveness"
-            ]
-        },
-        {
-            "title": "Qualifications",
-            "items": [
-                "5+ years of frontend development",
-                "Strong knowledge of JavaScript/TypeScript",
-                "Familiarity with REST APIs"
-            ]
-        }
-    ],
-    "years_experience": 5,
-    "skill_required": "Vue.js, TypeScript, HTML/CSS, Git",
-    "last_date": "2025-07-01",
-    "gender": "MALE",
-    "recruitment_steps": [
-        {
-            "title": "Application Review",
-            "description": "We review your CV and cover letter"
-        },
-        {
-            "title": "Technical Interview",
-            "description": "Live coding and problem-solving session"
-        }
-    ],
-    "status": "DRAFT",
-    "steps": [
-        {
-            "name": "Step 1",
-            "description": "Phone screening",
-            "renumeration": {
-                "value": 0,
-                "currency": "EUR"
-            }
-        },
-        {
-            "name": "Step 2",
-            "description": "Paid technical task",
-            "renumeration": {
-                "value": 200,
-                "currency": "EUR"
-            }
-        }
-    ],
-    "coverUrl": "https://i.pinimg.com/736x/75/84/c5/7584c5cbf81ab168cf9a9470beafa44a.jpg",
-    "updatedAt": "2025-06-11T21:35:21.465Z"
-}
+    {
+      title: "Qualifications",
+      items: [
+        "5+ years of frontend development",
+        "Strong knowledge of JavaScript/TypeScript",
+        "Familiarity with REST APIs",
+      ],
+    },
+  ],
+  years_experience: 5,
+  skill_required: "Vue.js, TypeScript, HTML/CSS, Git",
+  last_date: "2025-07-01",
+  gender: "MALE",
+  recruitment_steps: [
+    {
+      title: "Application Review",
+      description: "We review your CV and cover letter",
+    },
+    {
+      title: "Technical Interview",
+      description: "Live coding and problem-solving session",
+    },
+  ],
+  status: "DRAFT",
+  steps: [
+    {
+      name: "Step 1",
+      description: "Phone screening",
+      renumeration: {
+        value: 0,
+        currency: "EUR",
+      },
+    },
+    {
+      name: "Step 2",
+      description: "Paid technical task",
+      renumeration: {
+        value: 200,
+        currency: "EUR",
+      },
+    },
+  ],
+  coverUrl:
+    "https://i.pinimg.com/736x/75/84/c5/7584c5cbf81ab168cf9a9470beafa44a.jpg",
+  updatedAt: "2025-06-11T21:35:21.465Z",
+};
 // Details methods
 const addDetail = () => {
   jobOffer.value.details.push({
@@ -677,7 +745,8 @@ const handleFileUpload = async (e) => {
           title: data.file.$id,
           type: data.file.mimeType,
         };
-        
+
+        jobOffer.value.coverUrl=newFile.url
         toggleOpenModal();
       } else {
         notyf.error(data.message);
@@ -696,19 +765,26 @@ const handleFileUpload = async (e) => {
 // Save job offer
 const saveJobOffer = async () => {
   isSaving.value = true;
-  toggleOpenModal()
-  console.log(jobOffer.value)
+  toggleOpenModal();
+  console.log(jobOffer.value);
 
   try {
-    let companyId=route.params.companyId
-    const response= await auth.api('post',`/companies/${companyId}/jobs/create`,jobOffer.value,true)
-    console.log(response)
-    // console.log("Job offer saved:", cleanedJobOffer);
-
+    let companyId = route.params.companyId;
+    const response = await auth.api(
+      "post",
+      `/companies/${companyId}/jobs/create`,
+      jobOffer.value,
+      true
+    );
+    console.log(response);
+    if(response.success){
+      router.push({name:'companie_details',params:{companyId:route.params.companyId}})
+    }
+    toggleOpenModal();
     // Show success message
   } catch (error) {
     console.error("Error saving job offer:", error);
-    alert("Error saving job offer");
+    toggleOpenModal();
   } finally {
     isSaving.value = false;
   }

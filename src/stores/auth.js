@@ -44,7 +44,7 @@ export const useAuthStore = defineStore("auth", () => {
         
         switch (responseData?.statusCode ?? responseData.status) {
           case 422:
-            notyf.error(responseData.errors?.[0]?.message || "Erreur serveur");
+            notyf.error(responseData.errors?.[0]?.message || "Erreur De Validation");
           break;
 
           case 500:
@@ -58,7 +58,7 @@ export const useAuthStore = defineStore("auth", () => {
           break;
 
           default:
-            notyf.error(responseData.message || "Erreur serveur");
+            notyf.error(responseData?.message || "Erreur serveur");
           break;
         }
         // if (notify) notyf.error(responseData.message || "Erreur serveur");
