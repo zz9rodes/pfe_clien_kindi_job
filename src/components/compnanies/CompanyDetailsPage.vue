@@ -467,7 +467,6 @@ const HandleConfirmReject = async () => {
     reason: desapproveMessage.value,
   };
 
-  console.log(company);
 
   try {
     const response = await auth.api(
@@ -476,7 +475,6 @@ const HandleConfirmReject = async () => {
       payload,
       true
     );
-    console.log(response);
     if (response.success) {
       toggleOpenLoaderModal();
       goBack();
@@ -487,7 +485,6 @@ const HandleConfirmReject = async () => {
     goBack();
   }
 
-  console.log(isLoading.value);
 };
 
 const HandleConfirmApproved = async () => {
@@ -512,7 +509,6 @@ const HandleConfirmApproved = async () => {
 };
 
 const fetchCompanyRequestDetails = async () => {
-  console.log("RODES LA STARTS")
   toggleOpenLoaderModal();
   try {
     const companyId = route.params.companyId;
@@ -548,9 +544,7 @@ const fetchCompanyVersionDetails = async () => {
       false
     );
 
-    console.log(response.success)
-    console.log(response.data)
-    console.log( company.value)
+
     if (response.success && response.data) {
       company.value = response.data.version;
       admin.value = response.data.company.admin;
@@ -558,7 +552,6 @@ const fetchCompanyVersionDetails = async () => {
       goBack();
     }
 
-    console.log(company.value)
   } catch (error) {
     console.error("Error fetching company details:", error);
     goBack();

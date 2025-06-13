@@ -575,12 +575,10 @@ const prevStep = () => {
 };
 
 const handleSubmit = async () => {
-      console.log(formData.value);
 
   toggleOpenModal()
 
   const {password,email,location,...RestData}=formData.value
-  console.log(RestData);
 
 
   const payloadData={
@@ -595,7 +593,6 @@ const handleSubmit = async () => {
     }
   }
 
-  console.log(payloadData);
   
   const data = await auth.register(payloadData)
   

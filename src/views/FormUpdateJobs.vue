@@ -15,13 +15,15 @@
           </div>
           <div class="flex items-center gap-3">
             <button
-              @click="cancelUpdate"
+              type="button"
+              @click.prevent="cancelUpdate"
               class="px-6 py-2 font-medium text-gray-700 transition-colors bg-gray-100 rounded-lg hover:bg-gray-200"
             >
               Annuler
             </button>
             <button
-              @click="previewJob"
+              type="button"
+              @click.prevent="previewJob"
               class="px-6 py-2 font-medium text-gray-700 transition-colors bg-gray-100 rounded-lg hover:bg-gray-200"
             >
               Aperçu
@@ -89,7 +91,7 @@
                   <select
                     id="jobType"
                     required
-                    v-model="jobData.job_type"
+                    v-model="jobData.jobType"
                     class="w-full px-3 py-2 text-gray-900 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#db147f] focus:border-[#db147f]"
                   >
                     <option value="">select a job type</option>
@@ -179,7 +181,7 @@
                   >Années d'expérience</label
                 >
                 <input
-                  v-model="jobData.years_experience"
+                  v-model="jobData.yearsExperience"
                   type="number"
                   min="0"
                   placeholder="3"
@@ -192,7 +194,7 @@
                   >Compétences requises</label
                 >
                 <textarea
-                  v-model="jobData.skill_required"
+                  v-model="jobData.skillRequired"
                   placeholder="Ex: Vue.js, React, Node.js, Git..."
                   rows="3"
                   class="w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-[#db147f] focus:border-[#db147f]"
@@ -206,7 +208,7 @@
                       >Date limite de candidature</label
                     >
                     <input
-                      v-model="jobData.last_date"
+                      v-model="jobData.lastDate"
                       type="date"
                       :min="tomorrow"
                       class="w-full px-3 py-2 text-gray-900 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#db147f] focus:border-[#db147f]"
@@ -391,7 +393,7 @@
             </div>
 
             <div
-              v-if="jobData.recruitment_steps.length === 0"
+              v-if="jobData.recruitmentSteps.length === 0"
               class="py-8 text-center text-gray-500"
             >
               <UsersIcon class="w-12 h-12 mx-auto mb-3 text-gray-300" />
@@ -402,7 +404,7 @@
 
             <div class="space-y-4">
               <div
-                v-for="(step, index) in jobData.recruitment_steps"
+                v-for="(step, index) in jobData.recruitmentSteps"
                 :key="index"
                 class="p-4 border border-gray-200 rounded-lg"
               >
@@ -462,7 +464,7 @@
             </div>
 
             <div
-              v-if="jobData.steps.length === 0"
+              v-if="jobData.stepsValidation?.length === 0"
               class="py-8 text-center text-gray-500"
             >
               <CreditCardIcon class="w-12 h-12 mx-auto mb-3 text-gray-300" />
@@ -474,7 +476,7 @@
 
             <div class="space-y-4">
               <div
-                v-for="(step, index) in jobData.steps"
+                v-for="(step, index) in jobData.stepsValidation"
                 :key="index"
                 class="p-4 border border-gray-200 rounded-lg"
               >
@@ -629,15 +631,15 @@ import JobPreview from "./JobPreview.vue";
 import AppModal from "@/components/globales/AppModal.vue";
 import { AppwriteuploadFile } from "@/app_write/files";
 import { useAuthStore } from "@/stores/auth";
-import { useRoute,useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 // Emits
 const emit = defineEmits(["update", "cancel"]);
 
-const auth=useAuthStore()
+const auth = useAuthStore();
 
-const router=useRouter()
-const route=useRoute()
+const router = useRouter();
+const route = useRoute();
 
 // États réactifs
 const isSaving = ref(false);
@@ -656,19 +658,19 @@ const jobData = ref({
   city: "",
   description: "",
   industries: "",
-  job_type: "",
+  jobType: "",
   price: {
     value: null,
     currency: "",
   },
   details: [],
-  years_experience: null,
-  skill_required: "",
-  last_date: "",
+  yearsExperience: null,
+  skillRequired: "",
+  lastDate: "",
   gender: "",
-  recruitment_steps: [],
+  recruitmentSteps: [],
   status: "",
-  steps: [],
+  stepsValidation: [],
   coverUrl: null,
 });
 
@@ -694,6 +696,7 @@ const tomorrow = computed(() => {
 
 // Récupération des données du job via API
 const fetchJobData = async () => {
+  toggleOpenModal()
   try {
     jobData.value = {
       id: 123,
@@ -703,7 +706,7 @@ const fetchJobData = async () => {
       description:
         "We are looking for a passionate frontend developer with strong Vue.js experience.",
       industries: "Software Development",
-      job_type: "CDI",
+      jobType: "CDI",
       price: {
         value: 50000,
         currency: "EUR",
@@ -726,11 +729,11 @@ const fetchJobData = async () => {
           ],
         },
       ],
-      years_experience: 5,
-      skill_required: "Vue.js, TypeScript, HTML/CSS, Git",
-      last_date: "2025-07-01",
+      yearsExperience: 5,
+      skillRequired: "Vue.js, TypeScript, HTML/CSS, Git",
+      lastDate: "2025-07-01",
       gender: "MALE",
-      recruitment_steps: [
+      recruitmentSteps: [
         {
           title: "Application Review",
           description: "We review your CV and cover letter",
@@ -741,7 +744,7 @@ const fetchJobData = async () => {
         },
       ],
       status: "DRAFT",
-      steps: [
+      stepsValidation: [
         {
           name: "Step 1",
           description: "Phone screening",
@@ -759,18 +762,25 @@ const fetchJobData = async () => {
           },
         },
       ],
-      image:
-        "http://localhost:5173/account/companies/b9df3be9-a92e-4071-8d46-d4f82ead2a16/create_job",
+      coverUrl:
+        "https://i.pinimg.com/736x/ab/ab/82/abab827dbee8ceb4b078e2e94c645908.jpg",
     };
 
-    // Gestion de l'image
+    const response =await auth.api('GET',`/extern/companies/jobs/${route?.params?.jobId}`,{},false)
+    if(response.success){
+      console.log(response.data)
+
+      jobData.value=response.data
+    }
+    
     if (jobData.value.image) {
       imagePreview.value = jobData.value.image;
     }
   } catch (err) {
     console.error("Erreur lors du chargement des données:", err);
-  } finally {
-  }
+  } 
+  toggleOpenModal()
+
 };
 
 const handleFileUpload = async (e) => {
@@ -833,14 +843,14 @@ const removeDetailItem = (detailIndex, itemIndex) => {
 
 // Methods for recruitment steps management
 const addRecruitmentStep = () => {
-  jobData.value.recruitment_steps.push({
+  jobData.value.recruitmentSteps.push({
     title: "",
     description: "",
   });
 };
 
 const removeRecruitmentStep = (index) => {
-  jobData.value.recruitment_steps.splice(index, 1);
+  jobData.value.recruitmentSteps.splice(index, 1);
 };
 
 // Methods for steps management
@@ -859,38 +869,7 @@ const removeStep = (index) => {
   jobData.value.steps.splice(index, 1);
 };
 
-// Methods for file management
-const handleFileSelect = (event) => {
-  const file = event.target.files[0];
-  if (file && file.type.startsWith("image/")) {
-    selectedImage.value = file;
 
-    // Create preview URL
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      imagePreview.value = e.target.result;
-    };
-    reader.readAsDataURL(file);
-
-    // Add to jobData
-    jobData.value.image = file;
-  } else {
-    alert("Veuillez sélectionner un fichier image valide");
-  }
-};
-
-const removeImage = () => {
-  selectedImage.value = null;
-  imagePreview.value = null;
-  jobData.value.image = null;
-  if (fileInput.value) {
-    fileInput.value.value = "";
-  }
-};
-
-const triggerFileInput = () => {
-  fileInput.value?.click();
-};
 
 // Main actions
 const previewJob = () => {
@@ -902,39 +881,48 @@ const toggleOpenModal = () => {
 };
 
 const updateJob = async () => {
-  console.log("updat Jobs");
-  console.log(jobData.value)
+
   toggleOpenModal();
   isSaving.value = true;
 
   try {
-    console.log(route)
-    const companyId=route?.params?.companyId
-    const jobId=route?.params?.jobId
-    const response=await auth.api('put',`/companies/${companyId}/jobs/${jobId}/update`,jobData,true)
-    
-    if(response.success){
-      router.push({name:'companie_details',params:{companyId:companyId}})
+    const companyId = route?.params?.companyId;
+    const jobId = route?.params?.jobId;
+    const response = await auth.api(
+      "put",
+      `/companies/${companyId}/jobs/${jobId}/update`,
+      jobData,
+      true
+    );
+
+    if (response.success) {
+      router.push({
+        name: "companie_details",
+        params: { companyId: companyId },
+      });
     }
-    
+
     toggleOpenModal();
   } catch (error) {
     console.error("Error updating job:", error);
     toggleOpenModal();
   }
-  
+
   isSaving.value = false;
 };
 
 const cancelUpdate = () => {
-  if (confirm("Êtes-vous sûr de vouloir annuler les modifications ?")) {
-    emit("cancel");
-  }
+ router.back()
 };
 
 // Initialisation au montage du composant
 onMounted(() => {
-  fetchJobData();
+  const activeJob = auth.activeJob;
+  if (!activeJob) {
+    fetchJobData();
+    return;
+  }
+  jobData.value = activeJob;
 });
 </script>
 

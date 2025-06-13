@@ -268,7 +268,6 @@ const formErrors = ref({
 });
 
 const HandlerUpdateProfile= async()=>{
-    console.log(formData.value)
 
       const {dob,...payloadData}=formData.value
 
@@ -276,7 +275,6 @@ const HandlerUpdateProfile= async()=>{
         ...payloadData,dob:moment(dob).format('yyyy-MM-DD')
     })
   
-      console.log(data)
     if(data.success){
         // formData.value.avatarUrl = newFile.url;
         // auth.authenticate(data.)

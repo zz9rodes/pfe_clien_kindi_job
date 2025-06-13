@@ -112,7 +112,6 @@ const isUploading = ref(false);
 const formData = ref({ avatarUrl: auth.user.account.avatarUrl });
 
 const toggleOpenModal = () => {
-  console.log("ici");
 
   isModalOpen.value = !isModalOpen.value;
 };
@@ -133,12 +132,9 @@ const handleFileUpload = async (e) => {
   try {
     const uploadPromises = files.map(async (file) => {
       const data = await AppwriteuploadFile(file);
-      console.log(data)
-      console.log(data.file.bucketId);
-      console.log(data.file.$id);
+
 
       if (data.isCreate) {
-        console.log(data.file.bucketId);
 
         const newFile = {
           url: `${file_base_url}/${data.file.bucketId}/files/${data.file.$id}/view?project=${project_id}`,
