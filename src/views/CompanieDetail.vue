@@ -87,7 +87,7 @@
     </div>
     <div class="py-8 mx-4 md:mx-8">
       <div v-if="activeTab === 'about'" class="space-y-8">
-        <AboutCompanie :employees="company?.guests" :company="company?.activeDetails" />
+        <AboutCompanie @view-more-jobs="activeTab='jobs'" :detail="companyDetail" :jobs="company?.jobs?.slice(0,5)" :employees="company?.guests.slice(0,6)" :company="company?.activeDetails" />
       </div>
 
       <div v-if="activeTab === 'jobs'" class="space-y-6">
@@ -101,7 +101,7 @@
         </div>
 
         <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          <div class="flex flex-col" v-for="job in company.jobs" :key="job.id">
+          <div class="flex flex-col" v-for="job in company?.jobs" :key="job.id">
             <div class="text-end" @click="() => GoToUpdateCreateJob(job)">
               <button class="px-3 py-1 bg-[#db147f] text-white rounded-lg">
                 edit
@@ -124,7 +124,7 @@
         </div>
 
         <div class="grid grid-cols-1 gap-6 mt-8 md:grid-cols-2 lg:grid-cols-4">
-          <TeamMemberCard v-for="member in members" :key="member.name" :member="member" />
+          <TeamMemberCard v-for="member in companieMembers" :key="member.name" :member="member" />
         </div>
       </div>
     </div>
@@ -132,7 +132,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import {
   BuildingIcon,
   MapPinIcon,
@@ -171,6 +171,16 @@ const tabs = [
 ];
 
 const company = ref(null);
+const companieMembers=ref([])
+const companyDetail=ref({
+        stats: {
+            members: 0,
+            jobs: 0,
+            posts: 0
+        },
+        companyName: '',
+        companyLogo: ''
+    })
 
 const jobs = [
   {
@@ -326,6 +336,42 @@ const FecthCompanieDetails = async () => {
   console.log(company.value);
   toggleLoader()
 };
+
+watch(company,(newCompanieDetails)=>{
+
+  if(newCompanieDetails.activeDetails){
+    companyDetail.value={
+        stats: {
+            members: newCompanieDetails.guests.length,
+            jobs: newCompanieDetails.jobs.length,
+            posts: newCompanieDetails.posts.length
+        },
+        companyName: newCompanieDetails.activeDetails.name,
+        companyLogo: newCompanieDetails.activeDetails.avatarUrl
+    }
+  } 
+  
+})
+
+
+watch(
+  () => company.value?.guests, 
+  (members) => {
+    companieMembers.value = []; // reset pour éviter les doublons
+    members?.forEach(member => {
+      companieMembers.value.push({
+        name: `${member.account.firstName} ${member.account.lastName}`,
+        avatar: member.account.avatarUrl,
+        firstLanguage: member.account.firstLanguage,
+        position: member.role,
+      });
+    });
+
+    console.log("companieMembers.value", companieMembers.value);
+  },
+  { immediate: true } // si tu veux que ça s’exécute direct au premier rendu
+);
+
 
 onMounted(() => {
   FecthCompanieDetails();

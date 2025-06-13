@@ -8,7 +8,7 @@
     >
       <div class="w-20 h-20 mx-auto mb-4">
         <img
-          v-if="member.avatar && !errorAvatars[member.name]"
+          v-if="member.avatar "
           :src="member.avatar"
           :alt="member.name"
           class="object-cover w-20 h-20 rounded-full"
@@ -23,7 +23,7 @@
       </div>
       <h3 class="mb-1 font-semibold text-gray-900">{{ member.name }}</h3>
       <p class="mb-2 text-sm text-gray-600">{{ member.position }}</p>
-      <p class="text-xs text-gray-500">{{ member.department }}</p>
+      <p class="text-xs text-gray-500">firstLangage : {{ member.firstLangage }}</p>
     </div>
   </div>
 </template>

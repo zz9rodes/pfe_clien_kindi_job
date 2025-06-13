@@ -48,7 +48,7 @@
           <span class="h-3">{{ moment( job?.createdAt ).format('LL') }}</span>
         </div>
         <button 
-          v-if="shoFavorite"
+          v-if="showFavorite"
           class="text-gray-400 hover:text-[#e4097f] transition-colors"
           @click="toggleBookmark"
         >
@@ -79,7 +79,7 @@ const props = defineProps({
     type:String,
     required:true
   },
-  shoFavorite:{
+  showFavorite:{
     type:Boolean,
     required:false,
     default:true

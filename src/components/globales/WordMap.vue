@@ -146,4 +146,8 @@ async function fetchLocationInfo(lat, lng) {
 :deep(.leaflet-container) {
   font-family: inherit;
 }
+
+.leaflet-pane{
+  z-index: 1 !important;
+}
 </style>
