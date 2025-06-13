@@ -153,7 +153,7 @@ const router = createRouter({
               component: Form_Create_Job_Offers,
             },
             {
-              path: ":companyId/update_job",
+              path: ":companyId/update_job/:jobId",
               name: "update_job",
               component: FormUpdateJobs,
             }

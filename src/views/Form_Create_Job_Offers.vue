@@ -13,7 +13,8 @@
             </p>
           </div>
 
-          <button
+          <div class="flex flex-wrap gap-2">
+                        <button
             type="button"
             @click.prevent="previewJob"
             class="px-6 py-2 font-medium text-gray-700 transition-colors bg-gray-100 rounded-lg hover:bg-gray-200"
@@ -28,6 +29,9 @@
           >
             {{ isSaving ? "Saving..." : "Publish Offer" }}
           </button>
+          </div>
+
+
         </div>
 
         <div class="space-y-6">
@@ -610,74 +614,74 @@ const jobOffer = ref({
   steps: [],
 });
 
-jobOffer.value = {
-  id: 123,
-  title: "Senior Frontend Developer",
-  country: "France",
-  city: "Paris",
-  description:
-    "We are looking for a passionate frontend developer with strong Vue.js experience.",
-  industries: "Software Development",
-  job_type: "CDI",
-  price: {
-    value: 50000,
-    currency: "EUR",
-  },
-  details: [
-    {
-      title: "Responsibilities",
-      items: [
-        "Develop reusable Vue.js components",
-        "Collaborate with backend team",
-        "Ensure accessibility and responsiveness",
-      ],
-    },
-    {
-      title: "Qualifications",
-      items: [
-        "5+ years of frontend development",
-        "Strong knowledge of JavaScript/TypeScript",
-        "Familiarity with REST APIs",
-      ],
-    },
-  ],
-  years_experience: 5,
-  skill_required: "Vue.js, TypeScript, HTML/CSS, Git",
-  last_date: "2025-07-01",
-  gender: "MALE",
-  recruitment_steps: [
-    {
-      title: "Application Review",
-      description: "We review your CV and cover letter",
-    },
-    {
-      title: "Technical Interview",
-      description: "Live coding and problem-solving session",
-    },
-  ],
-  status: "DRAFT",
-  steps: [
-    {
-      name: "Step 1",
-      description: "Phone screening",
-      renumeration: {
-        value: 0,
-        currency: "EUR",
-      },
-    },
-    {
-      name: "Step 2",
-      description: "Paid technical task",
-      renumeration: {
-        value: 200,
-        currency: "EUR",
-      },
-    },
-  ],
-  coverUrl:
-    "https://i.pinimg.com/736x/75/84/c5/7584c5cbf81ab168cf9a9470beafa44a.jpg",
-  updatedAt: "2025-06-11T21:35:21.465Z",
-};
+// jobOffer.value = {
+//   id: 123,
+//   title: "Senior Frontend Developer",
+//   country: "France",
+//   city: "Paris",
+//   description:
+//     "We are looking for a passionate frontend developer with strong Vue.js experience.",
+//   industries: "Software Development",
+//   job_type: "CDI",
+//   price: {
+//     value: 50000,
+//     currency: "EUR",
+//   },
+//   details: [
+//     {
+//       title: "Responsibilities",
+//       items: [
+//         "Develop reusable Vue.js components",
+//         "Collaborate with backend team",
+//         "Ensure accessibility and responsiveness",
+//       ],
+//     },
+//     {
+//       title: "Qualifications",
+//       items: [
+//         "5+ years of frontend development",
+//         "Strong knowledge of JavaScript/TypeScript",
+//         "Familiarity with REST APIs",
+//       ],
+//     },
+//   ],
+//   years_experience: 5,
+//   skill_required: "Vue.js, TypeScript, HTML/CSS, Git",
+//   last_date: "2025-07-01",
+//   gender: "MALE",
+//   recruitment_steps: [
+//     {
+//       title: "Application Review",
+//       description: "We review your CV and cover letter",
+//     },
+//     {
+//       title: "Technical Interview",
+//       description: "Live coding and problem-solving session",
+//     },
+//   ],
+//   status: "DRAFT",
+//   steps: [
+//     {
+//       name: "Step 1",
+//       description: "Phone screening",
+//       renumeration: {
+//         value: 0,
+//         currency: "EUR",
+//       },
+//     },
+//     {
+//       name: "Step 2",
+//       description: "Paid technical task",
+//       renumeration: {
+//         value: 200,
+//         currency: "EUR",
+//       },
+//     },
+//   ],
+//   coverUrl:
+//     "https://i.pinimg.com/736x/75/84/c5/7584c5cbf81ab168cf9a9470beafa44a.jpg",
+//   updatedAt: "2025-06-11T21:35:21.465Z",
+// };
 // Details methods
 const addDetail = () => {
   jobOffer.value.details.push({

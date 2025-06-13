@@ -1,4 +1,9 @@
 <template>
+      <AppModal
+      @closeModal="toggleOpenLoaderModal"
+      :isOpen="isLoading"
+      :isLoader="true"
+    />
   <div class="w-full px-4 ">
     <div v-if="!OpenFormCreateCompanie" class="w-full py-1">
       <div
@@ -50,9 +55,11 @@ import CompanieCard from "@/components/CompanieCard.vue";
 import { useAuthStore } from "@/stores/auth";
 import { useRouter } from "vue-router";
 import FormCreateOrUpdateCompanie from "@/components/profile/FormCreateOrUpdateCompanie.vue";
+import AppModal from "@/components/globales/AppModal.vue";
 
 const router = useRouter();
 
+const isLoading=ref(false)
 const auth = useAuthStore();
 const OpenFormCreateCompanie = ref(false);
 
@@ -63,17 +70,28 @@ const viewCompany = async (id) => {
   router.push({ name: "companie_versions"});
 };
 
+const toggleOpenLoaderModal=()=>{
+  isLoading.value=!isLoading.value
+}
+
 const HandleGetCompaniedetail = async () => {
-  const response = await auth.api("GET", "/company_request", {}, false);
+  toggleOpenLoaderModal()
+  try {
+    const response = await auth.api("GET", "/company_request", {}, false);
 
-  if (response.success) {
-    console.log(response.data.companies);
+    if (response.success) {
+      console.log(response.data.companies);
 
-    companies.value =
-      response.data.companies.length > 0 ? response.data.companies : response.data.request;
-    auth.setCompany(response.data)
+      companies.value =
+        response.data.companies.length > 0 ? response.data.companies : response.data.request;
+      auth.setCompany(response.data)
+    }
+  toggleOpenLoaderModal()
+  } catch (error) {
+    console.log(error)
+      toggleOpenLoaderModal()
   }
-  console.log(companies.value);
+ 
 };
 
   const HandleResquestSave=(data)=>{
