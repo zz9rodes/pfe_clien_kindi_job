@@ -21,11 +21,6 @@
             {{ props.isUpdate ? "Update Changes" : "Save Changes" }}
           </span>
         </button>
-         <button @click.prevent="SaveCompanieChange"
-          class="bg-[#db147f] text-white px-6 py-2 rounded-lg hover:bg-[#c01370] transition-colors">
-          <Save class="sm:hidden" />
-          <span class="hidden sm:block"> Save Changes </span>
-        </button>
       </div>
       <!-- Company Logo & Cover -->
       <div class="p-6 bg-white border rounded-lg">
@@ -380,7 +375,6 @@ const validateForm = () => {
 
 const SaveCompanieChange = async () => {
   
-  console.log("dans le SaveCompanieChange ")
   if (!validateForm()) {
     return;
   }
@@ -400,7 +394,6 @@ const SaveCompanieChange = async () => {
       }
       else {
 
-        console.log("rodes la start")
         
         data = await auth.api(
           "post",
@@ -410,10 +403,8 @@ const SaveCompanieChange = async () => {
       }
 
     } else {
-      console.log("juste un goozomor")
       data = await auth.api("post", "/company_request/create", companyForm);
       if (data.success && data.data) {
-        console.log(companyForm.value)
         emits("request-saved", companyForm.value);
       }
       emits('close-form')
@@ -449,8 +440,7 @@ async function getGeolocation() {
       });
 
       ActiveLocation.value = true;
-      console.log("le user a valider");
-      console.log(position);
+
 
       await fetchLocationInfo(
         position.coords.latitude.toString(),
@@ -458,8 +448,7 @@ async function getGeolocation() {
       );
     } catch (error) {
       ActiveLocation.value = false;
-      console.log(error);
-      console.log("le User a refuser ca ici");
+
       notyf.error("We Cannot Use Your Location Now , try to permit it");
 
       switch (error.code) {

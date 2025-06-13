@@ -182,144 +182,17 @@ const companyDetail=ref({
         companyLogo: ''
     })
 
-const jobs = [
-  {
-    slug: "job_002",
-    id: "job_001",
-    title: "Frontend Developer",
-    companyName: "TechNova",
-    companyLogo:
-      "https://i.pinimg.com/736x/9b/6b/79/9b6b79c35e01c891fd5cc70e3ec499a0.jpg",
-    location: "Remote",
-    contractType: "Full-time",
-    postedTime: "2 days ago",
-    imageUrl:
-      "https://i.pinimg.com/736x/29/06/e2/2906e287427c26a98fd362e08a0f8093.jpg",
-    seen: true,
-    bookmarked: false,
-  },
-  {
-    id: "job_002",
-    slug: "job_002",
-    title: "UX/UI Designer",
-    companyName: "PixelCraft",
-    companyLogo:
-      "https://i.pinimg.com/736x/9e/57/c3/9e57c3ba0aad7de876cdb1c2a4b0bc5d.jpg",
-    location: "Paris, France",
-    contractType: "Contract",
-    postedTime: "1 week ago",
-    imageUrl:
-      "https://i.pinimg.com/736x/40/9f/77/409f77de213158f6b91780f3001ce214.jpg",
-    seen: false,
-    bookmarked: true,
-  },
-  {
-    id: "job_003",
-    slug: "job_002",
-    title: "Backend Engineer",
-    companyName: "CloudWorks",
-    companyLogo:
-      "https://i.pinimg.com/736x/d4/69/68/d469681941c7089b06a3ccc5137a6f3c.jpg",
-    location: "Berlin, Germany",
-    contractType: "Part-time",
-    postedTime: "5 hours ago",
-    imageUrl:
-      "https://i.pinimg.com/736x/68/93/cf/6893cf238804d5855aef507b3b2569be.jpg",
-    seen: true,
-    bookmarked: false,
-  },
-  {
-    id: "job_004",
-    slug: "job_002",
-    title: "Data Analyst",
-    companyName: "InsightCorp",
-    companyLogo:
-      "https://i.pinimg.com/736x/06/f4/c9/06f4c9a44d0d0558472fe511d41bb0b9.jpg",
-    location: "Dakar, Senegal",
-    contractType: "Internship",
-    postedTime: "3 days ago",
-    imageUrl:
-      "https://i.pinimg.com/736x/75/84/c5/7584c5cbf81ab168cf9a9470beafa44a.jpg",
-    seen: false,
-    bookmarked: true,
-  },
-  {
-    id: "job_001",
-    slug: "job_002",
-    title: "Frontend Developer",
-    companyName: "TechNova",
-    companyLogo:
-      "https://i.pinimg.com/736x/16/6e/5c/166e5cbf71048415677d780b8670e725.jpg",
-    location: "Remote",
-    contractType: "Full-time",
-    postedTime: "2 days ago",
-    imageUrl:
-      "https://i.pinimg.com/736x/16/6e/5c/166e5cbf71048415677d780b8670e725.jpg",
-    seen: true,
-    bookmarked: false,
-  },
-  {
-    id: "job_002",
-    slug: "job_002",
-    title: "UX/UI Designer",
-    companyName: "PixelCraft",
-    companyLogo: "/logos/pixelcraft.svg",
-    location: "Paris, France",
-    contractType: "Contract",
-    postedTime: "1 week ago",
-    imageUrl:
-      "https://i.pinimg.com/736x/03/79/ff/0379ff163827fd605d0c522f2cf585ac.jpg",
-    seen: false,
-    bookmarked: true,
-  },
-];
 
-const members = ref([
-  {
-    avatar:
-      "https://i.pinimg.com/736x/a0/dd/1b/a0dd1b06ffb50116537e15d377fa3b11.jpg",
-    name: "John Doe",
-    position: "Développeur Web",
-  },
-  {
-    avatar:
-      "https://i.pinimg.com/736x/09/aa/00/09aa00c89419c62c3f3f58bfff2baa79.jpg",
-    name: "Jane Smith",
-    position: "Designer UX",
-  },
-  {
-    avatar:
-      "https://i.pinimg.com/736x/6a/4c/d7/6a4cd7de7b9322f3f75b09bafeb883f6.jpg",
-    name: "Alice Johnson",
-    position: "Chef de projet",
-  },
-  {
-    avatar:
-      "https://i.pinimg.com/736x/bb/c7/5f/bbc75f884ab3e30157ab356d622a396e.jpg",
-    name: "Bob Brown",
-    position: "Analyste de données",
-  },
-  {
-    avatar:
-      "https://i.pinimg.com/736x/a2/b7/a3/a2b7a353a4f5e24102d60e6d41a995cb.jpg",
-    name: "Charlie Davis",
-    position: "Responsable marketing",
-  },
-  {
-    avatar:
-      "https://i.pinimg.com/736x/36/1a/d1/361ad1d0f6391b502f8d83dc90ec0b37.jpg",
-    name: "Eve Miller",
-    position: "Ingénieur logiciel",
-  },
-]);
+    const goBack=()=>{
+      router.push({name:'companie_versions'})
+    }
 
 const GoToNewCreateJob = () => {
-  console.log(route)
   router.push({ name: "create_job", params: { companyId: route.params.companyId } });
 };
 
 const GoToUpdateCreateJob = (job) => {
-  console.log(job.slug)
+  auth.setJob(job)
   router.push({ name: "update_job", params: { companyId: route.params.companyId, jobId: job.slug } });
 };
 
@@ -332,8 +205,7 @@ const FecthCompanieDetails = async () => {
     company.value = response.data;
   }
 
-  console.log(response);
-  console.log(company.value);
+
   toggleLoader()
 };
 
@@ -367,7 +239,6 @@ watch(
       });
     });
 
-    console.log("companieMembers.value", companieMembers.value);
   },
   { immediate: true } // si tu veux que ça s’exécute direct au premier rendu
 );

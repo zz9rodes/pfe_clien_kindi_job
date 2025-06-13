@@ -6,15 +6,18 @@ import "notyf/notyf.min.css";
 import { useRouter } from 'vue-router';
 const router=useRouter()
 
-console.log(router)
 export const useAuthStore = defineStore("auth", () => {
   const user = localStorage.getItem("user")
     ? ref(JSON.parse(localStorage.getItem("user")))
     : ref(null);
   const token = ref(localStorage.getItem("token"));
 
-    const userCompany = localStorage.getItem("company")
+  const userCompany = localStorage.getItem("company")
     ? ref(JSON.parse(localStorage.getItem("company")))
+    : ref(null);
+
+  const activeJob = localStorage.getItem("job")
+    ? ref(JSON.parse(localStorage.getItem("job")))
     : ref(null);
 
   async function api(method, url, payload = {}, notify = true) {
@@ -39,8 +42,7 @@ export const useAuthStore = defineStore("auth", () => {
       }
 
       if (!response.ok) {
-        console.log(responseData)
-        console.log(responseData?.statusCode);
+
         
         switch (responseData?.statusCode ?? responseData.status) {
           case 422:
@@ -127,7 +129,6 @@ export const useAuthStore = defineStore("auth", () => {
   }
 
   async function isAuthentificated() {
-    console.log(token);
 
     return token ? true : false;
   }
@@ -151,7 +152,15 @@ export const useAuthStore = defineStore("auth", () => {
     userCompany.value = company;
   }
 
-  return { user, userCompany,api, login, register, logout,setCompany, me, isAuthentificated };
+  function setJob(job) {
+    localStorage.setItem(
+      "job",
+      JSON.stringify(job)
+    );
+    activeJob.value = job;
+  }
+
+  return { user, userCompany,activeJob,api, login, register, logout,setCompany,setJob, me, isAuthentificated };
 });
 
 

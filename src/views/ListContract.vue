@@ -371,11 +371,8 @@ const createNewContract = () => {
 }
 
 const viewContract = (contract) => {
-  console.log('Voir le contrat:', contract)
-  alert(`Voir le contrat: ${contract.title}`)
   contractStore.setContract(contract)
 
-  console.log(contractStore.contractData)
 }
 
 const sampleContract = ref({

@@ -185,7 +185,6 @@ const fetchCompanyRequests = async () => {
   toggleOpenLoaderModal()
   try {
     const response = await auth.api('GET', '/company_request/all', {}, false)
-    console.log('Company requests:', response)
 
     if (response.success && response.data) {
       companyRequests.value = response.data.request

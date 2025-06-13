@@ -528,14 +528,11 @@ const saveProfile = async () => {
     // Simulate API call
     await new Promise(resolve => setTimeout(resolve, 1500))
     
-    console.log('Profile saved:', cleanedProfile)
     
     // Show success message (you can replace with a toast notification)
-    alert('Profile saved successfully!')
     
   } catch (error) {
     console.error('Error saving profile:', error)
-    alert('Error saving profile')
   } finally {
     isSaving.value = false
   }

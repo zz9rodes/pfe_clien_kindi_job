@@ -6,7 +6,6 @@ const appwriteUrl= import.meta.env.VITE_APP_WRITE_URL
 const appwriteProjectId= import.meta.env.VITE_APP_WRITE_PROJECT_ID
 const appwriteBucketId= import.meta.env.VITE_APP_WRITE_BUCKET_ID
 const email = import.meta.env.VITE_APP_WRITE_EMAIL;
-console.log(email);
 const password= import.meta.env.VITE_APP_WRITE_PASS
 
 
@@ -31,7 +30,6 @@ export const Appwritelogin = async () => {
    if(isAutheticated==null){
     try {
         const response = await account.createEmailPasswordSession(email, password);
-        console.log('Utilisateur connecté :', response);
         return response;
       } catch (error) {
         console.error('Erreur d\'authentification :', error);
