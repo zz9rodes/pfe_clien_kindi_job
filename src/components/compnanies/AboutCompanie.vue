@@ -9,11 +9,6 @@
                     <p class="mb-4 leading-relaxed text-gray-700">
                         {{ company?.description }}
                     </p>
-                    <!-- <p class="leading-relaxed text-gray-700">
-                        We are committed to innovation and excellence in everything we do.
-                        Our team of passionate professionals works together to deliver
-                        cutting-edge solutions that make a real difference in our industry.
-                    </p> -->
                 </div>
             </div>
 
@@ -37,14 +32,12 @@
                    
                 </div>
             </div>
-
             <!-- Locations -->
             <div class="p-6 bg-white border rounded-lg">
                 <div class="inline-flex ">
                     <MapPinIcon class="flex-shrink-0 w-4 h-4 mt-1 mr-3 text-gray-400" />
                     <h3 class="mb-4 mr-3 text-lg font-semibold text-gray-900 ">Locations </h3>
                 </div>
-                <!-- <div class="space-y-3"> -->
                     <div  class="flex items-start">
                         <div>
                             <div class="font-medium text-gray-900">
@@ -59,28 +52,37 @@
                             </div>
                         </div>
                     </div>
-                <!-- </div> -->
             </div> 
 
-            <!-- <div class="flex justify-between border divide-x table-stats">
-                <div class="p-6 ">
+            <div class="flex justify-between border divide-x rounded-lg table-stats">
+                <div class="flex items-center gap-2 p-6 ">
                     Teams Members
                     <span class="text-2xl font-bold ">
-                        8
+                        {{ detail.stats.members }}
                     </span>
                 </div>
-                <div class="p-6 ">
+                <div class="flex items-center gap-2 p-6 ">
                     Active Jobs
                     <span class="text-2xl font-bold ">
-                        5
+                        {{ detail.stats.jobs }}
                     </span>
                 </div>
-                <div class="p-6 ">
-                    Publish News <span class="text-2xl font-bold ">
-                        11
+                <div class="flex items-center gap-2 p-6 ">
+                    Publish News 
+                    <span class="text-2xl font-bold ">
+                        {{ detail.stats.posts }}
                     </span>
                 </div>
-            </div> -->
+            </div>
+            <div class="flex flex-col ">
+                <h3 class="text-lg">
+                    Ours Team 
+                </h3>
+                <div class="grid grid-cols-1 gap-6 mt-8 md:grid-cols-2 lg:grid-cols-4">
+                    <TeamMemberCard v-for="member in companieMembers" :key="member" :member="member" />
+                </div>
+            </div>
+          
 
             <WordMap/>
             
@@ -88,15 +90,18 @@
 
         <!-- Sidebar -->
 
-        <div class="space-y-6">
+        <div class="space-y-6" v-if="jobs.length>0">
             <JobCard
               v-for="job in jobs"
               :key="job.id"
               :job="job"
               @bookmark="handleBookmark"
+              :companyName="detail.companyName"
+              :companyLogo="detail.companyLogo"
+              :showFavorite="false"
             />
             <!-- <div class=""> -->
-               <button class="w-full p-2 bg-[#db147f]  text-white">
+               <button class="w-full p-2 bg-[#db147f]  text-white " @click="HandleViewMoreJobs()">
                 View Mores ...
                </button>
             <!-- </div> -->
@@ -105,7 +110,7 @@
 </template>
 
 <script setup>
-import { ref,defineProps } from "vue";
+import { ref,defineProps,defineEmits, watch } from "vue";
 import {
     MapPinIcon,
     StarIcon,
@@ -116,52 +121,9 @@ import {
 import JobCard from "../JobCard.vue";
 import WordMap from "../globales/WordMap.vue";
 import moment from "moment";
-import { number } from "zod";
+import TeamMemberCard from "../TeamMemberCard.vue";
 
-const jobs = [
-  {
-    id: "job_001",
-    title: "Frontend Developer",
-    companyName: "TechNova",
-    companyLogo:
-      "https://i.pinimg.com/736x/9b/6b/79/9b6b79c35e01c891fd5cc70e3ec499a0.jpg",
-    location: "Remote",
-    contractType: "Full-time",
-    postedTime: "2 days ago",
-    imageUrl:
-      "https://i.pinimg.com/736x/29/06/e2/2906e287427c26a98fd362e08a0f8093.jpg",
-    seen: true,
-    bookmarked: false,
-  },
-  {
-    id: "job_002",
-    title: "UX/UI Designer",
-    companyName: "PixelCraft",
-    companyLogo:
-      "https://i.pinimg.com/736x/9e/57/c3/9e57c3ba0aad7de876cdb1c2a4b0bc5d.jpg",
-    location: "Paris, France",
-    contractType: "Contract",
-    postedTime: "1 week ago",
-    imageUrl:
-      "https://i.pinimg.com/736x/40/9f/77/409f77de213158f6b91780f3001ce214.jpg",
-    seen: false,
-    bookmarked: true,
-  },
-  {
-    id: "job_003",
-    title: "Backend Engineer",
-    companyName: "CloudWorks",
-    companyLogo:
-      "https://i.pinimg.com/736x/d4/69/68/d469681941c7089b06a3ccc5137a6f3c.jpg",
-    location: "Berlin, Germany",
-    contractType: "Part-time",
-    postedTime: "5 hours ago",
-    imageUrl:
-      "https://i.pinimg.com/736x/68/93/cf/6893cf238804d5855aef507b3b2569be.jpg",
-    seen: true,
-    bookmarked: false,
-  } 
-];
+const emits=defineEmits(['view-more-jobs'])
 
 const props=defineProps({
     company:{
@@ -172,10 +134,59 @@ const props=defineProps({
         type:Array[Object],
         required:true,
         default:[]
+    },
+    jobs:{
+        type:Object,
+        required:false,
+        default:[]
+    },
+    detail: {
+    type: Object,
+    required: true,
+    default: () => ({
+        stats: {
+            members: 0,
+            jobs: 0,
+            posts: 0
+        },
+        companyName: '',
+        companyLogo: ''
+    }),
+    validator: (val) => {
+        return (
+            val &&
+            typeof val.companyName === 'string' &&
+            typeof val.companyLogo === 'string' &&
+            val.stats &&
+            typeof val.stats.members === 'number' &&
+            typeof val.stats.jobs === 'number' &&
+            typeof val.stats.posts === 'number'
+        )
     }
+}
+
 })
 
-// const company = ref(props.company);
+const companieMembers=ref([])
+
+const HandleViewMoreJobs=()=>{
+    emits('view-more-jobs')
+}
+
+watch(() => props.employees, (members) => {
+
+  members?.forEach(member=>{
+    companieMembers.value.push({
+        name:`${member.account.firstName}  ${member.account.lastName}`,
+        avatar:member.account.avatarUrl,
+        firstLangage:member.account.firstLangage,
+        position:member.role,
+        firstLanguage:member.account.firstLanguage
+    })
+  })
+ 
+})
+
 </script>
 
 <style></style>
