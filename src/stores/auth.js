@@ -43,7 +43,7 @@ export const useAuthStore = defineStore("auth", () => {
 
       if (!response.ok) {
 
-        
+
         switch (responseData?.statusCode ?? responseData.status) {
           case 422:
             notyf.error(responseData.errors?.[0]?.message || "Erreur De Validation");
