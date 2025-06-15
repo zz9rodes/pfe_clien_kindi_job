@@ -20,6 +20,8 @@ export const useAuthStore = defineStore("auth", () => {
     ? ref(JSON.parse(localStorage.getItem("job")))
     : ref(null);
 
+  const baseUrlApi='http://localhost:3333/v1/api'
+
   async function api(method, url, payload = {}, notify = true) {
     const notyf = new Notyf({ position: { x: "right", y: "top" }, duration: 3000 });
     console.log("la methode : ",method)
@@ -160,7 +162,7 @@ export const useAuthStore = defineStore("auth", () => {
     activeJob.value = job;
   }
 
-  return { user, userCompany,activeJob,api, login, register, logout,setCompany,setJob, me, isAuthentificated };
+  return {baseUrlApi, user, userCompany,activeJob,api,token, login, register, logout,setCompany,setJob, me, isAuthentificated };
 });
 
 

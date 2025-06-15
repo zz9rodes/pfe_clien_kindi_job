@@ -1,6 +1,5 @@
 <template>
-  <!-- <AppModal :isOpen="isModalOpen" :isLoader="true"></AppModal> -->
-
+  <AppModal :isOpen="isModalOpen" :isLoader="true"></AppModal>
   <div class="w-full h-full overflow-y-auto bg-gray-50 main-frame">
     <div class="max-w-4xl p-6 mx-auto">
       <div v-if="!showCreateForm">
@@ -108,7 +107,7 @@
                   @click="addSkill"
                   class="flex justify-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 transition-colors bg-gray-100 rounded-lg item-center hover:bg-gray-200"
                 >
-                  <span class="hidden sm:block"> + Ajouter </span>
+                  + <span class="hidden sm:block"> Ajouter </span>
                 </button>
               </div>
               <div class="space-y-3">
@@ -146,7 +145,7 @@
                   @click="addFocusPoint"
                   class="flex justify-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 transition-colors bg-gray-100 rounded-lg item-center hover:bg-gray-200"
                 >
-                  <span class="hidden sm:block"> + Ajouter </span>
+                  + <span class="hidden sm:block"> Ajouter </span>
                 </button>
               </div>
               <div class="space-y-3">
@@ -184,7 +183,7 @@
                   @click="addSocialLink"
                   class="flex justify-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 transition-colors bg-gray-100 rounded-lg item-center hover:bg-gray-200"
                 >
-                  <span class="hidden sm:block"> + Ajouter </span>
+                  + <span class="hidden sm:block"> Ajouter </span>
                 </button>
               </div>
               <div class="space-y-4">
@@ -265,7 +264,7 @@
                   @click="addEducation"
                   class="flex justify-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 transition-colors bg-gray-100 rounded-lg item-center hover:bg-gray-200"
                 >
-                  <span class="hidden sm:block"> + Ajouter </span>
+                  + <span class="hidden sm:block"> Ajouter </span>
                 </button>
               </div>
               <div class="space-y-4">
@@ -353,7 +352,7 @@
                   @click="addWorkExperience"
                   class="flex justify-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 transition-colors bg-gray-100 rounded-lg item-center hover:bg-gray-200"
                 >
-                  <span class="hidden sm:block"> + Ajouter </span>
+                  + <span class="hidden sm:block"> Ajouter </span>
                 </button>
               </div>
               <div class="space-y-4">
@@ -480,7 +479,7 @@
                   @click="addPersonalProject"
                   class="flex justify-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 transition-colors bg-gray-100 rounded-lg item-center hover:bg-gray-200"
                 >
-                  <span class="hidden sm:block"> + Ajouter </span>
+                  + <span class="hidden sm:block"> Ajouter </span>
                 </button>
               </div>
               <div class="space-y-4">
@@ -616,9 +615,12 @@ onMounted(() => {
   fetchProfiles();
 });
 
-const editProfile = (profileData) => {
-  console.log(profileData);
-  profileData.value = { ...profileData };
+const editProfile = (data) => {
+  console.log(data);
+  profileData.value = data;
+  // profileData.value = profile.value
+  // console.log(profile.value)
+  console.log(profileData.value);
   isEditing.value = true;
   showCreateForm.value = true;
 };
@@ -643,6 +645,8 @@ const resetForm = () => {
 
 const viewProfile = (profileData) => {
   console.log("Voir le profil:", profileData);
+  console.log(`${window.location.origin}/portofolio/${profile.value.slug}`)
+  window.open(`${window.location.origin}/portofolio/${profile.value.slug}`, "_blank");
 };
 
 const addSkill = () => {
@@ -723,16 +727,15 @@ const saveProfile = async () => {
       : "/cv_profiles/create";
     const method = isEditing.value ? "PUT" : "POST";
 
-      const  response= await auth.api(method, endpoint, profileData.value, true);
+    const response = await auth.api(method, endpoint, profileData.value, true);
 
-        if(response.success){
-              resetForm();
-              showCreateForm.value = false;
-              isEditing.value = false;
+    if (response.success) {
+      resetForm();
+      showCreateForm.value = false;
+      isEditing.value = false;
 
-              window.location.reload()
-        }
-    
+      window.location.reload();
+    }
   } catch (error) {
     console.error("Erreur lors de la sauvegarde du profil:", error);
   } finally {
