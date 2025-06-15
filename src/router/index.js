@@ -249,7 +249,7 @@ const router = createRouter({
       component: ResetPasswordForm,
     },
     {
-      path: "/portofolio",
+      path: "/portofolio/:cvId?",
       name: "portofolio",
       component: Portofolio,
     },

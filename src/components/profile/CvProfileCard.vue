@@ -13,7 +13,7 @@
         </div>
         <div class="flex gap-2">
           <button
-            @click="$emit('edit', profile)"
+            @click.prevent="$emit('edit', profile)"
             class="p-2 text-blue-600 rounded-full hover:bg-blue-50"
           >
             <EditIcon class="w-4 h-4" />
@@ -82,7 +82,7 @@
 <script setup>
 import { Edit as EditIcon, Trash as TrashIcon } from "lucide-vue-next";
 
-defineProps({
+const props = defineProps({
   profile: {
     type: Object,
     required: true,
