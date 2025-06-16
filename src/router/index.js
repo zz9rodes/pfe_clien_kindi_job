@@ -43,7 +43,7 @@ const router = createRouter({
       path: "/admin/",
       name: "admin",
       component: AdminDashBoard,
-      children:[
+      children: [
         {
           path: "companies",
           name: "admin_companies",
@@ -54,18 +54,18 @@ const router = createRouter({
           name: "companies_version",
           component: AdminCompanieVersionView,
         },
-         {
+        {
           path: "companies_version/:companyId/details",
           name: "companies_version_details",
           component: CompanyDetailsPage,
-          props:{showAction:false,isVersion:true}
+          props: { showAction: false, isVersion: true },
         },
         {
           path: "companie_request/:companyId/details",
           name: "admin_companie_details",
           component: CompanyDetailsPage,
-        }
-      ]
+        },
+      ],
     },
     {
       path: "/",
@@ -148,7 +148,7 @@ const router = createRouter({
               component: CompanieDetail,
             },
             {
-            path: ":companyId/create_job",
+              path: ":companyId/create_job",
               name: "create_job",
               component: Form_Create_Job_Offers,
             },
@@ -156,7 +156,12 @@ const router = createRouter({
               path: ":companyId/update_job/:jobId",
               name: "update_job",
               component: FormUpdateJobs,
-            }
+            },
+            {
+              path: ":companyId/team-members",
+              name: "team_members",
+              component: CompanieTeamMember,
+            },
           ],
         },
         {
@@ -168,11 +173,6 @@ const router = createRouter({
           path: "l_jobs/:id/jobs_details",
           name: "account_jobs_details",
           component: JobOffersDetails,
-        },
-        {
-          path: "team-members",
-          name: "team_members",
-          component: CompanieTeamMember,
         },
         {
           path: "list-news",

@@ -2,29 +2,51 @@
   <div class="w-full min-h-screen">
     <AppModal :isOpen="isUploading" :isLoader="true"> </AppModal>
     <div class="relative h-64 bg-gradient-to-r from-blue-600 to-purple-600">
-      <img :src="company?.activeDetails?.coverUrl" :alt="`Couverture de ${company?.activeDetails?.name}`"
-        class="object-cover w-full h-full" />
+      <img
+        :src="company?.activeDetails?.coverUrl"
+        :alt="`Couverture de ${company?.activeDetails?.name}`"
+        class="object-cover w-full h-full"
+      />
       <div class="absolute inset-0 bg-black bg-opacity-30"></div>
       <div class="absolute top-6 left-6">
-        <button @click="goBack"
-          class="flex items-center px-4 py-2 text-white transition-all duration-200 bg-white rounded-lg bg-opacity-20 backdrop-blur-sm hover:bg-opacity-30">
-          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        <button
+          @click="goBack"
+          class="flex items-center px-4 py-2 text-white transition-all duration-200 bg-white rounded-lg bg-opacity-20 backdrop-blur-sm hover:bg-opacity-30"
+        >
+          <svg
+            class="w-5 h-5 mr-2"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15 19l-7-7 7-7"
+            />
           </svg>
           Retour
         </button>
       </div>
 
       <div v-if="showAction" class="absolute flex space-x-3 top-6 right-6">
-        <button @click="toggleOpenModal"
-          class="px-6 py-2 font-medium text-white transition-colors duration-200 bg-gray-400 rounded-lg">
+        <button
+          @click="toggleOpenModal"
+          class="px-6 py-2 font-medium text-white transition-colors duration-200 bg-gray-400 rounded-lg"
+        >
           Rejeter
         </button>
-        <button :disabled="company == 'approved' ? true : false" :class="company == 'approved'
-            ? ' cursor-not-allowed bg-pink-300'
-            : 'cursor-pointer bg-[#db147f] '
-          " @click="() => toggleOpenModal('a')"
-          class="px-6 py-2 font-medium text-white transition-colors duration-200 bg-[#db147f] rounded-lg">
+        <button
+          :disabled="company == 'approved' ? true : false"
+          :class="
+            company == 'approved'
+              ? ' cursor-not-allowed bg-pink-300'
+              : 'cursor-pointer bg-[#db147f] '
+          "
+          @click="() => toggleOpenModal('a')"
+          class="px-6 py-2 font-medium text-white transition-colors duration-200 bg-[#db147f] rounded-lg"
+        >
           Approuver
         </button>
       </div>
@@ -33,9 +55,13 @@
       <div class="p-8 mb-8 bg-white shadow-lg rounded-xl">
         <div class="flex items-start space-x-6">
           <div class="flex-shrink-0">
-            <img :src="company?.activeDetails?.avatarUrl || '/placeholder-company.png'
-              " :alt="`Logo de ${company?.activeDetails?.name}`"
-              class="object-cover w-24 h-24 border-4 border-white shadow-lg rounded-xl" />
+            <img
+              :src="
+                company?.activeDetails?.avatarUrl || '/placeholder-company.png'
+              "
+              :alt="`Logo de ${company?.activeDetails?.name}`"
+              class="object-cover w-24 h-24 border-4 border-white shadow-lg rounded-xl"
+            />
           </div>
 
           <div class="flex-1">
@@ -43,12 +69,14 @@
               <h1 class="text-3xl font-bold text-gray-900">
                 {{ company?.activeDetails?.name }}
               </h1>
-              <span :class="[
-                'px-3 py-1 rounded-full text-sm font-medium',
-                company?.activeDetails?.isActive
-                  ? 'bg-green-100 text-green-800'
-                  : 'bg-yellow-100 text-yellow-800',
-              ]">
+              <span
+                :class="[
+                  'px-3 py-1 rounded-full text-sm font-medium',
+                  company?.activeDetails?.isActive
+                    ? 'bg-green-100 text-green-800'
+                    : 'bg-yellow-100 text-yellow-800',
+                ]"
+              >
                 {{ company?.activeDetails?.status }}
               </span>
             </div>
@@ -64,36 +92,50 @@
                 {{ company?.activeDetails?.country }}
               </span>
             </div>
-
-
           </div>
         </div>
       </div>
     </div>
 
-    <div class="sticky top-0 z-10 border-b border-gray-20 bg-neutral-400">
+    <div class="sticky top-0 z-10 bg-white border-b border-gray-20">
       <div class="mx-4 md:mx-8">
         <nav class="flex space-x-8 overflow-x-auto">
-          <button v-for="tab in tabs" :key="tab.id" @click="activeTab = tab.id" :class="[
-            'py-4 px-2 border-b-2 font-medium text-sm whitespace-nowrap transition-colors',
-            activeTab === tab.id
-              ? 'border-[#db147f] text-[#db147f]'
-              : 'border-transparent text-white hover:white-gray hover:border-gray-300',
-          ]">
+          <button
+            v-for="tab in tabs"
+            :key="tab.id"
+            @click="activeTab = tab.id"
+            :class="[
+              'py-4 px-2 border-b-2 font-medium text-sm whitespace-nowrap transition-colors',
+              activeTab === tab.id
+                ? 'border-[#db147f] text-[#db147f]'
+                : 'border-transparent  hover:text-gray-700 hover:border-gray-300',
+            ]"
+          >
             {{ tab.name }}
           </button>
         </nav>
       </div>
     </div>
-    <div class="py-8 mx-4 md:mx-8">
+    <div class="px-4 py-8 md:px-8" :class=" activeTab==='team' ? 'bg-gray-50':'bg-white' ">
+      
       <div v-if="activeTab === 'about'" class="space-y-8">
-        <AboutCompanie @view-more-jobs="activeTab='jobs'" :detail="companyDetail" :jobs="company?.jobs?.slice(0,5)" :employees="company?.guests.slice(0,6)" :company="company?.activeDetails" />
+        <AboutCompanie
+          @view-more-jobs="activeTab = 'jobs'"
+          :detail="companyDetail"
+          :jobs="company?.jobs?.slice(0, 5)"
+          :employees="company?.guests.slice(0, 6)"
+          :company="company?.activeDetails"
+        />
       </div>
 
       <div v-if="activeTab === 'jobs'" class="space-y-6">
-        <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <div
+          class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between"
+        >
           <div @click="GoToNewCreateJob">
-            <button class="new-job flex gap-1 bg-[#db147f] text-white rounded-md px-3 py-2">
+            <button
+              class="new-job flex gap-1 bg-[#db147f] text-white rounded-md px-3 py-2"
+            >
               <Plus />
               <span>New Job</span>
             </button>
@@ -107,12 +149,18 @@
                 edit
               </button>
             </div>
-            <JobCard :shoFavorite="false" :companyLogo="company.activeDetails.avatarUrl" :companyName="company.activeDetails.name" :job="job" @bookmark="handleBookmark" />
+            <JobCard
+              :shoFavorite="false"
+              :companyLogo="company.activeDetails.avatarUrl"
+              :companyName="company.activeDetails.name"
+              :job="job"
+              @bookmark="handleBookmark"
+            />
           </div>
         </div>
       </div>
 
-      <div v-if="activeTab === 'team'" class="space-y-8">
+      <div v-if="activeTab === 'team'" class="space-y-8 bg-gray-50">
         <div class="text-center">
           <h2 class="mb-4 text-2xl font-semibold text-gray-900">
             Meet Our Team
@@ -124,9 +172,14 @@
         </div>
 
         <div class="grid grid-cols-1 gap-6 mt-8 md:grid-cols-2 lg:grid-cols-4">
-          <TeamMemberCard v-for="member in companieMembers" :key="member.name" :member="member" />
+          <TeamMemberCard
+            v-for="member in companieMembers"
+            :key="member.name"
+            :member="member"
+          />
         </div>
       </div>
+      
     </div>
   </div>
 </template>
@@ -156,8 +209,7 @@ import AppModal from "@/components/globales/AppModal.vue";
 const router = useRouter();
 const route = useRoute();
 const auth = useAuthStore();
-const isUploading = ref(false)
-
+const isUploading = ref(false);
 
 const toggleLoader = () => {
   isUploading.value = !isUploading.value;
@@ -171,33 +223,38 @@ const tabs = [
 ];
 
 const company = ref(null);
-const companieMembers=ref([])
-const companyDetail=ref({
-        stats: {
-            members: 0,
-            jobs: 0,
-            posts: 0
-        },
-        companyName: '',
-        companyLogo: ''
-    })
+const companieMembers = ref([]);
+const companyDetail = ref({
+  stats: {
+    members: 0,
+    jobs: 0,
+    posts: 0,
+  },
+  companyName: "",
+  companyLogo: "",
+});
 
-
-    const goBack=()=>{
-      router.push({name:'companie_versions'})
-    }
+const goBack = () => {
+  router.push({ name: "companie_versions" });
+};
 
 const GoToNewCreateJob = () => {
-  router.push({ name: "create_job", params: { companyId: route.params.companyId } });
+  router.push({
+    name: "create_job",
+    params: { companyId: route.params.companyId },
+  });
 };
 
 const GoToUpdateCreateJob = (job) => {
-  auth.setJob(job)
-  router.push({ name: "update_job", params: { companyId: route.params.companyId, jobId: job.slug } });
+  auth.setJob(job);
+  router.push({
+    name: "update_job",
+    params: { companyId: route.params.companyId, jobId: job.slug },
+  });
 };
 
 const FecthCompanieDetails = async () => {
-  toggleLoader()
+  toggleLoader();
   const companyId = route.params.companyId;
 
   const response = await auth.api("GET", `/companies/${companyId}`, {}, false);
@@ -205,44 +262,39 @@ const FecthCompanieDetails = async () => {
     company.value = response.data;
   }
 
-
-  toggleLoader()
+  toggleLoader();
 };
 
-watch(company,(newCompanieDetails)=>{
-
-  if(newCompanieDetails.activeDetails){
-    companyDetail.value={
-        stats: {
-            members: newCompanieDetails.guests.length,
-            jobs: newCompanieDetails.jobs.length,
-            posts: newCompanieDetails.posts.length
-        },
-        companyName: newCompanieDetails.activeDetails.name,
-        companyLogo: newCompanieDetails.activeDetails.avatarUrl
-    }
-  } 
-  
-})
-
+watch(company, (newCompanieDetails) => {
+  if (newCompanieDetails.activeDetails) {
+    companyDetail.value = {
+      stats: {
+        members: newCompanieDetails.guests.length,
+        jobs: newCompanieDetails.jobs.length,
+        posts: newCompanieDetails.posts.length,
+      },
+      companyName: newCompanieDetails.activeDetails.name,
+      companyLogo: newCompanieDetails.activeDetails.avatarUrl,
+    };
+  }
+});
 
 watch(
-  () => company.value?.guests, 
+  () => company.value?.guests,
   (members) => {
     companieMembers.value = []; // reset pour éviter les doublons
-    members?.forEach(member => {
+    members?.forEach((member) => {
       companieMembers.value.push({
         name: `${member.account.firstName} ${member.account.lastName}`,
         avatar: member.account.avatarUrl,
         firstLanguage: member.account.firstLanguage,
         position: member.role,
+        status: member.accept ? 'accepted':'send'
       });
     });
-
   },
   { immediate: true } // si tu veux que ça s’exécute direct au premier rendu
 );
-
 
 onMounted(() => {
   FecthCompanieDetails();
