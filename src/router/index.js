@@ -162,6 +162,31 @@ const router = createRouter({
               name: "team_members",
               component: CompanieTeamMember,
             },
+            {
+              path: ":companyId/contract_creator",
+              name: "contract_creator",
+              component: FormContractCreator,
+            },
+            {
+              path: "contract_preview",
+              name: "contract_preview",
+              component: ContractPreview,
+            },
+            {
+              path: ":companyId/contract_list",
+              name: "contract_list",
+              component: ListContract,
+            },
+            {
+              path: "testcontract_preview",
+              name: "testcontract_preview",
+              component: TestPreviewContract,
+            },
+            {
+              path: ":companyId/update_contract/:contractId?",
+              name: "update_contract",
+              component: FormUpdateContract,
+            },
           ],
         },
         {
@@ -178,36 +203,6 @@ const router = createRouter({
           path: "list-news",
           name: "list_news",
           component: ListNews,
-        },
-        {
-          path: "create_cv_profile",
-          name: "create_cv_profile",
-          component: Form_Create_or_Update_Cv_Profile,
-        },
-        {
-          path: "contract_creator",
-          name: "contract_creator",
-          component: FormContractCreator,
-        },
-        {
-          path: "contract_preview",
-          name: "contract_preview",
-          component: ContractPreview,
-        },
-        {
-          path: "contract_list",
-          name: "contract_list",
-          component: ListContract,
-        },
-        {
-          path: "testcontract_preview",
-          name: "testcontract_preview",
-          component: TestPreviewContract,
-        },
-        {
-          path: "update_contract",
-          name: "update_contract",
-          component: FormUpdateContract,
         },
         {
           path: "list_projects",
