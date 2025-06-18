@@ -1,11 +1,7 @@
 import { ref, unref } from "vue";
 import { defineStore,acceptHMRUpdate } from "pinia";
-// import { useRouter } from "vue-router";
 import { Notyf } from "notyf";
 import "notyf/notyf.min.css";
-import { useRouter } from 'vue-router';
-const router=useRouter()
-
 export const useAuthStore = defineStore("auth", () => {
   const user = localStorage.getItem("user")
     ? ref(JSON.parse(localStorage.getItem("user")))
@@ -24,7 +20,6 @@ export const useAuthStore = defineStore("auth", () => {
 
   async function api(method, url, payload = {}, notify = true) {
     const notyf = new Notyf({ position: { x: "right", y: "top" }, duration: 3000 });
-    console.log("la methode : ",method)
     try {
       const response = await fetch(`http://localhost:3333/v1/api${url}`, {
         method,
@@ -44,9 +39,7 @@ export const useAuthStore = defineStore("auth", () => {
       }
 
       if (!response.ok) {
-
-
-        switch (responseData?.statusCode ?? responseData.status) {
+        switch (responseData?.statusCode ?? response.status) {
           case 422:
             notyf.error(responseData.errors?.[0]?.message || "Erreur De Validation");
           break;
@@ -57,8 +50,16 @@ export const useAuthStore = defineStore("auth", () => {
 
           case 404:
             notyf.error("Entity Not Found");
-            console.log(router)
-            // router.push({name:"profile"})
+          break;
+
+          case 404:
+            notyf.error(responseData?.message || "Erreur serveur");
+          break;
+          
+          case 401:
+            notyf.error(responseData?.message || "Erreur serveur");
+            await  logout()
+            window.location.href=`${window.location.origin}/auth/login`
           break;
 
           default:
@@ -107,7 +108,7 @@ export const useAuthStore = defineStore("auth", () => {
 
   async function logout() {
     try {
-      await api("DELETE", "auth/logout", {}, false);
+      // await api("DELETE", "auth/logout", {}, false);
     } catch (error) {
       console.error("Erreur de déconnexion:", error);
     } finally {
@@ -115,7 +116,8 @@ export const useAuthStore = defineStore("auth", () => {
       user.value = null;
       localStorage.removeItem("token");
       localStorage.removeItem("user");
-      window.$toast("success", "Déconnexion", "Vous avez été déconnecté");
+      localStorage.removeItem("job");
+      localStorage.removeItem("company");
     }
   }
 

@@ -1,36 +1,55 @@
 <template>
-  <div
-    :key="member.name"
-    class="p-2 text-center bg-white border rounded-lg"
-  >
-    <div
-      class="relative flex flex-col overflow-hidden transition duration-700 ease-in-out group hover:cursor-pointer"
-    >
-      <div class="w-20 h-20 mx-auto mb-4">
+  <div class="p-4 transition-shadow bg-white border border-gray-200 rounded-lg hover:shadow-md">
+    <div class="flex items-center space-x-3">
+      <div class="flex-shrink-0">
         <img
-          v-if="member.avatar "
+          v-if="member.avatar && !errorAvatars[member.name]"
           :src="member.avatar"
           :alt="member.name"
-          class="object-cover w-20 h-20 rounded-full"
+          class="object-cover w-12 h-12 border-2 border-gray-100 rounded-full"
           @error="handleAvatarError(member.name)"
         />
         <div
           v-else
-          class="flex items-center justify-center w-20 h-20 bg-gray-200 rounded-full"
+          class="flex items-center justify-center w-12 h-12 bg-gray-200 rounded-full"
         >
-          <UserIcon class="w-10 h-10 text-gray-400" />
+          <span class="text-sm font-medium text-gray-600">
+            {{ getInitials(member.name) }}
+          </span>
         </div>
       </div>
-      <h3 class="mb-1 font-semibold text-gray-900">{{ member.name }}</h3>
-      <p class="mb-2 text-sm text-gray-600">{{ member.position }}</p>
-      <p class="text-xs text-gray-500">firstLangage : {{ member.firstLangage }}</p>
+      <div class="flex-1 min-w-0">
+        <h3 class="text-sm font-medium text-gray-900 truncate">
+          {{ member.name }}
+        </h3>
+        <p class="text-sm text-gray-500 truncate">
+          {{ member.position }}
+        </p>
+        <div class="mt-2">
+          <span 
+            :class="[
+              'inline-flex items-center px-2 py-1 text-xs font-medium rounded-full',
+              member.status === 'accepted' 
+                ? 'bg-green-100 text-green-800' 
+                : 'bg-yellow-100 text-yellow-800'
+            ]"
+          >
+            <div 
+              :class="[
+                'w-1.5 h-1.5 rounded-full mr-1.5',
+                member.status === 'accepted' ? 'bg-green-400' : 'bg-yellow-400'
+              ]"
+            ></div>
+            {{ member.status === 'accepted' ? 'Actif' : 'En attente' }}
+          </span>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
-import { UserIcon } from 'lucide-vue-next'
 
 const props = defineProps({
   member: {
@@ -39,9 +58,16 @@ const props = defineProps({
   }
 })
 
+const emit = defineEmits(['resend-invitation', 'view-profile', 'remove-member'])
+
 const errorAvatars = ref({})
 
 function handleAvatarError(name) {
   errorAvatars.value[name] = true
+}
+
+function getInitials(name) {
+  if (!name) return '??'
+  return name.split(' ').map(n => n[0]).join('')
 }
 </script>
