@@ -17,9 +17,9 @@ import Portofolio from "@/views/Portofolio.vue";
 import Form_Create_Job_Offers from "@/views/Form_Create_Job_Offers.vue";
 import JobOffersDetails from "@/views/JobOffersDetails.vue";
 import FormContractCreator from "@/views/FormContractCreator.vue";
-import ContractPreview from "@/views/ContractPreview.vue";
+// import ContractPreview from "@/views/ContractPreview.vue";
 import CompanieTeamMember from "@/components/compnanies/CompanieTeamMember.vue";
-import TestPreviewContract from "@/views/TestPreviewContract.vue";
+import PreviewContract from "@/views/ContractItemPreviewContract.vue";
 import ListContract from "@/views/ListContract.vue";
 import FormUpdateContract from "@/views/FormUpdateContract.vue";
 import ExempleUpdatContract from "@/views/ExempleUpdatContract.vue";
@@ -163,27 +163,17 @@ const router = createRouter({
               component: CompanieTeamMember,
             },
             {
-              path: ":companyId/contract_creator",
+              path: ":companyId/contracts/create",
               name: "contract_creator",
               component: FormContractCreator,
             },
             {
-              path: "contract_preview",
-              name: "contract_preview",
-              component: ContractPreview,
-            },
-            {
-              path: ":companyId/contract_list",
+              path: ":companyId/contracts/",
               name: "contract_list",
               component: ListContract,
             },
             {
-              path: "testcontract_preview",
-              name: "testcontract_preview",
-              component: TestPreviewContract,
-            },
-            {
-              path: ":companyId/update_contract/:contractId?",
+              path: ":companyId/contracts/:contractId",
               name: "update_contract",
               component: FormUpdateContract,
             },
@@ -242,6 +232,11 @@ const router = createRouter({
       path: "/auth/reset-password",
       name: "reset_password",
       component: ResetPasswordForm,
+    },
+    {
+              path: "/contracts/:contractId/preview",
+              name: "contract_preview",
+              component: PreviewContract,
     },
     {
       path: "/portofolio/:cvId?",

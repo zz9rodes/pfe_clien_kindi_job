@@ -297,8 +297,8 @@ const handleClickOutside = (event) => {
 };
 
 const inithializeCompaniesInfo = () => {
-  versions.value = auth.userCompany.companies;
-  request.value = auth.userCompany.request;
+  versions.value = auth.userCompany?.companies;
+  request.value = auth.userCompany?.request;
 };
 
 onMounted(() => {

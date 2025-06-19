@@ -3,6 +3,14 @@
     <div class="max-w-4xl p-6 mx-auto">
       <div class="flex items-center justify-between mb-8">
         <form @submit.prevent="saveContract" action="" class="w-full">
+           <button 
+            type="button"
+            @click.prevent.stop="goBack"
+            class="flex items-center px-6 py-2 my-4 font-medium text-gray-700 transition-colors bg-gray-100 rounded-lg hover:bg-gray-200"
+          >
+                 <ArrowLeft class="h-3 "/>
+            Retour
+          </button>
           <div>
             <h1 class="text-3xl font-bold text-gray-900">Créer un contrat</h1>
             <p class="mt-1 text-gray-600">
@@ -338,7 +346,7 @@
 
 <script setup>
 import { ref, computed, nextTick, onMounted, onBeforeUnmount } from "vue";
-import { XIcon, FileTextIcon, PlusIcon } from "lucide-vue-next";
+import { XIcon, FileTextIcon, PlusIcon, ArrowLeft } from "lucide-vue-next";
 import ContractPreview from "./ContractPreview.vue";
 import AppModal from "@/components/globales/AppModal.vue";
 import { useAuthStore } from "@/stores/auth";
@@ -392,6 +400,13 @@ const toggleOpenModal = () => {
 const toggleOpenLoaderModal = () => {
     isModalLoaderOpen.value = !isModalLoaderOpen.value;
 };
+
+
+const goBack = () => {
+  const companyId = route.params.companyId
+  router.back()
+
+}
 
 const articleTextareaRefs = ref({});
 const itemInputRefs = ref({});

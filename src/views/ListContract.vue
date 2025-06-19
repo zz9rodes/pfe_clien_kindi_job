@@ -117,10 +117,10 @@
               </div>
               <div class="ml-4">
                 <button
-                  @click.stop="toggleContractMenu(contract.id)"
+                  @click.stop="GoToviewUpdate(contract)"
                   class="p-1 text-gray-400 rounded-full hover:text-gray-600 hover:bg-gray-100"
                 >
-                  <MoreVerticalIcon class="w-4 h-4" />
+                  <Edit2Icon class="w-4 h-4" />
                 </button>
               </div>
             </div>
@@ -171,7 +171,7 @@
             <!-- Actions -->
             <div class="flex items-center gap-2">
               <button
-                @click.stop="GoToviewContract(contract)"
+                @click.stop="GoToPreview(contract)"
                 class="flex-1 px-3 py-2 text-sm font-medium text-gray-700 transition-colors bg-gray-100 rounded-lg hover:bg-gray-200"
               >
                 Voir détails
@@ -193,7 +193,7 @@ import {
   CalendarIcon,
   MoreVerticalIcon,
   XIcon,
-  PlusIcon,
+  Edit2Icon
 } from "lucide-vue-next";
 import { useContractStore } from "@/stores/useContractStore";
 import AppModal from "@/components/globales/AppModal.vue";
@@ -331,10 +331,17 @@ const createNewContract = () => {
 
 
 
-const GoToviewContract = (contract) => {
+const GoToviewUpdate = (contract) => {
   contractStore.setContract(contract);
   console.log("Contract data:", contractStore.contractData);
   router.push({ name: "update_contract",params:{contractId:contract.slug} });
+};
+
+const GoToPreview = (contract) => {
+  contractStore.setContract(contract);
+  console.log("Contract data:", contractStore.contractData);
+  router.push({ name: "contract_preview",params:{contractId:contract.slug} });
+  // router.
 };
 
 

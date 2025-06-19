@@ -6,18 +6,21 @@
   >
   </AppModal>
     <div class="max-w-4xl p-6 mx-auto">
+       <button 
+
+            @click="goBack"
+            class="flex items-center px-6 py-2 my-4 font-medium text-gray-700 transition-colors bg-gray-100 rounded-lg hover:bg-gray-200"
+          >
+                 <ArrowLeft class="h-3 "/>
+            Retour
+          </button>
       <div class="flex items-center justify-between mb-8">
         <div>
           <h1 class="text-3xl font-bold text-gray-900">Modifier le contrat</h1>
           <p class="mt-1 text-gray-600">Modifiez votre contrat avec articles et clauses personnalisés</p>
         </div>
         <div class="flex items-center gap-3">
-          <button 
-            @click="goBack"
-            class="px-6 py-2 font-medium text-gray-700 transition-colors bg-gray-100 rounded-lg hover:bg-gray-200"
-          >
-            Retour
-          </button>
+         
           <button 
             @click="togglePreviewModal"
             class="px-6 py-2 font-medium text-gray-700 transition-colors bg-gray-100 rounded-lg hover:bg-gray-200"
@@ -35,10 +38,32 @@
       </div>
 
       <div class="space-y-6">
+          <div class="p-6 bg-white border border-gray-200 rounded-lg">
+              <h2 class="mb-4 text-xl font-semibold text-gray-900">
+                Job Associer Au Contract
+              </h2>
+              <div class="space-y-4">
+                <div>
+                  <label class="block mb-1 text-sm font-medium text-gray-700"
+                    >Job Associer Au Contract
+                    <span class="text-red-500">*</span></label
+                  >
+                  <input
+                    v-model="localContractData.job.title"
+                    placeholder="Ce select est désactivé"
+                     class="w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#db147f] focus:border-[#db147f]"
+                      :class="{ 'border-red-300': errors.title }"
+                    :disabled="true"
+                  />
+                </div>
+              </div>
+            </div>
         <!-- Informations générales -->
         <div class="p-6 bg-white border border-gray-200 rounded-lg">
           <h2 class="mb-4 text-xl font-semibold text-gray-900">Informations générales</h2>
           <div class="space-y-4">
+           
+            
             <div>
               <label class="block mb-1 text-sm font-medium text-gray-700">
                 Titre du contrat *
@@ -273,9 +298,13 @@
 
     <!-- Preview Modal -->
     <AppModal @closeModal="togglePreviewModal" :isOpen="isPreviewModalOpen" :isLoader="false">
-      <div class="flex items-center justify-center min-h-screen p-4">
-        <div class="w-full max-w-6xl bg-white rounded-lg shadow-xl max-h-[95vh] overflow-hidden">
-          <div class="flex items-center justify-between p-6 border-b border-gray-200">
+     <div class="flex items-center justify-center min-h-screen">
+        <div
+          class="w-full max-w-6xl bg-white rounded-lg shadow-xl max-h-[95vh] overflow-hidden"
+        >
+          <div
+            class="flex items-center justify-between p-6 border-b border-gray-200"
+          >
             <h2 class="text-xl font-semibold text-gray-900">Aperçu du contrat</h2>
             <button @click="togglePreviewModal" class="text-gray-400 hover:text-gray-600">
               <XIcon class="w-6 h-6" />
@@ -288,7 +317,7 @@
               :clauses="processedClauses"
               :title="localContractData.title"
               :companyData="sampleCompanyData"
-              :userData="userData"
+              :UserData="userData"
               :isLive="false"
             />
           </div>
@@ -302,7 +331,7 @@
 
 <script setup>
 import { ref, computed, nextTick, onMounted, onBeforeUnmount, watch } from 'vue'
-import { XIcon, FileTextIcon, PlusIcon } from 'lucide-vue-next'
+import { XIcon, ArrowLeft, FileTextIcon, PlusIcon } from 'lucide-vue-next'
 import ContractPreview from './ContractPreview.vue'
 import AppModal from '@/components/globales/AppModal.vue'
 import { useContractStore } from '@/stores/useContractStore'
@@ -342,7 +371,8 @@ const localContractData = ref({
   textDescription: '',
   articlesAndClauses: [],
   isPublish: 0,
-  requiredField: []
+  requiredField: [],
+  job:{}
 })
 
 // Sample data
@@ -633,7 +663,7 @@ toggleOpenLoaderModal()
     
     const response = await auth.api(
       "GET",
-      `/companies/${companyId}/contracts/${contractId}`,
+      `/contracts/${contractId}`,
       null,
       false
     )
@@ -644,7 +674,8 @@ toggleOpenLoaderModal()
         ...response.data,
         // S'assurer que les propriétés existent
         articlesAndClauses: response.data.articlesAndClauses || [],
-        requiredField: response.data.requiredField || []
+        requiredField: response.data.requiredField || [],
+        job:response.data.job
       }
       
       // Mettre à jour le store aussi

@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full p-6 py-24">
+  <div class="w-full p-6 py-4">
     <AppModal
       @closeModal="toggleOpenModal"
       :isOpen="isModalOpen"
@@ -7,8 +7,8 @@
     >
       <AcceptSignContractModal @close="toggleOpenModal()" />
     </AppModal>
-    
-    <div class="max-w-4xl mx-auto">
+
+    <div class="max-w-4xl mx-auto avatar">
       <!-- Contract Document -->
       <div class="overflow-auto bg-white rounded-lg shadow-lg">
         <!-- Document Content -->
@@ -239,7 +239,6 @@ const props = defineProps({
 const employeeSignature = ref("");
 const isModalOpen = ref(false);
 
-
 // Process text by replacing placeholders with values
 const processText = (text) => {
   if (!text || typeof text !== "string") return text;
@@ -282,8 +281,6 @@ const toggleOpenModal = () => {
   }
 };
 
-
-
 const formatDate = (date) => {
   return date.toLocaleDateString("en-US", {
     day: "2-digit",
@@ -312,24 +309,47 @@ const isFormValid = computed(() => {
   );
 });
 
-const validateContract = () => {
-  if (isFormValid.value) {
-    const contractData = {
-      clauses: props.clauses,
-      title: props.title,
-      UserData: props.UserData,
-      companyData: props.companyData,
-      signature: employeeSignature.value,
-      timestamp: new Date().toISOString(),
-    };
 
-    console.log("Contract validated:", contractData);
-    alert("Contract validated successfully!");
-  } else {
-    alert(
-      "Please ensure all required user information is provided and sign the contract"
+
+const downloadPDF = async () => {
+  toggleOpenModal()
+  try {
+    // URL de la page à convertir en PDF
+    const routeUrl = window.location.href;
+
+    console.log(`${auth.baseUrlApi}/cv_profiles/generate-pdf`);
+    const response = await fetch(
+      `${auth.baseUrlApi}/cv_profiles/generate-pdf`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${auth.token.value}`,
+        },
+        body: JSON.stringify({ url: routeUrl }),
+      }
     );
+
+    // console.log(response)
+
+    if (!response.ok) {
+      throw new Error("Erreur serveur");
+    }
+
+    const blob = await response.blob();
+
+    const pdfUrl = window.URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = pdfUrl;
+    link.download = "generated.pdf";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(pdfUrl);
+  } catch (err) {
+    console.error("Erreur lors du téléchargement :", err);
   }
+  toggleOpenModal()
 };
 </script>
 
