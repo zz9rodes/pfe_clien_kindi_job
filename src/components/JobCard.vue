@@ -21,7 +21,7 @@
         <img 
           :src="companyLogo" 
           :alt="companyName" 
-          class="object-contain w-8 h-8 mr-2"
+          class="object-contain w-8 h-8 mr-2 border rounded-md"
         />
         <span class="text-sm text-gray-600 uppercase">{{ companyName }}</span>
       </div>
