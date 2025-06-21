@@ -12,7 +12,8 @@ export default {
       },
       fontFamily:{
         nunito:["Nunito", 'serif'],
-        suse:["SUSE", 'serif']
+        suse:["SUSE", 'serif'],
+        jetbrain:["JetBrains Mono", 'monospace']
       }
 
     },

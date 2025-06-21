@@ -93,6 +93,11 @@ const router = createRouter({
           component: LisCompanies,
         },
         {
+          path: "companies/:companyId/companie-details",
+          name: "companie_details",
+          component: CompanieDetail,
+        },
+        {
           path: "/list-freelancers",
           name: "freelancers",
           component: ListFreelancers,
@@ -142,11 +147,7 @@ const router = createRouter({
           path: "companies",
           redirect: "account/profile/?tab=companies",
           children: [
-            {
-              path: ":companyId/companie-details",
-              name: "companie_details",
-              component: CompanieDetail,
-            },
+
             {
               path: ":companyId/create_job",
               name: "create_job",
@@ -234,9 +235,9 @@ const router = createRouter({
       component: ResetPasswordForm,
     },
     {
-              path: "/contracts/:contractId/preview",
-              name: "contract_preview",
-              component: PreviewContract,
+      path: "/contracts/:contractId/preview",
+      name: "contract_preview",
+      component: PreviewContract,
     },
     {
       path: "/portofolio/:cvId?",

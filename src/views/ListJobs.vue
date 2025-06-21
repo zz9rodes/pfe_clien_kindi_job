@@ -18,72 +18,18 @@
       <main class="flex-1 bg-gray-50">
         <div class="container px-4 py-6 mx-auto">
           <div class="flex items-center justify-between mb-4">
-            <h2 class="text-lg font-bold text-gray-700 uppercase">
+            <h2 class="hidden text-lg font-bold text-gray-700 uppercase sm:block">
               Recommended for you
             </h2>
+            <div id="pagination-bar " class="flex gap-2">
+              <button :disabled="jobs?.meta?.previousPageUrl ? false:true" :class="!jobs?.meta?.previousPageUrl ? ' cursor-not-allowed':' cursor-pointer hover:bg-pink-500 hover:text-white'" class="px-3 py-1 border rounded-md">Prev</button>
+              <button :disabled="jobs?.meta?.nextPageUrl  ? false:true" :class="!jobs?.meta?.nextPageUrl ? ' cursor-not-allowed':' cursor-pointer hover:bg-pink-500 hover:text-white'" class="px-3 py-1 border rounded-md">Next</button>
+            </div>
           </div>
-
-          <!-- <div class="grid grid-cols-1 gap-6 mb-10 md:grid-cols-2">
-            <div
-              class="group flex overflow-hidden relative group transition duration-700 rounded-[2px] ease-in-out bg-white border border-gray-300 shadow-sm hover:shadow-md hover:cursor-pointer">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
-                class="absolute hidden group-hover:block text-yellow-50 right-2 top-2">
-                <path d="M20 4L8 16M20 4V14M20 4H10" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                  stroke-linejoin="round" />
-              </svg>
-              <div class="flex-1 p-4">
-                <div class="text-xs text-[#e4097f] font-medium mb-1">
-                  HINTS, TIPS & STORIES
-                </div>
-                <h3 class="mb-2 text-lg font-bold">
-                  Win a Nature Play Kitchen
-                </h3>
-                <p class="mb-2 text-sm text-gray-600">
-                  Thanks to our friends at KindiJob, one KindiJob reader will
-                  win a Hape Outdoor Kitchen, worth $399.95!
-                </p>
-                <p class="text-xs text-gray-500">
-                  Posted 12 June 2023, and if you're reading it today, KindiJob,
-                  you're welcome to enter too! Good luck everyone.
-                </p>
-              </div>
-              <div class="w-1/3">
-                <img src="https://i.pinimg.com/736x/66/48/88/66488884b59ad0f601763ce6bfdeb599.jpg"
-                  alt="Nature Play Kitchen" class="object-cover w-full h-full" />
-              </div>
-            </div>
-
-            <div
-              class="flex group overflow-hidden relative transition duration-700 rounded-[2px] ease-in-out bg-white border border-gray-300 shadow-sm hover:shadow-md hover:cursor-pointer">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
-                class="absolute hidden text-yellow-50 right-2 top-2 group-hover:block">
-                <path d="M20 4L8 16M20 4V14M20 4H10" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                  stroke-linejoin="round" />
-              </svg>
-              <div class="flex-1 p-4">
-                <div class="text-xs text-[#e4097f] font-medium mb-1">
-                  HEALTH
-                </div>
-                <h3 class="mb-2 text-lg font-bold">Injuries at ChildJob</h3>
-                <p class="mb-2 text-sm text-gray-600">
-                  What to do if your child suffers a bump, bruise or something
-                  worse during childJob.
-                </p>
-                <p class="text-xs text-gray-500">
-                  What to do if your child suffers a bump, bruise or something
-                  worse during childJob and what to expect from a KindiJob
-                  centre if it does happen to see the best Job...
-                </p>
-              </div>
-              <div class="w-1/3">
-                <img src="https://i.pinimg.com/736x/66/48/88/66488884b59ad0f601763ce6bfdeb599.jpg"
-                  alt="Injuries at ChildJob" class="object-cover w-full h-full" />
-              </div>
-            </div>
-          </div> -->
+         
 
           <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            <JobCard @click="()=>ShowJobDetail(job.id)" v-for="job in jobs.data" :key="job.id" :job="job"
+            <JobCard @click="()=>ShowJobDetail(job.slug)" v-for="job in jobs.data" :key="job.id" :job="job"
                :companyName="job.company.activeDetails.name"
               :companyLogo="job.company.activeDetails.avatarUrl"
               @bookmark="handleBookmark" />

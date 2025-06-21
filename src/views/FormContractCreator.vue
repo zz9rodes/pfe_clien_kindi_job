@@ -397,6 +397,7 @@ const toggleOpenModal = () => {
   isModalOpen.value = !isModalOpen.value;
 };
 
+
 const toggleOpenLoaderModal = () => {
     isModalLoaderOpen.value = !isModalLoaderOpen.value;
 };

@@ -1,84 +1,154 @@
 <template>
-  <div class="min-h-screen py-24 bg-gray-50">
-
+  <AppModal :isOpen="isModalLoaderOpen" :isLoader="true" />
+  <div v-if="jobOffer" class="w-full h-full py-16 overflow-y-auto bg-gray-50">
     <div class="px-6 py-8 mx-auto max-w-7xl">
-      <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
+      <button
+        @click="goBack"
+        class="flex items-center px-4 py-2 mb-3 transition-all duration-200 bg-white rounded-lg bg-opacity-30 hover:bg-opacity-100"
+      >
+        <svg
+          class="w-5 h-5 mr-2"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M15 19l-7-7 7-7"
+          />
+        </svg>
+        Retour
+      </button>
+      <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
         <!-- Main Content -->
-        <div class="space-y-8 lg:col-span-2">
+        <div class="space-y-3 lg:col-span-2">
           <!-- Job Header -->
-          <div class="p-8 bg-white border border-gray-200 rounded-lg">
-            <div class="flex items-start gap-6">
-              <!-- Company Logo -->
-              <div class="flex items-center justify-center flex-shrink-0 w-12 h-12 bg-gradient-to-br from-[#db147f] to-purple-600 rounded-xl">
-                <span class="text-xl font-bold text-white">{{ getCompanyInitials(jobOffer.company_name) }}</span>
+          <div
+            class="relative p-4 bg-white border border-gray-200 rounded-md shadow-md group"
+          >
+            <div class="flex items-center gap-3">
+              <div
+                class="flex items-center justify-center flex-shrink-0 w-12 h-12 bg-gradient-to-br from-[#db147f] to-purple-600 rounded-xl"
+              >
+                <div
+                  v-if="jobOffer.company.activeDetails.avatarUrl"
+                  class="flex items-center"
+                >
+                  <img
+                    :src="jobOffer.company.activeDetails.avatarUrl"
+                    :alt="`Logo de ${jobOffer.company.activeDetails.name}`"
+                    class="object-cover w-12 h-12 border-4 border-white shadow-lg rounded-xl"
+                  />
+                </div>
+                <span v-else class="text-xl font-bold text-white">
+                  {{ getCompanyInitials(jobOffer.company.activeDetails.name) }}
+                </span>
               </div>
-              
-              <!-- Job Info -->
+              <div class="font-bold">
+                {{ jobOffer.company.activeDetails.name }}
+              </div>
+            </div>
+
+            <div class="flex items-start gap-6 mt-4">
               <div class="flex-1">
                 <div class="flex items-start justify-between mb-4">
                   <div>
-                    <h1 class="mb-2 text-3xl font-bold text-gray-900">{{ jobOffer.title }}</h1>
-                    <div class="flex flex-wrap items-center gap-4 mb-3 text-gray-600">
-                      <div class="flex items-center gap-1">
-                        <BuildingIcon class="w-4 h-4" />
-                        <span>{{ jobOffer.company_name || 'Company' }}</span>
-                      </div>
+                    <h1 class="mb-2 text-3xl font-bold text-gray-900">
+                      {{ jobOffer.title }}
+                    </h1>
+                    <div
+                      class="flex flex-wrap items-center gap-4 mb-3 text-gray-600"
+                    >
                       <div class="flex items-center gap-1">
                         <MapPinIcon class="w-4 h-4" />
                         <span>{{ jobOffer.city }}, {{ jobOffer.country }}</span>
                       </div>
                       <div class="flex items-center gap-1 font-bold">
                         <ClockIcon class="w-4 h-4" />
-                        <span>{{ getJobTypeLabel(jobOffer.job_type) }}</span>
+                        <span>{{ getJobTypeLabel(jobOffer.jobType) }}</span>
                       </div>
                     </div>
                     <div class="flex flex-wrap items-center gap-3">
-                      <span class="px-3 py-1 text-sm font-medium text-green-800 bg-green-100 rounded-full">
+                      <span
+                        class="px-3 py-1 text-sm font-medium text-green-800 bg-green-100 rounded-full"
+                      >
                         {{ getStatusLabel(jobOffer.status) }}
                       </span>
-                      <span v-if="jobOffer.price?.value" class="px-3 py-1 text-sm font-medium text-[#db147f] bg-blue-100 rounded-full">
+                      <span
+                        v-if="jobOffer.price?.value"
+                        class="px-3 py-1 text-sm font-medium text-[#db147f] bg-blue-100 rounded-full"
+                      >
                         {{ formatSalary(jobOffer.price) }}
                       </span>
-                      <span v-if="jobOffer.years_experience" class="px-3 py-1 text-sm font-medium text-gray-800 bg-gray-100 rounded-full">
-                        {{ jobOffer.years_experience }}+ years of experience
+                      <span
+                        v-if="jobOffer.yearsExperience"
+                        class="px-3 py-1 text-sm font-medium text-gray-800 bg-gray-100 rounded-full"
+                      >
+                        {{ jobOffer.yearsExperience }}+ years of experience
                       </span>
                     </div>
                   </div>
                 </div>
-                
+
                 <!-- Apply Button -->
-                <button 
-                  @click="applyToJob"
-                  :disabled="hasApplied"
-                  class="px-8 py-2 font-semibold text-white transition-colors bg-[#db147f] rounded-lg hover:bg-[#db147f] disabled:bg-gray-400 disabled:cursor-not-allowed"
-                >
-                  {{ hasApplied ? 'Application sent' : 'Apply now' }}
-                </button>
+                <div class="flex flex-wrap items-center justify-between mt-8">
+                  <button
+                    @click="applyToJob"
+                    class="px-8 py-2 font-semibold text-white transition-colors bg-[#db147f] rounded-md hover:bg-[#b3126b] disabled:bg-gray-400 disabled:cursor-not-allowed"
+                  >
+                    Apply now
+                  </button>
+
+                  <div class="flex items-center gap-1">
+                    <CalendarCheck class="h-4 font-bold" />
+                    {{ moment(jobOffer.createdAt).startOf("day").fromNow() }}
+                  </div>
+                </div>
               </div>
+            </div>
+
+            <div
+              @click.stop="HandleCopyLink"
+              class="absolute top-0 right-0 p-1 text-white transition-opacity duration-500 ease-in-out bg-pink-500 cursor-pointer rounded-tr-md "
+            >
+              copy job
             </div>
           </div>
 
           <!-- Job Description -->
-          <div class="p-8 bg-white border border-gray-200 rounded-lg">
-            <h2 class="mb-6 text-2xl font-bold text-gray-900">Job Description</h2>
+          <div class="p-4 bg-white border border-gray-200 rounded-md">
+            <h2 class="mb-6 text-2xl font-bold text-gray-900">
+              Job Description
+            </h2>
             <div class="prose prose-gray max-w-none">
-              <p class="leading-relaxed text-gray-700 whitespace-pre-wrap">{{ jobOffer.description }}</p>
+              <p class="leading-relaxed text-gray-700 whitespace-pre-wrap">
+                {{ jobOffer.description }}
+              </p>
             </div>
           </div>
 
           <!-- Job Details -->
-          <div v-if="jobOffer.details && jobOffer.details.length" class="p-8 bg-white border border-gray-200 rounded-lg">
+          <div
+            v-if="jobOffer.details && jobOffer.details.length"
+            class="p-4 bg-white border border-gray-200 rounded-md"
+          >
             <h2 class="mb-6 text-2xl font-bold text-gray-900">Job Details</h2>
             <div class="space-y-6">
               <div v-for="(detail, index) in jobOffer.details" :key="index">
-                <h3 class="mb-3 text-lg font-semibold text-gray-900">{{ detail.title }}</h3>
+                <h3 class="mb-3 text-lg font-semibold text-gray-900">
+                  {{ detail.title }}
+                </h3>
                 <ul class="space-y-2">
-                  <li 
-                    v-for="(item, itemIndex) in detail.items" 
+                  <li
+                    v-for="(item, itemIndex) in detail.items"
                     :key="itemIndex"
                     class="flex items-start gap-3 text-gray-700"
                   >
-                    <CheckCircleIcon class="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                    <CheckCircleIcon
+                      class="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0"
+                    />
                     <span>{{ item }}</span>
                   </li>
                 </ul>
@@ -87,13 +157,18 @@
           </div>
 
           <!-- Skills Required -->
-          <div v-if="jobOffer.skill_required" class="p-8 bg-white border border-gray-200 rounded-lg">
-            <h2 class="mb-6 text-2xl font-bold text-gray-900">Required Skills</h2>
+          <div
+            v-if="jobOffer.skillRequired"
+            class="p-4 bg-white border border-gray-200 rounded-md"
+          >
+            <h2 class="mb-6 text-2xl font-bold text-gray-900">
+              Required Skills
+            </h2>
             <div class="flex flex-wrap gap-2">
-              <span 
-                v-for="skill in getSkillsArray(jobOffer.skill_required)" 
+              <span
+                v-for="skill in getSkillsArray(jobOffer.skillRequired)"
                 :key="skill"
-                class="px-3 py-2 text-sm font-medium text-[#db147f] rounded-lg bg-blue-50"
+                class="px-3 py-2 text-sm font-medium text-[#db147f] rounded-lg bg-gray-100"
               >
                 {{ skill }}
               </span>
@@ -101,39 +176,60 @@
           </div>
 
           <!-- Recruitment Process -->
-          <div v-if="jobOffer.recruitment_steps && jobOffer.recruitment_steps.length" class="p-8 bg-white border border-gray-200 rounded-lg">
-            <h2 class="mb-6 text-2xl font-bold text-gray-900">Recruitment Process</h2>
+          <div
+            v-if="jobOffer.recruitmentSteps && jobOffer.recruitmentSteps.length"
+            class="p-4 bg-white border border-gray-200 rounded-md"
+          >
+            <h2 class="mb-6 text-2xl font-bold text-gray-900">
+              Recruitment Process
+            </h2>
             <div class="space-y-6">
-              <div 
-                v-for="(step, index) in jobOffer.recruitment_steps" 
+              <div
+                v-for="(step, index) in jobOffer.recruitmentSteps"
                 :key="index"
                 class="flex gap-4"
               >
                 <div class="flex flex-col items-center">
-                  <div class="flex items-center justify-center w-8 h-8 text-sm font-bold text-white bg-[#db147f] rounded-full">
+                  <div
+                    class="flex items-center justify-center w-8 h-8 text-sm font-bold text-white bg-[#db147f] rounded-full"
+                  >
                     {{ index + 1 }}
                   </div>
-                  <div v-if="index < jobOffer.recruitment_steps.length - 1" class="w-0.5 h-12 bg-gray-200 mt-2"></div>
+                  <div
+                    v-if="index < jobOffer.recruitmentSteps.length - 1"
+                    class="w-0.5 h-12 bg-gray-200 mt-2"
+                  ></div>
                 </div>
                 <div class="flex-1 pb-6">
-                  <h3 class="mb-2 text-lg font-semibold text-gray-900">{{ step.title }}</h3>
-                  <p v-if="step.description" class="text-gray-700">{{ step.description }}</p>
+                  <h3 class="mb-2 text-lg font-semibold text-gray-900">
+                    {{ step.title }}
+                  </h3>
+                  <p v-if="step.description" class="text-gray-700">
+                    {{ step.description }}
+                  </p>
                 </div>
               </div>
             </div>
           </div>
 
           <!-- Process Steps -->
-          <div v-if="jobOffer.steps && jobOffer.steps.length" class="p-8 bg-white border border-gray-200 rounded-lg">
+          <div
+            v-if="jobOffer.stepsValidation && jobOffer.stepsValidation.length"
+            class="p-4 bg-white border border-gray-200 rounded-md"
+          >
             <h2 class="mb-6 text-2xl font-bold text-gray-900">Process Steps</h2>
             <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-              <div 
-                v-for="(step, index) in jobOffer.steps" 
+              <div
+                v-for="(step, index) in jobOffer.stepsValidation"
                 :key="index"
-                class="p-4 border border-gray-200 rounded-lg"
+                class="p-4 border border-gray-200 rounded-md"
               >
-                <h3 class="mb-2 font-semibold text-gray-900">{{ step.name }}</h3>
-                <p v-if="step.description" class="mb-3 text-sm text-gray-700">{{ step.description }}</p>
+                <h3 class="mb-2 font-semibold text-gray-900">
+                  {{ step.name }}
+                </h3>
+                <p v-if="step.description" class="mb-3 text-sm text-gray-700">
+                  {{ step.description }}
+                </p>
                 <div v-if="step.renumeration?.value" class="text-sm">
                   <span class="font-medium text-green-600">
                     {{ formatSalary(step.renumeration) }}
@@ -147,74 +243,132 @@
         <!-- Sidebar -->
         <div class="space-y-6">
           <!-- Quick Info -->
-          <div class="p-6 bg-white border border-gray-200 rounded-lg">
-            <h3 class="mb-4 text-lg font-semibold text-gray-900">Key Information</h3>
+          <div class="p-6 bg-white border border-gray-200 rounded-md">
+            <h3 class="mb-4 text-lg font-semibold text-gray-900">
+              Key Information
+            </h3>
             <div class="space-y-4">
               <div class="flex items-center justify-between">
                 <span class="text-gray-600">Industry</span>
-                <span class="font-medium text-gray-900">{{ jobOffer.industries }}</span>
+                <span class="font-medium text-gray-900">{{
+                  jobOffer.industries
+                }}</span>
               </div>
               <div class="flex items-center justify-between">
-                <span class="text-gray-600">Contract Type</span>
-                <span class="font-medium text-gray-900">{{ getJobTypeLabel(jobOffer.job_type) }}</span>
+                <span class="text-gray-600">Job Type</span>
+                <span class="font-medium text-gray-900">{{
+                  getJobTypeLabel(jobOffer.jobType)
+                }}</span>
               </div>
-              <div v-if="jobOffer.years_experience" class="flex items-center justify-between">
+              <div
+                v-if="jobOffer.yearsExperience"
+                class="flex items-center justify-between"
+              >
                 <span class="text-gray-600">Experience</span>
-                <span class="font-medium text-gray-900">{{ jobOffer.years_experience }}+ years</span>
+                <span class="font-medium text-gray-900"
+                  >{{ jobOffer.yearsExperience }}+ years</span
+                >
               </div>
-              <div v-if="jobOffer.last_date" class="flex items-center justify-between">
+              <div
+                v-if="jobOffer.lastDate"
+                class="flex items-center justify-between"
+              >
                 <span class="text-gray-600">Deadline</span>
-                <span class="font-medium text-gray-900">{{ formatDate(jobOffer.last_date) }}</span>
+                <span class="font-medium text-gray-900">{{
+                  formatDate(jobOffer.lastDate)
+                }}</span>
               </div>
               <div class="flex items-center justify-between">
                 <span class="text-gray-600">Gender</span>
-                <span class="font-medium text-gray-900">{{ getGenderLabel(jobOffer.gender) }}</span>
+                <span class="font-medium text-gray-900">{{
+                  getGenderLabel(jobOffer.gender)
+                }}</span>
               </div>
             </div>
           </div>
 
           <!-- Company Info -->
-          <div class="p-6 bg-white border border-gray-200 rounded-lg">
-            <h3 class="mb-4 text-lg font-semibold text-gray-900">About the Company</h3>
+          <div class="p-6 bg-white border border-gray-200 rounded-md">
+            <h3 class="mb-4 text-lg font-semibold text-gray-900">
+              About the Company
+            </h3>
             <div class="flex items-center gap-3 mb-4">
-              <div class="flex items-center justify-center w-12 h-12 rounded-lg bg-gradient-to-br from-[#db147f] to-purple-600">
-                <span class="font-bold text-white">{{ getCompanyInitials(jobOffer.company_name) }}</span>
+              <div
+                v-if="jobOffer.company.activeDetails.avatarUrl"
+                class="flex items-center"
+              >
+                <img
+                  :src="jobOffer.company.activeDetails.avatarUrl"
+                  :alt="`Logo de ${jobOffer.company.activeDetails.name}`"
+                  class="object-cover w-12 h-12 border-4 border-white shadow-lg rounded-xl"
+                />
               </div>
+              <span v-else class="text-xl font-bold text-white">{{
+                getCompanyInitials(jobOffer.company.activeDetails.name)
+              }}</span>
+
+              <!-- {{ jobOffer.company.activeDetails.avatarUrl }} -->
+            </div>
+            <div class="flex flex-wrap gap-4">
               <div>
-                <h4 class="font-semibold text-gray-900">{{ jobOffer.company_name || 'Company' }}</h4>
+                <h4 class="font-semibold text-gray-900">
+                  {{ jobOffer.company.activeDetails.name || "Company" }}
+                </h4>
                 <p class="text-sm text-gray-600">{{ jobOffer.industries }}</p>
               </div>
+              <div>
+                <h4 class="font-semibold text-gray-900">Admin</h4>
+                <p class="text-sm text-gray-600">
+                  {{ jobOffer.company.admin.firstName }}
+                  {{ jobOffer.company.admin.lastName }}
+                </p>
+                <p class="text-sm text-gray-600">
+                  {{ jobOffer.company.admin.country }} ,<span>Tel: </span
+                  >{{ jobOffer.company.admin.phoneNumber }}
+                </p>
+              </div>
             </div>
-            <button class="w-full py-2 font-medium text-gray-700 transition-colors bg-gray-100 rounded-lg hover:bg-gray-200">
+            <button
+              class="w-full mt-3 py-2 font-medium text-white transition-colors bg-[#db147f] rounded-md"
+            >
               View company
             </button>
           </div>
 
+          <!-- Share -->
+          <!-- <div class="p-6 bg-white border border-gray-200 rounded-md">
+            <h3 class="mb-4 text-lg font-semibold text-gray-900">
+              Share this offer
+            </h3>
+            <button
+              class="w-full bg-[#db147f] py-2 mt-3 font-medium text-gray-700 transition-colors text-white rounded-lg"
+            >
+              Copy link
+            </button>
+          </div> -->
           <!-- Similar Jobs -->
-          <div class="p-6 bg-white border border-gray-200 rounded-lg">
-            <h3 class="mb-4 text-lg font-semibold text-gray-900">Similar Offers</h3>
+          <div class="p-6 bg-white border border-gray-200 rounded-md">
+            <h3 class="mb-4 text-lg font-semibold text-gray-900">
+              Similar Offers
+            </h3>
             <div class="space-y-4">
-              <div 
-                v-for="similarJob in similarJobs" 
+              <div
+                v-for="similarJob in similarJobs"
                 :key="similarJob.id"
-                class="p-4 transition-colors border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50"
+                class="p-4 transition-colors border border-gray-200 rounded-md cursor-pointer hover:bg-gray-50"
               >
-                <h4 class="mb-1 font-medium text-gray-900">{{ similarJob.title }}</h4>
-                <p class="mb-2 text-sm text-gray-600">{{ similarJob.company }}</p>
+                <h4 class="mb-1 font-medium text-gray-900">
+                  {{ similarJob.title }}
+                </h4>
+                <p class="mb-2 text-sm text-gray-600">
+                  {{ similarJob.company }}
+                </p>
                 <div class="flex items-center gap-2 text-xs text-gray-500">
                   <MapPinIcon class="w-3 h-3" />
                   <span>{{ similarJob.location }}</span>
                 </div>
               </div>
             </div>
-          </div>
-
-          <!-- Share -->
-          <div class="p-6 bg-white border border-gray-200 rounded-lg">
-            <h3 class="mb-4 text-lg font-semibold text-gray-900">Share this offer</h3>
-            <button class="w-full bg-[#db147f] py-2 mt-3 font-medium text-gray-700 transition-colors text-white rounded-lg hover:bg-gray-200">
-              Copy link
-            </button>
           </div>
         </div>
       </div>
@@ -223,7 +377,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted } from "vue";
 import {
   ArrowLeftIcon,
   ShareIcon,
@@ -231,203 +385,186 @@ import {
   BuildingIcon,
   MapPinIcon,
   ClockIcon,
-  CheckCircleIcon
-} from 'lucide-vue-next'
-
+  CheckCircleIcon,
+  User,
+  CalendarCheck,
+} from "lucide-vue-next";
+import { useAuthStore } from "@/stores/auth";
+import { useRoute, useRouter } from "vue-router";
+import AppModal from "@/components/globales/AppModal.vue";
+import moment from "moment";
+import { Notyf } from "notyf";
 // Props
 const props = defineProps({
   jobId: {
     type: [String, Number],
-    required: true
-  }
-})
+    required: true,
+  },
+});
 
 // Reactive data
-const isSaved = ref(false)
-const hasApplied = ref(false)
+const isSaved = ref(false);
+const hasApplied = ref(false);
+const auth = useAuthStore();
+const route = useRoute();
+const router = useRouter();
+
+const isModalLoaderOpen = ref(false);
+
+const toggleOpenLoaderModal = () => {
+  isModalLoaderOpen.value = !isModalLoaderOpen.value;
+};
+
+
+const notyf = new Notyf({ position: { x: "right", y: "top" }, duration: 3000 });
 
 // Sample job data (normally would come from API)
-const jobOffer = ref({
-  title: 'Senior Frontend Developer',
-  company_name: 'TechCorp',
-  city: 'Paris',
-  country: 'France',
-  description: `We are looking for a passionate senior frontend developer to join our dynamic team. You will work on innovative projects using the latest web technologies.
-
-You will be responsible for developing modern and high-performing user interfaces, in close collaboration with our design and backend teams.
-
-This position offers an excellent opportunity for growth in a stimulating and supportive environment.`,
-  industries: 'Technology',
-  job_type: 'FULL_TIME',
-  price: {
-    value: 55000,
-    currency: 'EUR'
-  },
-  details: [
-    {
-      title: 'Responsibilities',
-      items: [
-        'Develop user interfaces with Vue.js and React',
-        'Collaborate with the design team to implement mockups',
-        'Optimize web application performance',
-        'Maintain and improve existing code',
-        'Participate in code reviews and technical decisions'
-      ]
-    },
-    {
-      title: 'Benefits',
-      items: [
-        'Flexible remote work (2-3 days per week)',
-        'Continuous training and personal development budget',
-        'Premium company health insurance',
-        'Meal vouchers and transportation reimbursement',
-        'Young and dynamic team'
-      ]
-    }
-  ],
-  years_experience: 3,
-  skill_required: 'Vue.js, React, JavaScript, TypeScript, CSS, Git, Figma',
-  last_date: '2024-02-15',
-  gender: 'ANY',
-  recruitment_steps: [
-    {
-      title: 'Phone Interview',
-      description: 'Initial contact with the HR manager (30 minutes)'
-    },
-    {
-      title: 'Technical Test',
-      description: 'Practical exercise to be completed at home (2-3 hours)'
-    },
-    {
-      title: 'Technical Interview',
-      description: 'Discussion with the technical team (1 hour)'
-    },
-    {
-      title: 'Final Interview',
-      description: 'Meeting with the manager and team introduction'
-    }
-  ],
-  status: 'ACTIVE',
-  steps: [
-    {
-      name: 'Probation Period',
-      description: 'Training and integration into the team',
-      renumeration: {
-        value: 50000,
-        currency: 'EUR'
-      }
-    },
-    {
-      name: 'Confirmation',
-      description: 'Confirmed position with salary increase',
-      renumeration: {
-        value: 55000,
-        currency: 'EUR'
-      }
-    }
-  ]
-})
-
+const jobOffer = ref(null);
 // Similar jobs
 const similarJobs = ref([
   {
     id: 1,
-    title: 'React Developer',
-    company: 'StartupTech',
-    location: 'Paris'
+    title: "React Developer",
+    company: "StartupTech",
+    location: "Paris",
   },
   {
     id: 2,
-    title: 'Frontend Developer',
-    company: 'DigitalCorp',
-    location: 'Lyon'
+    title: "Frontend Developer",
+    company: "DigitalCorp",
+    location: "Lyon",
   },
   {
     id: 3,
-    title: 'Vue.js Developer',
-    company: 'WebAgency',
-    location: 'Remote'
-  }
-])
+    title: "Vue.js Developer",
+    company: "WebAgency",
+    location: "Remote",
+  },
+]);
 
 // Methods
 const toggleSave = () => {
-  isSaved.value = !isSaved.value
-}
+  isSaved.value = !isSaved.value;
+};
 
 const applyToJob = () => {
-  hasApplied.value = true
+  hasApplied.value = true;
   // Here you would typically send the application to the backend
-  alert('Application sent successfully!')
-}
+  alert("Application sent successfully!");
+};
 
 const getCompanyInitials = (companyName) => {
-  if (!companyName) return 'TC'
-  return companyName.split(' ').map(word => word.charAt(0)).join('').toUpperCase().slice(0, 2)
-}
+  if (!companyName) return "TC";
+  return companyName
+    .split(" ")
+    .map((word) => word.charAt(0))
+    .join("")
+    .toUpperCase()
+    .slice(0, 2);
+};
 
 const getJobTypeLabel = (jobType) => {
   const labels = {
-    'FULL_TIME': 'Full-time',
-    'PART_TIME': 'Part-time',
-    'CONTRACT': 'Contract',
-    'FREELANCE': 'Freelance',
-    'INTERNSHIP': 'Internship'
-  }
-  return labels[jobType] || jobType
-}
+    FULL_TIME: "Full-time",
+    PART_TIME: "Part-time",
+    CONTRACT: "Contract",
+    FREELANCE: "Freelance",
+    INTERNSHIP: "Internship",
+  };
+  return labels[jobType] || jobType;
+};
 
 const getStatusLabel = (status) => {
   const labels = {
-    'DRAFT': 'Draft',
-    'ACTIVE': 'Active',
-    'PAUSED': 'Paused',
-    'CLOSED': 'Closed'
-  }
-  return labels[status] || status
-}
+    DRAFT: "Draft",
+    ACTIVE: "Active",
+    PAUSED: "Paused",
+    CLOSED: "Closed",
+  };
+  return labels[status] || status;
+};
 
 const getGenderLabel = (gender) => {
   const labels = {
-    'ANY': 'All',
-    'MALE': 'Male',
-    'FEMALE': 'Female'
-  }
-  return labels[gender] || gender
-}
+    ANY: "All",
+    MALE: "Male",
+    FEMALE: "Female",
+  };
+  return labels[gender] || gender;
+};
 
 const formatSalary = (price) => {
-  if (!price?.value) return ''
+  if (!price?.value) return "";
   const symbols = {
-    'EUR': '€',
-    'USD': '$',
-    'GBP': '£',
-    'CAD': 'C$'
-  }
-  return `${price.value.toLocaleString()} ${symbols[price.currency] || price.currency}`
-}
+    EUR: "€",
+    USD: "$",
+    GBP: "£",
+    CAD: "C$",
+  };
+  return `${price.value.toLocaleString()} ${
+    symbols[price.currency] || price.currency
+  }`;
+};
 
 const formatDate = (dateString) => {
-  if (!dateString) return ''
-  return new Date(dateString).toLocaleDateString('en-US')
-}
+  if (!dateString) return "";
+  return new Date(dateString).toLocaleDateString("en-US");
+};
 
 const getSkillsArray = (skillsString) => {
-  if (!skillsString) return []
-  return skillsString.split(',').map(skill => skill.trim())
-}
+  if (!skillsString) return [];
+  return skillsString.split(",").map((skill) => skill.trim());
+};
 
+const FectJobDetails = async () => {
+  toggleOpenLoaderModal();
+
+  try {
+    const jobId = route.params.id;
+    const Url = `/extern/companies/jobs/${jobId}`;
+    const response = await auth.api("GET", Url, null, false);
+    if (!response.success) {
+      console.log("error ici");
+      router.push({ name: "jobs" });
+    } else {
+      jobOffer.value = response.data;
+
+      console.log(response);
+    }
+  } catch (error) {
+    console.error(error);
+  }
+
+  toggleOpenLoaderModal();
+};
+
+const goBack = () => {
+  router.back();
+};
+
+const HandleCopyLink=()=>{
+  const textLink=window.location.href
+  navigator.clipboard.writeText(textLink).then(() => {
+    console.log('Texte copié :', textLink);
+    notyf.success("job copied")
+  }).catch(err => {
+    console.error('Erreur lors de la copie :', err);
+    notyf.error("erro copy")
+  });
+}
 // Lifecycle
 onMounted(() => {
   // Fetch job data based on jobId
-  console.log('Loading job offer:', props.jobId)
-})
+  console.log("Loading job offer:", props.jobId);
+  FectJobDetails();
+});
 </script>
 
 <style scoped>
 /* Smooth transitions */
 * {
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform;
+  transition-property: color, background-color, border-color,
+    text-decoration-color, fill, stroke, opacity, box-shadow, transform;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 }

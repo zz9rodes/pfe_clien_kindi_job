@@ -283,7 +283,8 @@
                 Détails du poste
               </h2>
               <button
-                @click="addDetail"
+                type="button"
+                @click.prevent.stop="addDetail"
                 class="px-4 py-2 text-sm font-medium text-gray-700 transition-colors bg-gray-100 rounded-lg hover:bg-gray-200"
               >
                 + Ajouter une section
@@ -312,7 +313,8 @@
                     Section {{ index + 1 }}
                   </h3>
                   <button
-                    @click="removeDetail(index)"
+                    type="button"
+                    @click.prevent.stop="removeDetail(index)"
                     class="p-1 text-red-600 hover:text-red-700"
                   >
                     <XIcon class="w-4 h-4" />
@@ -339,7 +341,8 @@
                         >Éléments *</label
                       >
                       <button
-                        @click="addDetailItem(index)"
+                        type="button"
+                        @click.prevent.stop="addDetailItem(index)"
                         class="text-sm font-medium text-[#db147f] hover:text-[#c41370]"
                       >
                         + Ajouter un élément

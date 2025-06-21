@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full min-h-screen">
+  <div class="w-full min-h-screen mt-[70px]">
     <AppModal :isOpen="isUploading" :isLoader="true"> </AppModal>
     <div class="relative h-64 bg-gradient-to-r from-blue-600 to-purple-600">
       <img
@@ -116,8 +116,10 @@
         </nav>
       </div>
     </div>
-    <div class="px-4 py-8 md:px-8" :class=" activeTab==='team' ? 'bg-gray-50':'bg-white' ">
-      
+    <div
+      class="px-4 py-8 md:px-8"
+      :class="activeTab === 'team' ? 'bg-gray-50' : 'bg-white'"
+    >
       <div v-if="activeTab === 'about'" class="space-y-8">
         <AboutCompanie
           @view-more-jobs="activeTab = 'jobs'"
@@ -179,7 +181,6 @@
           />
         </div>
       </div>
-      
     </div>
   </div>
 </template>
@@ -257,7 +258,12 @@ const FecthCompanieDetails = async () => {
   toggleLoader();
   const companyId = route.params.companyId;
 
-  const response = await auth.api("GET", `/companies/${companyId}`, {}, false);
+  const response = await auth.api(
+    "GET",
+    `/extern/companies/${companyId}`,
+    {},
+    false
+  );
   if (response.success) {
     company.value = response.data;
   }
@@ -289,7 +295,7 @@ watch(
         avatar: member.account.avatarUrl,
         firstLanguage: member.account.firstLanguage,
         position: member.role,
-        status: member.accept ? 'accepted':'send'
+        status: member.accept ? "accepted" : "send",
       });
     });
   },
