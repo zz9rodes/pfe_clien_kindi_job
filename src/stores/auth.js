@@ -45,7 +45,7 @@ export const useAuthStore = defineStore("auth", () => {
           break;
 
           case 500:
-            notyf.error(responseData.message || "Erreur serveur");
+            notyf.error("Internal Server Error");
           break;
 
           case 404:

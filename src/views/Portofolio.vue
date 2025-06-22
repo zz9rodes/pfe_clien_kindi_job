@@ -27,16 +27,21 @@
       <div class="max-w-4xl px-6 mx-auto text-center">
         <!-- Profile Image -->
         <div
-          v-if="userAccount.avatarUrl"
+         
           class="relative inline-block mb-6 avatar"
         >
           <img
+           v-if="userAccount.avatarUrl"
             :src="
               userAccount.avatarUrl || '/placeholder.svg?height=120&width=120'
             "
             :alt="userAccount.firstName"
             class="object-cover mx-auto border-4 border-white rounded-full shadow-lg h-28 w-28"
           />
+           <UserIcon
+          class="text-gray-600 bg-gray-300 border-4 border-white rounded-full shadow-lg h-28 w-28"
+          v-else
+        />
           <button
             class="absolute flex items-center justify-center w-6 h-6 text-gray-500 bg-green-300 rounded-full top-2 right-2 hover:bg-gray-300"
           >
@@ -312,6 +317,7 @@
 <script setup>
 import {
   XIcon,
+  UserIcon,
   GithubIcon,
   LinkedinIcon,
   TwitterIcon,

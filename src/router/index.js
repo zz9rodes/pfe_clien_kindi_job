@@ -78,27 +78,27 @@ const router = createRouter({
           component: HomeView,
         },
         {
-          path: "list-jobs",
+          path: "app/list-jobs",
           name: "jobs",
           component: ListJobs,
         },
         {
-          path: "list-jobs/:id/jobs_details",
+          path: "app/list-jobs/:id/jobs_details",
           name: "jobs_details",
           component: JobOffersDetails,
         },
         {
-          path: "/list-companies",
+          path: "app/list-companies",
           name: "companies",
           component: LisCompanies,
         },
         {
-          path: "companies/:companyId/companie-details",
+          path: "app/companies/:companyId/companie-details",
           name: "companie_details",
           component: CompanieDetail,
         },
         {
-          path: "/list-freelancers",
+          path: "app/list-freelancers",
           name: "freelancers",
           component: ListFreelancers,
         },

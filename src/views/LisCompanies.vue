@@ -1,4 +1,5 @@
 <template>
+    <AppModal :isLoader="true" :isOpen="isOpenLoaderModale" />
     <div class="min-h-screen pt-6 mt-24 bg-gray-50">
         <AppInputFiltercompanies :filters="searchFilters" :results-count="jobResults.length"
             @update:filters="handleFiltersUpdate" @search="performJobSearch" />
@@ -41,12 +42,15 @@ import AppInputFiltercompanies from '@/components/AppInputFiltercompanies.vue'
 import CompanieCard from '@/components/CompanieCard.vue'
 import { useAuthStore } from '@/stores/auth'
 import { useRouter } from 'vue-router'
+import AppModal from '@/components/globales/AppModal.vue'
+
 const searchFilters = ref({
     keywords: '',
     location: '',
     language: ''
 });
 
+const isOpenLoaderModale=ref(false)
 const router=useRouter()
 const auth=useAuthStore()
 const jobResults = ref([]);
@@ -60,6 +64,10 @@ const handleFiltersUpdate = (filter) => {
     console.log(filter);
 }
 
+const toggleOpenLoaderModal=()=>{
+    isOpenLoaderModale.value=!isOpenLoaderModale.value
+}
+
 
 
 
@@ -71,7 +79,7 @@ const viewCompany = (company) => {
 
 
 const initFectCompanies=async()=>{
-
+toggleOpenLoaderModal()
     try {
             const response=await auth.api('GET','/extern/companies/all',null,false)
 
@@ -82,6 +90,7 @@ const initFectCompanies=async()=>{
     } catch (error) {
         console.log(error)
     }
+    toggleOpenLoaderModal()
 }
 onMounted(()=>{
     initFectCompanies()
