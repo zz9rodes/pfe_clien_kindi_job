@@ -274,7 +274,7 @@ const companyDetail = ref({
 });
 
 const goBack = () => {
-  router.push({ name: "companie_versions" });
+  router.back();
 };
 
 const GoToNewCreateJob = () => {

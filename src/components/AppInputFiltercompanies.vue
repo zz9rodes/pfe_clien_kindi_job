@@ -93,7 +93,7 @@ const quickFilters = ref([
     }
 ]);
 
-const categories = ref(['Category1', 'Category2', 'Category3']);
+const categories = ref(['Ecommerce', 'Sofware Engeniering', 'Business','Marketing']);
 const activeCategory = ref(null);
 
 
