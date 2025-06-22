@@ -1,10 +1,6 @@
 <template>
   <div class="w-full h-full bg-gray-50">
-    <AppModal
-      @closeModal="toggleOpenModal"
-      :isOpen="isModalOpen"
-      :isLoader="false"
-    >
+    <AppModal @closeModal="toggleOpenModal" :isOpen="isModalOpen" :isLoader="false">
     </AppModal>
     <div class="p-6 mx-auto max-w-7xl">
       <div class="flex items-center justify-between mb-8">
@@ -14,10 +10,8 @@
             Gérez vos contrats créés, envoyés et signés
           </p>
         </div>
-        <button
-          @click="createNewContract"
-          class="px-6 py-2 font-medium text-white transition-colors bg-[#db147f] rounded-lg hover:bg-[#c41370]"
-        >
+        <button @click="createNewContract"
+          class="px-6 py-2 font-medium text-white transition-colors bg-[#db147f] rounded-lg hover:bg-[#c41370]">
           + Nouveau contrat
         </button>
       </div>
@@ -25,26 +19,19 @@
       <div class="mb-8">
         <div class="border-b border-gray-200">
           <nav class="flex -mb-px space-x-8">
-            <button
-              v-for="tab in tabs"
-              :key="tab.key"
-              @click="activeTab = tab.key"
-              :class="[
-                'py-2 px-1 border-b-2 font-medium text-sm transition-colors',
-                activeTab === tab.key
-                  ? 'border-[#db147f] text-[#db147f]'
-                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
-              ]"
-            >
+            <button v-for="tab in tabs" :key="tab.key" @click="activeTab = tab.key" :class="[
+              'py-2 px-1 border-b-2 font-medium text-sm transition-colors',
+              activeTab === tab.key
+                ? 'border-[#db147f] text-[#db147f]'
+                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300',
+            ]">
               {{ tab.label }}
-              <span
-                :class="[
-                  'ml-2 py-0.5 px-2 rounded-full text-xs',
-                  activeTab === tab.key
-                    ? 'bg-[#db147f] text-white'
-                    : 'bg-gray-100 text-gray-600',
-                ]"
-              >
+              <span :class="[
+                'ml-2 py-0.5 px-2 rounded-full text-xs',
+                activeTab === tab.key
+                  ? 'bg-[#db147f] text-white'
+                  : 'bg-gray-100 text-gray-600',
+              ]">
                 {{ getContractCount(tab.key) }}
               </span>
             </button>
@@ -55,15 +42,9 @@
       <div class="flex items-center gap-4 mb-6">
         <div class="flex-1 max-w-md">
           <div class="relative">
-            <SearchIcon
-              class="absolute w-4 h-4 text-gray-400 transform -translate-y-1/2 left-3 top-1/2"
-            />
-            <input
-              v-model="searchQuery"
-              type="text"
-              placeholder="Rechercher un contrat..."
-              class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#db147f] focus:border-[#db147f]"
-            />
+            <SearchIcon class="absolute w-4 h-4 text-gray-400 transform -translate-y-1/2 left-3 top-1/2" />
+            <input v-model="searchQuery" type="text" placeholder="Rechercher un contrat..."
+              class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#db147f] focus:border-[#db147f]" />
           </div>
         </div>
       </div>
@@ -76,21 +57,15 @@
         <p class="mb-6 text-gray-500">
           {{ getEmptyStateDescription() }}
         </p>
-        <button
-          v-if="activeTab === 'all'"
-          @click="createNewContract"
-          class="px-4 py-2 font-medium text-white transition-colors bg-[#db147f] rounded-lg hover:bg-[#c41370]"
-        >
+        <button v-if="activeTab === 'all'" @click="createNewContract"
+          class="px-4 py-2 font-medium text-white transition-colors bg-[#db147f] rounded-lg hover:bg-[#c41370]">
           Créer votre premier contrat
         </button>
       </div>
 
       <div v-else class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-        <div
-          v-for="contract in filteredContracts"
-          :key="contract.id"
-          class="transition-shadow bg-white border border-gray-200 rounded-lg shadow-sm cursor-pointer hover:shadow-md"
-        >
+        <div v-for="contract in filteredContracts" :key="contract.id"
+          class="transition-shadow bg-white border border-gray-200 rounded-lg shadow-sm cursor-pointer hover:shadow-md">
           <!-- Contract Card -->
           <div class="p-6">
             <!-- Header with status -->
@@ -100,26 +75,21 @@
                   {{ contract.title }}
                 </h3>
                 <div class="flex items-center gap-2 mb-2">
-                  <span
-                    :class="[
-                      'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium',
-                      getStatusClasses(contract.isPublish),
-                    ]"
-                  >
+                  <span :class="[
+                    'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium',
+                    getStatusClasses(contract.isPublish),
+                  ]">
                     {{ getStatusLabel(contract.isPublish) }}
                   </span>
                   <span v-if="contract.agreements && contract.agreements.length > 0"
-                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800"
-                  >
+                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
                     {{ contract.agreements.length }} signature(s)
                   </span>
                 </div>
               </div>
               <div class="ml-4">
-                <button
-                  @click.stop="GoToviewUpdate(contract)"
-                  class="p-1 text-gray-400 rounded-full hover:text-gray-600 hover:bg-gray-100"
-                >
+                <button @click.stop="GoToviewUpdate(contract)"
+                  class="p-1 text-gray-400 rounded-full hover:text-gray-600 hover:bg-gray-100">
                   <Edit2Icon class="w-4 h-4" />
                 </button>
               </div>
@@ -136,21 +106,16 @@
                 <FileTextIcon class="w-3 h-3 mr-1" />
                 {{ contract.articlesAndClauses ? contract.articlesAndClauses.length : 0 }} article(s)
               </div>
-              
+
               <!-- Required fields -->
               <div v-if="contract.requiredField && contract.requiredField.length > 0" class="mt-2">
                 <div class="flex flex-wrap gap-1">
-                  <span 
-                    v-for="field in contract.requiredField.slice(0, 3)" 
-                    :key="field"
-                    class="inline-flex items-center px-2 py-0.5 rounded text-xs bg-blue-50 text-blue-700"
-                  >
+                  <span v-for="field in contract.requiredField.slice(0, 3)" :key="field"
+                    class="inline-flex items-center px-2 py-0.5 rounded text-xs bg-blue-50 text-blue-700">
                     {{ field }}
                   </span>
-                  <span 
-                    v-if="contract.requiredField.length > 3"
-                    class="inline-flex items-center px-2 py-0.5 rounded text-xs bg-gray-50 text-gray-600"
-                  >
+                  <span v-if="contract.requiredField.length > 3"
+                    class="inline-flex items-center px-2 py-0.5 rounded text-xs bg-gray-50 text-gray-600">
                     +{{ contract.requiredField.length - 3 }}
                   </span>
                 </div>
@@ -170,13 +135,11 @@
 
             <!-- Actions -->
             <div class="flex items-center gap-2">
-              <button
-                @click.stop="GoToPreview(contract)"
-                class="flex-1 px-3 py-2 text-sm font-medium text-gray-700 transition-colors bg-gray-100 rounded-lg hover:bg-gray-200"
-              >
+              <button @click.stop="GoToPreview(contract)"
+                class="flex-1 px-3 py-2 text-sm font-medium text-gray-700 transition-colors bg-gray-100 rounded-lg hover:bg-gray-200">
                 Voir détails
               </button>
-            
+
             </div>
           </div>
         </div>
@@ -236,7 +199,7 @@ const filteredContracts = computed(() => {
   if (activeTab.value === "published") {
     filtered = filtered.filter(contract => contract.isPublish === 1);
   } else if (activeTab.value === "signed") {
-    filtered = filtered.filter(contract => 
+    filtered = filtered.filter(contract =>
       contract.agreements && contract.agreements.length > 0
     );
   }
@@ -273,7 +236,7 @@ const getContractCount = (status) => {
   } else if (status === "published") {
     return contracts.value.filter(contract => contract.isPublish === 1).length;
   } else if (status === "signed") {
-    return contracts.value.filter(contract => 
+    return contracts.value.filter(contract =>
       contract.agreements && contract.agreements.length > 0
     ).length;
   }
@@ -281,8 +244,8 @@ const getContractCount = (status) => {
 };
 
 const getStatusClasses = (isPublish) => {
-  return isPublish === 1 
-    ? "bg-green-100 text-green-800" 
+  return isPublish === 1
+    ? "bg-green-100 text-green-800"
     : "bg-yellow-100 text-yellow-800";
 };
 
@@ -334,13 +297,13 @@ const createNewContract = () => {
 const GoToviewUpdate = (contract) => {
   contractStore.setContract(contract);
   console.log("Contract data:", contractStore.contractData);
-  router.push({ name: "update_contract",params:{contractId:contract.slug} });
+  router.push({ name: "update_contract", params: { contractId: contract.slug } });
 };
 
 const GoToPreview = (contract) => {
   contractStore.setContract(contract);
   console.log("Contract data:", contractStore.contractData);
-  router.push({ name: "contract_preview",params:{contractId:contract.slug} });
+  router.push({ name: "contract_preview", params: { contractId: contract.slug } });
   // router.
 };
 

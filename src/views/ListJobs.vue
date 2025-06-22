@@ -26,8 +26,7 @@
               <button :disabled="jobs?.meta?.nextPageUrl  ? false:true" :class="!jobs?.meta?.nextPageUrl ? ' cursor-not-allowed':' cursor-pointer hover:bg-pink-500 hover:text-white'" class="px-3 py-1 border rounded-md">Next</button>
             </div>
           </div>
-         
-
+      
           <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             <JobCard @click="()=>ShowJobDetail(job.slug)" v-for="job in jobs.data" :key="job.id" :job="job"
                :companyName="job.company.activeDetails.name"

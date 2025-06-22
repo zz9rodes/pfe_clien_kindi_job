@@ -899,10 +899,7 @@ const updateJob = async () => {
     );
 
     if (response.success) {
-      router.push({
-        name: "companie_details",
-        params: { companyId: companyId },
-      });
+      router.back()
     }
 
     toggleOpenModal();

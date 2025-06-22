@@ -1,5 +1,5 @@
 <template>
-  <div class="overflow-hidden bg-white border border-gray-300 rounded-[2px] hover:shadow-md hover:cursor-pointer transition ease-in-out duration-700">
+  <div class="overflow-hidden bg-white border-2 border-gray-300 rounded-[2px] hover:shadow-md hover:cursor-pointer transition ease-in-out duration-700">
     <!-- Image container with relative positioning for the "Seen" label -->
     <div class="relative h-48 overflow-hidden">
       <img 

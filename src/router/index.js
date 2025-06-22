@@ -35,6 +35,7 @@ import CompanieVersionDemo from "@/views/CompanieVersionDemo.vue";
 import AdminDashBoard from "@/views/AdminDashBoard.vue";
 import CompanyDetailsPage from "@/components/compnanies/CompanyDetailsPage.vue";
 import AdminCompanieVersionView from "@/components/compnanies/AdminCompanieVersionView.vue";
+import CompanieJobList from "@/components/compnanies/companieJobList.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -170,6 +171,22 @@ const router = createRouter({
               name: "team_members",
               component: CompanieTeamMember,
             },
+             {
+              path: ":companyId/list-jobs",
+              name: "companie_list_jobs",
+              component: CompanieJobList,
+              props:{isAdmin:true}
+            },
+              {
+            path: ":companyId/list_projects",
+            name: "list_projects",
+            component: ProjectManagement,
+          },
+          {
+            path: ":companyId/list_projects/:projectId/project_tasks",
+            name: "project_tasks",
+            component: ProjectTasksView,
+          },
             {
               path: ":companyId/contracts/create",
               name: "contract_creator",
@@ -201,16 +218,6 @@ const router = createRouter({
           path: "list-news",
           name: "list_news",
           component: ListNews,
-        },
-        {
-          path: "list_projects",
-          name: "list_projects",
-          component: ProjectManagement,
-        },
-        {
-          path: "project_tasks",
-          name: "project_tasks",
-          component: ProjectTasksView,
         },
       ],
     },
