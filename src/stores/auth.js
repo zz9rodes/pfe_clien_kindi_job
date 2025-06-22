@@ -133,7 +133,6 @@ export const useAuthStore = defineStore("auth", () => {
   }
 
   async function isAuthentificated() {
-
     return token ? true : false;
   }
 
@@ -156,6 +155,14 @@ export const useAuthStore = defineStore("auth", () => {
     userCompany.value = company;
   }
 
+  function setUser(user) {
+    localStorage.setItem(
+      "user",
+      JSON.stringify(user)
+    );
+    user.value = user;
+  }
+
   function setJob(job) {
     localStorage.setItem(
       "job",
@@ -164,7 +171,7 @@ export const useAuthStore = defineStore("auth", () => {
     activeJob.value = job;
   }
 
-  return {baseUrlApi, user, userCompany,activeJob,api,token, login, register, logout,setCompany,setJob, me, isAuthentificated };
+  return {baseUrlApi, user, userCompany,activeJob,api,token,setUser, login, register, logout,setCompany,setJob, me, isAuthentificated };
 });
 
 

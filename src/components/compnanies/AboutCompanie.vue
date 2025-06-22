@@ -92,6 +92,7 @@
 
         <div class="space-y-6" v-if="jobs.length>0">
             <JobCard
+              @click="()=>HandlegoToViewJobDetail(job)"
               v-for="job in jobs"
               :key="job.id"
               :job="job"
@@ -101,7 +102,7 @@
               :showFavorite="false"
             />
             <!-- <div class=""> -->
-               <button class="w-full p-2 bg-[#db147f]  text-white " @click="HandleViewMoreJobs()">
+               <button  class="w-full p-2 bg-[#db147f]  text-white " @click="$emit('view-more')">
                 View Mores ...
                </button>
             <!-- </div> -->
@@ -122,8 +123,11 @@ import JobCard from "../JobCard.vue";
 import WordMap from "../globales/WordMap.vue";
 import moment from "moment";
 import TeamMemberCard from "../TeamMemberCard.vue";
+import { useRouter } from "vue-router";
 
-const emits=defineEmits(['view-more-jobs'])
+const emits=defineEmits(['view-more-jobs','view-more'])
+
+const router=useRouter()
 
 const props=defineProps({
     company:{
@@ -171,6 +175,10 @@ const companieMembers=ref([])
 
 const HandleViewMoreJobs=()=>{
     emits('view-more-jobs')
+}
+
+const HandlegoToViewJobDetail=(job)=>{
+  router.push({name:'jobs_details',params:{id:job.slug}})
 }
 
 watch(() => props.employees, (members) => {

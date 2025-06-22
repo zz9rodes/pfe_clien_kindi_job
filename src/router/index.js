@@ -63,7 +63,7 @@ const router = createRouter({
         {
           path: "companie_request/:companyId/details",
           name: "admin_companie_details",
-          component: CompanyDetailsPage,
+          component: CompanyDetailsPage
         },
       ],
     },
@@ -152,6 +152,13 @@ const router = createRouter({
               path: ":companyId/create_job",
               name: "create_job",
               component: Form_Create_Job_Offers,
+            },
+            {
+              path: ":companyId/companie-details",
+              name: "me_companie_details",
+              component: CompanieDetail,
+              props:{isAdmin:true}
+
             },
             {
               path: ":companyId/update_job/:jobId",

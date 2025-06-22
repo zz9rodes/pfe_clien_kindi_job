@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full min-h-screen mt-[70px]">
+  <div class="w-full min-h-screen" :class="!isAdmin ? 'mt-[70px]' : ''">
     <AppModal :isOpen="isUploading" :isLoader="true"> </AppModal>
     <div class="relative h-64 bg-gradient-to-r from-blue-600 to-purple-600">
       <img
@@ -124,9 +124,10 @@
         <AboutCompanie
           @view-more-jobs="activeTab = 'jobs'"
           :detail="companyDetail"
-          :jobs="company?.jobs?.slice(0, 5)"
-          :employees="company?.guests.slice(0, 6)"
+          :jobs="company?.jobs?.slice(0, 3)"
+          :employees="company?.guests.slice(0, 4)"
           :company="company?.activeDetails"
+          @view-more="activeTab='jobs'"
         />
       </div>
 
@@ -134,7 +135,7 @@
         <div
           class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between"
         >
-          <div @click="GoToNewCreateJob">
+          <div @click="GoToNewCreateJob" v-if="isAdmin">
             <button
               class="new-job flex gap-1 bg-[#db147f] text-white rounded-md px-3 py-2"
             >
@@ -145,9 +146,21 @@
         </div>
 
         <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          <div class="flex flex-col" v-for="job in company?.jobs" :key="job.id">
-            <div class="text-end" @click="() => GoToUpdateCreateJob(job)">
-              <button class="px-3 py-1 bg-[#db147f] text-white rounded-lg">
+          <div
+            class="relative flex flex-col"
+            v-for="job in company?.jobs"
+            :key="job.id"
+            @click="()=>HandlegoToViewJobDetail(job)"
+
+          >
+            <div
+              v-if="isAdmin"
+              class="text-end"
+              @click="() => GoToUpdateCreateJob(job)"
+            >
+              <button
+                class="px-3 absolute top-0 right-0 z-10 py-1 bg-[#db147f] text-white rounded-tr-md"
+              >
                 edit
               </button>
             </div>
@@ -163,6 +176,18 @@
       </div>
 
       <div v-if="activeTab === 'team'" class="space-y-8 bg-gray-50">
+        <div
+          @click.prevent="goToTeamMember"
+          class="flex justify-end"
+          v-if="isAdmin"
+        >
+          <div
+            class="py-1 px-3 cursor-pointer items-center bg-[#db147f] flex justify-center transition-shadow text-white border border-gray-200 rounded-lg max-w-[80px] hover:shadow-md"
+          >
+            <Plus /> New
+          </div>
+        </div>
+
         <div class="text-center">
           <h2 class="mb-4 text-2xl font-semibold text-gray-900">
             Meet Our Team
@@ -186,7 +211,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref, watch, defineProps } from "vue";
 import {
   BuildingIcon,
   MapPinIcon,
@@ -207,15 +232,28 @@ import TeamMemberCard from "@/components/TeamMemberCard.vue";
 import { useRouter, useRoute } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
 import AppModal from "@/components/globales/AppModal.vue";
+import { boolean } from "zod";
 const router = useRouter();
 const route = useRoute();
 const auth = useAuthStore();
 const isUploading = ref(false);
 
+const props = defineProps({
+  isAdmin: {
+    type: boolean,
+    default: false,
+    required: true,
+  },
+  Opentab: {
+    type: String,
+    default: "about",
+  },
+});
+
 const toggleLoader = () => {
   isUploading.value = !isUploading.value;
 };
-const activeTab = ref("about");
+const activeTab = ref(props.Opentab);
 const tabs = [
   { id: "about", name: "About" },
   { id: "jobs", name: "Jobs" },
@@ -271,6 +309,14 @@ const FecthCompanieDetails = async () => {
   toggleLoader();
 };
 
+const goToTeamMember = () => {
+  router.push({ name: "team_members" });
+};
+
+
+const HandlegoToViewJobDetail=(job)=>{
+  router.push({name:'jobs_details',params:{id:job.slug}})
+}
 watch(company, (newCompanieDetails) => {
   if (newCompanieDetails.activeDetails) {
     companyDetail.value = {
