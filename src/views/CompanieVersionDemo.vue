@@ -265,7 +265,6 @@ const ViewsDetails=(versionId)=>{
   router.push({name:'me_companie_details',params:{companyId:versionId}})
 }
 
-c
 
 const toggleActionMenu = (versionId) => {
   activeActionMenu.value =
