@@ -25,6 +25,7 @@
       </div>
     </div>
   </AppModal>
+  
   <AdminHeader @open-search-modal="toggleOpenModal" />
   <div class="h-screen ">
     <div class="flex h-full">
