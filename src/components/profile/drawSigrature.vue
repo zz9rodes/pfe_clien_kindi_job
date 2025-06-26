@@ -6,7 +6,10 @@
       <div class="flex items-center justify-between mb-4">
         <h2 class="text-2xl font-semibold text-gray-900">Mes signatures</h2>
         <button @click="showCreateForm = true" 
-          class="bg-[#db147f] text-white px-4 py-2 rounded-lg hover:bg-[#c01370] transition-colors flex items-center gap-2">
+        
+          :disabled="signatures.length>=3 ? true : false"
+          :class="signatures.length>=3 ? ' bg-pink-300 cursor-not-allowed':'bg-[#e4097f]  hover:bg-[#c01370]'"
+          class="flex items-center gap-2 px-4 py-2 text-white transition-colors rounded-lg ">
           <PlusIcon class="w-4 h-4" />
           <span>Créer une signature</span>
         </button>

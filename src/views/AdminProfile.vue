@@ -5,14 +5,14 @@
         <div class="flex flex-col h-full lg:flex-row">
           <!-- Sidebar avec onglets -->
           <div class="lg:w-80 lg:border-r lg:border-b-0">
-            <div class="p-4 h-auto bg-gray-50 rounded-md lg:p-6">
+            <div class="h-auto p-4 rounded-md bg-gray-50 lg:p-6">
               <h2
                 class="mb-4 text-lg text-gray-800 fonht-semibold lg:mb-6 lg:text-xl"
               >
                 Account Settings
               </h2>
               <nav
-                class="flex overflow-x-auto flex-row space-x-2 lg:flex-col lg:space-x-0 lg:space-y-2 lg:overflow-x-visible"
+                class="flex flex-row space-x-2 overflow-x-auto lg:flex-col lg:space-x-0 lg:space-y-2 lg:overflow-x-visible"
               >
                 <button
                   v-for="tab in tabs"
@@ -27,7 +27,7 @@
                 >
                   <component
                     :is="tab.icon"
-                    class="mb-1 w-4 h-4 lg:w-5 lg:h-5 lg:mb-0 lg:mr-3"
+                    class="w-4 h-4 mb-1 lg:w-5 lg:h-5 lg:mb-0 lg:mr-3"
                   />
                   <span
                     class="hidden text-xs font-medium md:block lg:text-sm"
@@ -76,10 +76,10 @@ const tabs = [
     route: "admin_signature",
   },
   {
-    id: "cv_profile",
+    id: "admin_cv_profile",
     name: "Cv Profile",
     icon: FileUserIcon,
-    route: "cv_profile",
+    route: "admin_cv_profile",
   },
 ];
 
@@ -96,7 +96,7 @@ const ToogleActiveTab = (tabId) => {
 const validTabs = [
   "admin_profile_details",
   "admin_signature",
-  "cv_profile",
+  "admin_cv_profile",
 ];
 
 onMounted(() => {

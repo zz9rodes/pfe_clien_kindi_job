@@ -106,7 +106,7 @@
           </div>
           <span class="text-sm font-medium text-gray-600 group-hover:text-gray-700">
             Inviter un membre
-          </span>f
+          </span>
         </div>
       </div>
 
@@ -145,7 +145,7 @@ const route=useRoute()
 
 const tabLabels = {
   send: "Sent Invitations",
-  accepted: "Accepted Members",
+  accepted: "Approved Members",
 };
 
 const statuses = ["send", "accepted"];

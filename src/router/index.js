@@ -107,6 +107,11 @@ const router = createRouter({
               component: DrawSigrature,
               meta: { requiresAuth: true },
             },
+             {
+              path: "cv_profile",
+              name: "admin_cv_profile",
+              component: Form_Create_or_Update_Cv_Profile,
+            }
           ]
         },
         {

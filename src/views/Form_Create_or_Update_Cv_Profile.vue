@@ -10,7 +10,9 @@
           </div>
           <button
             @click="showCreateForm = true"
-            class="px-6 py-2 font-medium text-white transition-colors bg-[#e4097f] rounded-lg hover:bg-[#c01370] flex items-center gap-2"
+            :disabled="profile.slug ? true : false"
+            :class="profile.slug ? ' bg-pink-300 cursor-not-allowed':'bg-[#e4097f]  hover:bg-[#c01370]'"
+            class="flex items-center gap-2 px-6 py-2 font-medium text-white transition-colors rounded-lg"
           >
             <PlusIcon class="w-4 h-4" />
             <span>Créer un profil</span>
@@ -18,13 +20,29 @@
         </div>
 
         <!-- Liste des profils -->
-        <div v-if="profile" class="max-w-2xl">
+        <div v-if="profile.slug" class="max-w-2xl">
           <CvProfileCard
             :key="index"
             :profile="profile"
             @edit="editProfile"
             @view="viewProfile"
           />
+        </div>
+          <div v-else
+        class="p-6 text-center rounded-lg bg-gray-50"
+      >
+        <UsersIcon class="w-8 h-8 mx-auto mb-4 text-gray-400 sm:h-16 sm:w-16" />
+        <h3 class="mb-2 font-medium text-gray-900 text-md sm:text-lg">
+          No Companie Found
+        </h3>
+        <p class="mb-4 text-gray-600">You haven't added any Cv Profile</p>
+        <button
+            @click="showCreateForm = true"
+          class="bg-[#db147f] text-white px-6 py-2 rounded-lg hover:bg-[#c01370] transition-colors"
+        >
+          <span class="hidden sm:block">Create Your Cv Now</span>
+          <Plus class="sm:hidden" />
+        </button>
         </div>
       </div>
 
