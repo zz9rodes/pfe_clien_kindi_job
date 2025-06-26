@@ -106,8 +106,7 @@
           </div>
           <span class="text-sm font-medium text-gray-600 group-hover:text-gray-700">
             Inviter un membre
-          </span>
-          
+          </span>f
         </div>
       </div>
 

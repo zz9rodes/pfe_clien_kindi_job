@@ -39,6 +39,35 @@
         </div>
 
         <div class="space-y-6">
+            <!-- Statut -->
+          <div class="p-6 bg-white border border-gray-200 rounded-lg">
+            <h2 class="mb-4 text-xl font-semibold text-gray-900">
+              Statut de l'offre
+            </h2>
+
+            <div>
+              <label class="block mb-1 text-sm font-medium text-gray-700"
+                >Status *</label
+              >
+
+              <select
+                id="jobType"
+                required
+                v-model="jobData.status"
+                class="w-full px-3 py-2 text-gray-900 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#db147f] focus:border-[#db147f]"
+              >
+                <option value="">select a gender</option>
+                <option
+                  v-for="status in jobStatus"
+                  :key="status"
+                  :value="status"
+                >
+                  {{ status.toLocaleLowerCase() }}
+                </option>
+              </select>
+            </div>
+          </div>
+          
           <!-- Informations générales -->
           <div class="p-6 bg-white border border-gray-200 rounded-lg">
             <h2 class="mb-4 text-xl font-semibold text-gray-900">
@@ -561,34 +590,7 @@
             </div>
           </div>
 
-          <!-- Statut -->
-          <div class="p-6 bg-white border border-gray-200 rounded-lg">
-            <h2 class="mb-4 text-xl font-semibold text-gray-900">
-              Statut de l'offre
-            </h2>
-
-            <div>
-              <label class="block mb-1 text-sm font-medium text-gray-700"
-                >Status *</label
-              >
-
-              <select
-                id="jobType"
-                required
-                v-model="jobData.status"
-                class="w-full px-3 py-2 text-gray-900 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#db147f] focus:border-[#db147f]"
-              >
-                <option value="">select a gender</option>
-                <option
-                  v-for="status in jobStatus"
-                  :key="status"
-                  :value="status"
-                >
-                  {{ status.toLocaleLowerCase() }}
-                </option>
-              </select>
-            </div>
-          </div>
+        
         </div>
       </form>
     </div>
