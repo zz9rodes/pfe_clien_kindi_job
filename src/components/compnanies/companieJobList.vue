@@ -92,6 +92,17 @@
             :job="job"
             @bookmark="handleBookmark"
           />
+           <div
+            v-if="isAdmin && job.status=='OPEN'"
+            class="w-full bg-[#db147f] cursor-pointer"
+            @click.stop="GotoJobApplications(job)"
+          >
+            <button
+              class="bottom-0 z-10 px-3 py-1 text-white transition-colors right-20 "
+            >
+              {{ job.applies.length  }} applies
+            </button>
+          </div>
         </div>
 
 
@@ -179,6 +190,13 @@ const filteredJobs = computed(() => {
 const getJobCountByStatus = (status) => {
   if (!company.value?.jobs) return 0;
   return company.value.jobs.filter((job) => job.status === status).length;
+};
+// list_applications
+const GotoJobApplications = (job) => {
+  router.push({
+    name: "list_applications",
+    params: { companyId: route.params.companyId,jobId:job.slug },
+  });
 };
 
 const GoToNewCreateJob = () => {

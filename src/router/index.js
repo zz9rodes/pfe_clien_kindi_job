@@ -41,6 +41,7 @@ import { useAuthStore } from "@/stores/auth";
 import { storeToRefs } from "pinia";
 import { Notyf } from "notyf";
 import "notyf/notyf.min.css";
+import JobApplicantsList from "@/views/JobApplicantsList.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -236,6 +237,11 @@ const router = createRouter({
               name: "update_contract",
               component: FormUpdateContract,
             },
+            {
+              path: ":companyId/job/:jobId/list-applications",
+              name: "list_applications",
+              component: JobApplicantsList,
+            },
           ],
         },
         {
@@ -253,6 +259,7 @@ const router = createRouter({
           name: "list_news",
           component: ListNews,
         },
+         
       ],
     },
     {
