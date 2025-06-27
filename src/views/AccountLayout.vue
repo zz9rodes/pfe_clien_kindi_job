@@ -453,8 +453,8 @@ const getOverlayRouteLink = (item) => {
 
 // Fonction pour vérifier si un menu peut être affiché
 const menuCanBeShow = (item) => {
-  if (item.isCompanie && accountType.value !== 'companies') {
-    return false;
+  if (item.isCompanie && (accountType.value !== 'companies' || !companyId.value)) {
+    return false
   }
   return true;
 };

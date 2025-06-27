@@ -153,6 +153,7 @@ export const useAuthStore = defineStore("auth", () => {
       JSON.stringify(company)
     );
     userCompany.value = company;
+    // window.location.reload()
   }
 
   function setUser(user) {

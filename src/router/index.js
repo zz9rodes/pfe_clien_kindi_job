@@ -346,6 +346,7 @@ router.beforeEach((to, from, next) => {
     'companies_version',
     'companies_version_details',
     'admin_companie_details',
+    'admin_cv_profile'
   ];
   if (
     routesNeedAccount.includes(to.name) &&
