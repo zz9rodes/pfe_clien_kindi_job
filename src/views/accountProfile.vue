@@ -15,7 +15,7 @@
                 class="flex flex-row space-x-2 overflow-x-auto lg:flex-col lg:space-x-0 lg:space-y-2 lg:overflow-x-visible"
               >
                 <button
-                  v-for="tab in tabs"
+                  v-for="tab in filteredTabsMenuItems"
                   :key="tab.id"
                   @click="ToogleActiveTab(tab.id)"
                   :class="[
@@ -46,7 +46,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted,computed } from "vue";
 import { useRouter, useRoute, RouterView } from "vue-router";
 import {
   UserIcon,
@@ -55,9 +55,13 @@ import {
   PenToolIcon,
   FileUserIcon,
 } from "lucide-vue-next";
+import { useAuthStore } from "@/stores/auth";
 
 const router = useRouter();
 const route = useRoute();
+const auth=useAuthStore()
+
+const accountType=ref('')
 
 const activeTab =
   route?.params?.tab == "companies" ? ref(route?.params?.tab) : ref("profile");
@@ -74,6 +78,7 @@ const tabs = [
     name: "Companies Information",
     icon: UsersIcon,
     route: "profile_companies",
+    isCompanie: true,
   },
   {
     id: "signature",
@@ -89,6 +94,17 @@ const tabs = [
   },
 ];
 
+const filteredTabsMenuItems = computed(() => {
+  return tabs.filter(item => menuCanBeShow(item));
+});
+
+// Fonction pour vérifier si un menu peut être affiché
+const menuCanBeShow = (item) => {
+  if (item.isCompanie && (accountType.value !== 'companies' )) {
+    return false
+  }
+  return true;
+};
 
 const ToogleActiveTab = (tabId) => {
   activeTab.value = tabId;
@@ -108,6 +124,7 @@ const validTabs = [
 
 onMounted(() => {
   console.log(route);
+   accountType.value = auth?.user?.account?.accountType;
   const tabParam = route.name;
   activeTab.value = validTabs.includes(tabParam) ? tabParam : "profile_details";
 });

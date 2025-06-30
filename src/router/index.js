@@ -42,6 +42,7 @@ import { storeToRefs } from "pinia";
 import { Notyf } from "notyf";
 import "notyf/notyf.min.css";
 import JobApplicantsList from "@/views/JobApplicantsList.vue";
+import UserJobSApplication from "@/views/UserJobSApplication.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -108,12 +109,12 @@ const router = createRouter({
               component: DrawSigrature,
               meta: { requiresAuth: true },
             },
-             {
+            {
               path: "cv_profile",
               name: "admin_cv_profile",
               component: Form_Create_or_Update_Cv_Profile,
-            }
-          ]
+            },
+          ],
         },
         {
           path: "companies",
@@ -135,7 +136,7 @@ const router = createRouter({
         {
           path: "companie_request/:companyId/details",
           name: "admin_companie_details",
-          component: CompanyDetailsPage
+          component: CompanyDetailsPage,
         },
       ],
     },
@@ -183,7 +184,6 @@ const router = createRouter({
           path: "companies",
           redirect: "account/profile/?tab=companies",
           children: [
-
             {
               path: ":companyId/create_job",
               name: "create_job",
@@ -193,8 +193,7 @@ const router = createRouter({
               path: ":companyId/companie-details",
               name: "me_companie_details",
               component: CompanieDetail,
-              props: { isAdmin: true }
-
+              props: { isAdmin: true },
             },
             {
               path: ":companyId/update_job/:jobId",
@@ -210,7 +209,7 @@ const router = createRouter({
               path: ":companyId/list-jobs",
               name: "companie_list_jobs",
               component: CompanieJobList,
-              props: { isAdmin: true }
+              props: { isAdmin: true },
             },
             {
               path: ":companyId/list_projects",
@@ -244,6 +243,11 @@ const router = createRouter({
             },
           ],
         },
+         {
+      path: "job_applies",
+      name: "my_applications",
+      component: UserJobSApplication,
+    },
         {
           path: "l_jobs",
           name: "l_jobs",
@@ -259,7 +263,6 @@ const router = createRouter({
           name: "list_news",
           component: ListNews,
         },
-         
       ],
     },
     {
@@ -298,22 +301,21 @@ const router = createRouter({
       path: "/portofolio/:cvId?",
       name: "portofolio",
       component: Portofolio,
-    }
+    },
+    
   ],
 });
 
-
 const notyf = new Notyf({ position: { x: "right", y: "top" }, duration: 3000 });
-
 
 // Middleware d'authentification
 router.beforeEach((to, from, next) => {
   const auth = useAuthStore();
   // Si la route nécessite l'authentification
-  if (to.matched.some(record => record.meta.requiresAuth)) {
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
     if (!auth.token || !auth.user) {
       notyf.error("You Need to Be Login");
-      return next({ name: 'login' });
+      return next({ name: "login" });
     }
   }
   next();
@@ -324,29 +326,29 @@ router.beforeEach((to, from, next) => {
   const auth = useAuthStore();
   // Liste des routes à protéger par la présence de l'account
   const routesNeedAccount = [
-    'admin_signature',
-    'profile_details',
-    'companie_versions',
-    'profile_companies',
-    'cv_profile',
-    'signature',
+    "admin_signature",
+    "profile_details",
+    "companie_versions",
+    "profile_companies",
+    "cv_profile",
+    "signature",
     // Ajoute ici d'autres routes si besoin
-    'create_job',
-    'me_companie_details',
-    'update_job',
-    'team_members',
-    'companie_list_jobs',
-    'list_projects',
-    'project_tasks',
-    'contract_creator',
-    'contract_list',
-    'update_contract',
+    "create_job",
+    "me_companie_details",
+    "update_job",
+    "team_members",
+    "companie_list_jobs",
+    "list_projects",
+    "project_tasks",
+    "contract_creator",
+    "contract_list",
+    "update_contract",
     // Routes admin companies
-    'admin_companies',
-    'companies_version',
-    'companies_version_details',
-    'admin_companie_details',
-    'admin_cv_profile'
+    "admin_companies",
+    "companies_version",
+    "companies_version_details",
+    "admin_companie_details",
+    "admin_cv_profile",
   ];
   if (
     routesNeedAccount.includes(to.name) &&
@@ -354,14 +356,17 @@ router.beforeEach((to, from, next) => {
   ) {
     // Vérifie si c'est la dernière route matched
     if (to.matched[to.matched.length - 1].name === to.name) {
-      if (to.name !== 'profile_details' && to.name !== 'admin_profile_details') {
+      if (
+        to.name !== "profile_details" &&
+        to.name !== "admin_profile_details"
+      ) {
         notyf.error("You Need to Complete Your Profile Before");
       }
     }
     if (auth.user?.isAdmin) {
-      return next({ name: 'admin_profile_details' });
+      return next({ name: "admin_profile_details" });
     }
-    return next({ name: 'profile_details' });
+    return next({ name: "profile_details" });
   }
   next();
 });

@@ -89,16 +89,15 @@
         </div>
       </div>
 
-      <!-- Resume -->
-      <div v-if="applyInfo.slug">
-        <h3 class="mb-3 text-lg font-medium text-gray-900">CV</h3>
+      <div v-if="applicant.cvProfiles.slug">
+        <h3 class="mb-3 text-lg font-medium text-gray-900">Cv Profile</h3>
         <a
-          :href="applyInfo.slug"
+          :href="activeUrl"
           target="_blank"
           class="inline-flex items-center px-4 py-2 text-sm font-medium text-blue-600 rounded-lg bg-blue-50 hover:bg-blue-100"
         >
           <FileText class="w-4 h-4 mr-2" />
-          Télécharger le CV
+          Voir le CV
         </a>
       </div>
     </div>
@@ -123,16 +122,16 @@
         
         <div class="flex space-x-3">
           <button
-            v-if="applicant.status !== 'rejected'"
-            @click="$emit('updateStatus', applicant.id, 'rejected')"
+            v-if="applicant.status !== 'reject'"
+            @click="$emit('updateStatus', 'reject')"
             class="px-4 py-2 text-sm font-medium text-red-600 rounded-lg bg-red-50 hover:bg-red-100"
           >
             Rejeter
           </button>
          
           <button
-            v-if="applyInfo.status !== 'accepted'"
-            @click="$emit('updateStatus', applicant.slug, 'accepted')"
+            v-if="applyInfo.status !== 'approved'"
+            @click="$emit('updateStatus', 'approved')"
             class="px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700"
           >
             Accepter
@@ -169,13 +168,15 @@ const formatDate = (dateString) => {
   });
 };
 
+const activeUrl=`${window.location.origin}/portofolio/${props.applicant.cvProfiles.slug}`
+
 const getStatusBadgeClass = (status) => {
   switch (status) {
     case 'pending':
       return 'bg-yellow-100 text-yellow-800';
-    case 'accepted':
+    case 'approved':
       return 'bg-green-100 text-green-800';
-    case 'rejected':
+    case 'reject':
       return 'bg-red-100 text-red-800';
     case 'interviewed':
       return 'bg-blue-100 text-blue-800';
@@ -188,9 +189,9 @@ const getStatusDotClass = (status) => {
   switch (status) {
     case 'pending':
       return 'bg-yellow-400';
-    case 'accepted':
+    case 'approved':
       return 'bg-green-400';
-    case 'rejected':
+    case 'reject':
       return 'bg-red-400';
     case 'interviewed':
       return 'bg-blue-400';
@@ -202,8 +203,8 @@ const getStatusDotClass = (status) => {
 const getStatusLabel = (status) => {
   const labels = {
     pending: "En attente",
-    accepted: "Accepté",
-    rejected: "Rejeté",
+    approved: "Accepté",
+    reject: "Rejeté",
     interviewed: "Entretien"
   };
   return labels[status] || status;

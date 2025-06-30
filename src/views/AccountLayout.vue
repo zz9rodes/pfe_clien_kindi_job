@@ -313,7 +313,7 @@ const baseMenuItems = [
   {
     icon: MessageCircleMore,
     title: "Applies",
-    routeName: "home",
+    routeName: "my_applications",
     active: false,
     badge: 3,
     isCompanie: false,
@@ -364,7 +364,7 @@ const baseMobileMenuItems = [
   {
     icon: MessageCircleMore,
     title: "Applies",
-    routeName: "home",
+    routeName: "my_applications",
     active: false,
     badge: 3,
     isCompanie: false,

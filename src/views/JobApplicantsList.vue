@@ -1,22 +1,22 @@
 <template>
   <div class="w-full min-h-screen mx-auto bg-gray-50">
-    <AppModal  :isOpen="isLoading" :isLoader="true"></AppModal>
+    <AppModal :isOpen="isLoading" :isLoader="true"></AppModal>
 
     <!-- Modal pour voir le profil du candidat -->
     <AppModal
-      @close="closeApplicantModal"
-      :isOpen="isApplicantModalOpen"
+      @closeModal="closeApplicantModal"
+      :isOpen="selectedApplicant"
       :isLoader="false"
     >
-      <ApplicantProfileModal 
+      <ApplicantProfileModal
         @close="closeApplicantModal"
         v-if="selectedApplicant"
         :applicant="selectedApplicant.account"
-        :applyInfo='{
-            message:selectedApplicant.message,
-            slug:selectedApplicant.slug,
-            status:selectedApplicant.status
-        }'
+        :applyInfo="{
+          message: selectedApplicant.message,
+          slug: selectedApplicant.slug,
+          status: selectedApplicant.status,
+        }"
         @updateStatus="handleStatusUpdate"
       />
     </AppModal>
@@ -37,13 +37,19 @@
               class="flex items-center justify-center w-16 h-16 bg-gray-200 rounded-lg"
             >
               <span class="text-lg font-medium text-gray-600">
-                {{ jobData?.company?.activeDetails?.name?.charAt(0) || 'J' }}
+                {{ jobData?.company?.activeDetails?.name?.charAt(0) || "J" }}
               </span>
             </div>
             <div>
-              <h1 class="text-2xl font-bold text-gray-900">{{ jobData?.title || 'Candidatures' }}</h1>
-              <p class="text-gray-600">{{ jobData?.company?.activeDetails?.name }}</p>
-              <div class="flex items-center mt-2 space-x-4 text-sm text-gray-500">
+              <h1 class="text-2xl font-bold text-gray-900">
+                {{ jobData?.title || "Candidatures" }}
+              </h1>
+              <p class="text-gray-600">
+                {{ jobData?.company?.activeDetails?.name }}
+              </p>
+              <div
+                class="flex items-center mt-2 space-x-4 text-sm text-gray-500"
+              >
                 <span class="flex items-center">
                   <MapPin class="w-4 h-4 mr-1" />
                   {{ jobData?.city }}, {{ jobData?.country }}
@@ -59,19 +65,19 @@
               </div>
             </div>
           </div>
-          
+
           <!-- Job Status and Stats -->
           <div class="flex items-center space-x-6">
-            <span 
+            <span
               :class="[
                 'inline-flex items-center px-3 py-1 text-sm font-medium rounded-full',
-                getJobStatusBadgeClass(jobData?.status)
+                getJobStatusBadgeClass(jobData?.status),
               ]"
             >
-              <div 
+              <div
                 :class="[
                   'w-2 h-2 rounded-full mr-2',
-                  getJobStatusDotClass(jobData?.status)
+                  getJobStatusDotClass(jobData?.status),
                 ]"
               ></div>
               {{ getJobStatusLabel(jobData?.status) }}
@@ -84,30 +90,34 @@
             </span>
           </div>
         </div>
-        
+
         <div class="text-right">
-          <div class="text-2xl font-bold text-gray-900">{{ applicants.length }}</div>
-          <div class="text-sm text-gray-500">candidature{{ applicants.length > 1 ? 's' : '' }}</div>
+          <div class="text-2xl font-bold text-gray-900">
+            {{ applicants.length }}
+          </div>
+          <div class="text-sm text-gray-500">
+            candidature{{ applicants.length > 1 ? "s" : "" }}
+          </div>
         </div>
       </div>
     </div>
 
     <!-- Tabs pour filtrer par statut -->
-    <div class="bg-white border-b border-gray-200">
+    <div class="px-6 bg-white border-b border-gray-200">
       <div class="flex gap-0">
         <button
           v-for="status in applicationStatuses"
           :key="status"
           @click="activeTab = status"
           :class="[
-            'py-2 px-4 text-sm font-medium border-b-2',
+            'py-2 px-6 text-sm font-medium border-b-2',
             activeTab === status
               ? 'border-[#db147f] text-[#db147f]'
               : 'border-transparent text-gray-500 hover:text-gray-700 hover:bg-gray-50',
           ]"
         >
           {{ statusLabels[status] }}
-          <span 
+          <span
             v-if="getApplicantCountByStatus(status) > 0"
             class="px-2 py-1 ml-2 text-xs bg-gray-100 rounded-full"
           >
@@ -116,12 +126,14 @@
         </button>
       </div>
     </div>
-    
+
     <!-- Contenu principal -->
     <div class="p-6">
-      <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div
+        class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+      >
         <!-- Cartes des candidats -->
-        <div 
+        <div
           v-for="applicant in filteredApplicants"
           :key="applicant.id"
           class="p-4 transition-shadow bg-white border border-gray-200 rounded-lg cursor-pointer hover:shadow-md"
@@ -155,16 +167,16 @@
                 {{ getApplicantExperience(applicant) }}
               </p>
               <div class="flex items-center justify-between mt-2">
-                <span 
+                <span
                   :class="[
                     'inline-flex items-center px-2 py-1 text-xs font-medium rounded-full',
-                    getStatusBadgeClass(applicant.status)
+                    getStatusBadgeClass(applicant.status),
                   ]"
                 >
-                  <div 
+                  <div
                     :class="[
                       'w-1.5 h-1.5 rounded-full mr-1.5',
-                      getStatusDotClass(applicant.status)
+                      getStatusDotClass(applicant.status),
                     ]"
                   ></div>
                   {{ getStatusLabel(applicant.status) }}
@@ -172,7 +184,7 @@
                 <div class="flex items-center space-x-1">
                   <button
                     v-if="applicant.status === 'pending'"
-                    @click.stop="updateApplicantStatus(applicant.id, 'accepted')"
+                    @click.stop="updateApplicantStatus(applicant, 'approved')"
                     class="p-1 text-green-600 rounded hover:bg-green-50"
                     title="Accepter"
                   >
@@ -180,7 +192,7 @@
                   </button>
                   <button
                     v-if="applicant.status === 'pending'"
-                    @click.stop="updateApplicantStatus(applicant.id, 'rejected')"
+                    @click.stop="updateApplicantStatus(applicant, 'reject')"
                     class="p-1 text-red-600 rounded hover:bg-red-50"
                     title="Rejeter"
                   >
@@ -197,10 +209,12 @@
               </div>
             </div>
           </div>
-          
+
           <!-- Informations supplémentaires -->
           <div class="pt-3 mt-3 border-t border-gray-100">
-            <div class="flex items-center justify-between text-xs text-gray-500">
+            <div
+              class="flex items-center justify-between text-xs text-gray-500"
+            >
               <span>Postulé le {{ formatDate(applicant.createdAt) }}</span>
               <div class="flex items-center space-x-2">
                 <span class="flex items-center">
@@ -209,7 +223,7 @@
                 </span>
               </div>
             </div>
-            
+
             <!-- Compétences du candidat -->
             <div v-if="getApplicantSkills(applicant).length > 0" class="mt-2">
               <div class="flex flex-wrap gap-1">
@@ -240,12 +254,14 @@
       </div>
 
       <!-- État vide -->
-      <div 
-        v-if="filteredApplicants.length === 0 && !isLoading" 
+      <div
+        v-if="filteredApplicants.length === 0 && !isLoading"
         class="py-12 text-center"
       >
         <div class="flex flex-col items-center">
-          <div class="flex items-center justify-center w-16 h-16 mb-4 bg-gray-100 rounded-full">
+          <div
+            class="flex items-center justify-center w-16 h-16 mb-4 bg-gray-100 rounded-full"
+          >
             <Users class="w-8 h-8 text-gray-400" />
           </div>
           <h3 class="mb-2 text-lg font-medium text-gray-900">
@@ -264,7 +280,17 @@
 import { ref, computed, onMounted } from "vue";
 import AppModal from "@/components/globales/AppModal.vue";
 import ApplicantProfileModal from "@/components/ApplicantProfileModal.vue";
-import { Check, X, Eye, Star, Users, MapPin, Briefcase, DollarSign, Phone } from "lucide-vue-next";
+import {
+  Check,
+  X,
+  Eye,
+  Star,
+  Users,
+  MapPin,
+  Briefcase,
+  DollarSign,
+  Phone,
+} from "lucide-vue-next";
 import { useAuthStore } from "@/stores/auth";
 import { useRouter, useRoute } from "vue-router";
 
@@ -276,54 +302,61 @@ const route = useRoute();
 const props = defineProps({
   jobId: {
     type: String,
-    required: true
-  }
+    required: true,
+  },
 });
 
 // Reactive data
 const isLoading = ref(false);
 const isApplicantModalOpen = ref(false);
 const selectedApplicant = ref(null);
-const activeTab = ref('pending');
+const activeTab = ref("pending");
 const jobData = ref(null);
 
 const statusLabels = {
   pending: "En attente",
-  accepted: "Acceptés",
-  rejected: "Rejetés"
+  approved: "Acceptés",
+  reject: "Rejetés",
 };
 
-const applicationStatuses = ["pending", "accepted", "rejected"];
+const applicationStatuses = ["pending", "approved", "reject"];
 
 // Données des candidatures (sera rempli par l'API)
 const applicants = ref([]);
 
 // Computed properties
 const filteredApplicants = computed(() => {
-  return applicants.value.filter(applicant => applicant.status === activeTab.value);
+  return applicants.value.filter(
+    (applicant) => applicant.status === activeTab.value
+  );
 });
 
 const getApplicantCountByStatus = (status) => {
-  return applicants.value.filter(applicant => applicant.status === status).length;
+  return applicants.value.filter((applicant) => applicant.status === status)
+    .length;
 };
 
 // Methods pour extraire les données des candidats
 const getApplicantName = (applicant) => {
-  return `${applicant.account?.firstName || ''} ${applicant.account?.lastName || ''}`.trim() || 'Candidat anonyme';
+  return (
+    `${applicant.account?.firstName || ""} ${
+      applicant.account?.lastName || ""
+    }`.trim() || "Candidat anonyme"
+  );
 };
 
 const getApplicantInitials = (applicant) => {
-  const firstName = applicant.account?.firstName || '';
-  const lastName = applicant.account?.lastName || '';
-  return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase() || 'CA';
+  const firstName = applicant.account?.firstName || "";
+  const lastName = applicant.account?.lastName || "";
+  return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase() || "CA";
 };
 
 const getApplicantCurrentPosition = (applicant) => {
   const workExperiences = applicant.account?.cvProfiles?.workExperiences || [];
   if (workExperiences.length > 0) {
-    return workExperiences[0].title || 'Poste non spécifié';
+    return workExperiences[0].title || "Poste non spécifié";
   }
-  return 'Poste non spécifié';
+  return "Poste non spécifié";
 };
 
 const getApplicantExperience = (applicant) => {
@@ -334,7 +367,7 @@ const getApplicantExperience = (applicant) => {
     }, 0);
     return `${Math.floor(totalPeriods / 12)} ans d'expérience`;
   }
-  return 'Expérience non spécifiée';
+  return "Expérience non spécifiée";
 };
 
 const getApplicantSkills = (applicant) => {
@@ -344,27 +377,27 @@ const getApplicantSkills = (applicant) => {
 // Methods pour les statuts
 const getStatusBadgeClass = (status) => {
   switch (status) {
-    case 'pending':
-      return 'bg-yellow-100 text-yellow-800';
-    case 'accepted':
-      return 'bg-green-100 text-green-800';
-    case 'rejected':
-      return 'bg-red-100 text-red-800';
+    case "pending":
+      return "bg-yellow-100 text-yellow-800";
+    case "approved":
+      return "bg-green-100 text-green-800";
+    case "reject":
+      return "bg-red-100 text-red-800";
     default:
-      return 'bg-gray-100 text-gray-800';
+      return "bg-gray-100 text-gray-800";
   }
 };
 
 const getStatusDotClass = (status) => {
   switch (status) {
-    case 'pending':
-      return 'bg-yellow-400';
-    case 'accepted':
-      return 'bg-green-400';
-    case 'rejected':
-      return 'bg-red-400';
+    case "pending":
+      return "bg-yellow-400";
+    case "approved":
+      return "bg-green-400";
+    case "reject":
+      return "bg-red-400";
     default:
-      return 'bg-gray-400';
+      return "bg-gray-400";
   }
 };
 
@@ -375,38 +408,38 @@ const getStatusLabel = (status) => {
 // Methods pour le statut du job
 const getJobStatusBadgeClass = (status) => {
   switch (status) {
-    case 'OPEN':
-      return 'bg-green-100 text-green-800';
-    case 'CLOSE':
-      return 'bg-red-100 text-red-800';
-    case 'DRAFT':
-      return 'bg-yellow-100 text-yellow-800';
+    case "OPEN":
+      return "bg-green-100 text-green-800";
+    case "CLOSE":
+      return "bg-red-100 text-red-800";
+    case "DRAFT":
+      return "bg-yellow-100 text-yellow-800";
     default:
-      return 'bg-gray-100 text-gray-800';
+      return "bg-gray-100 text-gray-800";
   }
 };
 
 const getJobStatusDotClass = (status) => {
   switch (status) {
-    case 'OPEN':
-      return 'bg-green-400';
-    case 'CLOSE':
-      return 'bg-red-400';
-    case 'DRAFT':
-      return 'bg-yellow-400';
+    case "OPEN":
+      return "bg-green-400";
+    case "CLOSE":
+      return "bg-red-400";
+    case "DRAFT":
+      return "bg-yellow-400";
     default:
-      return 'bg-gray-400';
+      return "bg-gray-400";
   }
 };
 
 const getJobStatusLabel = (status) => {
   switch (status) {
-    case 'OPEN':
-      return 'Ouverte';
-    case 'CLOSE':
-      return 'Fermée';
-    case 'DRAFT':
-      return 'Brouillon';
+    case "OPEN":
+      return "Ouverte";
+    case "CLOSE":
+      return "Fermée";
+    case "DRAFT":
+      return "Brouillon";
     default:
       return status;
   }
@@ -414,43 +447,43 @@ const getJobStatusLabel = (status) => {
 
 // Utility methods
 const formatSalary = (price) => {
-  if (!price) return 'Salaire non spécifié';
+  if (!price) return "Salaire non spécifié";
   return `${price.value?.toLocaleString()} ${price.currency}`;
 };
 
 const formatDate = (dateString) => {
-  if (!dateString) return '';
+  if (!dateString) return "";
   const date = new Date(dateString);
-  return date.toLocaleDateString('fr-FR', {
-    day: '2-digit',
-    month: '2-digit',
-    year: 'numeric'
+  return date.toLocaleDateString("fr-FR", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
   });
 };
 
 const getEmptyStateTitle = () => {
   switch (activeTab.value) {
-    case 'pending':
-      return 'Aucune candidature en attente';
-    case 'accepted':
-      return 'Aucun candidat accepté';
-    case 'rejected':
-      return 'Aucun candidat rejeté';
+    case "pending":
+      return "Aucune candidature en attente";
+    case "approved":
+      return "Aucun candidat accepté";
+    case "reject":
+      return "Aucun candidat rejeté";
     default:
-      return 'Aucune candidature';
+      return "Aucune candidature";
   }
 };
 
 const getEmptyStateDescription = () => {
   switch (activeTab.value) {
-    case 'pending':
-      return 'Les nouvelles candidatures apparaîtront ici.';
-    case 'accepted':
-      return 'Les candidats acceptés apparaîtront ici.';
-    case 'rejected':
-      return 'Les candidats rejetés apparaîtront ici.';
+    case "pending":
+      return "Les nouvelles candidatures apparaîtront ici.";
+    case "approved":
+      return "Les candidats acceptés apparaîtront ici.";
+    case "reject":
+      return "Les candidats rejetés apparaîtront ici.";
     default:
-      return 'Aucune candidature reçue pour le moment.';
+      return "Aucune candidature reçue pour le moment.";
   }
 };
 
@@ -465,49 +498,63 @@ const closeApplicantModal = () => {
   selectedApplicant.value = null;
 };
 
-const updateApplicantStatus = async (applicantId, newStatus) => {
+const updateApplicantStatus = async (applicant, newStatus) => {
   isLoading.value = true;
-  
+  const payload = {
+    status: newStatus,
+  };
   try {
-    const response = await auth.api('PUT', `/applies/${applicantId}/status`, {
-      status: newStatus
-    }, true);
-    
+    const response = await auth.api(
+      "PUT",
+      `/applies/${applicant.slug}/status`,
+      payload,
+      true
+    );
+
     if (response.success) {
       // Mise à jour locale
-      const applicantIndex = applicants.value.findIndex(a => a.id === applicantId);
+      const applicantIndex = applicants.value.findIndex(
+        (a) => a.id === applicant.id
+      );
       if (applicantIndex !== -1) {
         applicants.value[applicantIndex].status = newStatus;
       }
     }
-    
-    console.log(`Candidat ${applicantId} mis à jour avec le statut: ${newStatus}`);
+
+    console.log(
+      `Candidat ${applicant} mis à jour avec le statut: ${newStatus}`
+    );
   } catch (error) {
-    console.error('Erreur lors de la mise à jour du statut:', error);
+    console.error("Erreur lors de la mise à jour du statut:", error);
   } finally {
     isLoading.value = false;
   }
 };
 
-const handleStatusUpdate = (applicantId, newStatus) => {
-  updateApplicantStatus(applicantId, newStatus);
+const handleStatusUpdate = (newStatus) => {
+  updateApplicantStatus(selectedApplicant.value, newStatus);
   closeApplicantModal();
 };
 
 // API Methods
 const fetchJobAndApplicants = async () => {
   isLoading.value = true;
-  
+
   try {
-    const response = await auth.api('GET', `/applies/jobs/${route.params.jobId}`, null, false);
+    const response = await auth.api(
+      "GET",
+      `/applies/jobs/${route.params.jobId}`,
+      null,
+      false
+    );
     if (response.success) {
       jobData.value = response.data;
       applicants.value = response.data.applies || [];
     }
-    console.log('Job data:', jobData.value);
-    console.log('Applicants:', applicants.value);
+    console.log("Job data:", jobData.value);
+    console.log("Applicants:", applicants.value);
   } catch (error) {
-    console.error('Erreur lors du chargement des candidatures:', error);
+    console.error("Erreur lors du chargement des candidatures:", error);
   } finally {
     isLoading.value = false;
   }
@@ -527,7 +574,8 @@ onMounted(async () => {
 
 /* Hover effects */
 .hover\:shadow-md:hover {
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 /* Custom scrollbar si nécessaire */
