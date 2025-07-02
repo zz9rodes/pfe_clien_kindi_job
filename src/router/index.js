@@ -45,6 +45,7 @@ import JobApplicantsList from "@/views/JobApplicantsList.vue";
 import UserJobSApplication from "@/views/UserJobSApplication.vue";
 import AgreementsList from "@/views/AgreementsList.vue";
 import SignedContractDisplay from "@/views/SignedContractDisplay.vue";
+import ExampleUsage from "@/components/globales/ExampleUsage.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -313,6 +314,11 @@ const router = createRouter({
       path: "/portofolio/:cvId?",
       name: "portofolio",
       component: Portofolio,
+    },
+     {
+      path: "/deoma/",
+      name: "deoma",
+      component: ExampleUsage,
     },    
   ],
 });
