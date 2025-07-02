@@ -20,28 +20,38 @@
     </div>
 
 
-
+    <form action="" @submit.prevent="handleSubmit">
+        
     <div class="p-6">
       <div class="">
-              
-
-        <div class="space-y-6 ">
+        <div class="space-y-3 ">
+         
           <div class="space-y-2">
-            <label for="email" class="block text-sm font-medium text-gray-700">
-              Email <span class="text-red-500">*</span>
-            </label>
-            <input id="email" v-model="email" type="email" placeholder="example-mail@demo.com"
-              class="w-full px-4 py-2 transition-colors border border-gray-300 rounded-md focus:ring-2 focus:ring-[#e4097f] outline-none"
-              required />
-          </div>
-          <div class="space-y-2">
-            <label for="email" class="block text-sm font-medium text-gray-700">
+            <label for="password" class="block text-sm font-medium text-gray-700">
               Password <span class="text-red-500">*</span>
             </label>
-            <input id="password" v-model="email" type="email" placeholder="*********"
+            <input id="password" v-model="Aggrement.password" type="password" placeholder="*********"
               class="w-full px-4 py-2 transition-colors border border-gray-300 rounded-md focus:ring-2 focus:ring-[#e4097f] outline-none"
               required />
           </div>
+
+           
+           <div class="space-y-4">
+                <div>
+                  <label class="block mb-1 text-sm font-medium text-gray-700"
+                    >Signature Associer Au Contract
+                    <span class="text-red-500">*</span></label
+                  >
+                  <CustomSelect
+                    v-model="Aggrement.signatureId"
+                    :options="signaturesList"
+                    option-label="name"
+                    option-value="id"
+                    placeholder="Ce select est désactivé"
+                    :disabled="false"
+                  />
+                </div>
+              </div>
             <div class="space-y-4">
               <div class="flex items-center group">
                 <input
@@ -81,45 +91,86 @@
                   </label>
                 </label>
               </div>
-
-            
             </div>
         </div>
 
       </div>
       <div class="pt-6 mt-6 border-t border-gray-100">
-        <button @click="handleSubmit"
+        <button type="submit" 
           class="w-full bg-[#e4097f] text-white py-2 px-6 rounded-md font-semibold hover:shadow-lg hover:scale transition-all duration-200 flex items-center justify-center gap-2">
           Confirm
         </button>
       </div>
     </div>
+      
+    </form>
+
   </div>
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue'
-const categories = ['Personal', 'Companies'];
+import { ref,  reactive,defineProps,onMounted } from 'vue'
+import CustomSelect from '../globales/CustomSelect.vue';
+import { useAuthStore } from "@/stores/auth";
 
+const props = defineProps({
+  contractId: { type: String, required: true },
+  accountId: { type: String, required: true }, // slug du compte
+  reference: { type: String, required: false, default: '' }
+})
 
+const auth = useAuthStore()
 const emit = defineEmits(['close'])
 
-const activeCategory = ref(categories[0])
+const Aggrement = reactive({
+  email: '',
+  password: '',
+  signatureId: '',
+  reference: props.reference || ''
+})
 
+const signaturesList = ref([])
+const loading = ref(false)
 
-const handleSubmit = () => {
-
-  emit('close')
+const handleSubmit = async () => {
+  
+  try {
+    const payload = {
+      accountId: props.accountId,
+      contractId: props.contractId,
+      password: Aggrement.password,
+      reference: Aggrement.reference || undefined,
+      signatureId: Aggrement.signatureId
+    }
+    const response = await auth.api('POST', '/agreements/create', payload, true)
+    if (response && response.success) {
+      emit('close')
+    }
+    emit('close')
+  } catch (e) {
+    console.log(e)
+  } 
+  
 }
-
-const handleCategoryClick = (category) => {
-  activeCategory.value = category;
-};
-
 
 const HadleCloseModal = () => {
   emit('close')
 }
+
+const FecthAccountsSignatures = async () => {
+  try {
+    const response = await auth.api('GET', '/accounts/signatures', null, false)
+    if (response.success) {
+      signaturesList.value = response.data
+    }
+  } catch (error) {
+    // déjà notifié
+  }
+}
+
+onMounted(() => {
+  FecthAccountsSignatures()
+})
 </script>
 
 <style scoped>

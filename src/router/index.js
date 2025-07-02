@@ -43,6 +43,8 @@ import { Notyf } from "notyf";
 import "notyf/notyf.min.css";
 import JobApplicantsList from "@/views/JobApplicantsList.vue";
 import UserJobSApplication from "@/views/UserJobSApplication.vue";
+import AgreementsList from "@/views/AgreementsList.vue";
+import SignedContractDisplay from "@/views/SignedContractDisplay.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -248,7 +250,12 @@ const router = createRouter({
       name: "my_applications",
       component: UserJobSApplication,
     },
-        {
+     {
+      path: "list_agrement",
+      name: "list_agrement",
+      component: AgreementsList,
+    },
+    {
           path: "l_jobs",
           name: "l_jobs",
           component: ListJobs,
@@ -295,14 +302,18 @@ const router = createRouter({
     {
       path: "/contracts/:contractId/preview",
       name: "contract_preview",
-      component: PreviewContract,
+      component: PreviewContract
+    },
+     {
+      path: "/app/agrements/:agrementId/preview",
+      name: "preview_agrement",
+      component: SignedContractDisplay,
     },
     {
       path: "/portofolio/:cvId?",
       name: "portofolio",
       component: Portofolio,
-    },
-    
+    },    
   ],
 });
 

@@ -5,7 +5,12 @@
       :isOpen="isModalOpen"
       :isLoader="false"
     >
-      <AcceptSignContractModal @close="toggleOpenModal()" />
+      <AcceptSignContractModal 
+        @close="toggleOpenModal()" 
+        :contractId="contractId"
+        :accountId="accountId"
+        :reference="generateReference()"
+      />
     </AppModal>
 
     <div class="max-w-4xl mx-auto avatar">
@@ -95,7 +100,7 @@
           </div>
 
           <div class="mb-8">
-            <p class="text-gray-700">{{ description }}</p>
+            <p class="text-gray-700">{{ processText(description) }}</p>
           </div>
 
           <!-- Articles -->
@@ -187,10 +192,12 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed ,onMounted} from "vue";
 import { FileTextIcon } from "lucide-vue-next";
 import AppModal from "@/components/globales/AppModal.vue";
 import AcceptSignContractModal from "@/components/Contract/AcceptSignContractModal.vue";
+import { useAuthStore } from '@/stores/auth';
+import { useRoute,useRouter } from "vue-router";
 
 const props = defineProps({
   clauses: {
@@ -234,10 +241,19 @@ const props = defineProps({
       phoneNumber: "",
     }),
   },
+  contractId: {
+    type: String,
+    default: "",
+  },
+  accountId: {
+    type: String,
+    default: "",
+  },
 });
 
 const employeeSignature = ref("");
 const isModalOpen = ref(false);
+const route=useRoute()
 
 // Process text by replacing placeholders with values
 const processText = (text) => {
@@ -246,32 +262,66 @@ const processText = (text) => {
   return text.replace(/\{\{([^}]+)\}\}/g, (match, placeholder) => {
     const key = placeholder.trim();
 
-    // Map common placeholders to UserData properties
-    const userDataMapping = {
+    // Si isLive est false, on retourne juste le placeholder
+    if (!props.isLive) {
+      return match;
+    }
+
+    // Mapping complet des champs requis selon utils/index.ts
+    const fieldMapping = {
+      // Champs utilisateur
       UserEmail: props.UserData.email,
       AccountFirstName: props.UserData.firstName,
       AccountLastName: props.UserData.lastName,
       AccountPhoneNumber: props.UserData.phoneNumber,
+      AccountAvatarUrl: props.UserData.avatarUrl,
+      AccountCountry: props.UserData.country,
+      AccountCity: props.UserData.city,
+      AccountFirstLangage: props.UserData.firstLangage,
+      AccountSecondLangage: props.UserData.secondLangage,
+
+      // Champs entreprise
       CompanieName: props.companyData.CompanyName,
+      CompanyName: props.companyData.CompanyName,
+      CompanyCity: props.companyData.city,
+      CompanyCountry: props.companyData.country,
+      CompanyRegisteredNumber: props.companyData.RegisteredNumber,
+
+      // Champs admin
+      AdminName: props.companyData.admin?.name,
+      AdminFirstName: props.companyData.admin?.firstName,
+      AdminLastName: props.companyData.admin?.lastName,
     };
 
-    // Check if it's a mapped UserData field
-    if (userDataMapping[key] !== undefined && userDataMapping[key] !== "") {
-      return userDataMapping[key];
+    // Vérifier d'abord dans le mapping des champs
+    if (
+      fieldMapping[key] !== undefined &&
+      fieldMapping[key] !== null &&
+      fieldMapping[key] !== ""
+    ) {
+      return fieldMapping[key];
     }
 
-    // Check if it's a direct UserData property
-    if (props.UserData[key] !== undefined && props.UserData[key] !== "") {
+    // Vérifier dans UserData directement
+    if (
+      props.UserData[key] !== undefined &&
+      props.UserData[key] !== null &&
+      props.UserData[key] !== ""
+    ) {
       return props.UserData[key];
     }
 
-    // Check if it's a direct companyData property
-    if (props.companyData[key] !== undefined && props.companyData[key] !== "") {
+    // Vérifier dans companyData directement
+    if (
+      props.companyData[key] !== undefined &&
+      props.companyData[key] !== null &&
+      props.companyData[key] !== ""
+    ) {
       return props.companyData[key];
     }
 
-    // Return a placeholder text if no value is found
-    return `[${key}]`;
+    // Si aucune valeur n'est trouvée, retourner le placeholder original
+    return match;
   });
 };
 
@@ -309,10 +359,8 @@ const isFormValid = computed(() => {
   );
 });
 
-
-
 const downloadPDF = async () => {
-  toggleOpenModal()
+  toggleOpenModal();
   try {
     // URL de la page à convertir en PDF
     const routeUrl = window.location.href;
@@ -349,8 +397,17 @@ const downloadPDF = async () => {
   } catch (err) {
     console.error("Erreur lors du téléchargement :", err);
   }
-  toggleOpenModal()
+  toggleOpenModal();
 };
+
+// Ajout des variables pour les props enfants
+const auth = useAuthStore();
+
+// contractId : slug du contrat (à adapter selon la structure de tes données)
+const contractId = route.params.contractId
+// accountId : slug du compte utilisateur courant
+const accountId = computed(() => auth.user?.account?.slug || '');
+
 </script>
 
 <style scoped>

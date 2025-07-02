@@ -25,7 +25,7 @@ const props = defineProps({
 
 <style scoped>
 .signature-card {
-  @apply bg-white rounded-xl shadow-md overflow-hidden w-full max-w-sm border border-gray-100 transition-all hover:shadow-lg;
+  @apply bg-white rounded-xl shadow-md overflow-hidden w-full border border-gray-100 transition-all hover:shadow-lg;
 }
 
 .card-content {

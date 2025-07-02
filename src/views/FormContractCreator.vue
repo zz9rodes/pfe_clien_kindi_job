@@ -478,9 +478,69 @@ const availableRequiredFields = ref([
     description: "Numéro de téléphone du compte",
   },
   {
+    value: "AccountAvatarUrl",
+    label: "Avatar",
+    description: "URL de l'avatar de l'utilisateur",
+  },
+  {
+    value: "AccountCountry",
+    label: "Pays",
+    description: "Pays de l'utilisateur",
+  },
+  {
+    value: "AccountCity",
+    label: "Ville",
+    description: "Ville de l'utilisateur",
+  },
+  {
+    value: "AccountFirstLangage",
+    label: "Langue principale",
+    description: "Langue principale de l'utilisateur",
+  },
+  {
+    value: "AccountSecondLangage",
+    label: "Langue secondaire",
+    description: "Langue secondaire de l'utilisateur",
+  },
+  {
     value: "CompanieName",
     label: "Nom de l'entreprise",
-    description: "Nom de la companie",
+    description: "Nom de la compagnie",
+  },
+  {
+    value: "CompanyName",
+    label: "Nom de l'entreprise (alternatif)",
+    description: "Nom de la compagnie (format alternatif)",
+  },
+  {
+    value: "CompanyCity",
+    label: "Ville de l'entreprise",
+    description: "Ville de la compagnie",
+  },
+  {
+    value: "CompanyCountry",
+    label: "Pays de l'entreprise",
+    description: "Pays de la compagnie",
+  },
+  {
+    value: "CompanyRegisteredNumber",
+    label: "Numéro d'enregistrement",
+    description: "Numéro d'enregistrement de la compagnie",
+  },
+  {
+    value: "AdminName",
+    label: "Nom de l'administrateur",
+    description: "Nom complet de l'administrateur",
+  },
+  {
+    value: "AdminFirstName",
+    label: "Prénom de l'administrateur",
+    description: "Prénom de l'administrateur",
+  },
+  {
+    value: "AdminLastName",
+    label: "Nom de famille de l'administrateur",
+    description: "Nom de famille de l'administrateur",
   },
 ]);
 

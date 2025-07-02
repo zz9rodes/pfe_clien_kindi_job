@@ -261,13 +261,16 @@ import AppOvarleyBottom from "@/components/globales/AppOvarleyBottom.vue";
 import {
   Menu,
   Home,
-  Heart,
   Cherry,
   MessageCircleMore,
   BarChart3,
   Users,
   FileText,
-  FolderClosed
+  FolderClosed,
+  Signature,
+  BookOpenText,
+  BriefcaseBusiness,
+  MailQuestionIcon
 } from "lucide-vue-next";
 import { useAuthStore } from "@/stores/auth";
 
@@ -295,7 +298,7 @@ const baseMenuItems = [
     isCompanie: false,
   },
   {
-    icon: Heart,
+    icon: BookOpenText,
     title: "Contracts",
     routeName: "contract_list",
     active: false,
@@ -303,7 +306,15 @@ const baseMenuItems = [
     isCompanie: true,
   },
   {
-    icon: Cherry,
+    icon: Signature,
+    title: "Signed Contracts",
+    routeName: "list_agrement",
+    active: false,
+    badge: null,
+    isCompanie: false,
+  },
+  {
+    icon: BriefcaseBusiness,
     title: "Jobs",
     routeName: "companie_list_jobs",
     active: false,
@@ -311,7 +322,7 @@ const baseMenuItems = [
     isCompanie: true,
   },
   {
-    icon: MessageCircleMore,
+    icon: MailQuestionIcon,
     title: "Applies",
     routeName: "my_applications",
     active: false,
@@ -362,7 +373,7 @@ const baseMobileMenuItems = [
     isCompanie: false,
   },
   {
-    icon: MessageCircleMore,
+    icon: MailQuestionIcon,
     title: "Applies",
     routeName: "my_applications",
     active: false,
@@ -381,7 +392,7 @@ const baseMobileMenuItems = [
 
 const baseOverlayMenuItems = [
   {
-    icon: Heart,
+    icon: BookOpenText,
     title: "Contracts",
     routeName: "contract_list",
     active: false,
@@ -389,12 +400,20 @@ const baseOverlayMenuItems = [
     isCompanie: true,
   },
   {
-    icon: Cherry,
+    icon: BriefcaseBusiness,
     title: "Jobs",
     routeName: "companie_list_jobs",
     active: false,
     badge: null,
     isCompanie: true,
+  },
+  {
+    icon: Signature,
+    title: "Signed Contracts",
+    routeName: "list_agrement",
+    active: false,
+    badge: null,
+    isCompanie: false,
   },
   {
     icon: FolderClosed,
