@@ -256,18 +256,16 @@ const projectData = ref({
 
 // Options data
 const projectStatuses = ref([
-  { value: 'planning', label: 'Planification' },
-  { value: 'in_progress', label: 'En cours' },
-  { value: 'on_hold', label: 'En pause' },
-  { value: 'completed', label: 'Terminé' },
-  { value: 'cancelled', label: 'Annulé' }
+  { value: 'open', label: 'open' },
+  { value: 'in_progress', label: 'in progress' },
+  { value: 'completed', label: 'completed' },
+  { value: 'closed', label: 'closed' }
 ])
 
 const priorities = ref([
-  { value: 'low', label: 'Faible', colorClass: 'text-green-600' },
-  { value: 'medium', label: 'Moyenne', colorClass: 'text-yellow-600' },
-  { value: 'high', label: 'Élevée', colorClass: 'text-orange-600' },
-  { value: 'urgent', label: 'Urgente', colorClass: 'text-red-600' }
+  { value: 'HIGH', label: 'high' },
+  { value: 'MEDIUM', label: 'medium' },
+  { value: 'LOW', label: 'low' },
 ])
 
 const fileTypes = ref([
