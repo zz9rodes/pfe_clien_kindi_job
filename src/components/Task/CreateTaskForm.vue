@@ -37,7 +37,7 @@
             <textarea
               v-model="taskData.description"
               placeholder="Décrivez la tâche en détail..."
-              rows="2"
+              rows="3"
               class="w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-[#db147f] focus:border-[#db147f]"
             ></textarea>
           </div>
@@ -56,17 +56,17 @@
                 required
               >
                 <option value="">Sélectionner une priorité</option>
-                <option value="low">Faible</option>
-                <option value="medium">Moyenne</option>
-                <option value="high">Élevée</option>
-                <option value="urgent">Urgente</option>
+                <option value="LOW">low</option>
+                <option value="MEDIUM">medium</option>
+                <option value="HIGH">high</option>
               </select>
             </div>
+            
 
             <div>
               <label class="block mb-1 text-sm font-medium text-gray-700">Estimation (jours) *</label>
               <input
-                v-model="taskData.estimationTime"
+                v-model.number="taskData.estimationTime"
                 type="number"
                 min="1"
                 placeholder="5"
@@ -105,33 +105,18 @@
         <div class="space-y-3">
           <h3 class="text-lg font-medium text-gray-900">Assignation</h3>
           
-          <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-            <div>
-              <label class="block mb-1 text-sm font-medium text-gray-700">Assigné à *</label>
-              <select
-                v-model="taskData.assigneeId"
-                class="w-full px-3 py-2 text-gray-900 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#db147f] focus:border-[#db147f]"
-                required
-              >
-                <option value="">Sélectionner un assigné</option>
-                <option v-for="assignee in assignees" :key="assignee.id" :value="assignee.id">
-                  {{ assignee.name }} - {{ assignee.email }}
-                </option>
-              </select>
-            </div>
-
-            <div>
-              <label class="block mb-1 text-sm font-medium text-gray-700">Étape du projet</label>
-              <select
-                v-model="taskData.stepId"
-                class="w-full px-3 py-2 text-gray-900 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#db147f] focus:border-[#db147f]"
-              >
-                <option value="">Aucune étape</option>
-                <option v-for="step in projectSteps" :key="step.id" :value="step.id">
-                  {{ step.name }}
-                </option>
-              </select>
-            </div>
+          <div>
+            <label class="block mb-1 text-sm font-medium text-gray-700">Assigné à *</label>
+            <select
+              v-model="taskData.assigneeId"
+              class="w-full px-3 py-2 text-gray-900 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#db147f] focus:border-[#db147f]"
+              required
+            >
+              <option value="">Sélectionner un assigné</option>
+              <option v-for="member in projectMembers" :key="member.id" :value="member.id">
+                {{ member.name }} - {{ member.role }}
+              </option>
+            </select>
           </div>
         </div>
 
@@ -180,10 +165,10 @@
               <div class="flex items-center gap-3">
                 <!-- File Preview -->
                 <div class="flex-shrink-0">
-                  <img 
+                  <img
                     v-if="file.preview && file.type.startsWith('image/')"
-                    :src="file.preview" 
-                    alt="Preview" 
+                    :src="file.preview"
+                    alt="Preview"
                     class="object-cover w-12 h-12 border border-gray-200 rounded"
                   />
                   <div v-else class="flex items-center justify-center w-12 h-12 bg-gray-200 rounded">
@@ -209,6 +194,10 @@
           </div>
         </div>
 
+        <!-- Messages d'erreur -->
+        <div v-if="errorMessage" class="p-4 border border-red-200 rounded-lg bg-red-50">
+          <p class="text-sm text-red-600">{{ errorMessage }}</p>
+        </div>
 
         <!-- Boutons d'action -->
         <div class="flex items-center justify-end gap-3 pt-4">
@@ -234,15 +223,33 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
 import { XIcon, PaperclipIcon, FileIcon } from 'lucide-vue-next'
+
+// Props
+const props = defineProps({
+  projectId: {
+    type: [String, Number],
+    required: true
+  },
+  projectMembers: {
+    type: Array,
+    default: () => []
+  }
+})
 
 // Emits
 const emit = defineEmits(['close', 'created'])
+
+const route = useRoute()
+const auth = useAuthStore()
 
 // Reactive data
 const isSaving = ref(false)
 const selectedFiles = ref([])
 const fileInput = ref(null)
+const errorMessage = ref('')
 
 const taskData = ref({
   name: '',
@@ -252,13 +259,10 @@ const taskData = ref({
   dueDate: '',
   estimationTime: null,
   assigneeId: null,
-  stepId: null,
   status: 'create',
 })
 
-// Data from API
-const assignees = ref([])
-const projectSteps = ref([])
+
 
 // Computed properties
 const today = computed(() => {
@@ -312,117 +316,75 @@ const formatFileSize = (bytes) => {
   return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
 }
 
-const fetchAssignees = async () => {
-  try {
-    const response = await fetch('/api/users')
-    if (response.ok) {
-      assignees.value = await response.json()
-    }
-  } catch (error) {
-    console.error('Error fetching assignees:', error)
-    // Données de test
-    assignees.value = [
-      { id: 1, name: 'Jean Dupont', email: 'jean.dupont@example.com' },
-      { id: 2, name: 'Marie Martin', email: 'marie.martin@example.com' },
-      { id: 3, name: 'Pierre Durand', email: 'pierre.durand@example.com' },
-      { id: 4, name: 'Sophie Leroy', email: 'sophie.leroy@example.com' }
-    ]
-  }
-}
-
-const fetchProjectSteps = async () => {
-  try {
-    const response = await fetch('/api/project-steps')
-    if (response.ok) {
-      projectSteps.value = await response.json()
-    }
-  } catch (error) {
-    console.error('Error fetching project steps:', error)
-    // Données de test
-    projectSteps.value = [
-      { id: 1, name: 'Phase 1: Analyse' },
-      { id: 2, name: 'Phase 2: Conception' },
-      { id: 3, name: 'Phase 3: Développement' },
-      { id: 4, name: 'Phase 4: Tests' },
-      { id: 5, name: 'Phase 5: Déploiement' }
-    ]
-  }
-}
-
 const createTask = async () => {
+  errorMessage.value = ''
   isSaving.value = true
   
   try {
     // Validation
-    if (!taskData.value.name || !taskData.value.priority || !taskData.value.startDate || 
+    if (!taskData.value.name || !taskData.value.priority || !taskData.value.startDate ||
         !taskData.value.dueDate || !taskData.value.estimationTime || !taskData.value.assigneeId) {
-      alert('Veuillez remplir tous les champs obligatoires')
+      errorMessage.value = 'Veuillez remplir tous les champs obligatoires'
       return
     }
 
     // Validation des dates
     if (new Date(taskData.value.dueDate) < new Date(taskData.value.startDate)) {
-      alert('La date d\'échéance doit être postérieure à la date de début')
+      errorMessage.value = 'La date d\'échéance doit être postérieure à la date de début'
       return
     }
 
-   
+    const companyId = route.params.companyId
+    
+    const projectId = route.params.projectId
 
-    // Préparation des données
-    const formData = new FormData()
-    
-    // Ajouter les fichiers au FormData
-    selectedFiles.value.forEach((file, index) => {
-      formData.append(`files[${index}]`, file)
-    })
-    
-    // Ajouter les données JSON au FormData
-    const taskPayload = { 
-      ...taskData.value,
-      createdAt: new Date().toISOString()
+    // Préparer les données pour l'API
+    const taskPayload = {
+      name: taskData.value.name,
+      description: taskData.value.description || '',
+      priority: taskData.value.priority,
+      startDate: taskData.value.startDate,
+      dueDate: taskData.value.dueDate,
+      estimationTime: taskData.value.estimationTime,
+      assigneeId: taskData.value.assigneeId,
+      projectId: props.projectId,
+      status: taskData.value.status
     }
-    formData.append('data', JSON.stringify(taskPayload))
 
-    // API call
-    const response = await fetch('/api/tasks', {
-      method: 'POST',
-      body: formData
-    })
+    // Si il y a des fichiers, les uploader d'abord
+    if (selectedFiles.value.length > 0) {
+      // Ici vous devriez implémenter l'upload des fichiers
+      // et ajouter les URLs des fichiers au payload
+      taskPayload.files = selectedFiles.value.map(file => ({
+        name: file.name,
+        size: file.size,
+        type: file.type
+      }))
+    }
 
-    if (response.ok) {
-      const createdTask = await response.json()
-      emit('created', createdTask)
-      alert('Tâche créée avec succès !')
+    const response = await auth.api(
+      'POST',
+      `/companies/${companyId}/projects/${projectId}/tasks/create`,
+      taskPayload,
+      true
+    )
+
+    if (response.success) {
+      emit('created', response.data)
+      console.log('Tâche créée avec succès:', response.data)
     } else {
-      // For demo, create task anyway
-      const newTask = {
-        id: Date.now(),
-        ...taskData.value,
-        files: selectedFiles.value.map(file => ({
-          name: file.name,
-          size: file.size,
-          type: file.type,
-          preview: file.preview
-        })),
-        assignee: assignees.value.find(a => a.id === taskData.value.assigneeId),
-        step: projectSteps.value.find(s => s.id === taskData.value.stepId)
-      }
-      emit('created', newTask)
-      alert('Tâche créée avec succès !')
+      errorMessage.value = response.message || 'Erreur lors de la création de la tâche'
     }
     
   } catch (error) {
-    console.error('Error creating task:', error)
-    alert('Erreur lors de la création de la tâche')
+    console.error('Erreur lors de la création de la tâche:', error)
+    errorMessage.value = 'Erreur lors de la création de la tâche'
   } finally {
     isSaving.value = false
   }
 }
 
 onMounted(() => {
-  fetchAssignees()
-  fetchProjectSteps()
-  
   // Set default start date to today
   taskData.value.startDate = today.value
   

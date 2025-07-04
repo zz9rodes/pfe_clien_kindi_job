@@ -1,6 +1,5 @@
 <template>
   <div class="w-full ">
-    {{ projectId }}
     <TaskBoard 
       :projectId="projectId" 
       :projectName="projectName"

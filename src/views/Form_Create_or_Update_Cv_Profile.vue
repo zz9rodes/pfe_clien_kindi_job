@@ -120,6 +120,7 @@
                 <h2 class="font-semibold text-gray-900 text-md sm:text-xl">
                   Compétences
                 </h2>
+                <!-- {{ profileData.value.competence }} rodes ici -->
                 <button
                   type="button"
                   @click="addSkill"
@@ -619,12 +620,13 @@ const fetchProfiles = async () => {
     const response = await auth.api("GET", "/cv_profiles/", null, false);
     if (response.success && response.data) {
       populateProfile(response.data);
-    } else {
-      profileData.value = [];
     }
+    //  else {
+    //   profileData.value = [];
+    // }
   } catch (error) {
     console.error("Erreur lors de la récupération des profils:", error);
-    profileData.value = [];
+    // profileData.value = [];
   }
   toggleOpenModal();
 };

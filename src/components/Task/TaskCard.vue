@@ -44,14 +44,14 @@
         <CheckCircleIcon class="w-4 h-4 mr-1" />
         {{ getStatusLabel(task.status) }}
       </div>
-      <div v-else-if="task.daysLeft > 0" class="flex items-center text-sm text-gray-500">
+      <!-- <div v-else-if="task.daysLeft > 0" class="flex items-center text-sm text-gray-500">
         <ClockIcon class="w-4 h-4 mr-1" />
         {{ task.daysLeft }} days left
       </div>
       <div v-else class="flex items-center text-sm text-red-600">
         <AlertCircleIcon class="w-4 h-4 mr-1" />
         En retard
-      </div>
+      </div> -->
     </div>
 
     <!-- Task Stats -->
@@ -113,20 +113,18 @@ const emit = defineEmits(['update', 'delete'])
 
 const getPriorityClasses = (priority) => {
   const classes = {
-    'high': 'bg-red-100 text-red-800',
-    'medium': 'bg-yellow-100 text-yellow-800',
-    'low': 'bg-green-100 text-green-800',
-    'urgent': 'bg-orange-100 text-orange-800'
+    'HIGH': 'bg-red-100 text-red-800',
+    'MEDIUM': 'bg-yellow-100 text-yellow-800',
+    'LOW': 'bg-green-100 text-green-800',
   }
   return classes[priority] || 'bg-gray-100 text-gray-800'
 }
 
 const getPriorityLabel = (priority) => {
   const labels = {
-    'high': 'Élevée',
-    'medium': 'Moyenne',
-    'low': 'Faible',
-    'urgent': 'Urgente'
+    'HIGH': 'high',
+    'MEDIUM': 'medium',
+    'LOW': 'low',
   }
   return labels[priority] || priority
 }

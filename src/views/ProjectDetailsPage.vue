@@ -184,17 +184,7 @@
           >
             <component :is="tab.icon" class="w-4 h-4 mr-2" />
             {{ tab.name }}
-            <span
-              v-if="tab.count !== undefined"
-              :class="[
-                activeTab === tab.id
-                  ? 'bg-[#db147f] text-white'
-                  : 'bg-gray-100 text-gray-600',
-                'ml-2 py-0.5 px-2 rounded-full text-xs font-medium',
-              ]"
-            >
-              {{ tab.count }}
-            </span>
+           
           </button>
         </nav>
       </div>
@@ -737,7 +727,6 @@ const tabs = computed(() => [
     id: "tasks",
     name: "Tâches",
     icon: CheckSquareIcon,
-    count: project.value.tasksCount || 0,
   },
 ]);
 
