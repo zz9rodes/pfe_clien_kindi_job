@@ -1,8 +1,6 @@
 <template>
-
   <div class="w-full p-6">
-  <AppModal  :isOpen="isLoaderModalOpen" :isLoader="true">
-  </AppModal>
+    <AppModal :isOpen="isLoaderModalOpen" :isLoader="true"> </AppModal>
     <!-- Header avec bouton de création -->
     <div class="flex items-center justify-between mb-8">
       <div>
@@ -22,12 +20,13 @@
     <!-- Liste des projets -->
     <div class="grid grid-cols-1 gap-6 resla md:grid-cols-2 lg:grid-cols-3">
       <div
+        @click.stop="()=>goToViewProject(project)"
         v-for="project in projects"
         :key="project.id"
         class="relative p-6 transition-shadow bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md"
       >
         <div
-          @click="() => openDrawer('update', project)"
+          @click.stop="() => openDrawer('update', project)"
           class="absolute rounded cursor-pointer top-0 right-0 flex items-center justify-end gap-2 bg-[#db147f] p-1 text-white"
         >
           <Edit class="w-4 h-4" />
@@ -77,7 +76,10 @@
                 {{ member.firstName.charAt(0) }}
               </div>
             </template>
-            <span v-if="project.membersList.length > 3" class="px-2 py-1 ml-2 text-xs font-semibold bg-gray-200 rounded-full">
+            <span
+              v-if="project.membersList.length > 3"
+              class="px-2 py-1 ml-2 text-xs font-semibold bg-gray-200 rounded-full"
+            >
               +{{ project.membersList.length - 3 }}
             </span>
           </div>
@@ -127,7 +129,7 @@ const showUpdateForm = ref(false);
 const activeProject = ref({});
 const loading = ref(false);
 const membersForUpdate = ref([]);
-const isLoaderModalOpen=ref(false)
+const isLoaderModalOpen = ref(false);
 
 const router = useRouter();
 const route = useRoute();
@@ -146,9 +148,9 @@ const fetchProjects = async () => {
       const membersList = Array.isArray(project.members)
         ? project.members.map((m) => ({
             id: m.member?.id,
-            firstName: m.member?.account?.firstName || '',
-            lastName: m.member?.account?.lastName || '',
-            avatarUrl: m.member?.account?.avatarUrl || ''
+            firstName: m.member?.account?.firstName || "",
+            lastName: m.member?.account?.lastName || "",
+            avatarUrl: m.member?.account?.avatarUrl || "",
           }))
         : [];
       return { ...project, membersList };
@@ -195,7 +197,9 @@ const closeCreateDrawer = () => {
   showUpdateForm.value = false;
 };
 
-
+const goToViewProject=(project)=>{
+  router.push({name:'project_tasks',params:{projectId:project.slug}})
+}
 
 const getStatusClasses = (status) => {
   const classes = {

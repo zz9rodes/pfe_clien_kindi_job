@@ -46,6 +46,7 @@ import UserJobSApplication from "@/views/UserJobSApplication.vue";
 import AgreementsList from "@/views/AgreementsList.vue";
 import SignedContractDisplay from "@/views/SignedContractDisplay.vue";
 import ExampleUsage from "@/components/globales/ExampleUsage.vue";
+import ProjectDetailsPage from "@/views/ProjectDetailsPage.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -222,7 +223,7 @@ const router = createRouter({
             {
               path: ":companyId/list_projects/:projectId/project_tasks",
               name: "project_tasks",
-              component: ProjectTasksView,
+              component: ProjectDetailsPage /*ProjectTasksView*/,
             },
             {
               path: ":companyId/contracts/create",
