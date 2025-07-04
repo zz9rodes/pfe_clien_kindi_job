@@ -195,21 +195,7 @@ const closeCreateDrawer = () => {
   showUpdateForm.value = false;
 };
 
-const handleProjectCreated = async (newProject) => {
-  const companyId = route.params.companyId;
-  try {
-    const res = await auth.api(
-      "POST",
-      `/companies/${companyId}/projects/create`,
-      newProject,
-      true
-    );
-    if (res.data) {
-      projects.value.unshift(res.data);
-      closeCreateDrawer();
-    }
-  } catch (e) {}
-};
+
 
 const getStatusClasses = (status) => {
   const classes = {

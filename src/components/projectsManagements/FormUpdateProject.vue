@@ -366,6 +366,8 @@ const updateProject = async () => {
       setTimeout(() => {
         emit('close')
       }, 1500)
+      
+      window.location.reload()
     } else {
       throw new Error(response.message || 'Erreur lors de la mise à jour')
     }

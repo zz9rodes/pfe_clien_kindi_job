@@ -81,7 +81,7 @@
               >
                 <option value="">Sélectionner une priorité</option>
                 <option v-for="priority in priorities" :key="priority.value" :value="priority.value">
-                  <span :class="priority.colorClass">{{ priority.label }}</span>
+                  {{ priority.label }}
                 </option>
               </select>
             </div>
@@ -112,7 +112,7 @@
             >
               <option value="">Sélectionner un manager</option>
               <option v-for="manager in managers" :key="manager.id" :value="manager.id">
-                {{ manager.name }} - {{ manager.email }}
+                {{ manager.firstName }} 
               </option>
             </select>
           </div>
@@ -125,87 +125,120 @@
             >
               <option value="">Aucune offre liée</option>
               <option v-for="job in jobs" :key="job.id" :value="job.id">
-                {{ job.title }} - {{ job.company }}
+                {{ job.title }} 
               </option>
             </select>
           </div>
         </div>
 
-        <!-- Fichiers -->
+        <!-- Gestion des fichiers -->
         <div class="space-y-4">
           <div class="flex items-center justify-between">
-            <h3 class="text-lg font-medium text-gray-900">Fichiers du projet</h3>
-            <button
-              type="button"
-              @click="addFile"
-              :disabled="projectData.files.length >= 3"
-              class="px-3 py-1 text-sm font-medium text-[#db147f] bg-white border border-[#db147f] rounded-lg hover:bg-[#db147f] hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              + Ajouter un fichier
-            </button>
+            <h3 class="text-lg font-medium text-gray-900">Documents du projet</h3>
+            <span class="text-sm text-gray-500">{{ projectData.files.length }}/3 fichiers</span>
           </div>
 
-          <div v-if="projectData.files.length === 0" class="p-4 text-center text-gray-500 border-2 border-gray-300 border-dashed rounded-lg">
-            <FileIcon class="w-8 h-8 mx-auto mb-2 text-gray-400" />
-            <p>Aucun fichier ajouté. Maximum 3 fichiers.</p>
-          </div>
+          <!-- Zone de sélection de fichiers -->
+          <div class="space-y-4">
+            <!-- Bouton de sélection multiple -->
+            <div class="flex items-center gap-3">
+              <input
+                ref="fileInput"
+                type="file"
+                multiple
+                accept=".pdf,.jpg,.jpeg,.png,.mp4,.avi,.mov,.docx"
+                @change="handleMultipleFileSelection"
+                class="hidden"
+              />
+              <button
+                type="button"
+                @click="$refs.fileInput.click()"
+                :disabled="projectData.files.length >= 3"
+                class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-[#db147f] rounded-lg hover:bg-[#c41370] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              >
+                <UploadIcon class="w-4 h-4" />
+                Sélectionner des fichiers
+              </button>
+              <p class="text-sm text-gray-500">
+                Maximum 3 fichiers (PDF, Images, Vidéos, DOCX)
+              </p>
+            </div>
 
-          <div v-else class="space-y-3">
+            <!-- Zone de glisser-déposer
             <div
-              v-for="(file, index) in projectData.files"
-              :key="index"
-              class="p-4 border border-gray-200 rounded-lg"
+              @drop="handleFileDrop"
+              @dragover.prevent
+              @dragenter.prevent
+              :class="[
+                'border-2 border-dashed rounded-lg p-6 text-center transition-colors',
+                isDragOver ? 'border-[#db147f] bg-pink-50' : 'border-gray-300'
+              ]"
+              @dragenter="isDragOver = true"
+              @dragleave="isDragOver = false"
             >
-              <div class="flex items-center justify-between mb-3">
-                <h4 class="font-medium text-gray-900">Fichier {{ index + 1 }}</h4>
-                <button
-                  type="button"
-                  @click="removeFile(index)"
-                  class="p-1 text-red-600 hover:text-red-700"
-                >
-                  <XIcon class="w-4 h-4" />
-                </button>
-              </div>
+              <UploadCloudIcon class="w-12 h-12 mx-auto mb-4 text-gray-400" />
+              <p class="mb-2 text-lg font-medium text-gray-900">
+                Glissez et déposez vos fichiers ici
+              </p>
+              <p class="text-sm text-gray-500">
+                ou cliquez sur "Sélectionner des fichiers" ci-dessus
+              </p>
+            </div> -->
+          </div>
 
-              <div class="space-y-3">
-                <div>
-                  <label class="block mb-1 text-sm font-medium text-gray-700">Nom du fichier</label>
-                  <input
-                    v-model="file.name"
-                    type="text"
-                    placeholder="Ex: Cahier des charges, Maquettes..."
-                    class="w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#db147f] focus:border-[#db147f]"
-                  />
+          <!-- Liste des fichiers sélectionnés -->
+          <div v-if="projectData.files.length > 0" class="space-y-3">
+            <h4 class="text-sm font-medium text-gray-900">Fichiers sélectionnés :</h4>
+            <div class="space-y-2">
+              <div
+                v-for="(file, index) in projectData.files"
+                :key="index"
+                class="flex items-center justify-between p-3 border rounded-lg bg-gray-50"
+              >
+                <div class="flex items-center gap-3">
+                  <div class="flex-shrink-0">
+                    <FileTextIcon v-if="isDocumentFile(file.type)" class="w-8 h-8 text-blue-500" />
+                    <ImageIcon v-else-if="isImageFile(file.type)" class="w-8 h-8 text-green-500" />
+                    <VideoIcon v-else-if="isVideoFile(file.type)" class="w-8 h-8 text-purple-500" />
+                    <FileIcon v-else class="w-8 h-8 text-gray-500" />
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium text-gray-900 truncate">
+                      {{ file.name }}
+                    </p>
+                    <p class="text-xs text-gray-500">
+                      {{ formatFileSize(file.size) }} • {{ file.type || 'Type inconnu' }}
+                    </p>
+                  </div>
                 </div>
-
-                <div>
-                  <label class="block mb-1 text-sm font-medium text-gray-700">Type de fichier *</label>
-                  <select
-                    v-model="file.type"
-                    class="w-full px-3 py-2 text-gray-900 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#db147f] focus:border-[#db147f]"
-                    required
+                <div class="flex items-center gap-2">
+                  <!-- Indicateur de statut d'upload -->
+                  <div v-if="file.uploading" class="flex items-center gap-2">
+                    <div class="w-4 h-4 border-2 border-[#db147f] border-t-transparent rounded-full animate-spin"></div>
+                    <span class="text-xs text-gray-500">{{ file.uploadProgress }}%</span>
+                  </div>
+                  <CheckCircleIcon v-else-if="file.uploaded" class="w-5 h-5 text-green-500" />
+                  
+                  <!-- Bouton de suppression -->
+                  <button
+                    type="button"
+                    @click="removeFile(index)"
+                    class="p-1 text-gray-400 transition-colors hover:text-red-500"
                   >
-                    <option value="">Sélectionner un type</option>
-                    <option v-for="type in fileTypes" :key="type.value" :value="type.value">
-                      {{ type.label }}
-                    </option>
-                  </select>
-                </div>
-
-                <div>
-                  <label class="block mb-1 text-sm font-medium text-gray-700">Fichier *</label>
-                  <input
-                    type="file"
-                    @change="handleFileUpload($event, index)"
-                    class="w-full px-3 py-2 text-gray-900 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#db147f] focus:border-[#db147f]"
-                    required
-                  />
-                  <p v-if="file.url" class="mt-1 text-sm text-green-600">
-                    ✓ Fichier sélectionné: {{ file.fileName }}
-                  </p>
+                    <XIcon class="w-4 h-4" />
+                  </button>
                 </div>
               </div>
             </div>
+          </div>
+
+          <!-- État vide -->
+          <div v-else class="p-8 text-center text-gray-500 border-2 border-gray-200 border-dashed rounded-lg">
+            <FolderIcon class="w-8 h-8 mx-auto mb-4 text-gray-300" />
+            <p class="mb-2 text-lg font-medium text-gray-400">Aucun fichier ajouté</p>
+            <p class="text-sm text-gray-400">
+              Ajoutez des documents pour enrichir votre projet
+            </p>
           </div>
         </div>
       </form>
@@ -222,10 +255,14 @@
       </button>
       <button
         @click="createProject"
-        :disabled="isSaving"
+        :disabled="isSaving || isUploading"
         class="px-6 py-2 font-medium text-white transition-colors bg-[#db147f] rounded-lg hover:bg-[#c41370] disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        {{ isSaving ? 'Création...' : 'Créer le projet' }}
+        <span v-if="isSaving" class="flex items-center gap-2">
+          <div class="w-4 h-4 border-2 border-white rounded-full border-t-transparent animate-spin"></div>
+          Création...
+        </span>
+        <span v-else>Créer le projet</span>
       </button>
     </div>
   </div>
@@ -233,13 +270,32 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import { XIcon, FileIcon } from 'lucide-vue-next'
+import { 
+  XIcon, 
+  FileIcon, 
+  UploadIcon, 
+  UploadCloudIcon, 
+  FileTextIcon, 
+  ImageIcon, 
+  FolderIcon,
+  CheckCircleIcon,
+  VideoIcon
+} from 'lucide-vue-next'
+import { useRoute } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
+import { AppwriteuploadFile } from '@/app_write/files'
+import { Notyf } from 'notyf'
 
 // Emits
 const emit = defineEmits(['close', 'created'])
 
 // Reactive data
 const isSaving = ref(false)
+const isUploading = ref(false)
+const isDragOver = ref(false)
+const route = useRoute()
+const auth = useAuthStore()
+const notyf = new Notyf({ position: { x: "right", y: "top" }, duration: 3000 })
 
 // Project data structure
 const projectData = ref({
@@ -256,25 +312,16 @@ const projectData = ref({
 
 // Options data
 const projectStatuses = ref([
-  { value: 'open', label: 'open' },
-  { value: 'in_progress', label: 'in progress' },
-  { value: 'completed', label: 'completed' },
-  { value: 'closed', label: 'closed' }
+  { value: 'open', label: 'Ouvert' },
+  { value: 'in_progress', label: 'En cours' },
+  { value: 'completed', label: 'Terminé' },
+  { value: 'closed', label: 'Fermé' }
 ])
 
 const priorities = ref([
-  { value: 'HIGH', label: 'high' },
-  { value: 'MEDIUM', label: 'medium' },
-  { value: 'LOW', label: 'low' },
-])
-
-const fileTypes = ref([
-  { value: 'document', label: 'Document' },
-  { value: 'image', label: 'Image' },
-  { value: 'video', label: 'Vidéo' },
-  { value: 'audio', label: 'Audio' },
-  { value: 'archive', label: 'Archive' },
-  { value: 'other', label: 'Autre' }
+  { value: 'HIGH', label: 'Haute' },
+  { value: 'MEDIUM', label: 'Moyenne' },
+  { value: 'LOW', label: 'Basse' },
 ])
 
 // Data from API
@@ -286,71 +333,199 @@ const today = computed(() => {
   return new Date().toISOString().split('T')[0]
 })
 
-// Methods
-const addFile = () => {
-  if (projectData.value.files.length < 3) {
-    projectData.value.files.push({
-      name: '',
-      type: '',
-      url: '',
-      fileName: ''
-    })
+// File management methods
+const handleMultipleFileSelection = (event) => {
+  const files = Array.from(event.target.files)
+  processFiles(files)
+}
+
+const handleFileDrop = (event) => {
+  event.preventDefault()
+  isDragOver.value = false
+  const files = Array.from(event.dataTransfer.files)
+  processFiles(files)
+}
+
+const processFiles = async (files) => {
+  // Vérifier la limite de fichiers
+  const remainingSlots = 3 - projectData.value.files.length
+  const filesToProcess = files.slice(0, remainingSlots)
+
+  if (files.length > remainingSlots) {
+    notyf.error(`Vous ne pouvez ajouter que ${remainingSlots} fichier(s) supplémentaire(s).`)
+  }
+
+  for (const file of filesToProcess) {
+    // Vérifier la taille du fichier (max 10MB)
+    if (file.size > 10 * 1024 * 1024) {
+      notyf.error(`Le fichier "${file.name}" est trop volumineux (max 10MB).`)
+      continue
+    }
+
+    // Vérifier le type de fichier
+    if (!isValidFileType(file)) {
+      notyf.error(`Le fichier "${file.name}" n'est pas un type de fichier accepté.`)
+      continue
+    }
+
+    // Créer l'objet fichier avec le type formaté
+    const fileObj = {
+      name: file.name,
+      size: file.size,
+      type: formatFileType(file.type),
+      file: file,
+      uploading: false,
+      uploaded: false,
+      uploadProgress: 0,
+      url: null
+    }
+
+    projectData.value.files.push(fileObj)
+
+    // Upload vers Appwrite
+    await uploadFile(fileObj)
+  }
+}
+
+const uploadFile = async (fileObj) => {
+  fileObj.uploading = true
+  isUploading.value = true
+
+  try {
+    // Upload vers Appwrite
+    const data = await AppwriteuploadFile(fileObj.file)
+
+    if (data.isCreate) {
+      // Construire l'URL comme dans accountDetail.vue
+      const file_base_url = import.meta.env.VITE_APP_WRITE_FILE_BASE_URL
+      const bucket_id = import.meta.env.VITE_APP_WRITE_BUCKET_ID
+      const project_id = import.meta.env.VITE_APP_WRITE_PROJECT_ID
+
+      fileObj.url = `${file_base_url}/${data.file.bucketId}/files/${data.file.$id}/view?project=${project_id}`
+      fileObj.uploaded = true
+      fileObj.uploadProgress = 100
+      
+      notyf.success(`Fichier ${fileObj.name} uploadé avec succès`)
+    } else {
+      console.error('Erreur upload:', data.message)
+      notyf.error(data.message || `Erreur lors de l'upload de ${fileObj.name}`)
+      
+      // Retirer le fichier de la liste en cas d'erreur
+      const index = projectData.value.files.findIndex(f => f.name === fileObj.name)
+      if (index > -1) {
+        projectData.value.files.splice(index, 1)
+      }
+    }
+    
+  } catch (error) {
+    console.error('Erreur lors de l\'upload:', error)
+    notyf.error(`Erreur lors de l'upload de ${fileObj.name}`)
+    
+    // Retirer le fichier de la liste en cas d'erreur
+    const index = projectData.value.files.findIndex(f => f.name === fileObj.name)
+    if (index > -1) {
+      projectData.value.files.splice(index, 1)
+    }
+  } finally {
+    fileObj.uploading = false
+    isUploading.value = projectData.value.files.some(f => f.uploading)
   }
 }
 
 const removeFile = (index) => {
+  const file = projectData.value.files[index]
+  if (file.url && file.url.startsWith('blob:')) {
+    URL.revokeObjectURL(file.url)
+  }
   projectData.value.files.splice(index, 1)
 }
 
-const handleFileUpload = (event, index) => {
-  const file = event.target.files[0]
-  if (file) {
-    // Simuler l'upload du fichier
-    const formData = new FormData()
-    formData.append('file', file)
-    
-    // Ici vous feriez l'appel API pour uploader le fichier
-    // Pour la démo, on simule une URL
-    projectData.value.files[index].url = URL.createObjectURL(file)
-    projectData.value.files[index].fileName = file.name
-    
-    console.log('File uploaded:', file.name)
-  }
+// Utility functions
+const isValidFileType = (file) => {
+  const allowedTypes = [
+    'image/jpeg',
+    'image/jpg', 
+    'image/png',
+    'application/pdf',
+    'video/mp4',
+    'video/avi',
+    'video/quicktime',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document' // docx
+  ]
+  
+  return allowedTypes.includes(file.type)
 }
 
+const formatFileType = (mimeType) => {
+  const typeMap = {
+    'image/jpeg': 'image',
+    'image/jpg': 'image',
+    'image/png': 'image',
+    'application/pdf': 'pdf',
+    'video/mp4': 'video',
+    'video/avi': 'video',
+    'video/quicktime': 'video',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 'docx'
+  }
+  
+  return typeMap[mimeType] || 'unknown'
+}
+
+const isDocumentFile = (type) => {
+  return type && (
+    type.includes('pdf') ||
+    type.includes('document') ||
+    type.includes('text') ||
+    type.includes('spreadsheet') ||
+    type.includes('presentation')
+  )
+}
+
+const isImageFile = (type) => {
+  return type && type.startsWith('image/')
+}
+
+const isVideoFile = (type) => {
+  return type && type.startsWith('video/')
+}
+
+const formatFileSize = (bytes) => {
+  if (bytes === 0) return '0 Bytes'
+  const k = 1024
+  const sizes = ['Bytes', 'KB', 'MB', 'GB']
+  const i = Math.floor(Math.log(bytes) / Math.log(k))
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
+}
+
+// API methods
 const fetchManagers = async () => {
   try {
-    // Simuler l'appel API pour récupérer les managers
-    const response = await fetch('/api/managers')
-    if (response.ok) {
-      managers.value = await response.json()
+    const companyId = route.params.companyId
+    const response = await auth.api('GET', `/companies/${companyId}/guests`, null, false)
+    if (response.success) {
+      response.data.forEach((guest) => {
+        let manager = {
+          id: guest?.id,
+          firstName: guest?.account?.firstName + " " + guest?.account?.lastName || "",
+        }
+        managers.value.push(manager)
+      })
     }
   } catch (error) {
-    console.error('Error fetching managers:', error)
-    // Données de test
-    managers.value = [
-      { id: 1, name: 'Jean Dupont', email: 'jean.dupont@example.com' },
-      { id: 2, name: 'Marie Martin', email: 'marie.martin@example.com' },
-      { id: 3, name: 'Pierre Durand', email: 'pierre.durand@example.com' }
-    ]
+    console.log(error)
   }
 }
 
 const fetchJobs = async () => {
   try {
-    // Simuler l'appel API pour récupérer les jobs
-    const response = await fetch('/api/jobs')
-    if (response.ok) {
-      jobs.value = await response.json()
+    const companyId = route.params.companyId
+    const response = await auth.api('GET', `/extern/companies/${companyId}/jobs/all`, null, false)
+    
+    if (response.success) {
+      jobs.value = response.data.data
     }
   } catch (error) {
     console.error('Error fetching jobs:', error)
-    // Données de test
-    jobs.value = [
-      { id: 1, title: 'Développeur Frontend', company: 'TechCorp' },
-      { id: 2, title: 'Designer UX/UI', company: 'DesignStudio' },
-      { id: 3, title: 'Chef de projet', company: 'ProjectCo' }
-    ]
   }
 }
 
@@ -358,53 +533,38 @@ const createProject = async () => {
   isSaving.value = true
   
   try {
-    // Validation côté client
-    if (!projectData.value.name || !projectData.value.status || !projectData.value.priority || !projectData.value.start || !projectData.value.managerId) {
-      alert('Veuillez remplir tous les champs obligatoires')
-      return
-    }
+    const companyId = route.params.companyId
 
-    // Préparation des données
-    const formData = new FormData()
-    
-    const projectPayload = {
+    // Préparer les données du projet avec les URLs des fichiers
+    const projectDataToSend = {
       ...projectData.value,
-      files: projectData.value.files.filter(file => file.url && file.type)
-    }
-    
-    formData.append('data', JSON.stringify(projectPayload))
-    
-    // Ajouter les fichiers au FormData
-    projectData.value.files.forEach((file, index) => {
-      if (file.url && file.url.startsWith('blob:')) {
-        // Récupérer le fichier depuis l'URL blob
-        fetch(file.url)
-          .then(res => res.blob())
-          .then(blob => {
-            formData.append(`file_${index}`, blob, file.fileName)
-          })
-      }
-    })
-
-    // Appel API
-    const response = await fetch('/api/projects', {
-      method: 'POST',
-      body: formData
-    })
-
-    if (!response.ok) {
-      throw new Error(`Erreur lors de la création (${response.status})`)
+      files: projectData.value.files.map(file => ({
+        name: file.name,
+        size: file.size,
+        type: file.type,
+        url: file.url
+      }))
     }
 
-    const createdProject = await response.json()
-    
-    console.log('Project created:', createdProject)
-    emit('created', createdProject)
-    alert('Projet créé avec succès !')
-    
+    const response = await auth.api(
+      "POST",
+      `/companies/${companyId}/projects/create`,
+      projectDataToSend,
+      true
+    )
+
+    if (response.success) {
+      console.log('Project created:', response.data)
+      notyf.success('Projet créé avec succès !')
+      emit('created', response.data)
+      emit('close')
+      window.location.reload()
+    } else {
+      notyf.error(response.message || 'Erreur lors de la création du projet')
+    }
   } catch (error) {
     console.error('Error creating project:', error)
-    alert('Erreur lors de la création du projet: ' + error.message)
+    notyf.error('Erreur lors de la création du projet')
   } finally {
     isSaving.value = false
   }
@@ -414,14 +574,11 @@ const createProject = async () => {
 onMounted(() => {
   fetchManagers()
   fetchJobs()
-  
-  // Set default start date to today
   projectData.value.start = today.value
 })
 </script>
 
 <style scoped>
-/* Custom scrollbar for the form content */
 .overflow-y-auto::-webkit-scrollbar {
   width: 6px;
 }
