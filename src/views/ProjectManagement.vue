@@ -23,7 +23,7 @@
         @click.stop="()=>goToViewProject(project)"
         v-for="project in projects"
         :key="project.id"
-        class="relative p-6 transition-shadow bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md"
+        class="relative p-6 transition-shadow bg-white border border-gray-200 rounded-lg shadow-sm cursor-pointer hover:shadow-md"
       >
         <div
           @click.stop="() => openDrawer('update', project)"
@@ -47,7 +47,7 @@
               {{ getStatusLabel(project.status) }}
             </span>
           </div>
-          <p class="mb-4 text-gray-600">{{ project.description }}</p>
+          <p class="mb-4 text-gray-600 line-clamp-4">{{ project.description }}</p>
           <div class="flex items-center justify-between text-sm text-gray-500">
             <span>
               Manager:

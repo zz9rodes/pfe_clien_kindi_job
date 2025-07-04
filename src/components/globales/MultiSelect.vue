@@ -21,7 +21,7 @@
         </span>
       </div>
       <div v-else>
-            select permissions
+            {{placeholder}}
       </div>
 
       <input

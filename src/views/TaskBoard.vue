@@ -221,6 +221,8 @@
 
 <script setup>
 import { ref, computed, onMounted } from "vue";
+import { useAuthStore } from "@/stores/auth";
+import { useRoute } from "vue-router";
 import {
   ClipboardListIcon,
   ClockIcon,
@@ -244,6 +246,8 @@ const props = defineProps({
   },
 });
 const isModalOpen = ref(false);
+const route=useRoute()
+const auth=useAuthStore()
 
 const toggleOpenModal = () => {
   isModalOpen.value = !isModalOpen.value;
@@ -392,6 +396,15 @@ const fetchTasks = async () => {
         comments: 1,
       },
     ];
+
+    const companyId=route.params.companyId
+    const projectId=route.params.projectId
+    const response=await auth.api('GET',`/companies/${companyId}/projects/${projectId}/tasks`,null,false)
+
+    if(response.success){
+      console.log(response.data)
+    }
+    
   } catch (error) {
     console.error("Error fetching tasks:", error);
   }
