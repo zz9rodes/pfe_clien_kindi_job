@@ -94,7 +94,6 @@
                 <!-- Assignation -->
                 <div class="space-y-4">
                     <h3 class="text-lg font-medium text-gray-900">Assignation</h3>
-
                     <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
                         <div>
                             <label class="block mb-1 text-sm font-medium text-gray-700">Assigné à *</label>

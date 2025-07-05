@@ -444,23 +444,23 @@ const fetchProjectMembers = async () => {
       avalaibleJobStepValidation.value=response.data?.job?.stepsValidation ?? []
 
       // Ajouter le manager
-      if (response.data.manager) {
-        members.push({
-          id: response.data.manager.id,
-          name:
-            response.data.manager.account.firstName +
-            " " +
-            response.data.manager.account.lastName,
-          email: response.data.manager.account.email || "",
-          role: "Manager",
-          avatar: response.data.manager.account.avatarUrl,
-        });
-      }
+      // if (response.data.manager) {
+      //   members.push({
+      //     id: response.data.manager.id,
+      //     name:
+      //       response.data.manager.account.firstName +
+      //       " " +
+      //       response.data.manager.account.lastName,
+      //     email: response.data.manager.account.email || "",
+      //     role: "Manager",
+      //     avatar: response.data.manager.account.avatarUrl,
+      //   });
+      // }
 
       // Ajouter les autres membres
       if (response.data.members) {
         response.data.members.forEach((member) => {
-          if (member.memberId !== response.data.manager?.id) {
+          // if (member.memberId !== response.data.manager?.id) {
             members.push({
               id: member.id,
               name:
@@ -471,7 +471,7 @@ const fetchProjectMembers = async () => {
               role: member.member.role || "Membre",
               avatar: member.member.account.avatarUrl,
             });
-          }
+          // }
         });
       }
 
