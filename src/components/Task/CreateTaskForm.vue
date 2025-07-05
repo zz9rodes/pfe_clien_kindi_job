@@ -6,10 +6,7 @@
         <h2 class="text-xl font-semibold text-gray-900">Créer une nouvelle tâche</h2>
         <p class="text-sm text-gray-600">Ajoutez les détails de votre nouvelle tâche</p>
       </div>
-      <button
-        @click="$emit('close')"
-        class="p-2 text-gray-400 rounded-lg hover:text-gray-600 hover:bg-gray-100"
-      >
+      <button @click="$emit('close')" class="p-2 text-gray-400 rounded-lg hover:text-gray-600 hover:bg-gray-100">
         <XIcon class="w-5 h-5" />
       </button>
     </div>
@@ -20,83 +17,60 @@
         <!-- Informations générales -->
         <div class="space-y-3">
           <h3 class="text-lg font-medium text-gray-900">Informations générales</h3>
-          
+
           <div>
             <label class="block mb-1 text-sm font-medium text-gray-700">Nom de la tâche *</label>
-            <input
-              v-model="taskData.name"
-              type="text"
-              placeholder="Ex: Développer l'interface utilisateur"
+            <input v-model="taskData.name" type="text" placeholder="Ex: Développer l'interface utilisateur"
               class="w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#db147f] focus:border-[#db147f]"
-              required
-            />
+              required />
           </div>
 
           <div>
             <label class="block mb-1 text-sm font-medium text-gray-700">Description</label>
-            <textarea
-              v-model="taskData.description"
-              placeholder="Décrivez la tâche en détail..."
-              rows="3"
-              class="w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-[#db147f] focus:border-[#db147f]"
-            ></textarea>
+            <textarea v-model="taskData.description" placeholder="Décrivez la tâche en détail..." rows="3"
+              class="w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-[#db147f] focus:border-[#db147f]"></textarea>
           </div>
         </div>
 
         <!-- Configuration -->
         <div class="space-y-3">
           <h3 class="text-lg font-medium text-gray-900">Configuration</h3>
-          
+
           <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div>
               <label class="block mb-1 text-sm font-medium text-gray-700">Priorité *</label>
-              <select
-                v-model="taskData.priority"
+              <select v-model="taskData.priority"
                 class="w-full px-3 py-2 text-gray-900 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#db147f] focus:border-[#db147f]"
-                required
-              >
+                required>
                 <option value="">Sélectionner une priorité</option>
                 <option value="LOW">low</option>
                 <option value="MEDIUM">medium</option>
                 <option value="HIGH">high</option>
               </select>
             </div>
-            
+
 
             <div>
               <label class="block mb-1 text-sm font-medium text-gray-700">Estimation (jours) *</label>
-              <input
-                v-model.number="taskData.estimationTime"
-                type="number"
-                min="1"
-                placeholder="5"
+              <input v-model.number="taskData.estimationTime" type="number" min="1" placeholder="5"
                 class="w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#db147f] focus:border-[#db147f]"
-                required
-              />
+                required />
             </div>
           </div>
 
           <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div>
               <label class="block mb-1 text-sm font-medium text-gray-700">Date de début *</label>
-              <input
-                v-model="taskData.startDate"
-                type="date"
-                :min="today"
+              <input v-model="taskData.startDate" type="date" :min="today"
                 class="w-full px-3 py-2 text-gray-900 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#db147f] focus:border-[#db147f]"
-                required
-              />
+                required />
             </div>
 
             <div>
               <label class="block mb-1 text-sm font-medium text-gray-700">Date d'échéance *</label>
-              <input
-                v-model="taskData.dueDate"
-                type="date"
-                :min="taskData.startDate || today"
+              <input v-model="taskData.dueDate" type="date" :min="taskData.startDate || today"
                 class="w-full px-3 py-2 text-gray-900 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#db147f] focus:border-[#db147f]"
-                required
-              />
+                required />
             </div>
           </div>
         </div>
@@ -104,14 +78,12 @@
         <!-- Assignation -->
         <div class="space-y-3">
           <h3 class="text-lg font-medium text-gray-900">Assignation</h3>
-          
+
           <div>
             <label class="block mb-1 text-sm font-medium text-gray-700">Assigné à *</label>
-            <select
-              v-model="taskData.assigneeId"
+            <select v-model="taskData.assigneeId"
               class="w-full px-3 py-2 text-gray-900 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#db147f] focus:border-[#db147f]"
-              required
-            >
+              required>
               <option value="">Sélectionner un assigné</option>
               <option v-for="member in projectMembers" :key="member.id" :value="member.id">
                 {{ member.name }} - {{ member.role }}
@@ -120,77 +92,94 @@
           </div>
         </div>
 
-        <!-- Fichiers joints -->
+        <!-- Step Validation -->
         <div class="space-y-3">
-          <h3 class="text-lg font-medium text-gray-900">Fichiers joints</h3>
-          <p class="text-sm text-gray-600">Vous pouvez joindre jusqu'à 3 fichiers</p>
-          
-          <!-- File Input (hidden) -->
-          <input
-            ref="fileInput"
-            type="file"
-            multiple
-            accept="*/*"
-            @change="handleFileSelect"
-            class="hidden"
-          />
-          
-          <!-- Upload Area -->
-          <div v-if="selectedFiles.length < 3" class="text-center transition-colors border-2 border-gray-300 border-dashed rounded-lg hover:border-gray-400">
-            <div class="p-3">
-              <div class="flex justify-center">
-                <PaperclipIcon class="text-gray-400 h-9 w-9" />
-              </div>
-              <div>
-                <p class="mb-4 text-gray-600">Cliquez pour sélectionner des fichiers à joindre</p>
-                <button
-                  @click="triggerFileInput"
-                  type="button"
-                  class="px-6 py-2 bg-[#db147f] text-white rounded-lg hover:bg-[#c41370] transition-colors font-medium"
-                >
-                  Choisir des fichiers
-                </button>
-              </div>
-              <p class="text-sm text-gray-500">Tous types de fichiers acceptés ({{ 3 - selectedFiles.length }} restant{{ 3 - selectedFiles.length > 1 ? 's' : '' }})</p>
+          <h3 class="text-lg font-medium text-gray-900">Job Step Validation</h3>
+
+          <div>
+            <label class="block mb-1 text-sm font-medium text-gray-700">step Validation (irreverssible)*</label>
+            <select v-model="taskData.stepId"
+              class="w-full px-3 py-2 text-gray-900 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#db147f] focus:border-[#db147f]"
+              required>
+              <option value="">Sélectionner une etapes</option>
+              <option v-for="step in steps_validation" :key="step.id" :value="step.id">
+                {{ step.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Fichiers joints -->
+        <div class="space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="text-lg font-medium text-gray-900">Documents du projet</h3>
+            <span class="text-sm text-gray-500">{{ taskData.files.length }}/3 fichiers</span>
+          </div>
+
+          <!-- Zone de sélection de fichiers -->
+          <div class="space-y-4">
+            <!-- Bouton de sélection multiple -->
+            <div class="flex items-center gap-3">
+              <input ref="fileInput" type="file" multiple accept=".pdf,.jpg,.jpeg,.png,.mp4,.avi,.mov,.docx"
+                @change="handleMultipleFileSelection" class="hidden" />
+              <button type="button" @click="$refs.fileInput.click()" :disabled="taskData.files.length >= 3"
+                class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-[#db147f] rounded-lg hover:bg-[#c41370] disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+                <UploadIcon class="w-4 h-4" />
+                Sélectionner des fichiers
+              </button>
+              <p class="text-sm text-gray-500">
+                Maximum 3 fichiers (PDF, Images, Vidéos, DOCX)
+              </p>
             </div>
           </div>
-          
-          <!-- File Previews -->
-          <div v-if="selectedFiles.length > 0" class="space-y-3">
-            <div
-              v-for="(file, index) in selectedFiles"
-              :key="index"
-              class="flex items-center justify-between p-4 border border-gray-200 rounded-lg bg-gray-50"
-            >
-              <div class="flex items-center gap-3">
-                <!-- File Preview -->
-                <div class="flex-shrink-0">
-                  <img
-                    v-if="file.preview && file.type.startsWith('image/')"
-                    :src="file.preview"
-                    alt="Preview"
-                    class="object-cover w-12 h-12 border border-gray-200 rounded"
-                  />
-                  <div v-else class="flex items-center justify-center w-12 h-12 bg-gray-200 rounded">
-                    <FileIcon class="w-6 h-6 text-gray-600" />
+
+          <!-- Liste des fichiers sélectionnés -->
+          <div v-if="taskData.files.length > 0" class="space-y-3">
+            <h4 class="text-sm font-medium text-gray-900">Fichiers sélectionnés :</h4>
+            <div class="space-y-2">
+              <div v-for="(file, index) in taskData.files" :key="index"
+                class="flex items-center justify-between p-3 border rounded-lg bg-gray-50">
+                <div class="flex items-center gap-3">
+                  <div class="flex-shrink-0">
+                    <FileTextIcon v-if="isDocumentFile(file.type)" class="w-8 h-8 text-blue-500" />
+                    <ImageIcon v-else-if="isImageFile(file.type)" class="w-8 h-8 text-green-500" />
+                    <VideoIcon v-else-if="isVideoFile(file.type)" class="w-8 h-8 text-purple-500" />
+                    <FileIcon v-else class="w-8 h-8 text-gray-500" />
+                  </div>
+                  <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium text-gray-900 truncate">
+                      {{ file.name }}
+                    </p>
+                    <p class="text-xs text-gray-500">
+                      {{ formatFileSize(file.size) }} • {{ file.type || 'Type inconnu' }}
+                    </p>
                   </div>
                 </div>
-                
-                <!-- File Info -->
-                <div>
-                  <p class="font-medium text-gray-900">{{ file.name }}</p>
-                  <p class="text-sm text-gray-600">{{ formatFileSize(file.size) }}</p>
+                <div class="flex items-center gap-2">
+                  <!-- Indicateur de statut d'upload -->
+                  <div v-if="file.isUploading" class="flex items-center gap-2">
+                    <div class="w-4 h-4 border-2 border-[#db147f] border-t-transparent rounded-full animate-spin"></div>
+                    <span class="text-xs text-gray-500">{{ file.uploadProgress }}%</span>
+                  </div>
+                  <CheckCircleIcon v-else-if="file.uploaded" class="w-5 h-5 text-green-500" />
+
+                  <!-- Bouton de suppression -->
+                  <button type="button" @click="removeFile(index)"
+                    class="p-1 text-gray-400 transition-colors hover:text-red-500">
+                    <XIcon class="w-4 h-4" />
+                  </button>
                 </div>
               </div>
-              
-              <!-- Remove Button -->
-              <button
-                @click="removeFile(index)"
-                class="p-2 text-red-600 transition-colors rounded-lg hover:text-red-700 hover:bg-red-50"
-              >
-                <XIcon class="w-4 h-4" />
-              </button>
             </div>
+          </div>
+
+          <!-- État vide -->
+          <div v-else class="p-8 text-center text-gray-500 border-2 border-gray-200 border-dashed rounded-lg">
+            <FolderIcon class="w-8 h-8 mx-auto mb-4 text-gray-300" />
+            <p class="mb-2 text-lg font-medium text-gray-400">Aucun fichier ajouté</p>
+            <p class="text-sm text-gray-400">
+              Ajoutez des documents pour enrichir votre projet
+            </p>
           </div>
         </div>
 
@@ -201,18 +190,12 @@
 
         <!-- Boutons d'action -->
         <div class="flex items-center justify-end gap-3 pt-4">
-          <button
-            type="button"
-            @click="$emit('close')"
-            class="px-4 py-2 font-medium text-gray-700 transition-colors bg-gray-100 rounded-lg hover:bg-gray-200"
-          >
+          <button type="button" @click="$emit('close')"
+            class="px-4 py-2 font-medium text-gray-700 transition-colors bg-gray-100 rounded-lg hover:bg-gray-200">
             Annuler
           </button>
-          <button
-            @click="createTask"
-            :disabled="isSaving"
-            class="px-6 py-2 font-medium text-white transition-colors bg-[#db147f] rounded-lg hover:bg-[#c41370] disabled:opacity-50 disabled:cursor-not-allowed"
-          >
+          <button @click="createTask" :disabled="isSaving"
+            class="px-6 py-2 font-medium text-white transition-colors bg-[#db147f] rounded-lg hover:bg-[#c41370] disabled:opacity-50 disabled:cursor-not-allowed">
             {{ isSaving ? 'Création...' : 'Créer la tâche' }}
           </button>
         </div>
@@ -226,6 +209,11 @@ import { ref, computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import { XIcon, PaperclipIcon, FileIcon } from 'lucide-vue-next'
+import { AppwriteuploadFile } from '@/app_write/files'
+import { Notyf } from 'notyf'
+
+
+const notyf = new Notyf({ position: { x: "right", y: "top" }, duration: 3000 })
 
 // Props
 const props = defineProps({
@@ -234,6 +222,10 @@ const props = defineProps({
     required: true
   },
   projectMembers: {
+    type: Array,
+    default: () => []
+  },
+  steps_validation: {
     type: Array,
     default: () => []
   }
@@ -250,6 +242,8 @@ const isSaving = ref(false)
 const selectedFiles = ref([])
 const fileInput = ref(null)
 const errorMessage = ref('')
+const isUploading = ref(false)
+
 
 const taskData = ref({
   name: '',
@@ -259,53 +253,165 @@ const taskData = ref({
   dueDate: '',
   estimationTime: null,
   assigneeId: null,
+  stepId: null,
   status: 'create',
+  files: []
 })
 
 
 
-// Computed properties
 const today = computed(() => {
   return new Date().toISOString().split('T')[0]
 })
 
-// Methods for file management
-const handleFileSelect = (event) => {
-  const files = Array.from(event.target.files)
-  const remainingSlots = 3 - selectedFiles.value.length
-  const filesToAdd = files.slice(0, remainingSlots)
-  
-  filesToAdd.forEach(file => {
-    const fileWithPreview = {
-      ...file,
-      id: Date.now() + Math.random(),
-      preview: null
-    }
-    
-    // Create preview for images
-    if (file.type.startsWith('image/')) {
-      const reader = new FileReader()
-      reader.onload = (e) => {
-        fileWithPreview.preview = e.target.result
-      }
-      reader.readAsDataURL(file)
-    }
-    
-    selectedFiles.value.push(fileWithPreview)
-  })
-  
-  // Reset input
-  if (fileInput.value) {
-    fileInput.value.value = ''
-  }
-}
+
 
 const removeFile = (index) => {
   selectedFiles.value.splice(index, 1)
 }
 
-const triggerFileInput = () => {
-  fileInput.value?.click()
+const handleMultipleFileSelection = (event) => {
+  const files = Array.from(event.target.files)
+  processFiles(files)
+}
+
+const processFiles = async (files) => {
+  // Vérifier la limite de fichiers
+  const remainingSlots = 3 - taskData.value.files.length
+  const filesToProcess = files.slice(0, remainingSlots)
+
+  if (files.length > remainingSlots) {
+    notyf.error(`Vous ne pouvez ajouter que ${remainingSlots} fichier(s) supplémentaire(s).`)
+  }
+
+  for (const file of filesToProcess) {
+    // Vérifier la taille du fichier (max 10MB)
+    if (file.size > 10 * 1024 * 1024) {
+      notyf.error(`Le fichier "${file.name}" est trop volumineux (max 10MB).`)
+      continue
+    }
+
+    // Vérifier le type de fichier
+    if (!isValidFileType(file)) {
+      notyf.error(`Le fichier "${file.name}" n'est pas un type de fichier accepté.`)
+      continue
+    }
+
+    // Créer l'objet fichier avec le type formaté
+    const fileObj = {
+      name: file.name,
+      size: file.size,
+      type: formatFileType(file.type),
+      file: file,
+      uploading: false,
+      uploaded: false,
+      uploadProgress: 0,
+      url: null
+    }
+
+    taskData.value.files.push(fileObj)
+
+    // Upload vers Appwrite
+    await uploadFile(fileObj)
+  }
+}
+
+const uploadFile = async (fileObj) => {
+  fileObj.uploading = true
+  isUploading.value = true
+
+  try {
+    // Upload vers Appwrite
+    const data = await AppwriteuploadFile(fileObj.file)
+
+    if (data.isCreate) {
+      // Construire l'URL comme dans accountDetail.vue
+      const file_base_url = import.meta.env.VITE_APP_WRITE_FILE_BASE_URL
+      const bucket_id = import.meta.env.VITE_APP_WRITE_BUCKET_ID
+      const project_id = import.meta.env.VITE_APP_WRITE_PROJECT_ID
+
+      fileObj.url = `${file_base_url}/${data.file.bucketId}/files/${data.file.$id}/view?project=${project_id}`
+      fileObj.uploaded = true
+      fileObj.uploadProgress = 100
+
+      notyf.success(`Fichier ${fileObj.name} uploadé avec succès`)
+    } else {
+      console.error('Erreur upload:', data.message)
+      notyf.error(data.message || `Erreur lors de l'upload de ${fileObj.name}`)
+
+      // Retirer le fichier de la liste en cas d'erreur
+      const index = taskData.value.files.findIndex(f => f.name === fileObj.name)
+      if (index > -1) {
+        taskData.value.files.splice(index, 1)
+      }
+    }
+
+  } catch (error) {
+    console.error('Erreur lors de l\'upload:', error)
+    notyf.error(`Erreur lors de l'upload de ${fileObj.name}`)
+
+    // Retirer le fichier de la liste en cas d'erreur
+    const index = taskData.value.files.findIndex(f => f.name === fileObj.name)
+    if (index > -1) {
+      taskData.value.files.splice(index, 1)
+    }
+  } finally {
+    fileObj.uploading = false
+    isUploading.value = taskData.value.files.some(f => f.uploading)
+  }
+}
+
+
+
+
+
+// Utility functions
+const isValidFileType = (file) => {
+  const allowedTypes = [
+    'image/jpeg',
+    'image/jpg', 
+    'image/png',
+    'application/pdf',
+    'video/mp4',
+    'video/avi',
+    'video/quicktime',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document' // docx
+  ]
+  
+  return allowedTypes.includes(file.type)
+}
+
+const formatFileType = (mimeType) => {
+  const typeMap = {
+    'image/jpeg': 'image',
+    'image/jpg': 'image',
+    'image/png': 'image',
+    'application/pdf': 'pdf',
+    'video/mp4': 'video',
+    'video/avi': 'video',
+    'video/quicktime': 'video',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 'docx'
+  }
+  
+  return typeMap[mimeType] || 'unknown'
+}
+
+const isDocumentFile = (type) => {
+  return type && (
+    type.includes('pdf') ||
+    type.includes('document') ||
+    type.includes('text') ||
+    type.includes('spreadsheet') ||
+    type.includes('presentation')
+  )
+}
+
+const isImageFile = (type) => {
+  return type && type.startsWith('image/')
+}
+
+const isVideoFile = (type) => {
+  return type && type.startsWith('video/')
 }
 
 const formatFileSize = (bytes) => {
@@ -319,11 +425,11 @@ const formatFileSize = (bytes) => {
 const createTask = async () => {
   errorMessage.value = ''
   isSaving.value = true
-  
+
   try {
     // Validation
     if (!taskData.value.name || !taskData.value.priority || !taskData.value.startDate ||
-        !taskData.value.dueDate || !taskData.value.estimationTime || !taskData.value.assigneeId) {
+      !taskData.value.dueDate || !taskData.value.estimationTime || !taskData.value.assigneeId) {
       errorMessage.value = 'Veuillez remplir tous les champs obligatoires'
       return
     }
@@ -335,7 +441,7 @@ const createTask = async () => {
     }
 
     const companyId = route.params.companyId
-    
+
     const projectId = route.params.projectId
 
     // Préparer les données pour l'API
@@ -348,7 +454,9 @@ const createTask = async () => {
       estimationTime: taskData.value.estimationTime,
       assigneeId: taskData.value.assigneeId,
       projectId: props.projectId,
-      status: taskData.value.status
+      status: taskData.value.status,
+      attachements:taskData.value.files,
+      stepId:taskData.value.stepId
     }
 
     // Si il y a des fichiers, les uploader d'abord
@@ -375,7 +483,7 @@ const createTask = async () => {
     } else {
       errorMessage.value = response.message || 'Erreur lors de la création de la tâche'
     }
-    
+
   } catch (error) {
     console.error('Erreur lors de la création de la tâche:', error)
     errorMessage.value = 'Erreur lors de la création de la tâche'
@@ -387,7 +495,7 @@ const createTask = async () => {
 onMounted(() => {
   // Set default start date to today
   taskData.value.startDate = today.value
-  
+
   // Set default due date to tomorrow
   const tomorrow = new Date()
   tomorrow.setDate(tomorrow.getDate() + 1)

@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4 transition-shadow bg-white border border-gray-200 rounded-lg hover:shadow-md">
+  <div @click.stop="$emit('update', task)" class="p-4 transition-shadow bg-white border border-gray-200 rounded-lg cursor-pointer hover:shadow-md">
     <!-- Task Header -->
     <div class="flex items-start justify-between mb-3">
       <h3 class="text-sm font-semibold leading-tight text-gray-900">
@@ -33,9 +33,9 @@
         </div>
       </div>
       <!-- Afficher le statut avec une couleur -->
-      <span :class="getStatusClasses(task.status)" class="px-2 py-1 text-xs font-medium rounded-full">
+      <!-- <span :class="getStatusClasses(task.status)" class="px-2 py-1 text-xs font-medium rounded-full">
         {{ getStatusLabel(task.status) }}
-      </span>
+      </span> -->
     </div>
 
     <!-- Task Meta pour les jours restants -->
@@ -56,30 +56,47 @@
 
     <!-- Task Stats -->
     <div class="flex items-center justify-between">
+
+        <img v-if="task.assignee.member.account.avatarUrl" :src="task?.assignee?.member?.account?.avatarUrl" class="flex items-center justify-center object-cover w-8 h-8 bg-gray-200 rounded-full">
+            <!-- {{ getInitials(task.assignee.member.account.firstName+""+task.assignee.member.account.lastName) }} -->
+
+        <div
+          v-else
+          class="flex items-center justify-center w-8 h-8 bg-gray-200 rounded-full"
+        >
+          <span class="text-sm font-medium text-gray-600">
+            {{ getInitials(task.assignee.member.account.firstName+""+task.assignee.member.account.lastName) }}
+          </span>
+        </div>
+      
       <div class="flex items-center space-x-3 text-sm text-gray-500">
                <div class="flex items-center">
           <MessageCircleIcon class="w-4 h-4 mr-1" />
           {{ task.comments ? task.comments.length : 0 }}
         </div>
       </div>
-       <div class="flex items-center space-x-3 text-sm text-gray-500">
-               <div class="flex items-center">
-          <User class="w-4 h-4 mr-1" />        
-        </div>
-      </div>
+       
     </div>
+    
+     
+        
+     <!-- <div class="flex items-center justify-center p-1 mt-4 rounded-md ">
+
+      {{ task.assignee.member.account.firstName }}   {{ task.assignee.member.account.lastName }}
+     
+    </div> -->
     
     <!-- Task Actions -->
     <div class="flex items-center justify-end pt-3 mt-3 space-x-2 border-t border-gray-100">
-      <button
+      <!-- <button
         @click="$emit('update', task)"
         class="px-3 py-1 text-xs font-medium text-blue-600 transition-colors bg-white rounded-lg bg-"
         title="Modifier"
       >
         <EditIcon class="inline-block w-4 h-4 mr-1" />
-      </button>
+      </button> -->
       <button
-        @click="$emit('delete', task.id)"
+        @click.stop="$emit('delete', task.id)"
         class="px-3 py-1 text-xs font-medium text-red-600 transition-colors bg-white rounded-lg "
         title="Supprimer"
       >
@@ -135,6 +152,11 @@ const formatDate = (dateString) => {
     day: '2-digit',
     month: '2-digit'
   })
+}
+
+function getInitials(name) {
+  if (!name) return '??'
+  return name.split(' ').map(n => n[0]).join('')
 }
 
 const getStatusClasses = (status) => {

@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full ">
+  <div class="w-full">
     <TaskBoard 
       :projectId="projectId" 
       :projectName="projectName"

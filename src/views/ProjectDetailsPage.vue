@@ -191,7 +191,7 @@
     </div>
 
     <!-- Contenu des onglets -->
-    <div class="px-4 py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
+    <div class="px-4 pt-6 mx-auto sm:px-6 lg:px-8">
       <!-- Onglet Détails -->
       <div v-if="activeTab === 'details'" class="space-y-6">
         <!-- Statistiques rapides -->
@@ -665,7 +665,7 @@
       </div>
 
       <!-- Onglet Tâches -->
-      <div v-if="activeTab === 'tasks'">
+      <div v-if="activeTab === 'tasks'" >
         <ProjectTasksView :projectId="project.id" :projectName="project.name" />
       </div>
     </div>
