@@ -57,7 +57,7 @@
       </div>
 
       <!-- Kanban Board -->
-      <div v-else class="flex flex-col gap-3 overflow-auto overflow-x-auto md:flex-row">
+      <div v-else class="flex flex-col gap-3 py-3 my-6 overflow-auto overflow-x-auto md:flex-row min-h-[600px] ">
         <!-- CREATE Column -->
         <div class="border border-gray-200 rounded-lg shadow-sm min-w-[300px]">
           <div class="p-4 border-b border-gray-200">
