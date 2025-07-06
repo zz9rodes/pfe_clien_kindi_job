@@ -154,15 +154,15 @@
                                     </div>
                                     <div class="flex-1 min-w-0">
                                         <p class="text-sm font-medium text-gray-900 truncate">
-                                            {{ file.name }}
+                                            {{ file.name || file.fileName || 'Fichier sans nom' }}
                                         </p>
                                         <p class="text-xs text-gray-500">
-                                            {{ formatFileSize(file.size) }} • {{ file.type || 'Type inconnu' }}
+                                            {{ formatFileSize(file.size || file.fileSize || 0) }} • {{ file.type || file.fileType || 'Type inconnu' }}
                                         </p>
                                         <!-- Barre de progression pour les nouveaux fichiers -->
                                         <div v-if="file.uploading" class="w-full bg-gray-200 rounded-full h-1.5 mt-1">
                                             <div class="bg-[#db147f] h-1.5 rounded-full transition-all duration-300" 
-                                                :style="{ width: file.uploadProgress + '%' }"></div>
+                                                :style="{ width: (file.uploadProgress || 0) + '%' }"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -170,10 +170,10 @@
                                     <!-- Indicateur de statut d'upload -->
                                     <div v-if="file.uploading" class="flex items-center gap-2">
                                         <div class="w-4 h-4 border-2 border-[#db147f] border-t-transparent rounded-full animate-spin"></div>
-                                        <span class="text-xs text-gray-500">{{ file.uploadProgress }}%</span>
+                                        <span class="text-xs text-gray-500">{{ file.uploadProgress || 0 }}%</span>
                                     </div>
-                                    <CheckCircleIcon v-else-if="file.uploaded" class="w-5 h-5 text-green-500" />
-                                    <a v-if="file.url" :href="file.url" target="_blank" 
+                                    <CheckCircleIcon v-else-if="file.uploaded !== false" class="w-5 h-5 text-green-500" />
+                                    <a v-if="file.url || file.fileUrl" :href="file.url || file.fileUrl" target="_blank" 
                                         class="p-1 text-blue-500 transition-colors hover:text-blue-700">
                                         <ExternalLinkIcon class="w-4 h-4" />
                                     </a>
@@ -211,11 +211,11 @@
                                     <div class="flex items-center justify-center w-8 h-8 bg-gray-300 rounded-full">
                                         <UserIcon class="w-4 h-4 text-gray-600" />
                                     </div>
-                                    <span class="font-medium text-gray-900">{{ comment.author }}</span>
+                                    <span class="font-medium text-gray-900">{{ comment.author || comment.user?.name || 'Utilisateur' }}</span>
                                 </div>
-                                <span class="text-xs text-gray-500">{{ formatDateTime(comment.createdAt) }}</span>
+                                <span class="text-xs text-gray-500">{{ formatDateTime(comment.createdAt || comment.created_at) }}</span>
                             </div>
-                            <p class="text-gray-700">{{ comment.text }}</p>
+                            <p class="text-gray-700">{{ comment.text || comment.content }}</p>
                         </div>
                     </div>
 
@@ -297,10 +297,27 @@ const fileInput = ref(null);
 const newComment = ref("");
 const errorMessage = ref('');
 
+// Fonction pour normaliser les fichiers existants
+const normalizeExistingFiles = (files) => {
+    if (!files || !Array.isArray(files)) return []
+    
+    return files.map(file => ({
+        name: file.name || file.fileName || file.original_name || 'Fichier sans nom',
+        size: file.size || file.fileSize || file.file_size || 0,
+        type: file.type || file.fileType || file.file_type || file.mime_type || 'unknown',
+        url: file.url || file.fileUrl || file.file_url || file.path || null,
+        uploaded: true,
+        uploading: false,
+        uploadProgress: 100,
+        // Garder les propriétés originales au cas où
+        ...file
+    }))
+}
+
 // Créer une copie locale des données de la tâche
 const localTaskData = ref({
     id: props.taskData.id,
-    slug:props.taskData.slug,
+    slug: props.taskData.slug,
     name: props.taskData.name || props.taskData.title || "",
     description: props.taskData.description || "",
     priority: props.taskData.priority || "",
@@ -314,10 +331,17 @@ const localTaskData = ref({
         name: props.taskData.step?.name || null,
     },
     comments: props.taskData.comments || [],
-    files: props.taskData.files || [],
+    files: normalizeExistingFiles(
+        props.taskData.files || 
+        props.taskData.attachments || 
+        props.taskData.attachements || 
+        []
+    ),
 });
 
+console.log("props.taskData:", props.taskData);
 console.log("localTaskData:", localTaskData.value);
+console.log("Fichiers normalisés:", localTaskData.value.files);
 
 // Computed properties pour les dates
 const formattedStartDate = computed({
@@ -469,28 +493,34 @@ const isValidFileType = (file) => {
 
 const formatFileType = (mimeType) => {
     const typeMap = {
-        'application/pdf': 'PDF',
-        'image/jpeg': 'Image',
-        'image/jpg': 'Image',
-        'image/png': 'Image',
-        'video/mp4': 'Vidéo',
-        'video/avi': 'Vidéo',
-        'video/mov': 'Vidéo',
-        'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 'Document'
+        'application/pdf': 'pdf',
+        'image/jpeg': 'image',
+        'image/jpg': 'image',
+        'image/png': 'image',
+        'video/mp4': 'video',
+        'video/avi': 'video',
+        'video/mov': 'video',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 'docx'
     }
-    return typeMap[mimeType] || 'Fichier'
+    return typeMap[mimeType] || mimeType || 'unknown'
 }
 
 const isDocumentFile = (type) => {
-    return type && (type.includes('pdf') || type.includes('document') || type.includes('Document'))
+    if (!type) return false
+    const lowerType = type.toLowerCase()
+    return lowerType.includes('pdf') || lowerType.includes('document') || lowerType.includes('docx')
 }
 
 const isImageFile = (type) => {
-    return type && (type.includes('image') || type.includes('Image'))
+    if (!type) return false
+    const lowerType = type.toLowerCase()
+    return lowerType.includes('image') || lowerType.includes('jpeg') || lowerType.includes('jpg') || lowerType.includes('png')
 }
 
 const isVideoFile = (type) => {
-    return type && (type.includes('video') || type.includes('Vidéo'))
+    if (!type) return false
+    const lowerType = type.toLowerCase()
+    return lowerType.includes('video') || lowerType.includes('mp4') || lowerType.includes('avi') || lowerType.includes('mov')
 }
 
 const formatFileSize = (bytes) => {
@@ -552,7 +582,16 @@ const updateTask = async () => {
         const companyId = route.params.companyId
         const projectId = route.params.projectId
 
-        
+        // Filtrer seulement les nouveaux fichiers uploadés
+        const newFiles = localTaskData.value.files.filter(f => 
+            f.file !== undefined && f.uploaded === true
+        ).map(f => ({
+            name: f.name,
+            type: f.type,
+            url: f.url,
+            size: f.size
+        }))
+
         // Préparer les données pour l'API
         const taskPayload = {
             name: localTaskData.value.name,
@@ -563,14 +602,12 @@ const updateTask = async () => {
             dueDate: localTaskData.value.dueDate,
             estimationTime: localTaskData.value.estimationTime,
             assigneeId: localTaskData.value.assigneeId,
-            files: localTaskData.value.files.filter(f => f.uploaded).map(f => ({
-                name: f.name,
-                size: f.size,
-                type: f.type,
-                url: f.url
-            })),
+            // Envoyer SEULEMENT les nouveaux fichiers avec la clé "attachements"
+            attachements: newFiles,
             comments: localTaskData.value.comments
         }
+
+        console.log('Nouveaux attachements à envoyer:', newFiles)
 
         const response = await auth.api(
             'PUT',
@@ -595,20 +632,9 @@ const updateTask = async () => {
 }
 
 onMounted(() => {
-    // Initialiser les fichiers existants avec les bonnes propriétés
-    if (props.taskData.files) {
-        localTaskData.value.files = props.taskData.files.map(file => ({
-            ...file,
-            uploaded: true,
-            uploading: false,
-            uploadProgress: 100
-        }))
-    }
+    console.log("Données de la tâche reçues:", props.taskData)
+    console.log("Fichiers détectés:", props.taskData.files || props.taskData.attachments || props.taskData.attachements)
 })
-
-const handleSubmit = async () => {
-    await updateTask();
-}
 </script>
 
 <style scoped>

@@ -327,9 +327,6 @@ const closeCreateTaskDrawer = () => {
 };
 
 const openUpdateTaskDrawer = (task) => {
-  console.log("task")
-  console.log(task)
-
   selectedTask.value = task;
   isUpdateDrawerOpen.value = true;
 };
