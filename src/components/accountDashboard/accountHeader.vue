@@ -1,7 +1,7 @@
 <template>
   <header class="fixed top-0 left-0 right-0 z-50 px-6 py-1 bg-white border-b border-gray-200">
     <div class="flex items-center justify-between">
-      <div class="relative flex-[1]">
+      <div class="relative flex-[1] flex gap-3">
         <div class="hidden sm:block">
           <span class="text-[#e4097f] font-bold text-xl tracking-tight font-nunito">KINDI🎁</span>
           <div class="inline-flex items-center">
@@ -17,6 +17,9 @@
             </span>
           </div>
         </div>
+        <!-- <div>
+          Lorem, ipsum dolor.
+        </div> -->
       </div>
       <!-- Menu -->
 

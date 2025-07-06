@@ -24,7 +24,6 @@
           <svg
             class="container"
             x="0px"
-            y="0px"
             viewBox="0 0 37 37"
             height="37"
             width="37"
@@ -62,7 +61,95 @@
         @mouseenter="handleMouseEnter"
         @mouseleave="handleMouseLeave"
       >
-        <nav class="px-2 mt-3">
+        <!-- Company Selector Section -->
+        <div class="px-2 mt-1">
+          <!-- Expanded State - Full Dropdown -->
+          <div 
+            v-if="isExpanded" 
+            class="transition-all duration-300 ease-in-out opacity-100"
+          >
+            <!-- <div class="mb-2">
+              <span class="text-xs font-medium tracking-wide text-gray-500 uppercase">
+                Company
+              </span>
+            </div> -->
+            <CustomSelect
+              v-model="activeCompanies"
+              :options="listComapneis"
+              option-label="title"
+              option-value="id"
+              placeholder="Select Company"
+              :disabled="false"
+              :searchable="false"
+              :clearable="false"
+              class="w-full"
+            />
+            <!-- {{ activeCompanies }} -->
+          </div>
+
+          <!-- Collapsed State - Company Avatar/Icon -->
+          <div 
+            v-else 
+            class="relative transition-all duration-300 ease-in-out group"
+          >
+            <div 
+              class="flex items-center justify-center w-12 h-12 mx-auto bg-gradient-to-br from-[#db147f] to-[#e4097f] rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-all duration-200"
+              @click="toggleCompanyDropdown"
+            >
+              <span class="text-lg font-bold text-white">
+                {{ getCompanyInitials(selectedCompanyName) }}
+              </span>
+            </div>
+
+            <!-- Tooltip for collapsed state -->
+            <div
+              class="absolute z-50 px-3 py-2 ml-2 text-sm text-white transition-opacity duration-200 transform -translate-y-1/2 bg-gray-900 rounded-lg shadow-lg opacity-0 pointer-events-none left-full top-1/2 group-hover:opacity-100 whitespace-nowrap"
+            >
+              {{ selectedCompanyName || 'Select Company' }}
+              <div
+                class="absolute left-0 transform -translate-x-1 -translate-y-1/2 border-4 border-transparent top-1/2 border-r-gray-900"
+              ></div>
+            </div>
+
+            <!-- Dropdown for collapsed state -->
+            <div
+              v-if="showCompanyDropdown"
+              class="absolute left-full top-0 ml-2 z-50 bg-white rounded-lg shadow-xl border border-gray-200 min-w-[200px] py-2"
+            >
+              <div class="px-3 py-2 border-b border-gray-100">
+                <span class="text-xs font-medium tracking-wide text-gray-500 uppercase">
+                  Select Company
+                </span>
+              </div>
+              <div class="overflow-y-auto max-h-60">
+                <div
+                  v-for="company in listComapneis"
+                  :key="company.id"
+                  @click="selectCompany(company)"
+                  class="flex items-center px-3 py-2 transition-colors duration-150 cursor-pointer hover:bg-gray-50"
+                >
+                  <div class="flex items-center justify-center w-8 h-8 bg-gradient-to-br from-[#db147f] to-[#e4097f] rounded-md mr-3">
+                    <span class="text-sm font-medium text-white">
+                      {{ getCompanyInitials(company.title) }}
+                    </span>
+                  </div>
+                  <span class="text-sm font-medium text-gray-900">
+                    {{ company.title }}
+                  </span>
+                  <div 
+                    v-if="activeCompanies === company.slug"
+                    class="ml-auto w-2 h-2 bg-[#db147f] rounded-full"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Separator -->
+        <div class="mx-2 mb-3"></div>
+
+        <nav class="px-2">
           <div class="space-y-2">
             <div
               v-for="(item, index) in filteredMenuItems"
@@ -204,6 +291,74 @@
             </div>
 
             <div class="px-4 py-4 overflow-y-auto max-h-96">
+              <!-- Company Selector Section for Mobile -->
+              <div class="pb-4 mb-6 border-b border-gray-100">
+                <!-- <div class="mb-3">
+                  <span class="text-xs font-medium tracking-wide text-gray-500 uppercase">
+                    Company
+                  </span>
+                </div> -->
+                
+                <!-- Current Selected Company Display -->
+                <div class="mb-3">
+                  <div class="flex items-center p-3 bg-gradient-to-r from-[#db147f] to-[#e4097f] rounded-lg shadow-sm">
+                    <div class="flex items-center justify-center w-10 h-10 mr-3 bg-white rounded-lg bg-opacity-20">
+                      <span class="text-lg font-bold text-white">
+                        {{ getCompanyInitials(selectedCompanyName) }}
+                      </span>
+                    </div>
+                    <div class="flex-1">
+                      <span class="font-medium text-white">
+                        {{ selectedCompanyName || 'No Company Selected' }}
+                      </span>
+                      <div class="text-xs text-white text-opacity-80">
+                        Current active company
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Company Selection List -->
+                <div class="space-y-2">
+                  <div class="mb-2 text-sm font-medium text-gray-700">
+                    Switch Company:
+                  </div>
+                  <div class="grid gap-2">
+                    <div
+                      v-for="company in listComapneis"
+                      :key="company.id"
+                      @click="selectCompanyMobile(company)"
+                      :class="[
+                        'flex items-center p-3 rounded-lg border-2 cursor-pointer transition-all duration-200',
+                        activeCompanies === company.id 
+                          ? 'border-[#db147f] bg-[#fff0fb]' 
+                          : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+                      ]"
+                    >
+                      <div class="flex items-center justify-center w-8 h-8 bg-gradient-to-br from-[#db147f] to-[#e4097f] rounded-md mr-3">
+                        <span class="text-sm font-medium text-white">
+                          {{ getCompanyInitials(company.title) }}
+                        </span>
+                      </div>
+                      <div class="flex-1">
+                        <span class="text-sm font-medium text-gray-900">
+                          {{ company.title }}
+                        </span>
+                      </div>
+                      <div 
+                        v-if="activeCompanies === company.id"
+                        class="w-5 h-5 bg-[#db147f] rounded-full flex items-center justify-center"
+                      >
+                        <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                          <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Menu Items -->
               <div class="space-y-2">
                 <RouterLink
                   v-for="item in filteredOverlayMenuItems"
@@ -227,10 +382,12 @@
                   </div>
                 </RouterLink>
               </div>
+              
+              <!-- Profile Link -->
               <a
                 href="/profile"
                 @click="toggleUserMenu"
-                class="flex items-center px-4 py-2 transition-colors duration-200 rounded-lg hover:bg-gray-50"
+                class="flex items-center px-4 py-2 pt-4 mt-4 transition-colors duration-200 border-t border-gray-100 rounded-lg hover:bg-gray-50"
               >
                 <div class="flex items-center justify-center w-8 h-8 mr-3">
                   <img
@@ -270,9 +427,11 @@ import {
   Signature,
   BookOpenText,
   BriefcaseBusiness,
-  MailQuestionIcon
+  MailQuestionIcon,
+  BlindsIcon
 } from "lucide-vue-next";
 import { useAuthStore } from "@/stores/auth";
+import CustomSelect from "@/components/globales/CustomSelect.vue";
 
 // État de la sidebar
 const isExpanded = ref(false);
@@ -281,11 +440,99 @@ const searchQuery = ref("");
 const isSearchLoading = ref(false);
 const isModalOpen = ref(false);
 const isUserMenuOpen = ref(false);
+const showCompanyDropdown = ref(false);
 
 const auth = useAuthStore();
 
 const accountType = ref('');
 const companyId = ref('');
+
+const listComapneis = ref([])
+
+const activeCompanies = ref(null)
+
+// Computed pour obtenir le nom de la compagnie sélectionnée
+const selectedCompanyName = computed(() => {
+  if (!activeCompanies.value) return null;
+  const company = listComapneis.value.find(c => c.id === activeCompanies.value);
+  return company ? company.title : null;
+});
+
+// Fonction pour obtenir les initiales d'une compagnie
+const getCompanyInitials = (companyName) => {
+  if (!companyName) return '?';
+  return companyName
+    .split(' ')
+    .map(word => word.charAt(0))
+    .join('')
+    .substring(0, 2)
+    .toUpperCase();
+};
+
+// Fonction pour sélectionner une compagnie
+const selectCompany = (company) => {
+  activeCompanies.value = company.id;
+  showCompanyDropdown.value = false;
+};
+
+// Fonction pour toggle le dropdown des compagnies
+const toggleCompanyDropdown = () => {
+  showCompanyDropdown.value = !showCompanyDropdown.value;
+};
+
+// Fermer le dropdown quand on clique ailleurs
+const handleClickOutside = (event) => {
+  if (!event.target.closest('#desktopSideBar')) {
+    showCompanyDropdown.value = false;
+  }
+};
+
+// Fonction pour sélectionner une compagnie depuis le mobile
+const selectCompanyMobile = (company) => {
+  activeCompanies.value = company.id;
+  // Optionnel: fermer l'overlay après sélection
+  // toggleUserMenu();
+};
+
+const fetchGuestsForAccount = async () => {
+   try {
+      const response = await auth.api('GET', '/accounts/guest/list', null, false);
+
+      if (response.success) {
+         console.log(response.data);
+         
+         if (Array.isArray(response.data)) {
+            const companies = response.data.map(guest => ({
+               id: guest.company.slug,
+               title: guest.company.activeDetails.name
+            }));
+            
+            // Assuming listComapneis.values is defined and should be updated
+            listComapneis.value.push(...companies);
+         }
+      }
+   } catch (error) {
+      console.error('An error occurred:', error);
+   }
+};
+
+
+
+onMounted(() => {
+  accountType.value = auth?.user?.account?.accountType;
+  console.log(auth.userCompany);
+  companyId.value = accountType.value === 'companies' ? auth.userCompany?.companies?.[0]?.slug : null;
+  
+  // Sélectionner la première compagnie par défaut
+  if (listComapneis.value.length > 0) {
+    activeCompanies.value = listComapneis.value[0].id;
+  }
+  
+  // Ajouter l'event listener pour fermer le dropdown
+  document.addEventListener('click', handleClickOutside);
+
+  fetchGuestsForAccount()
+});
 
 // Définition des menus de base (sans les liens dynamiques)
 const baseMenuItems = [
@@ -296,6 +543,15 @@ const baseMenuItems = [
     active: true,
     badge: null,
     isCompanie: false,
+  },
+  {
+    icon: BlindsIcon,
+    title: "Works Projects",
+    routeName: "guest_list_projects",
+    active: false, // Changer de true à false pour éviter les conflits
+    badge: null,
+    isCompanie: false,
+    isGuest: true, // Changer de false à true
   },
   {
     icon: BookOpenText,
@@ -346,14 +602,6 @@ const baseMenuItems = [
     isCompanie: true,
   },
   {
-    icon: BarChart3,
-    title: "Invoices",
-    routeName: "home",
-    active: false,
-    badge: null,
-    isCompanie: false,
-  },
-  {
     icon: FileText,
     title: "Reviews",
     routeName: "home",
@@ -381,12 +629,13 @@ const baseMobileMenuItems = [
     isCompanie: false,
   },
   {
-    icon: BarChart3,
-    title: "Invoices",
-    routeName: "home",
+    icon: BlindsIcon,
+    title: "Works Projects",
+    routeName: "guest_list_projects",
     active: false,
     badge: null,
     isCompanie: false,
+    isGuest: true,
   },
 ];
 
@@ -431,16 +680,26 @@ const baseOverlayMenuItems = [
     badge: null,
     isCompanie: false,
   },
+  {
+    icon: BlindsIcon,
+    title: "Works Projects",
+    routeName: "guest_list_projects",
+    active: false,
+    badge: null,
+    isCompanie: false,
+    isGuest: true,
+  },
 ];
-
-onMounted(() => {
-  accountType.value = auth?.user?.account?.accountType;
-  console.log(auth.userCompany);
-  companyId.value = accountType.value === 'companies' ? auth.userCompany?.companies?.[0]?.slug : null;
-});
 
 // Fonction pour générer le lien de route avec les paramètres appropriés
 const getRouteLink = (item) => {
+  if(item.isGuest && activeCompanies.value){
+     return {
+      name: item.routeName,
+      params: { companyId: activeCompanies.value } // Utiliser activeCompanies.value au lieu de companyId.value
+    };
+  }
+
   if (item.isCompanie && companyId.value) {
     return {
       name: item.routeName,
@@ -451,6 +710,13 @@ const getRouteLink = (item) => {
 };
 
 const getMobileRouteLink = (item) => {
+  if(item.isGuest && activeCompanies.value){
+     return {
+      name: item.routeName,
+      params: { companyId: activeCompanies.value }
+    };
+  }
+
   if (item.isCompanie && companyId.value) {
     return {
       name: item.routeName,
@@ -461,6 +727,13 @@ const getMobileRouteLink = (item) => {
 };
 
 const getOverlayRouteLink = (item) => {
+  if(item.isGuest && activeCompanies.value){
+     return {
+      name: item.routeName,
+      params: { companyId: activeCompanies.value }
+    };
+  }
+
   if (item.isCompanie && companyId.value) {
     return {
       name: item.routeName,
@@ -472,9 +745,21 @@ const getOverlayRouteLink = (item) => {
 
 // Fonction pour vérifier si un menu peut être affiché
 const menuCanBeShow = (item) => {
+  // Si c'est un menu pour les compagnies et que l'utilisateur n'est pas une compagnie ou n'a pas de companyId
   if (item.isCompanie && (accountType.value !== 'companies' || !companyId.value)) {
     return false
   }
+
+  // Si c'est un menu pour les invités et qu'aucune compagnie n'est sélectionnée
+  if (item.isGuest && !activeCompanies.value) {
+    return false
+  }
+
+  // Si c'est un menu pour les invités mais que l'utilisateur est propriétaire d'une compagnie
+  if (item.isGuest && accountType.value === 'companies') {
+    return false
+  }
+
   return true;
 };
 
@@ -521,6 +806,7 @@ const handleMouseLeave = () => {
   }
   hoverTimeout.value = setTimeout(() => {
     isExpanded.value = false;
+    showCompanyDropdown.value = false; // Fermer le dropdown quand on quitte la sidebar
   });
 };
 
