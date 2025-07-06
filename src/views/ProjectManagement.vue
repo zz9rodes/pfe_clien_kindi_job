@@ -18,7 +18,7 @@
     </div>
 
     <!-- Liste des projets -->
-    <div class="grid grid-cols-1 gap-6 resla md:grid-cols-2 lg:grid-cols-3">
+    <div class="grid grid-cols-1 gap-6 p-3 resla md:grid-cols-2 lg:grid-cols-3">
       <div
         @click.stop="()=>goToViewProject(project)"
         v-for="project in projects"

@@ -291,7 +291,7 @@
                       Tâches
                     </dt>
                     <dd class="text-lg font-medium text-gray-900">
-                      {{ project.tasksCount || 0 }}
+                      {{ project.tasks?.length || 0 }}
                     </dd>
                   </dl>
                 </div>
@@ -898,7 +898,6 @@ const HandleAddToProject = async () => {
       await fetchProject();
       // Fermer le modal et réinitialiser
       HadleCloseModal();
-      alert('Membres ajoutés avec succès !');
     }
   } catch (error) {
     console.error("Erreur lors de l'ajout des membres:", error);

@@ -1,16 +1,18 @@
 <template>
-  <div class="w-full p-6">
+  <div class="w-full h-full p-6 ">
     <AppModal :isOpen="isLoaderModalOpen" :isLoader="true"> </AppModal>
     <!-- Header avec bouton de création -->
     <div class="flex items-center justify-between mb-8">
       <div>
         <h1 class="text-xl font-bold text-gray-900 sm:text-3xl">
-          All Projects
+           Your Projects
         </h1>
       </div>
       <button
+        :disabled="!isAdmin"
         @click="() => openDrawer('create')"
-        class="px-6 flex gap-1 py-2 font-medium text-white transition-colors bg-[#db147f] rounded-lg hover:bg-[#c41370]"
+        :class="isAdmin ? 'bg-[#db147f]  hover:bg-[#c41370] cursor-pointer':'bg-[#ce82aa] cursor-not-allowed'"
+        class="flex gap-1 px-6 py-2 font-medium text-white transition-colors rounded-lg "
       >
         <Plus />
         <span class="hidden sm:block">Nouveau projet</span>
@@ -18,20 +20,22 @@
     </div>
 
     <!-- Liste des projets -->
-    <div class="grid grid-cols-1 gap-6 resla md:grid-cols-2 lg:grid-cols-3">
+    <div class="grid grid-cols-1 gap-6 p-3 resla md:grid-cols-2 lg:grid-cols-3">
       <div
         @click.stop="()=>goToViewProject(project)"
         v-for="project in projects"
         :key="project.id"
         class="relative p-6 transition-shadow bg-white border border-gray-200 rounded-lg shadow-sm cursor-pointer hover:shadow-md"
       >
-        <div
+        <button
+          :class="isAdmin ? 'bg-[#db147f]  hover:bg-[#c41370] cursor-pointer':'bg-[#ce82aa] cursor-not-allowed'"
+          :disabled="!isAdmin"
           @click.stop="() => openDrawer('update', project)"
-          class="absolute rounded cursor-pointer top-0 right-0 flex items-center justify-end gap-2 bg-[#db147f] p-1 text-white"
+          class="absolute top-0 right-0 flex items-center justify-end gap-2 p-1 text-white rounded"
         >
           <Edit class="w-4 h-4" />
           <span> edit </span>
-        </div>
+        </button>
 
         <div class="pt-[24px]">
           <div class="flex items-center justify-between mb-4">
@@ -130,6 +134,7 @@ const activeProject = ref({});
 const loading = ref(false);
 const membersForUpdate = ref([]);
 const isLoaderModalOpen = ref(false);
+const isAdmin=ref(false)
 
 const router = useRouter();
 const route = useRoute();
@@ -144,7 +149,10 @@ const fetchProjects = async () => {
       null,
       false
     );
-    projects.value = (res.data || []).map((project) => {
+    console.log("res.data.isAdmin")
+    console.log(res.data.isAdmin)
+    isAdmin.value=res.data.isAdmin
+    projects.value = (res.data.projects || []).map((project) => {
       const membersList = Array.isArray(project.members)
         ? project.members.map((m) => ({
             id: m.member?.id,
@@ -167,6 +175,7 @@ onMounted(() => {
 });
 
 const openDrawer = (form_name = "create", project = null) => {
+  console.log("demo ici")
   if (form_name == "create") {
     showUpdateForm.value = false;
     isCreateDrawerOpen.value = true;
