@@ -240,6 +240,7 @@
         v-if="selectedTask"
         :taskData="selectedTask"
         :projectMembers="projectMembers"
+        :connectedMember="connectedMember"
         @close="closeUpdateTaskDrawer"
         @updated="handleTaskUpdated"
       />
@@ -290,6 +291,7 @@ const isCreateDrawerOpen = ref(false);
 const isUpdateDrawerOpen = ref(false);
 const selectedTask = ref(null);
 const taskToDelete = ref(null);
+const connectedMember=ref(null)
 
 // Computed properties pour chaque statut
 const createTasks = computed(() =>
@@ -328,6 +330,7 @@ const closeCreateTaskDrawer = () => {
 
 const openUpdateTaskDrawer = (task) => {
   selectedTask.value = task;
+  console.log(selectedTask.value)
   isUpdateDrawerOpen.value = true;
 };
 
@@ -393,6 +396,7 @@ const fetchTasks = async () => {
     );
 
     if (response.success) {
+      console.log("tasks.value")
       tasks.value = response.data.map((task) => ({
         ...task,
         // Adapter les données pour correspondre à votre structure
@@ -410,6 +414,7 @@ const fetchTasks = async () => {
             )
           : 0,
       }));
+
     }
   } catch (error) {
     console.error("Erreur lors de la récupération des tâches:", error);
@@ -434,9 +439,7 @@ const fetchProjectMembers = async () => {
       // Extraire les membres du projet (manager + membres)
       const members = [];
       
-      console.log("response.data?.job")
 
-      console.log(response.data?.job.stepsValidation)
 
       avalaibleJobStepValidation.value=response.data?.job?.stepsValidation ?? []
 
@@ -456,8 +459,12 @@ const fetchProjectMembers = async () => {
 
       // Ajouter les autres membres
       if (response.data.members) {
+        
         response.data.members.forEach((member) => {
           // if (member.memberId !== response.data.manager?.id) {
+          if(member.member.account.id===auth.user.account.id){
+            connectedMember.value=member
+          }          
             members.push({
               id: member.id,
               name:
@@ -471,6 +478,7 @@ const fetchProjectMembers = async () => {
           // }
         });
       }
+
 
       projectMembers.value = members;
     }
