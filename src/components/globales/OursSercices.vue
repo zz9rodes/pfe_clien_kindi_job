@@ -1,65 +1,114 @@
 <template>
   <div class="container px-4 mx-auto mt-16">
+    <h2 class="mb-6 text-2xl font-bold text-gray-900 dark:text-white">Ours Services</h2>
 
-            <h2 class="mb-6 text-2xl font-bold">Ours Ressources</h2>
-
-    <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+    <div class="grid overflow-hidden text-gray-600 border border-gray-100 divide-x divide-y divide-gray-100 dark:divide-gray-700 rounded-3xl dark:border-gray-700 sm:grid-cols-2 lg:grid-cols-4 lg:divide-y-0 xl:grid-cols-4">
       <div 
         v-for="(service, index) in services" 
         :key="index"
-        class="p-6 text-center bg-white border border-gray-100 rounded-xl transition-all duration-300 hover:translate-y-[-5px] custom-shadow hover:shadow-[0_15px_30px_rgba(0,0,0,0.12)]"
+        class="group relative bg-white dark:bg-gray-800 transition hover:z-[1] hover:shadow-2xl hover:shadow-gray-600/10"
+        :class="index === services.length - 1 ? 'bg-gray-50 dark:bg-gray-900' : ''"
       >
-        <div :class="`w-16 h-16 ${service.bgColor} rounded-full flex items-center justify-center mx-auto mb-4`">
-          <svg :class="`h-8 w-8 ${service.iconColor}`" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" :d="service.iconPath" />
-          </svg>
+        <div 
+          class="relative p-8 py-12 space-y-8 transition duration-300"
+          :class="index === services.length - 1 ? 'group-hover:bg-white dark:group-hover:bg-gray-800' : ''"
+        >
+          <!-- Icon/Image -->
+          <div class="w-12 h-12">
+            <img 
+              :src="service.image" 
+              :alt="service.title + ' illustration'"
+              class="object-contain w-12 h-12"
+            />
+          </div>
+
+          <!-- Content -->
+          <div class="space-y-2">
+            <h5 class="text-xl font-semibold text-gray-700 dark:text-white transition group-hover:text-[#e4097f]">
+              {{ service.title }}
+            </h5>
+            <p class="text-gray-600 dark:text-gray-300">
+              {{ service.description }}
+            </p>
+          </div>
+
+          <!-- Read More Link with Animated Arrow -->
+          <div
+            class="flex cursor-pointer items-center justify-between group-hover:text-[#e4097f] transition-colors duration-300"
+            @click.prevent="handleReadMore(service)"
+          >
+            <span class="text-sm font-medium">start now</span>
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              viewBox="0 0 24 24" 
+              fill="currentColor" 
+              class="w-5 h-5 text-2xl transition duration-300 -translate-x-4 opacity-0 group-hover:translate-x-0 group-hover:opacity-100"
+            >
+              <path 
+                fill-rule="evenodd" 
+                d="M12.97 3.97a.75.75 0 011.06 0l7.5 7.5a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 11-1.06-1.06l6.22-6.22H3a.75.75 0 010-1.5h16.19l-6.22-6.22a.75.75 0 010-1.06z" 
+                clip-rule="evenodd"
+              />
+            </svg>
+          </div>
         </div>
-        <h3 class="mb-2 text-lg font-semibold">{{ service.title }}</h3>
-        <p class="text-sm text-gray-600">{{ service.description }}</p>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
+const services = [
+  {
+    title: 'Find Your Jobs',
+    description: 'Discover job opportunities near you with detailed offers and quick access to applications.',
+    image: 'https://cdn-icons-png.flaticon.com/512/4341/4341139.png'
+  },
+  {
+    title: 'Electronic Contract Signature',
+    description: 'Sign your contracts online securely and instantly, with full legal validity.',
+    image: 'https://cdn-icons-png.flaticon.com/512/4341/4341134.png'
+  },
+  {
+    title: 'Project And Task Management',
+    description: 'Plan, assign and track all your projects and tasks in one collaborative dashboard.',
+    image: 'https://cdn-icons-png.flaticon.com/512/4341/4341160.png'
+  },
+  {
+    title: 'Recruitment System (RH)',
+    description: 'Manage recruitment, candidate tracking and onboarding seamlessly in one integrated solution.',
+    image: 'https://cdn-icons-png.flaticon.com/512/4341/4341025.png'
+  }
+]
 
-const services= [
-        {
-          title: 'Find ChildJob',
-          description: 'Search for childJob centers near you with detailed information.',
-          bgColor: 'bg-[#e4097f]/10',
-          iconColor: 'text-[#e4097f]',
-          iconPath: 'M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z'
-        },
-        {
-          title: 'Calculate Subsidy',
-          description: 'Estimate your childJob subsidy with our easy-to-use calculator.',
-          bgColor: 'bg-[#00a3e0]/10',
-          iconColor: 'text-[#00a3e0]',
-          iconPath: 'M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z'
-        },
-        {
-          title: 'Waitlist Updates',
-          description: 'Get notified when spots become available at your preferred centers.',
-          bgColor: 'bg-[#e4097f]/10',
-          iconColor: 'text-[#e4097f]',
-          iconPath: 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z'
-        },
-        {
-          title: 'Book Tours',
-          description: 'Schedule visits to childJob centers directly through the app.',
-          bgColor: 'bg-[#00a3e0]/10',
-          iconColor: 'text-[#00a3e0]',
-          iconPath: 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z'
-        }
-      ]
-
+const handleReadMore = (service) => {
+  console.log('Read more clicked for:', service.title)
+  // Add your navigation logic here
+}
 </script>
 
 <style scoped>
-.custom-shadow {
-  --tw-shadow: 0 2px 9px rgba(0, 0, 0, 0.08);
-  --tw-shadow-colored: 0 2px 9px var(--tw-shadow-color);
+/* Custom styles for better dark mode support */
+.group:hover .group-hover\:text-secondary {
+  color: #e4097f;
+}
+
+/* Ensure smooth transitions for all elements */
+* {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Custom shadow for hover effect */
+.hover\:shadow-2xl:hover {
+  --tw-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  --tw-shadow-colored: 0 25px 50px -12px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+/* Dark mode shadow */
+.dark .hover\:shadow-gray-600\/10:hover {
+  --tw-shadow-color: rgb(75 85 99 / 0.1);
+  --tw-shadow: var(--tw-shadow-colored);
 }
 </style>

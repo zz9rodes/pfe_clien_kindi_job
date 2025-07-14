@@ -254,22 +254,22 @@ const router = createRouter({
             },
           ],
         },
-         {
-      path: "job_applies",
-      name: "my_applications",
-      component: UserJobSApplication,
-    },
-     {
-      path: "list_companie_invitations",
-      name: "list_companie_invitations",
-      component: CompaniesGuestList,
-    },
-     {
-      path: "list_agrement",
-      name: "list_agrement",
-      component: AgreementsList,
-    },
-    {
+        {
+          path: "job_applies",
+          name: "my_applications",
+          component: UserJobSApplication,
+        },
+        {
+          path: "list_companie_invitations",
+          name: "list_companie_invitations",
+          component: CompaniesGuestList,
+        },
+        {
+          path: "list_agrement",
+          name: "list_agrement",
+          component: AgreementsList,
+        },
+        {
           path: "l_jobs",
           name: "l_jobs",
           component: ListJobs,
@@ -316,9 +316,9 @@ const router = createRouter({
     {
       path: "/contracts/:contractId/preview",
       name: "contract_preview",
-      component: PreviewContract
+      component: PreviewContract,
     },
-     {
+    {
       path: "/app/agrements/:agrementId/preview",
       name: "preview_agrement",
       component: SignedContractDisplay,
@@ -328,11 +328,11 @@ const router = createRouter({
       name: "portofolio",
       component: Portofolio,
     },
-     {
+    {
       path: "/deoma/",
       name: "deoma",
       component: ExampleUsage,
-    },    
+    },
   ],
 });
 
