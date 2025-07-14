@@ -16,6 +16,8 @@ export const useAuthStore = defineStore("auth", () => {
     ? ref(JSON.parse(localStorage.getItem("job")))
     : ref(null);
 
+  const activeCompanie=ref(false)
+
   const baseUrlApi='http://localhost:3333/v1/api'
 
   async function api(method, url, payload = {}, notify = true) {
@@ -172,7 +174,7 @@ export const useAuthStore = defineStore("auth", () => {
     activeJob.value = job;
   }
 
-  return {baseUrlApi, user, userCompany,activeJob,api,token,setUser, login, register, logout,setCompany,setJob, me, isAuthentificated };
+  return {baseUrlApi, user, userCompany,activeJob,activeCompanie,api,token,setUser, login, register, logout,setCompany,setJob, me, isAuthentificated };
 });
 
 

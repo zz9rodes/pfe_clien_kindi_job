@@ -68,14 +68,9 @@
             v-if="isExpanded" 
             class="transition-all duration-300 ease-in-out opacity-100"
           >
-            <!-- <div class="mb-2">
-              <span class="text-xs font-medium tracking-wide text-gray-500 uppercase">
-                Company
-              </span>
-            </div> -->
             <CustomSelect
               v-model="activeCompanies"
-              :options="listComapneis"
+              :options="listComapnies"
               option-label="title"
               option-value="id"
               placeholder="Select Company"
@@ -123,7 +118,7 @@
               </div>
               <div class="overflow-y-auto max-h-60">
                 <div
-                  v-for="company in listComapneis"
+                  v-for="company in listComapnies"
                   :key="company.id"
                   @click="selectCompany(company)"
                   class="flex items-center px-3 py-2 transition-colors duration-150 cursor-pointer hover:bg-gray-50"
@@ -325,7 +320,7 @@
                   </div>
                   <div class="grid gap-2">
                     <div
-                      v-for="company in listComapneis"
+                      v-for="company in listComapnies"
                       :key="company.id"
                       @click="selectCompanyMobile(company)"
                       :class="[
@@ -428,7 +423,8 @@ import {
   BookOpenText,
   BriefcaseBusiness,
   MailQuestionIcon,
-  BlindsIcon
+  BlindsIcon,
+  MailIcon
 } from "lucide-vue-next";
 import { useAuthStore } from "@/stores/auth";
 import CustomSelect from "@/components/globales/CustomSelect.vue";
@@ -447,14 +443,14 @@ const auth = useAuthStore();
 const accountType = ref('');
 const companyId = ref('');
 
-const listComapneis = ref([])
+const listComapnies = ref([])
 
 const activeCompanies = ref(null)
 
 // Computed pour obtenir le nom de la compagnie sélectionnée
 const selectedCompanyName = computed(() => {
   if (!activeCompanies.value) return null;
-  const company = listComapneis.value.find(c => c.id === activeCompanies.value);
+  const company = listComapnies.value.find(c => c.id === activeCompanies.value);
   return company ? company.title : null;
 });
 
@@ -507,8 +503,8 @@ const fetchGuestsForAccount = async () => {
                title: guest.company.activeDetails.name
             }));
             
-            // Assuming listComapneis.values is defined and should be updated
-            listComapneis.value.push(...companies);
+            // Assuming listComapnies.values is defined and should be updated
+            listComapnies.value.push(...companies);
          }
       }
    } catch (error) {
@@ -524,8 +520,8 @@ onMounted(() => {
   companyId.value = accountType.value === 'companies' ? auth.userCompany?.companies?.[0]?.slug : null;
   
   // Sélectionner la première compagnie par défaut
-  if (listComapneis.value.length > 0) {
-    activeCompanies.value = listComapneis.value[0].id;
+  if (listComapnies.value.length > 0) {
+    activeCompanies.value = listComapnies.value[0].id;
   }
   
   // Ajouter l'event listener pour fermer le dropdown
@@ -545,17 +541,25 @@ const baseMenuItems = [
     isCompanie: false,
   },
   {
-    icon: BlindsIcon,
-    title: "Works Projects",
-    routeName: "guest_list_projects",
-    active: false, // Changer de true à false pour éviter les conflits
+    icon: MailIcon,
+    title: "Invitations",
+    routeName: "list_companie_invitations",
+    active: false,
     badge: null,
     isCompanie: false,
-    isGuest: true, // Changer de false à true
+  },
+  {
+    icon: BlindsIcon,
+    title: " Projects",
+    routeName: "guest_list_projects",
+    active: false,
+    badge: null,
+    isCompanie: false,
+    isGuest: true,
   },
   {
     icon: BookOpenText,
-    title: "Contracts",
+    title: "Contract ",
     routeName: "contract_list",
     active: false,
     badge: null,
@@ -563,7 +567,7 @@ const baseMenuItems = [
   },
   {
     icon: Signature,
-    title: "Signed Contracts",
+    title: "My Contracts",
     routeName: "list_agrement",
     active: false,
     badge: null,
@@ -571,7 +575,7 @@ const baseMenuItems = [
   },
   {
     icon: BriefcaseBusiness,
-    title: "Jobs",
+    title: "Job Offers",
     routeName: "companie_list_jobs",
     active: false,
     badge: null,
@@ -579,7 +583,7 @@ const baseMenuItems = [
   },
   {
     icon: MailQuestionIcon,
-    title: "Applies",
+    title: "My Applications",
     routeName: "my_applications",
     active: false,
     badge: 3,
@@ -587,7 +591,7 @@ const baseMenuItems = [
   },
   {
     icon: FolderClosed,
-    title: "Projects",
+    title: "Company Projects",
     routeName: "list_projects",
     active: false,
     badge: null,
@@ -595,21 +599,14 @@ const baseMenuItems = [
   },
   {
     icon: Users,
-    title: "Teams",
+    title: "Team Management",
     routeName: "team_members",
     active: false,
     badge: null,
     isCompanie: true,
-  },
-  {
-    icon: FileText,
-    title: "Reviews",
-    routeName: "home",
-    active: false,
-    badge: null,
-    isCompanie: false,
-  },
+  }
 ];
+
 
 const baseMobileMenuItems = [
   {
@@ -648,6 +645,14 @@ const baseOverlayMenuItems = [
     badge: null,
     isCompanie: true,
   },
+   {
+    icon: MailIcon,
+    title: "Invitations",
+    routeName: "list_companie_invitations",
+    active: false,
+    badge: null,
+    isCompanie: false,
+  },
   {
     icon: BriefcaseBusiness,
     title: "Jobs",
@@ -688,6 +693,14 @@ const baseOverlayMenuItems = [
     badge: null,
     isCompanie: false,
     isGuest: true,
+  },
+  {
+    icon: Users,
+    title: "Team Management",
+    routeName: "team_members",
+    active: false,
+    badge: null,
+    isCompanie: true,
   },
 ];
 
