@@ -77,7 +77,6 @@
           </router-link>
         </button>
 
-        <!-- Desktop User Dropdown -->
         <div v-if="isAuthentified" class="relative">
           <button
             @click="toggleUserDropdown"
@@ -86,10 +85,10 @@
             <img
               class="h-[40px] w-[40px] rounded-full border border-slate-300 object-cover"
               :src="userDetail.avatarUrl"
-              :alt="userDetail.fullName"
+              :alt="userDetail.fullNamde"
             />
             <div class="hidden text-left lg:block">
-              <p class="text-sm font-medium text-gray-900">{{ userDetail.fullName }}</p>
+              <p class="text-sm font-medium text-gray-900">{{ userDetail.fullNamde }}</p>
               <p class="text-xs text-gray-500">{{ userDetail.email }}</p>
             </div>
             <svg 
@@ -115,17 +114,17 @@
                   <img
                     class="object-cover w-10 h-10 border rounded-full border-slate-300"
                     :src="userDetail.avatarUrl"
-                    :alt="userDetail.fullName"
+                    :alt="userDetail.fullNamde"
                   />
                   <div>
-                    <p class="text-sm font-medium text-gray-900">{{ userDetail.fullName }}</p>
+                    <p class="text-sm font-medium text-gray-900">{{ userDetail.fullNamde }}</p>
                     <p class="text-xs text-gray-500">{{ userDetail.email }}</p>
                   </div>
                 </div>
               </div>
 
               <!-- Menu Items -->
-              <div class="py-1">
+              <div class="py-1" >
                 <button
                   @click="GotoViewProfile"
                   class="flex items-center w-full px-4 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-50"
@@ -147,11 +146,11 @@
                   Dashboard
                 </button>
 
-            
+               
               </div>
 
               <!-- Logout Section -->
-              <div class="py-1 border-t border-gray-100">
+              <div  class="py-1 border-t border-gray-100">
                 <button
                   @click="handleLogout"
                   class="flex items-center w-full px-4 py-2 text-sm text-red-600 transition-colors hover:bg-red-50"
@@ -261,10 +260,10 @@
               <img
                 class="object-cover w-12 h-12 border rounded-full border-slate-300"
                 :src="userDetail.avatarUrl"
-                :alt="userDetail.fullName"
+                :alt="userDetail.fullNamde"
               />
               <div>
-                <p class="text-sm font-medium text-gray-900">{{ userDetail.fullName }}</p>
+                <p class="text-sm font-medium text-gray-900">{{ userDetail.fullNamde }}</p>
                 <p class="text-xs text-gray-500">{{ userDetail.email }}</p>
               </div>
             </div>
@@ -291,6 +290,7 @@
                 </svg>
                 Dashboard
               </button>
+
 
 
               <!-- Mobile Logout Button -->
@@ -327,7 +327,7 @@ const auth = useAuthStore();
 const userDetail = ref({
   email: auth.user?.email || '',
   avatarUrl: auth.user?.account?.avatarUrl || '/default-avatar.png',
-  fullName: (auth.user?.account?.firstName || '') + " " + (auth.user?.account?.lastName || ''),
+  fullNamde: (auth.user?.account?.firstName || '') + " " + (auth.user?.account?.lastName || ''),
 });
 
 const isAuthentified = auth.isAuthentificated();
