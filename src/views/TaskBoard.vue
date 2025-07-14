@@ -5,27 +5,42 @@
     :isLoader="false"
     class="px-1"
   >
-    <div
-      class="flex flex-col justify-between p-6 mx-auto bg-white rounded-md h-60"
-    >
-      <span class="flex justify-center">
-        <ShieldQuestion class="w-12 h-12 text-red-300" />
-      </span>
-      <p class="inline-flex flex-wrap text-xl">
-        Voulez-vous vraiment supprimer cette tâche ?
-      </p>
-      <div class="flex justify-between text-white">
+    <div class="flex flex-col justify-center max-w-md p-8 mx-auto bg-white rounded-lg shadow-xl">
+      <!-- Icon Section -->
+      <div class="flex justify-center mb-6">
+        <div class="flex items-center justify-center w-16 h-16 bg-red-100 rounded-full">
+          <ShieldQuestion class="w-8 h-8 text-red-600" />
+        </div>
+      </div>
+      
+      <!-- Title and Message -->
+      <div class="mb-8 text-center">
+        <h3 class="mb-3 text-xl font-semibold text-gray-900">
+          Supprimer la tâche
+        </h3>
+        <p class="leading-relaxed text-gray-600">
+          Êtes-vous sûr de vouloir supprimer cette tâche ? Cette action est irréversible et toutes les données associées seront perdues.
+        </p>
+      </div>
+      
+      <!-- Action Buttons -->
+      <div class="flex flex-col gap-3 sm:flex-row sm:gap-4">
         <button
           @click="isModalOpen = false"
-          class="px-6 py-2 bg-red-600 rounded"
+          class="flex-1 px-3 py-2 font-medium text-gray-700 transition-colors duration-200 bg-gray-100 border border-gray-300 rounded-lg hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300"
         >
-          Non
+          Annuler
         </button>
         <button
           @click="confirmDeleteTask"
-          class="px-6 py-2 bg-green-600 border rounded"
+          :disabled="isDeleting"
+          class="flex items-center justify-center flex-1 px-3 py-2 font-medium text-white transition-colors duration-200 bg-red-600 rounded-lg hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-red-500"
         >
-          Oui
+          <span v-if="isDeleting" class="flex items-center">
+            <div class="w-4 h-4 mr-2 border-2 border-white rounded-full border-t-transparent animate-spin"></div>
+            Suppression...
+          </span>
+          <span v-else>Supprimer</span>
         </button>
       </div>
     </div>
@@ -316,6 +331,8 @@ const toggleOpenModal = () => {
 };
 
 const openDeleteModal = (task) => {
+  console.log(task);
+  
   taskToDelete.value = task;
   isModalOpen.value = true;
 };
@@ -359,20 +376,26 @@ const handleTaskUpdated = (updatedTask) => {
 const confirmDeleteTask = async () => {
   if (!taskToDelete.value) return;
 
+  console.log(taskToDelete);
+  
+
   try {
     const companyId = route.params.companyId;
-    const taskId = taskToDelete.value.id;
+    const taskId = taskToDelete.value.slug;
+    const projectId=route.params.projectId
 
     const response = await auth.api(
       "DELETE",
-      `/companies/${companyId}/tasks/${taskId}`,
-      null,
+      `/companies/${companyId}/projects/${projectId}/tasks/${taskId}/destroy`,
+      {},
       true
     );
 
     if (response.success) {
       // Supprimer la tâche de la liste locale
       tasks.value = tasks.value.filter((task) => task.id !== taskId);
+
+      window.location.reload()
     }
   } catch (error) {
     console.error("Erreur lors de la suppression de la tâche:", error);

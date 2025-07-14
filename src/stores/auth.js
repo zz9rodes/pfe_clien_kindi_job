@@ -134,7 +134,7 @@ export const useAuthStore = defineStore("auth", () => {
     }
   }
 
-  async function isAuthentificated() {
+   function isAuthentificated() {
     return token ? true : false;
   }
 

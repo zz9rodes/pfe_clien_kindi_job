@@ -64,8 +64,8 @@
         <!-- Company Selector Section -->
         <div class="px-2 mt-1">
           <!-- Expanded State - Full Dropdown -->
-          <div 
-            v-if="isExpanded" 
+          <div
+            v-if="isExpanded"
             class="transition-all duration-300 ease-in-out opacity-100"
           >
             <CustomSelect
@@ -79,15 +79,14 @@
               :clearable="false"
               class="w-full"
             />
-            <!-- {{ activeCompanies }} -->
           </div>
 
           <!-- Collapsed State - Company Avatar/Icon -->
-          <div 
-            v-else 
+          <div
+            v-else
             class="relative transition-all duration-300 ease-in-out group"
           >
-            <div 
+            <div
               class="flex items-center justify-center w-12 h-12 mx-auto bg-gradient-to-br from-[#db147f] to-[#e4097f] rounded-lg shadow-md cursor-pointer hover:shadow-lg transition-all duration-200"
               @click="toggleCompanyDropdown"
             >
@@ -100,7 +99,7 @@
             <div
               class="absolute z-50 px-3 py-2 ml-2 text-sm text-white transition-opacity duration-200 transform -translate-y-1/2 bg-gray-900 rounded-lg shadow-lg opacity-0 pointer-events-none left-full top-1/2 group-hover:opacity-100 whitespace-nowrap"
             >
-              {{ selectedCompanyName || 'Select Company' }}
+              {{ selectedCompanyName || "Select Company" }}
               <div
                 class="absolute left-0 transform -translate-x-1 -translate-y-1/2 border-4 border-transparent top-1/2 border-r-gray-900"
               ></div>
@@ -112,7 +111,9 @@
               class="absolute left-full top-0 ml-2 z-50 bg-white rounded-lg shadow-xl border border-gray-200 min-w-[200px] py-2"
             >
               <div class="px-3 py-2 border-b border-gray-100">
-                <span class="text-xs font-medium tracking-wide text-gray-500 uppercase">
+                <span
+                  class="text-xs font-medium tracking-wide text-gray-500 uppercase"
+                >
                   Select Company
                 </span>
               </div>
@@ -123,7 +124,9 @@
                   @click="selectCompany(company)"
                   class="flex items-center px-3 py-2 transition-colors duration-150 cursor-pointer hover:bg-gray-50"
                 >
-                  <div class="flex items-center justify-center w-8 h-8 bg-gradient-to-br from-[#db147f] to-[#e4097f] rounded-md mr-3">
+                  <div
+                    class="flex items-center justify-center w-8 h-8 bg-gradient-to-br from-[#db147f] to-[#e4097f] rounded-md mr-3"
+                  >
                     <span class="text-sm font-medium text-white">
                       {{ getCompanyInitials(company.title) }}
                     </span>
@@ -131,7 +134,7 @@
                   <span class="text-sm font-medium text-gray-900">
                     {{ company.title }}
                   </span>
-                  <div 
+                  <div
                     v-if="activeCompanies === company.slug"
                     class="ml-auto w-2 h-2 bg-[#db147f] rounded-full"
                   ></div>
@@ -159,7 +162,9 @@
                 ]"
                 @click="setActiveItem(index)"
               >
-                <div class="flex items-center justify-center flex-shrink-0 w-6 h-6">
+                <div
+                  class="flex items-center justify-center flex-shrink-0 w-6 h-6"
+                >
                   <component
                     :is="item.icon"
                     :class="[
@@ -171,10 +176,14 @@
                 <div
                   :class="[
                     'ml-3 transition-all duration-300 ease-in-out',
-                    isExpanded ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-2',
+                    isExpanded
+                      ? 'opacity-100 translate-x-0'
+                      : 'opacity-0 -translate-x-2',
                   ]"
                 >
-                  <span class="text-sm whitespace-nowrap">{{ item.title }}</span>
+                  <span class="text-sm whitespace-nowrap">{{
+                    item.title
+                  }}</span>
                 </div>
               </RouterLink>
 
@@ -190,20 +199,19 @@
             </div>
           </div>
         </nav>
-        <div
-          class="absolute bottom-0 left-0 right-0 p-2 border-t border-gray-200"
-        >
+
+        <!-- Desktop User Profile Section with Dropdown -->
+        <div class="absolute bottom-0 left-0 right-0 p-2 border-t border-gray-200">
           <div class="relative group">
-            <router-link
-              :to="{ name: 'profile' }"
-              class="flex items-center px-3 py-3 text-gray-600 transition-all duration-200 rounded-lg hover:bg-gray-50 hover:text-gray-900"
+            <!-- User Profile Button -->
+            <button
+              @click="toggleUserDropdown"
+              class="flex items-center w-full px-3 py-3 text-gray-600 transition-all duration-200 rounded-lg hover:bg-gray-50 hover:text-gray-900"
             >
               <!-- User Avatar -->
-              <div
-                class="flex items-center justify-center flex-shrink-0 w-6 h-6"
-              >
+              <div class="flex items-center justify-center flex-shrink-0 w-6 h-6">
                 <img
-                  src="/src/assets/logo.svg"
+                  :src="userDetail.avatarUrl"
                   alt="Profile"
                   class="w-6 h-6 rounded-full"
                 />
@@ -212,24 +220,84 @@
               <!-- User Info -->
               <div
                 :class="[
-                  'ml-3 transition-all duration-300 ease-in-out',
+                  'ml-3 transition-all duration-300 ease-in-out flex-1 text-left',
                   isExpanded
                     ? 'opacity-100 translate-x-0'
                     : 'opacity-0 -translate-x-2',
                 ]"
               >
                 <div class="text-sm font-medium whitespace-nowrap">
-                  John Doe
+                  {{ userDetail.fullName }}
+                </div>
+                <div class="text-xs text-gray-500 whitespace-nowrap">
+                  {{ userDetail.email }}
                 </div>
               </div>
-            </router-link>
 
-            <!-- Profile Tooltip -->
+              <!-- Dropdown Arrow (only when expanded) -->
+              <svg 
+                v-if="isExpanded"
+                class="flex-shrink-0 w-4 h-4 text-gray-400 transition-transform duration-200"
+                :class="{ 'rotate-180': isUserDropdownOpen }"
+                fill="none" 
+                viewBox="0 0 24 24" 
+                stroke="currentColor"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+
+            <!-- Desktop User Dropdown Menu -->
+            <Transition name="dropdown">
+              <div
+                v-if="isUserDropdownOpen && isExpanded"
+                class="absolute left-0 right-0 z-50 py-2 mb-2 bg-white border border-gray-200 rounded-lg shadow-lg bottom-full"
+              >
+                <!-- Menu Items -->
+                <div class="py-1">
+                  <button
+                    @click="GotoViewProfile"
+                    class="flex items-center w-full px-4 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-50"
+                  >
+                    <svg class="w-4 h-4 mr-3 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                    Mon Profil
+                  </button>
+                  
+                  <button
+                    @click="goToDashboard"
+                    class="flex items-center w-full px-4 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-50"
+                  >
+                    <svg class="w-4 h-4 mr-3 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z" />
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5a2 2 0 012-2h4a2 2 0 012 2v6H8V5z" />
+                    </svg>
+                    Dashboard
+                  </button>
+                </div>
+
+                <!-- Logout Section -->
+                <div class="py-1 border-t border-gray-100">
+                  <button
+                    @click="handleLogout"
+                    class="flex items-center w-full px-4 py-2 text-sm text-red-600 transition-colors hover:bg-red-50"
+                  >
+                    <svg class="w-4 h-4 mr-3 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                    </svg>
+                    Se déconnecter
+                  </button>
+                </div>
+              </div>
+            </Transition>
+
+            <!-- Profile Tooltip (when collapsed) -->
             <div
               v-if="!isExpanded"
               class="absolute z-50 px-2 py-1 ml-2 text-sm text-white transition-opacity duration-200 transform -translate-y-1/2 bg-gray-900 rounded opacity-0 pointer-events-none left-full top-1/2 group-hover:opacity-100 whitespace-nowrap"
             >
-              Profile
+              {{ userDetail.fullName }}
               <div
                 class="absolute left-0 transform -translate-x-1 -translate-y-1/2 border-4 border-transparent top-1/2 border-r-gray-900"
               ></div>
@@ -288,23 +356,21 @@
             <div class="px-4 py-4 overflow-y-auto max-h-96">
               <!-- Company Selector Section for Mobile -->
               <div class="pb-4 mb-6 border-b border-gray-100">
-                <!-- <div class="mb-3">
-                  <span class="text-xs font-medium tracking-wide text-gray-500 uppercase">
-                    Company
-                  </span>
-                </div> -->
-                
                 <!-- Current Selected Company Display -->
                 <div class="mb-3">
-                  <div class="flex items-center p-3 bg-gradient-to-r from-[#db147f] to-[#e4097f] rounded-lg shadow-sm">
-                    <div class="flex items-center justify-center w-10 h-10 mr-3 bg-white rounded-lg bg-opacity-20">
+                  <div
+                    class="flex items-center p-3 bg-gradient-to-r from-[#db147f] to-[#e4097f] rounded-lg shadow-sm"
+                  >
+                    <div
+                      class="flex items-center justify-center w-10 h-10 mr-3 bg-white rounded-lg bg-opacity-20"
+                    >
                       <span class="text-lg font-bold text-white">
                         {{ getCompanyInitials(selectedCompanyName) }}
                       </span>
                     </div>
                     <div class="flex-1">
                       <span class="font-medium text-white">
-                        {{ selectedCompanyName || 'No Company Selected' }}
+                        {{ selectedCompanyName || "No Company Selected" }}
                       </span>
                       <div class="text-xs text-white text-opacity-80">
                         Current active company
@@ -325,12 +391,14 @@
                       @click="selectCompanyMobile(company)"
                       :class="[
                         'flex items-center p-3 rounded-lg border-2 cursor-pointer transition-all duration-200',
-                        activeCompanies === company.id 
-                          ? 'border-[#db147f] bg-[#fff0fb]' 
-                          : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+                        activeCompanies === company.id
+                          ? 'border-[#db147f] bg-[#fff0fb]'
+                          : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50',
                       ]"
                     >
-                      <div class="flex items-center justify-center w-8 h-8 bg-gradient-to-br from-[#db147f] to-[#e4097f] rounded-md mr-3">
+                      <div
+                        class="flex items-center justify-center w-8 h-8 bg-gradient-to-br from-[#db147f] to-[#e4097f] rounded-md mr-3"
+                      >
                         <span class="text-sm font-medium text-white">
                           {{ getCompanyInitials(company.title) }}
                         </span>
@@ -340,12 +408,20 @@
                           {{ company.title }}
                         </span>
                       </div>
-                      <div 
+                      <div
                         v-if="activeCompanies === company.id"
                         class="w-5 h-5 bg-[#db147f] rounded-full flex items-center justify-center"
                       >
-                        <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                          <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                        <svg
+                          class="w-3 h-3 text-white"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                            clip-rule="evenodd"
+                          ></path>
                         </svg>
                       </div>
                     </div>
@@ -377,45 +453,76 @@
                   </div>
                 </RouterLink>
               </div>
-              
-              <!-- Profile Link -->
-              <a
-                href="/profile"
-                @click="toggleUserMenu"
-                class="flex items-center px-4 py-2 pt-4 mt-4 transition-colors duration-200 border-t border-gray-100 rounded-lg hover:bg-gray-50"
-              >
-                <div class="flex items-center justify-center w-8 h-8 mr-3">
+
+              <!-- Mobile User Profile Section -->
+              <div class="pt-4 mt-4 border-t border-gray-100">
+                <!-- User Info Header -->
+                <div class="flex items-center gap-3 p-3 mb-4 rounded-lg bg-gray-50">
                   <img
-                    src="/src/assets/logo.svg"
+                    :src="userDetail.avatarUrl"
                     alt="Profile"
-                    class="w-6 h-6 rounded-full"
+                    class="object-cover w-12 h-12 border rounded-full border-slate-300"
                   />
+                  <div>
+                    <p class="text-sm font-medium text-gray-900">{{ userDetail.fullName }}</p>
+                    <p class="text-xs text-gray-500">{{ userDetail.email }}</p>
+                  </div>
                 </div>
-                <span class="text-sm font-medium text-gray-900">Profile</span>
-              </a>
+
+                <!-- Mobile User Menu Items -->
+                <div class="space-y-2">
+                  <button
+                    @click="GotoViewProfile"
+                    class="flex items-center w-full px-4 py-3 text-sm text-gray-700 transition-colors rounded-lg hover:bg-gray-50"
+                  >
+                    <svg class="w-5 h-5 mr-3 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                    Mon Profil
+                  </button>
+                  
+                  <button
+                    @click="goToDashboard"
+                    class="flex items-center w-full px-4 py-3 text-sm text-gray-700 transition-colors rounded-lg hover:bg-gray-50"
+                  >
+                    <svg class="w-5 h-5 mr-3 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z" />
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5a2 2 0 012-2h4a2 2 0 012 2v6H8V5z" />
+                    </svg>
+                    Dashboard
+                  </button>
+
+                  <!-- Mobile Logout Button -->
+                  <button
+                    @click="handleLogout"
+                    class="flex items-center w-full px-4 py-3 pt-4 mt-4 text-sm text-red-600 transition-colors border-t border-gray-200 rounded-lg hover:bg-red-50"
+                  >
+                    <svg class="w-5 h-5 mr-3 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                    </svg>
+                    Se déconnecter
+                  </button>
+                </div>
+              </div>
             </div>
 
             <div class="h-6 bg-white"></div>
           </div>
         </div>
       </AppOvarleyBottom>
-      <!-- Modal Mobile Menu -->
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from "vue";
-import { RouterLink, RouterView } from "vue-router";
+import { ref, computed, onMounted, onUnmounted } from "vue";
+import { RouterLink, RouterView, useRouter } from "vue-router";
 import accountHeader from "@/components/accountDashboard/accountHeader.vue";
 import AppModal from "@/components/globales/AppModal.vue";
 import AppOvarleyBottom from "@/components/globales/AppOvarleyBottom.vue";
 import {
   Menu,
   Home,
-  Cherry,
-  MessageCircleMore,
-  BarChart3,
   Users,
   FileText,
   FolderClosed,
@@ -424,7 +531,7 @@ import {
   BriefcaseBusiness,
   MailQuestionIcon,
   BlindsIcon,
-  MailIcon
+  MailIcon,
 } from "lucide-vue-next";
 import { useAuthStore } from "@/stores/auth";
 import CustomSelect from "@/components/globales/CustomSelect.vue";
@@ -437,32 +544,68 @@ const isSearchLoading = ref(false);
 const isModalOpen = ref(false);
 const isUserMenuOpen = ref(false);
 const showCompanyDropdown = ref(false);
+const isUserDropdownOpen = ref(false); // Added for desktop user dropdown
 
 const auth = useAuthStore();
+const router = useRouter();
 
-const accountType = ref('');
-const companyId = ref('');
+const accountType = ref("");
+const companyId = ref("");
+const userDetail = {
+  avatarUrl: auth.user.account.avatarUrl,
+  fullName: auth.user.account.firstName + " " + auth.user.account.lastName,
+  email: auth.user.email
+}
 
-const listComapnies = ref([])
-
-const activeCompanies = ref(null)
+const listComapnies = ref([]);
+const activeCompanies = ref(null);
 
 // Computed pour obtenir le nom de la compagnie sélectionnée
 const selectedCompanyName = computed(() => {
   if (!activeCompanies.value) return null;
-  const company = listComapnies.value.find(c => c.id === activeCompanies.value);
+  const company = listComapnies.value.find(
+    (c) => c.id === activeCompanies.value
+  );
   return company ? company.title : null;
 });
 
 // Fonction pour obtenir les initiales d'une compagnie
 const getCompanyInitials = (companyName) => {
-  if (!companyName) return '?';
+  if (!companyName) return "?";
   return companyName
-    .split(' ')
-    .map(word => word.charAt(0))
-    .join('')
+    .split(" ")
+    .map((word) => word.charAt(0))
+    .join("")
     .substring(0, 2)
     .toUpperCase();
+};
+
+// User dropdown functions
+const toggleUserDropdown = () => {
+  isUserDropdownOpen.value = !isUserDropdownOpen.value;
+};
+
+const GotoViewProfile = () => {
+  isUserDropdownOpen.value = false;
+  isUserMenuOpen.value = false;
+  router.push({ name: "profile" });
+};
+
+const goToDashboard = () => {
+  isUserDropdownOpen.value = false;
+  isUserMenuOpen.value = false;
+  router.push({ name: "home" });
+};
+
+const handleLogout = async () => {
+  try {
+    await auth.logout();
+    isUserDropdownOpen.value = false;
+    isUserMenuOpen.value = false;
+    router.push({ name: "login" });
+  } catch (error) {
+    console.error('Erreur lors de la déconnexion:', error);
+  }
 };
 
 // Fonction pour sélectionner une compagnie
@@ -476,58 +619,61 @@ const toggleCompanyDropdown = () => {
   showCompanyDropdown.value = !showCompanyDropdown.value;
 };
 
-// Fermer le dropdown quand on clique ailleurs
+// Close dropdown when clicking outside
 const handleClickOutside = (event) => {
   if (!event.target.closest('#desktopSideBar')) {
     showCompanyDropdown.value = false;
+    isUserDropdownOpen.value = false;
   }
 };
 
 // Fonction pour sélectionner une compagnie depuis le mobile
 const selectCompanyMobile = (company) => {
   activeCompanies.value = company.id;
-  // Optionnel: fermer l'overlay après sélection
-  // toggleUserMenu();
 };
 
 const fetchGuestsForAccount = async () => {
-   try {
-      const response = await auth.api('GET', '/accounts/guest/list', null, false);
+  try {
+    const response = await auth.api("GET", "/accounts/guest/list", null, false);
 
-      if (response.success) {
-         console.log(response.data);
-         
-         if (Array.isArray(response.data)) {
-            const companies = response.data.map(guest => ({
-               id: guest.company.slug,
-               title: guest.company.activeDetails.name
-            }));
-            
-            // Assuming listComapnies.values is defined and should be updated
-            listComapnies.value.push(...companies);
-         }
+    if (response.success) {
+      console.log(response.data);
+
+      if (Array.isArray(response.data)) {
+        const companies = response.data.map((guest) => ({
+          id: guest.company.slug,
+          title: guest.company.activeDetails.name,
+        }));
+
+        listComapnies.value.push(...companies);
       }
-   } catch (error) {
-      console.error('An error occurred:', error);
-   }
+    }
+  } catch (error) {
+    console.error("An error occurred:", error);
+  }
 };
-
-
 
 onMounted(() => {
   accountType.value = auth?.user?.account?.accountType;
   console.log(auth.userCompany);
-  companyId.value = accountType.value === 'companies' ? auth.userCompany?.companies?.[0]?.slug : null;
-  
+  companyId.value =
+    accountType.value === "companies"
+      ? auth.userCompany?.companies?.[0]?.slug
+      : null;
+
   // Sélectionner la première compagnie par défaut
   if (listComapnies.value.length > 0) {
     activeCompanies.value = listComapnies.value[0].id;
   }
-  
-  // Ajouter l'event listener pour fermer le dropdown
-  document.addEventListener('click', handleClickOutside);
 
-  fetchGuestsForAccount()
+  // Ajouter l'event listener pour fermer le dropdown
+  document.addEventListener("click", handleClickOutside);
+
+  fetchGuestsForAccount();
+});
+
+onUnmounted(() => {
+  document.removeEventListener("click", handleClickOutside);
 });
 
 // Définition des menus de base (sans les liens dynamiques)
@@ -604,9 +750,8 @@ const baseMenuItems = [
     active: false,
     badge: null,
     isCompanie: true,
-  }
+  },
 ];
-
 
 const baseMobileMenuItems = [
   {
@@ -645,7 +790,7 @@ const baseOverlayMenuItems = [
     badge: null,
     isCompanie: true,
   },
-   {
+  {
     icon: MailIcon,
     title: "Invitations",
     routeName: "list_companie_invitations",
@@ -671,8 +816,8 @@ const baseOverlayMenuItems = [
   },
   {
     icon: FolderClosed,
-    title: "Projects",
-    routeName: "home",
+    title: "Company Projects",
+    routeName: "list_projects",
     active: false,
     badge: null,
     isCompanie: true,
@@ -706,51 +851,51 @@ const baseOverlayMenuItems = [
 
 // Fonction pour générer le lien de route avec les paramètres appropriés
 const getRouteLink = (item) => {
-  if(item.isGuest && activeCompanies.value){
-     return {
+  if (item.isGuest && activeCompanies.value) {
+    return {
       name: item.routeName,
-      params: { companyId: activeCompanies.value } // Utiliser activeCompanies.value au lieu de companyId.value
+      params: { companyId: activeCompanies.value },
     };
   }
 
   if (item.isCompanie && companyId.value) {
     return {
       name: item.routeName,
-      params: { companyId: companyId.value }
+      params: { companyId: companyId.value },
     };
   }
   return { name: item.routeName };
 };
 
 const getMobileRouteLink = (item) => {
-  if(item.isGuest && activeCompanies.value){
-     return {
+  if (item.isGuest && activeCompanies.value) {
+    return {
       name: item.routeName,
-      params: { companyId: activeCompanies.value }
+      params: { companyId: activeCompanies.value },
     };
   }
 
   if (item.isCompanie && companyId.value) {
     return {
       name: item.routeName,
-      params: { companyId: companyId.value }
+      params: { companyId: companyId.value },
     };
   }
   return { name: item.routeName };
 };
 
 const getOverlayRouteLink = (item) => {
-  if(item.isGuest && activeCompanies.value){
-     return {
+  if (item.isGuest && activeCompanies.value) {
+    return {
       name: item.routeName,
-      params: { companyId: activeCompanies.value }
+      params: { companyId: activeCompanies.value },
     };
   }
 
   if (item.isCompanie && companyId.value) {
     return {
       name: item.routeName,
-      params: { companyId: companyId.value }
+      params: { companyId: companyId.value },
     };
   }
   return { name: item.routeName };
@@ -758,19 +903,19 @@ const getOverlayRouteLink = (item) => {
 
 // Fonction pour vérifier si un menu peut être affiché
 const menuCanBeShow = (item) => {
-  // Si c'est un menu pour les compagnies et que l'utilisateur n'est pas une compagnie ou n'a pas de companyId
-  if (item.isCompanie && (accountType.value !== 'companies' || !companyId.value)) {
-    return false
+  if (
+    item.isCompanie &&
+    (accountType.value !== "companies" || !companyId.value)
+  ) {
+    return false;
   }
 
-  // Si c'est un menu pour les invités et qu'aucune compagnie n'est sélectionnée
   if (item.isGuest && !activeCompanies.value) {
-    return false
+    return false;
   }
 
-  // Si c'est un menu pour les invités mais que l'utilisateur est propriétaire d'une compagnie
-  if (item.isGuest && accountType.value === 'companies') {
-    return false
+  if (item.isGuest && accountType.value === "companies") {
+    return false;
   }
 
   return true;
@@ -778,15 +923,15 @@ const menuCanBeShow = (item) => {
 
 // Computed properties pour filtrer les menus
 const filteredMenuItems = computed(() => {
-  return baseMenuItems.filter(item => menuCanBeShow(item));
+  return baseMenuItems.filter((item) => menuCanBeShow(item));
 });
 
 const filteredMobileMenuItems = computed(() => {
-  return baseMobileMenuItems.filter(item => menuCanBeShow(item));
+  return baseMobileMenuItems.filter((item) => menuCanBeShow(item));
 });
 
 const filteredOverlayMenuItems = computed(() => {
-  return baseOverlayMenuItems.filter(item => menuCanBeShow(item));
+  return baseOverlayMenuItems.filter((item) => menuCanBeShow(item));
 });
 
 const toggleOpenModal = () => {
@@ -819,7 +964,8 @@ const handleMouseLeave = () => {
   }
   hoverTimeout.value = setTimeout(() => {
     isExpanded.value = false;
-    showCompanyDropdown.value = false; // Fermer le dropdown quand on quitte la sidebar
+    showCompanyDropdown.value = false;
+    isUserDropdownOpen.value = false;
   });
 };
 
@@ -828,9 +974,11 @@ const setActiveItem = (index) => {
   baseMenuItems.forEach((item, i) => {
     item.active = false;
   });
-  
+
   if (filteredItems[index]) {
-    const originalIndex = baseMenuItems.findIndex(item => item.title === filteredItems[index].title);
+    const originalIndex = baseMenuItems.findIndex(
+      (item) => item.title === filteredItems[index].title
+    );
     if (originalIndex !== -1) {
       baseMenuItems[originalIndex].active = true;
     }
@@ -842,9 +990,11 @@ const setActiveMobileItem = (index) => {
   baseMobileMenuItems.forEach((item, i) => {
     item.active = false;
   });
-  
+
   if (filteredItems[index]) {
-    const originalIndex = baseMobileMenuItems.findIndex(item => item.title === filteredItems[index].title);
+    const originalIndex = baseMobileMenuItems.findIndex(
+      (item) => item.title === filteredItems[index].title
+    );
     if (originalIndex !== -1) {
       baseMobileMenuItems[originalIndex].active = true;
     }
@@ -866,6 +1016,19 @@ const toggleUserMenu = () => {
 * {
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Dropdown animations */
+.dropdown-enter-active,
+.dropdown-leave-active {
+  transition: all 0.2s ease;
+  transform-origin: bottom left;
+}
+
+.dropdown-enter-from,
+.dropdown-leave-to {
+  opacity: 0;
+  transform: scale(0.95) translateY(10px);
 }
 </style>
 
