@@ -49,6 +49,7 @@ import ExampleUsage from "@/components/globales/ExampleUsage.vue";
 import ProjectDetailsPage from "@/views/ProjectDetailsPage.vue";
 import GuestProjectManagement from "@/views/GuestProjectManagement.vue";
 import CompaniesGuestList from "@/views/CompaniesGuest.vue";
+import AdminListUsersView from "@/views/AdminListUsersView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -134,12 +135,17 @@ const router = createRouter({
           component: AdminCompanieVersionView,
         },
         {
+          path: "users",
+          name: "admin_users",
+          component: AdminListUsersView,
+        },
+        {
           path: "companies_version/:companyId/details",
           name: "companies_version_details",
           component: CompanyDetailsPage,
           props: { showAction: false, isVersion: true },
         },
-        {
+         {
           path: "companie_request/:companyId/details",
           name: "admin_companie_details",
           component: CompanyDetailsPage,

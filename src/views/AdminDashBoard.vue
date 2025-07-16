@@ -536,7 +536,7 @@ const baseMenuItems = [
   {
     icon: Users2Icon,
     title: "Users",
-    routeName: "my_applications",
+    routeName: "admin_users",
     active: false,
     badge: 3,
     isCompanie: false,
