@@ -1,6 +1,6 @@
 <template>
   <AppModal @closeModal="toggleOpenLoaderModal" :isOpen="isLoading" :isLoader="true" />
-  <div class="w-full min-h-screen overflow-y-auto">
+  <div class="w-full min-h-screen pt-16 overflow-y-auto">
     <div class="p-6 mx-auto max-w-7xl">
       <!-- Header -->
       <div class="flex items-center justify-between mb-8">

@@ -5,7 +5,7 @@
       :isLoader="true"
     />
   <div class="w-full px-4 ">
-    <div v-if="!OpenFormCreateCompanie" class="w-full py-1">
+    <div v-if="!OpenFormCreateCompanie" class="w-full h-full py-1 ">
       <div
         class="flex flex-col mb-6 sm:flex-row sm:items-center sm:justify-between lg:mb-8"
       >
@@ -30,8 +30,9 @@
           <Plus class="sm:hidden" />
         </button>
       </div>
-      <div v-else class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div v-else class="h-full ">
         <CompanieCard
+        class=" max-w-96"
           v-for="company in companies"
           @click="viewCompany(company.id)"
           :key="company.id"

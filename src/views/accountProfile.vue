@@ -1,16 +1,12 @@
 <template>
-  <div class="w-full min-h-screen ">
+  <div class="w-full h-full ">
     <div class="h-full">
       <div class="h-full rounded-lg">
         <div class="flex flex-col h-full lg:flex-row">
           <!-- Sidebar avec onglets -->
           <div class="lg:w-80 lg:border-r lg:border-b-0">
-            <div class="h-auto p-4 rounded-md bg-gray-50 lg:p-6">
-              <h2
-                class="mb-4 text-lg text-gray-800 fonht-semibold lg:mb-6 lg:text-xl"
-              >
-                Account Settings
-              </h2>
+            <div class="h-auto p-4 rounded-md lg:p-6">
+
               <nav
                 class="flex flex-row space-x-2 overflow-x-auto lg:flex-col lg:space-x-0 lg:space-y-2 lg:overflow-x-visible"
               >
@@ -38,7 +34,7 @@
             </div>
           </div>
 
-          <RouterView class="flex-[1] lg:pb-8  overflow-auto  "> </RouterView>
+          <RouterView class="flex-[1] lg:pb-8  overflow-auto p-3   "> </RouterView>
         </div>
       </div>
     </div>
@@ -75,14 +71,14 @@ const tabs = [
   },
   {
     id: "profile_companies",
-    name: "Companies Information",
+    name: "Companies ",
     icon: UsersIcon,
     route: "profile_companies",
     isCompanie: true,
   },
   {
     id: "signature",
-    name: "Sign Agreement",
+    name: "Signature",
     icon: PenToolIcon,
     route: "signature",
   },
