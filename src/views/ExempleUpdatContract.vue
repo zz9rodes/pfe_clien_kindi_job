@@ -170,7 +170,6 @@ const loadExampleContract = () => {
   sampleUserData.value.position = randomExample.position
   sampleUserData.value.salary = randomExample.salary
   
-  alert('Nouveau contrat d\'exemple chargé !')
 }
 
 const handleContractUpdate = (updatedContract) => {

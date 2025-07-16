@@ -22,73 +22,123 @@
     <!-- Liste des projets -->
     <div class="grid grid-cols-1 gap-6 p-3 resla md:grid-cols-2 lg:grid-cols-3">
       <div
-        @click.stop="()=>goToViewProject(project)"
-        v-for="project in projects"
-        :key="project.id"
-        class="relative p-6 transition-shadow bg-white border border-gray-200 rounded-lg shadow-sm cursor-pointer hover:shadow-md"
+      @click.stop="() => goToViewProject(project)"
+      v-for="project in projects"
+      :key="project.id"
+      class="group relative overflow-hidden bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-500 transform hover:-translate-y-1 border border-gray-100 hover:border-[#e4097f]/30 cursor-pointer"
+    >
+      <!-- Background decorative elements -->
+      <div class="absolute inset-0 transition-opacity duration-500 opacity-0 bg-gradient-to-br from-gray-50/50 to-white group-hover:opacity-100"></div>
+      
+      <!-- Enhanced edit button -->
+      <div
+        @click.stop="() => openDrawer('update', project)"
+        class="absolute z-10 transition-all duration-300 transform translate-x-2 opacity-0 top-4 right-4 group-hover:opacity-100 group-hover:translate-x-0"
       >
-        <button
-          :class="isAdmin ? 'bg-[#db147f]  hover:bg-[#c41370] cursor-pointer':'bg-[#ce82aa] cursor-not-allowed'"
-          :disabled="!isAdmin"
-          @click.stop="() => openDrawer('update', project)"
-          class="absolute top-0 right-0 flex items-center justify-end gap-2 p-1 text-white rounded"
-        >
+        <div class="flex items-center gap-2 px-3 py-2 bg-gradient-to-r from-[#db147f] to-[#c4087a] text-white rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer">
           <Edit class="w-4 h-4" />
-          <span> edit </span>
-        </button>
+          <span class="text-sm font-medium">Edit</span>
+        </div>
+      </div>
 
-        <div class="pt-[24px]">
-          <div class="flex items-center justify-between mb-4">
-            <h3 class="text-lg font-semibold text-gray-900">
-              {{ project.name }}
-            </h3>
-            <span
-              :class="[
-                'px-2 py-1 text-xs font-medium rounded-full',
-                getStatusClasses(project.status),
-              ]"
-            >
-              {{ getStatusLabel(project.status) }}
-            </span>
-          </div>
-          <p class="mb-4 text-gray-600 line-clamp-4">{{ project.description }}</p>
-          <div class="flex items-center justify-between text-sm text-gray-500">
-            <span>
-              Manager:
-              <strong>
+      <!-- Content section with enhanced spacing -->
+      <div class="relative p-6 space-y-4">
+        <!-- Header with title and status -->
+        <div class="flex items-start justify-between gap-4 pt-2">
+          <h3 class="text-xl font-bold text-gray-900 group-hover:text-[#e4097f] transition-colors duration-300 flex-1">
+            {{ project.name }}
+          </h3>
+          <span
+            :class="[
+              'px-3 py-1.5 text-xs font-semibold rounded-full whitespace-nowrap transition-all duration-300 transform group-hover:scale-105',
+              getStatusClasses(project.status),
+            ]"
+          >
+            {{ getStatusLabel(project.status) }}
+          </span>
+        </div>
+
+        <!-- Enhanced description -->
+        <div class="relative">
+          <p class="leading-relaxed text-gray-600 line-clamp-3">
+            {{ project.description }}
+          </p>
+          <!-- Gradient fade for long text -->
+          <div class="absolute bottom-0 left-0 right-0 h-4 transition-opacity duration-300 opacity-0 bg-gradient-to-t from-white to-transparent group-hover:opacity-100"></div>
+        </div>
+
+        <!-- Manager and date info with enhanced styling -->
+        <div class="space-y-2 text-sm">
+          <div class="flex items-center gap-2">
+            <div class="p-1.5 bg-gray-100 rounded-full group-hover:bg-[#e4097f]/10 transition-colors duration-300">
+              <UserIcon class="w-3 h-3 text-gray-500 group-hover:text-[#e4097f] transition-colors duration-300" />
+            </div>
+            <span class="text-gray-600">
+              Manager: 
+              <span class="font-semibold text-gray-900">
                 {{ project.manager?.account?.firstName }}
                 {{ project.manager?.account?.lastName }}
-              </strong>
+              </span>
             </span>
-            <span>cree le : {{ formatDate(project.createdAt) }}</span>
           </div>
-          <!-- Section membres -->
-          <div class="flex items-center mt-3">
-            <template v-for="member in project.membersList.slice(0, 3)">
-              <img
-                v-if="member.avatarUrl"
-                :src="member.avatarUrl"
-                :alt="member.firstName"
-                class="w-8 h-8 -ml-2 border-2 border-white rounded-full first:ml-0"
-                :key="member.id"
-              />
-              <div
-                v-else
-                class="flex items-center justify-center w-8 h-8 -ml-2 text-xs font-bold text-gray-600 bg-gray-300 border-2 border-white rounded-full first:ml-0"
-                :key="member"
-              >
-                {{ member.firstName.charAt(0) }}
-              </div>
-            </template>
-            <span
-              v-if="project.membersList.length > 3"
-              class="px-2 py-1 ml-2 text-xs font-semibold bg-gray-200 rounded-full"
-            >
-              +{{ project.membersList.length - 3 }}
+          
+          <div class="flex items-center gap-2">
+            <div class="p-1.5 bg-gray-100 rounded-full group-hover:bg-[#e4097f]/10 transition-colors duration-300">
+              <CalendarIcon class="w-3 h-3 text-gray-500 group-hover:text-[#e4097f] transition-colors duration-300" />
+            </div>
+            <span class="text-gray-500">
+              Created: {{ formatDate(project.createdAt) }}
             </span>
           </div>
         </div>
+
+        <!-- Enhanced members section -->
+        <div class="pt-4 transition-colors duration-300 border-t border-gray-100 group-hover:border-gray-200">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center">
+              <div class="flex items-center -space-x-2">
+                <template v-for="(member, index) in project.membersList.slice(0, 3)" :key="member.id">
+                  <div class="relative">
+                    <img
+                      v-if="member.avatarUrl"
+                      :src="member.avatarUrl"
+                      :alt="member.firstName"
+                      class="relative w-10 h-10 transition-transform duration-300 border-white rounded-full shadow-sm border-3 hover:scale-110 hover:z-10"
+                      :style="{ zIndex: 10 - index }"
+                    />
+                    <div
+                      v-else
+                      class="relative flex items-center justify-center w-10 h-10 text-sm font-bold text-gray-600 transition-transform duration-300 border-white rounded-full shadow-sm bg-gradient-to-br from-gray-200 to-gray-300 border-3 hover:scale-110 hover:z-10"
+                      :style="{ zIndex: 10 - index }"
+                    >
+                      {{ member.firstName.charAt(0) }}
+                    </div>
+                  </div>
+                </template>
+                
+                <div
+                  v-if="project.membersList.length > 3"
+                  class="flex items-center justify-center w-10 h-10 text-xs font-semibold text-gray-600 bg-gray-100 border-3 border-white rounded-full shadow-sm group-hover:bg-[#e4097f]/10 group-hover:text-[#e4097f] transition-all duration-300 relative z-0"
+                >
+                  +{{ project.membersList.length - 3 }}
+                </div>
+              </div>
+            </div>
+            
+            <!-- Team size indicator -->
+            <div class="flex items-center gap-1 px-2 py-1 bg-gray-100 rounded-full group-hover:bg-[#e4097f]/10 transition-colors duration-300">
+              <UsersIcon class="w-3 h-3 text-gray-500 group-hover:text-[#e4097f] transition-colors duration-300" />
+              <span class="text-xs font-medium text-gray-600 group-hover:text-[#e4097f] transition-colors duration-300">
+                {{ project.membersList.length }} members
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
+
+      <!-- Subtle hover effect border -->
+      <!-- <div class="absolute inset-0 rounded-2xl bg-gradient-to-r from-[#e4097f]/10 via-transparent to-[#00a3e0]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div> -->
+    </div>
     </div>
 
     <!-- Drawer pour la création de projet -->

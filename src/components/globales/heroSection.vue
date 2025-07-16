@@ -112,7 +112,7 @@ const heroData = ref({
   subtitle: "Join millions of professionals worldwide using KINDIJOB to discover amazing career opportunities and connect with top companies.",
   primaryButton: {
     text: "Get Started",
-    action: "signup"
+    action: "login"
   },
   secondaryButton: {
     text: "Browse jobs",
@@ -175,8 +175,7 @@ const stats = ref([
 // Event handlers
 const handlePrimaryAction = () => {
   console.log('Primary action clicked: Get Started')
-  // Add your navigation logic here
-  // Example: router.push('/signup')
+   router.push({name:'login'})
 }
 
 const handleSecondaryAction = () => {

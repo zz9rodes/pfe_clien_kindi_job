@@ -340,7 +340,6 @@ const toggleLoader = () => {
   isUploading.value = !isUploading.value;
 };
 
-console.log(auth?.user);
 
 const validateForm = () => {
   const requiredFields = [
@@ -431,9 +430,7 @@ const Userlocation = () => {
 };
 
 async function getGeolocation() {
-  console.log("Gesolocation");
   if (navigator.geolocation) {
-    console.log("le vanigateur gere la georlocatlisation");
     try {
       const position = await new Promise((resolve, reject) => {
         navigator.geolocation.getCurrentPosition(resolve, reject);
@@ -476,7 +473,6 @@ async function fetchLocationInfo(lat, lng) {
       `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&zoom=18&addressdetails=1`
     );
     const data = await response.json();
-    console.log(data);
 
     companyForm.value.address = data.display_name || "";
     companyForm.value.country = data.address.country || "";
@@ -509,12 +505,9 @@ const handleFileUpload = async (e, type) => {
 
         if (type === "avatar") {
           companyForm.value.avatarUrl = newFile.url;
-          console.log(companyForm.value.avatarUrl);
         } else if (type ==="cover") {
           companyForm.value.coverUrl = newFile.url;
-          console.log(companyForm.value.coverUrl);
         } else {
-          console.log("on a uploade les certificateOfIncorporation ")
           companyForm.value.certificateOfIncorporation = newFile.url;
         }
       } else {

@@ -105,7 +105,6 @@ export const AppwriteDeleteFile= async(fileId)=>{
         appwriteBucketId, // bucketId
         fileId // fileId
     );
-    console.log(result);
 
     return {
       isdeleted:true,

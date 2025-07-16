@@ -258,16 +258,13 @@ const updateVersion = async () => {
     if (response.ok) {
       const result = await response.json()
       emit('updated', result)
-      alert('Version mise à jour avec succès !')
     } else {
       // Pour la démo, on met à jour quand même
       emit('updated', updatedVersion)
-      alert('Version mise à jour avec succès !')
     }
     
   } catch (error) {
     console.error('Error updating version:', error)
-    alert('Erreur lors de la mise à jour de la version')
   } finally {
     isSaving.value = false
   }

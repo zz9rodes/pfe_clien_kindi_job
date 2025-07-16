@@ -189,7 +189,8 @@ watch(() => props.employees, (members) => {
         avatar:member.account.avatarUrl,
         firstLangage:member.account.firstLangage,
         position:member.role,
-        firstLanguage:member.account.firstLanguage
+        firstLanguage:member.account.firstLanguage,
+        status : member.accept ? 'accepted':"pending"
     })
   })
  

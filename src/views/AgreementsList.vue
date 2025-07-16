@@ -289,16 +289,7 @@ const viewFullContract = (agreement) => {
     window.open(`${window.location.origin}/app/agrements/${agreement.id}/preview`, '_blank')
 };
 
-const downloadContract = async (agreement) => {
-  try {
-    console.log('Téléchargement du contrat:', agreement.reference);
-    // Implémenter la logique de téléchargement PDF
-    alert(`Téléchargement du contrat ${agreement.reference} commencé !`);
-  } catch (error) {
-    console.error('Erreur lors du téléchargement:', error);
-    alert('Erreur lors du téléchargement du contrat');
-  }
-};
+
 
 // API Methods
 const fetchAgreements = async () => {

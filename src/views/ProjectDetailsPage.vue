@@ -871,10 +871,6 @@ const editProject = () => {
 };
 
 const HandleAddToProject = async () => {
-  if (!selectedMembers.value.length) {
-    alert('Veuillez sélectionner au moins un membre');
-    return;
-  }
 
   isAddingMembers.value = true;
   try {
@@ -901,7 +897,6 @@ const HandleAddToProject = async () => {
     }
   } catch (error) {
     console.error("Erreur lors de l'ajout des membres:", error);
-    alert('Erreur lors de l\'ajout des membres');
   } finally {
     isAddingMembers.value = false;
   }

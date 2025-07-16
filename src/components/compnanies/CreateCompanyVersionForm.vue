@@ -220,16 +220,13 @@ const createVersion = async () => {
     if (response.ok) {
       const createdVersion = await response.json()
       emit('created', createdVersion)
-      alert('Version créée avec succès !')
     } else {
       // Pour la démo, on crée quand même
       emit('created', newVersion)
-      alert('Version créée avec succès !')
     }
     
   } catch (error) {
     console.error('Error creating version:', error)
-    alert('Erreur lors de la création de la version')
   } finally {
     isSaving.value = false
   }

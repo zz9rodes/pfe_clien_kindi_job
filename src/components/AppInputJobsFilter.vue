@@ -38,7 +38,6 @@
               </button>
             </TransitionGroup>
             
-            <!-- More button -->
             <button 
               @click="showMoreCategories = !showMoreCategories"
               class="group px-4 py-3 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-full hover:border-[#e4097f] hover:text-[#e4097f] transition-all duration-300 hover:scale-105"
@@ -60,38 +59,19 @@
 
             <!-- Search Form -->
             <form 
-              class="relative flex items-center group" 
-              @submit.prevent="handleFilter"
+              class="relative flex flex-col gap-3 sm:gap-0 sm:flex-row group" 
+              @submit.prevent="updateFilters"
             >
-              <!-- Search Input Container -->
+              <!-- Keywords Input -->
               <div class="relative flex-1">
                 <input 
-                  v-model="searchQuery" 
-                  @input="handleChangeSearchValue"
-                  @focus="isInputFocused = true"
-                  @blur="isInputFocused = false"
-                  :placeholder="currentPlaceholder"
-                  class="w-full h-12 lg:h-14 pl-6 pr-4 text-base bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-l-full border-r-0 focus:outline-none focus:ring-2 focus:ring-[#e4097f] focus:border-[#e4097f] transition-all duration-300 placeholder-gray-500 dark:placeholder-gray-400 dark:text-white"
+                  v-model="localFilters.keywords" 
+                  @focus="isKeywordsFocused = true"
+                  @blur="isKeywordsFocused = false"
+                  placeholder="Search by job title, industry, or skills"
+                  class="w-full h-12 lg:h-14 pl-6 pr-4 text-base bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-l-full rounded-r-full sm:rounded-r-none border-r-0 sm:border-r-0 focus:outline-none focus:ring-2 focus:ring-[#e4097f] focus:border-[#e4097f] transition-all duration-300 placeholder-gray-500 dark:placeholder-gray-400 dark:text-white"
                 />
                 
-                <!-- Search suggestions dropdown -->
-                <Transition name="dropdown">
-                  <div 
-                    v-if="isInputFocused && searchSuggestions.length > 0"
-                    class="absolute left-0 right-0 z-50 mt-2 overflow-y-auto bg-white border border-gray-200 rounded-lg shadow-lg top-full dark:bg-gray-700 dark:border-gray-600 max-h-60"
-                  >
-                    <div 
-                      v-for="(suggestion, index) in searchSuggestions" 
-                      :key="index"
-                      @click="selectSuggestion(suggestion)"
-                      class="flex items-center gap-3 px-4 py-3 transition-colors duration-200 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-600"
-                    >
-                      <SearchIcon class="w-4 h-4 text-gray-400" />
-                      <span class="text-gray-700 dark:text-gray-300">{{ suggestion }}</span>
-                    </div>
-                  </div>
-                </Transition>
-
                 <!-- Loading indicator -->
                 <div 
                   v-if="isLoading"
@@ -100,12 +80,12 @@
                   <div class="animate-spin rounded-full h-5 w-5 border-b-2 border-[#e4097f]"></div>
                 </div>
               </div>
-
+             
               <!-- Search Button -->
               <button
                 type="submit"
                 :disabled="isLoading"
-                class="group relative h-12 lg:h-14 px-6 mr-3 bg-gradient-to-r from-[#e4097f] to-[#c8076f] hover:from-[#c8076f] hover:to-[#a8065f] text-white rounded-r-full transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl"
+                class="group relative h-12 lg:h-14 px-6 mr-3 bg-gradient-to-r from-[#e4097f] to-[#c8076f] hover:from-[#c8076f] hover:to-[#a8065f] text-white rounded-r-full sm:rounded-l-none rounded-l-full transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl"
               >
                 <SearchIcon class="w-5 h-5 transition-transform duration-300 group-hover:scale-110" />
                 
@@ -150,7 +130,7 @@
                   'flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300',
                   activeCategory === category.id
                     ? 'bg-gradient-to-r from-[#e4097f] to-[#c8076f] text-white'
-                    : 'text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600'
+                    : 'text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700Coronavirus border border-gray-300 dark:border-gray-600'
                 ]"
               >
                 <component :is="category.icon" class="inline-block w-4 h-4 mr-2" />
@@ -192,43 +172,6 @@ import {
   GraduationCapIcon
 } from 'lucide-vue-next';
 
-const emit = defineEmits(['searchvalue-changed', 'filter', 'open-modal']);
-
-const searchQuery = ref('');
-const activeCategory = ref('all');
-const isInputFocused = ref(false);
-const isLoading = ref(false);
-const showMoreCategories = ref(false);
-const currentPlaceholderIndex = ref(0);
-
-const categories = ref([
-  { id: 'all', name: 'All Job Types', icon: BriefcaseIcon },
-  { id: 'fulltime', name: 'Full Time', icon: ClockIcon },
-  { id: 'internship', name: 'Internship', icon: GraduationCapIcon },
-  { id: 'freelance', name: 'Freelance', icon: UserIcon }
-]);
-
-const placeholders = [
-  'Search childcare by postcode, suburb or centre name',
-  'Find your dream job...',
-  'Search by company, role, or location',
-  'Discover new opportunities'
-];
-
-const searchSuggestions = ref([
-  'Software Developer',
-  'Marketing Manager',
-  'Data Analyst',
-  'UX Designer',
-  'Project Manager'
-]);
-
-const stats = ref({
-  activeJobs: '2.5K',
-  companies: '500',
-  lastUpdate: '2 hours ago'
-});
-
 const props = defineProps({
   showTitle: {
     type: Boolean,
@@ -237,43 +180,69 @@ const props = defineProps({
   showToggleModal: {
     type: Boolean,
     default: false
+  },
+  filters: {
+    type: Object,
+    default: () => ({
+      keywords: '',
+      location: '',
+      jobType: '',
+      salary: { min: 0, max: Infinity, isFiltered: false }
+    })
   }
 });
 
-// Computed property for rotating placeholder
+const emit = defineEmits(['searchvalue-changed', 'filter', 'open-modal', 'update:filters']);
+
+const localFilters = ref({
+  keywords: props.filters.keywords,
+});
+const activeCategory = ref('all');
+const isKeywordsFocused = ref(false);
+const isLoading = ref(false);
+const showMoreCategories = ref(false);
+const currentPlaceholderIndex = ref(0);
+
+const categories = ref([
+  { id: 'all', name: 'All Job Types', icon: BriefcaseIcon },
+  { id: 'cdi', name: 'CDI', icon: ClockIcon },
+  { id: 'internship', name: 'Internship', icon: GraduationCapIcon },
+  { id: 'freelance', name: 'Freelance', icon: UserIcon }
+]);
+
+const placeholders = [
+  'Search by job title, industry, or skills',
+  'Find your dream job...',
+  'Search by company, role, or location',
+  'Discover new opportunities'
+];
+
+
+const stats = ref({
+  activeJobs: '2.5K',
+  companies: '500',
+  lastUpdate: '2 hours ago'
+});
+
 const currentPlaceholder = computed(() => {
   return placeholders[currentPlaceholderIndex.value];
 });
 
-// Rotate placeholder text
-onMounted(() => {
-  setInterval(() => {
-    currentPlaceholderIndex.value = (currentPlaceholderIndex.value + 1) % placeholders.length;
-  }, 3000);
-});
 
-// Watch search query for suggestions
-watch(searchQuery, (newValue) => {
-  if (newValue.length > 2) {
-    isLoading.value = true;
-    // Simulate API call
-    setTimeout(() => {
-      isLoading.value = false;
-    }, 500);
-  }
-});
 
-const handleChangeSearchValue = () => {
-  emit('searchvalue-changed', searchQuery.value);
+// watch(() => props.filters, (newFilters) => {
+//   localFilters.value = { ...newFilters, salary: { ...newFilters.salary } };
+// }, { immediate: true, deep: true });
+
+watch(localFilters, () => {
+  updateFilters();
+}, { deep: true });
+
+const updateFilters = () => {
+  emit('update:filters',localFilters.value );
 };
 
-const handleFilter = () => {
-  isLoading.value = true;
-  emit('filter');
-  setTimeout(() => {
-    isLoading.value = false;
-  }, 1000);
-};
+
 
 const HandleOpenModal = () => {
   emit('open-modal');
@@ -281,18 +250,14 @@ const HandleOpenModal = () => {
 
 const handleCategoryClick = (category) => {
   activeCategory.value = category.id;
-  emit('searchvalue-changed', category.name);
+  localFilters.value.jobType = category.id !== 'all' ? category.name.toLowerCase() : '';
+  updateFilters();
 };
 
-const selectSuggestion = (suggestion) => {
-  searchQuery.value = suggestion;
-  isInputFocused.value = false;
-  handleChangeSearchValue();
-};
+
 </script>
 
 <style scoped>
-/* Hide scrollbar for mobile categories */
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -302,7 +267,6 @@ const selectSuggestion = (suggestion) => {
   display: none;
 }
 
-/* Animations */
 @keyframes fade-in {
   from {
     opacity: 0;
@@ -318,7 +282,6 @@ const selectSuggestion = (suggestion) => {
   animation: fade-in 0.8s ease-out;
 }
 
-/* Category transitions */
 .category-enter-active,
 .category-leave-active {
   transition: all 0.3s ease;
@@ -330,7 +293,6 @@ const selectSuggestion = (suggestion) => {
   transform: scale(0.8);
 }
 
-/* Dropdown transitions */
 .dropdown-enter-active,
 .dropdown-leave-active {
   transition: all 0.3s ease;
@@ -341,34 +303,5 @@ const selectSuggestion = (suggestion) => {
 .dropdown-leave-to {
   opacity: 0;
   transform: scaleY(0.8) translateY(-10px);
-}
-
-/* Ripple effect */
-@keyframes ripple {
-  0% {
-    transform: scale(0);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(4);
-    opacity: 0;
-  }
-}
-
-.ripple {
-  animation: ripple 0.6s linear;
-}
-
-/* Custom focus styles */
-.focus-ring {
-  @apply focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#e4097f];
-}
-
-/* Gradient text */
-.gradient-text {
-  background: linear-gradient(135deg, #e4097f 0%, #00a3e0 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
 }
 </style>
