@@ -528,7 +528,7 @@ const baseMenuItems = [
   {
     icon: Home,
     title: "Dashboard",
-    routeName: "home",
+    routeName: "admin_dashboard",
     active: true,
     badge: null,
     isCompanie: false,
@@ -555,28 +555,27 @@ const baseMobileMenuItems = [
   {
     icon: Home,
     title: "Dashboard",
-    routeName: "home",
+    routeName: "admin_dashboard",
     active: true,
     badge: null,
     isCompanie: false,
   },
   {
-    icon: MailQuestionIcon,
-    title: "Applies",
-    routeName: "my_applications",
+    icon: Users2Icon,
+    title: "Users",
+    routeName: "admin_users",
     active: false,
     badge: 3,
     isCompanie: false,
   },
   {
-    icon: BlindsIcon,
-    title: "Works Projects",
-    routeName: "guest_list_projects",
+    icon: Building2,
+    title: "Conpanies",
+    routeName: "admin_companies",
     active: false,
     badge: null,
     isCompanie: false,
-    isGuest: true,
-  },
+  }
 ];
 
 const baseOverlayMenuItems = [
