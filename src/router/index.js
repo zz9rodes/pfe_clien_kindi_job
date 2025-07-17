@@ -51,6 +51,7 @@ import GuestProjectManagement from "@/views/GuestProjectManagement.vue";
 import CompaniesGuestList from "@/views/CompaniesGuest.vue";
 import AdminListUsersView from "@/views/AdminListUsersView.vue";
 import DashboardView from "@/views/DashboardView.vue";
+import UserDashboardView from "@/views/UserDashboardView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -197,6 +198,11 @@ const router = createRouter({
               component: DrawSigrature,
             },
           ],
+        },
+        {
+          path: "dashboard",
+          name: "user_dashboard",
+          component: UserDashboardView,
         },
         {
           path: "companies",

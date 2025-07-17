@@ -594,7 +594,7 @@ const GotoViewProfile = () => {
 const goToDashboard = () => {
   isUserDropdownOpen.value = false;
   isUserMenuOpen.value = false;
-  router.push({ name: "home" });
+  router.push({ name: "user_dashboard" });
 };
 
 const handleLogout = async () => {
@@ -681,7 +681,7 @@ const baseMenuItems = [
   {
     icon: Home,
     title: "Dashboard",
-    routeName: "home",
+    routeName: "user_dashboard",
     active: true,
     badge: null,
     isCompanie: false,
@@ -757,7 +757,7 @@ const baseMobileMenuItems = [
   {
     icon: Home,
     title: "Dashboard",
-    routeName: "home",
+    routeName: "user_dashboard",
     active: true,
     badge: null,
     isCompanie: false,

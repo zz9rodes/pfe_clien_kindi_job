@@ -3,14 +3,14 @@
     <AppModal :isOpen="isLoading" :isLoader="true"></AppModal>
 
     <!-- Header avec titre -->
-    <div class="px-6 py-4 bg-white border-b border-gray-200">
+    <div class="px-6 py-4 overflow-x-auto bg-white border-b border-gray-200">
       <h1 class="text-2xl font-bold text-gray-900">Offres d'emploi</h1>
       <p class="mt-1 text-gray-600">Gérez vos offres d'emploi</p>
     </div>
 
     <!-- Tabs simplifiés -->
     <div class="bg-white border-b border-gray-200">
-      <div class="flex gap-0">
+      <div class="flex gap-0 overflow-x-auto ">
         <button
           v-for="tab in jobStatuses"
           :key="tab"
@@ -25,7 +25,7 @@
           {{ tabLabels[tab] }}
           <span
             v-if="getJobCountByStatus(tab) > 0"
-            class="px-2 py-1 ml-2 text-xs bg-gray-100 rounded-full"
+            class="hidden px-2 py-1 ml-2 text-xs bg-gray-100 rounded-full sm:block"
           >
             {{ getJobCountByStatus(tab) }}
           </span>

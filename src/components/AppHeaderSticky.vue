@@ -335,13 +335,35 @@ const isAuthentified = auth.isAuthentificated();
 const GotoViewProfile = () => {
   isUserDropdownOpen.value = false;
   isMobileMenuOpen.value = false;
-  router.push({ name: "profile" });
+  if(auth.user.account.accountType=='companies'){
+      router.push({ name: "profile_companies" });
+
+      return
+  }
+  else{
+      router.push({ name: "profile" });
+      return
+  }
 };
 
 const goToDashboard = () => {
   isUserDropdownOpen.value = false;
   isMobileMenuOpen.value = false;
   router.push({ name: "home" });
+  if(auth.user.isAdmin){
+    router.push({name:'admin_dashboard'})
+    return
+  }
+  
+  if(auth.user.account.accountType=='companies'){
+      router.push({ name: "profile_companies" });
+
+      return
+  }
+  else{
+      router.push({ name: "user_dashboard" });
+      return
+  }
 };
 
 const goToSettings = () => {

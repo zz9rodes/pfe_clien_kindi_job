@@ -170,7 +170,7 @@
           :key="status"
           @click="activeTab = status"
           :class="[
-            'py-3 px-6 text-sm font-medium border-b-2 transition-colors',
+            'py-2 px-3 text-[12px] sm:text-sm font-medium border-b-2 transition-colors',
             activeTab === status
               ? 'border-[#db147f] text-[#db147f] '
               : 'border-transparent text-gray-500 hover:text-gray-700 ',

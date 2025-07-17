@@ -441,7 +441,7 @@ const GotoViewProfile = () => {
 const goToDashboard = () => {
   isUserDropdownOpen.value = false;
   isUserMenuOpen.value = false;
-  router.push({ name: "home" });
+  router.push({ name: "admin_dashboard" });
 };
 
 const handleLogout = async () => {
@@ -579,71 +579,7 @@ const baseMobileMenuItems = [
 ];
 
 const baseOverlayMenuItems = [
-  {
-    icon: BookOpenText,
-    title: "Contracts",
-    routeName: "contract_list",
-    active: false,
-    badge: null,
-    isCompanie: true,
-  },
-  {
-    icon: MailIcon,
-    title: "Invitations",
-    routeName: "list_companie_invitations",
-    active: false,
-    badge: null,
-    isCompanie: false,
-  },
-  {
-    icon: BriefcaseBusiness,
-    title: "Jobs",
-    routeName: "companie_list_jobs",
-    active: false,
-    badge: null,
-    isCompanie: true,
-  },
-  {
-    icon: Signature,
-    title: "Signed Contracts",
-    routeName: "list_agrement",
-    active: false,
-    badge: null,
-    isCompanie: false,
-  },
-  {
-    icon: FolderClosed,
-    title: "Company Projects",
-    routeName: "list_projects",
-    active: false,
-    badge: null,
-    isCompanie: true,
-  },
-  {
-    icon: FileText,
-    title: "Reviews",
-    routeName: "home",
-    active: false,
-    badge: null,
-    isCompanie: false,
-  },
-  {
-    icon: BlindsIcon,
-    title: "Works Projects",
-    routeName: "guest_list_projects",
-    active: false,
-    badge: null,
-    isCompanie: false,
-    isGuest: true,
-  },
-  {
-    icon: Users,
-    title: "Team Management",
-    routeName: "team_members",
-    active: false,
-    badge: null,
-    isCompanie: true,
-  },
+  
 ];
 
 // Fonction pour générer le lien de route avec les paramètres appropriés
