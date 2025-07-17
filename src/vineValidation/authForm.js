@@ -1,36 +1,36 @@
 import { z } from 'zod';
 
 export const FirstStepSchema = z.object({
-  firstName: z.string().min(2, "first name required"),
-  lastName: z.string().min(2, "last name required"),
-  email: z.string().email("invalid email"),
-  phoneNumber: z.string().regex(/^\d{9,15}$/, "invalid phone number"),
+  firstName: z.string().min(2, "le prénom est requis"),
+  lastName: z.string().min(2, "le nom est requis"),
+  email: z.string().email("email invalide"),
+  phoneNumber: z.string().regex(/^\d{9,15}$/, "numéro de téléphone invalide"),
   dob: z.string().refine((val) => !isNaN(Date.parse(val)), {
-    message: "invalid date",
+    message: "date invalide",
   }).nullable(),
 });
 
 export const validateEmailSchema=z.object({
-    email: z.string().email("invalid email"),
+    email: z.string().email("email invalide"),
 })
 
 export const SecondStepSchema = z.object({
-  country: z.string().min(4, "country is required"),
-  city: z.string().min(4, "city required"),
-  address: z.string().min(4, "invalid address").nullable(),
-  firstLangage: z.string().min(4, "first language required"),
-  secondLangage: z.string().min(4, "second language required").nullable(),
+  country: z.string().min(4, "le pays est requis"),
+  city: z.string().min(4, "la ville est requise"),
+  address: z.string().min(4, "adresse invalide").nullable(),
+  firstLangage: z.string().min(4, "première langue requise"),
+  secondLangage: z.string().min(4, "seconde langue requise").nullable(),
 });
 
 export const ThirdStepSchema = z
   .object({
     password: z
       .string()
-      .min(8, "min 8 caracters"),
+      .min(8, "8 caractères minimum"),
     confirmPassword: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {
-    message: "invalid password",
+    message: "mot de passe invalide",
     path: ["confirmPassword"],
   });
 

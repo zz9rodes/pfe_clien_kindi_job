@@ -5,7 +5,7 @@
         <div class="flex flex-col md:flex-row">
           <div class="md:w-1/2 md:pr-12">
             <div>
-              <h2 class="mt-2 mb-4 text-3xl font-bold">Select your KindiJob plan</h2>
+              <h2 class="mt-2 mb-4 text-3xl font-bold">Sélectionnez votre formule KindiJob</h2>
             </div>
             <h3 class="my-2 text-2xl ">{{ selectedPlan.name }} ( {{ selectedPlan.price }} - {{ selectedPlan.currency }})</h3>
             <span>
@@ -81,7 +81,7 @@
                   class="w-full group bg-[#e4097f] text-white py-2 rounded-lg font-medium hover:bg-[#e4097f]/90 transition-colors flex justify-center"
                 >
                 <span>
-                      Start Now
+                      Commencer maintenant
                 </span>
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden lucide lucide-arrow-right-icon lucide-arrow-right group-hover:block"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                 </button>
@@ -100,51 +100,51 @@ import { ref } from "vue";
 const plans = ref([
   {
     id: "basic",
-    name: "Free",
+    name: "Gratuit",
     price: "0",
     currency: "XAF",
-    duration: "mo.",
-    description: "A starter plan for freelancers to begin applying for jobs and receiving payments.",
+    duration: "mois",
+    description: "Une formule de démarrage pour les freelances afin de postuler à des offres et recevoir des paiements.",
     isActive: false,
     features: [
-      "Apply for job offers",
-      "Receive payments via Mobile Money",
-      "Manage CV profile",
-      "One electronic signature included",
+      "Postuler aux offres d'emploi",
+      "Recevoir des paiements via Mobile Money",
+      "Gérer le profil CV",
+      "Une signature électronique incluse",
     ],
   },
   {
     id: "standard",
     name: "Standard",
-    price: "5,000",
+    price: "5 000",
     currency: "XAF",
-    duration: "mo.",
-    description: "Designed for small businesses or occasional recruiters who need more control and reach.",
+    duration: "mois",
+    description: "Conçue pour les petites entreprises ou les recruteurs occasionnels qui ont besoin de plus de contrôle et de portée.",
     isActive: false,
     features: [
-      "All features from Free",
-      "Create up to 10 job announcements",
-      "Manage up to 7 active projects",
-      "Access to community resources",
-      "Up to 25 tasks per project",
-      "Standard email support",
+      "Toutes les fonctionnalités de la formule Gratuit",
+      "Créer jusqu'à 10 annonces d'emploi",
+      "Gérer jusqu'à 7 projets actifs",
+      "Accès aux ressources de la communauté",
+      "Jusqu'à 25 tâches par projet",
+      "Support email standard",
     ],
   },
   {
     id: "pro",
     name: "Pro",
-    price: "15,000",
+    price: "15 000",
     currency: "XAF",
-    duration: "mo.",
-    description: "A full-featured plan for active companies or HR agencies managing multiple teams and workflows.",
+    duration: "mois",
+    description: "Une formule complète pour les entreprises actives ou les agences RH gérant plusieurs équipes et flux de travail.",
     isActive: true,
     features: [
-      "All features from Standard",
-      "Unlimited job announcements",
-      "Unlimited projects and tasks",
-      "Multiple electronic signatures",
-      "Data export in PDF and CSV formats",
-      "Priority 24/7 customer support",
+      "Toutes les fonctionnalités de la formule Standard",
+      "Annonces d'emploi illimitées",
+      "Projets et tâches illimités",
+      "Signatures électroniques multiples",
+      "Exportation des données en PDF et CSV",
+      "Support client prioritaire 24h/24 et 7j/7",
     ],
   },
 ])

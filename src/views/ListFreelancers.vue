@@ -17,16 +17,16 @@
         <UserIcon class="lg:w-20 lg:h-20 sm:w-14 sm:h-14 text-[#e4097f]" />
         <div class="pt-8">
           <h2 class="mb-4 text-2xl">
-            No Freelancers Found
+            Aucun freelance trouvé
           </h2>
           <p class="mb-4 text-gray-600">
-            Try adjusting your search criteria or clear filters
+            Essayez d'ajuster vos critères de recherche ou réinitialisez les filtres
           </p>
           <button 
             @click="clearFilters"
             class="bg-[#e4097f] text-white px-6 py-2 rounded font-medium hover:bg-[#c4087a] transition-colors duration-200"
           >
-            Clear Filters
+            Réinitialiser les filtres
           </button>
         </div>
       </div>
@@ -36,7 +36,7 @@
         <UserIcon class="lg:w-20 lg:h-20 sm:w-14 sm:h-14 text-[#e4097f]" />
         <div class="pt-8">
           <h2 class="text-2xl">
-            Oups, No Freelancers Found Now
+            Oups, aucun freelance trouvé pour le moment
           </h2>
         </div>
       </div>
@@ -44,7 +44,7 @@
         @click="router.push({name:'login'})"
         class="bg-[#e4097f] mt-8 text-white px-6 py-2 rounded font-medium hover:bg-[#c4087a] transition-colors duration-200"
       >
-        Be The First To Join
+        Soyez le premier à rejoindre
       </button>
     </div>
   </div>

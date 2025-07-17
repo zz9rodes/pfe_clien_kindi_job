@@ -1,7 +1,7 @@
 <template>
   <div class="container px-4 mx-auto mt-16 mb-16">
     <div class="p-8 text-gray-600 rounded-3xl lg:p-12">
-      <h2 class="mb-12 text-3xl font-bold text-center text-">What Clients Say About KindiJob</h2>
+      <h2 class="mb-12 text-3xl font-bold text-center text-">Ce que disent nos clients à propos de KindiJob</h2>
       <div class="grid grid-cols-1 gap-8 md:grid-cols-3">
         <div 
           v-for="(testimonial, index) in testimonials" 
@@ -46,21 +46,21 @@ import { ref } from 'vue';
    const   testimonials=ref( [
         {
           name: 'Sarah Johnson',
-          role: 'Ceo',
+          role: 'PDG',
           avatar: 'https://i.pinimg.com/736x/3b/37/69/3b3769f1be8b2a41f7f02eabdbba4916.jpg',
-          quote: 'KindiJob made finding the perfect childJob center for my child so easy. The app is intuitive and the information provided is comprehensive. I found a great dayJob within days!',
+          quote: 'KindiJob a rendu la recherche du centre d\'emploi idéal pour mon enfant si facile. L\'application est intuitive et les informations fournies sont complètes. J\'ai trouvé un excellent emploi en quelques jours !',
         },
         {
           name: 'Michael Chen',
-          role: 'Software Ingenieur',
+          role: 'Ingénieur logiciel',
           avatar: 'https://i.pinimg.com/736x/3b/37/69/3b3769f1be8b2a41f7f02eabdbba4916.jpg',
-          quote: 'The waitlist management feature is a game changer. I get notified immediately when spots open up at my preferred centers. No more calling around constantly!',
+          quote: 'La gestion de la liste d\'attente est une révolution. Je suis immédiatement notifié lorsque des places se libèrent dans mes centres préférés. Plus besoin d\'appeler partout !',
         },
         {
           name: 'Emma Rodriguez',
-          role: 'Freelancer',
+          role: 'Freelance',
           avatar: 'https://i.pinimg.com/736x/3b/37/69/3b3769f1be8b2a41f7f02eabdbba4916.jpg',
-          quote: 'As a single parent, the subsidy calculator helped me understand exactly what I could afford. The virtual tours saved me so much time. Highly recommend!',
+          quote: 'En tant que parent isolé, le simulateur d\'aides m\'a permis de comprendre exactement ce que je pouvais me permettre. Les visites virtuelles m\'ont fait gagner un temps précieux. Je recommande vivement !',
         }
       ])
    

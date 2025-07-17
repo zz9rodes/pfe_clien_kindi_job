@@ -13,13 +13,13 @@
         <input
           type="text"
           placeholder="What do you  looking for today?"
-          class="w-full pl-3 pr-3 leading-5 placeholder-gray-500 border-none outline-none"
+          class="pr-3 pl-3 w-full leading-5 placeholder-gray-500 border-none outline-none"
           v-model="searchQuery"
           @input="HandleGlobalSearch"
         />
       </div>
 
-      <div class="flex items-center justify-center flex-1 h-full">
+      <div class="flex flex-1 justify-center items-center h-full">
         <div v-if="isSearchLoading">
           <svg
             class="container"
@@ -50,7 +50,7 @@
     </div>
   </AppModal>
   <accountHeader @open-search-modal="toggleOpenModal" />
-  <div class="h-screen pt-2">
+  <div class="pt-2 h-screen">
     <div class="flex h-full">
       <div
         id="desktopSideBar"
@@ -81,7 +81,7 @@
                 @click="setActiveItem(index)"
               >
                 <div
-                  class="flex items-center justify-center flex-shrink-0 w-6 h-6"
+                  class="flex flex-shrink-0 justify-center items-center w-6 h-6"
                 >
                   <component
                     :is="item.icon"
@@ -107,11 +107,11 @@
 
               <div
                 v-if="!isExpanded"
-                class="absolute z-50 px-2 py-1 ml-2 text-sm text-white transition-opacity duration-200 transform -translate-y-1/2 bg-gray-900 rounded opacity-0 pointer-events-none left-full top-1/2 group-hover:opacity-100 whitespace-nowrap"
+                class="absolute top-1/2 left-full z-50 px-2 py-1 ml-2 text-sm text-white whitespace-nowrap bg-gray-900 rounded opacity-0 transition-opacity duration-200 transform -translate-y-1/2 pointer-events-none group-hover:opacity-100"
               >
                 {{ item.title }}
                 <div
-                  class="absolute left-0 transform -translate-x-1 -translate-y-1/2 border-4 border-transparent top-1/2 border-r-gray-900"
+                  class="absolute left-0 top-1/2 border-4 border-transparent transform -translate-x-1 -translate-y-1/2 border-r-gray-900"
                 ></div>
               </div>
             </div>
@@ -119,15 +119,15 @@
         </nav>
 
         <!-- Desktop User Profile Section with Dropdown -->
-        <div class="absolute bottom-0 left-0 right-0 p-2 border-t border-gray-200">
+        <div class="absolute right-0 bottom-0 left-0 p-2 border-t border-gray-200">
           <div class="relative group">
             <!-- User Profile Button -->
             <button
               @click="toggleUserDropdown"
-              class="flex items-center w-full px-3 py-3 text-gray-600 transition-all duration-200 rounded-lg hover:bg-gray-50 hover:text-gray-900"
+              class="flex items-center px-3 py-3 w-full text-gray-600 rounded-lg transition-all duration-200 hover:bg-gray-50 hover:text-gray-900"
             >
               <!-- User Avatar -->
-              <div class="flex items-center justify-center flex-shrink-0 w-6 h-6">
+              <div class="flex flex-shrink-0 justify-center items-center w-6 h-6">
                 <img
                   :src="userDetail.avatarUrl"
                   alt="Profile"
@@ -169,15 +169,15 @@
             <Transition name="dropdown">
               <div
                 v-if="isUserDropdownOpen && isExpanded"
-                class="absolute left-0 right-0 z-50 py-2 mb-2 bg-white border border-gray-200 rounded-lg shadow-lg bottom-full"
+                class="absolute right-0 left-0 bottom-full z-50 py-2 mb-2 bg-white rounded-lg border border-gray-200 shadow-lg"
               >
                 <!-- Menu Items -->
                 <div class="py-1">
                   <button
                     @click="GotoViewProfile"
-                    class="flex items-center w-full px-4 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-50"
+                    class="flex items-center px-4 py-2 w-full text-sm text-gray-700 transition-colors hover:bg-gray-50"
                   >
-                    <svg class="w-4 h-4 mr-3 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg class="mr-3 w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                     </svg>
                     Mon Profil
@@ -185,9 +185,9 @@
                   
                   <button
                     @click="goToDashboard"
-                    class="flex items-center w-full px-4 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-50"
+                    class="flex items-center px-4 py-2 w-full text-sm text-gray-700 transition-colors hover:bg-gray-50"
                   >
-                    <svg class="w-4 h-4 mr-3 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg class="mr-3 w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z" />
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5a2 2 0 012-2h4a2 2 0 012 2v6H8V5z" />
                     </svg>
@@ -199,9 +199,9 @@
                 <div class="py-1 border-t border-gray-100">
                   <button
                     @click="handleLogout"
-                    class="flex items-center w-full px-4 py-2 text-sm text-red-600 transition-colors hover:bg-red-50"
+                    class="flex items-center px-4 py-2 w-full text-sm text-red-600 transition-colors hover:bg-red-50"
                   >
-                    <svg class="w-4 h-4 mr-3 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg class="mr-3 w-4 h-4 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                     </svg>
                     Se déconnecter
@@ -213,11 +213,11 @@
             <!-- Profile Tooltip (when collapsed) -->
             <div
               v-if="!isExpanded"
-              class="absolute z-50 px-2 py-1 ml-2 text-sm text-white transition-opacity duration-200 transform -translate-y-1/2 bg-gray-900 rounded opacity-0 pointer-events-none left-full top-1/2 group-hover:opacity-100 whitespace-nowrap"
+              class="absolute top-1/2 left-full z-50 px-2 py-1 ml-2 text-sm text-white whitespace-nowrap bg-gray-900 rounded opacity-0 transition-opacity duration-200 transform -translate-y-1/2 pointer-events-none group-hover:opacity-100"
             >
               {{ userDetail.fullName }}
               <div
-                class="absolute left-0 transform -translate-x-1 -translate-y-1/2 border-4 border-transparent top-1/2 border-r-gray-900"
+                class="absolute left-0 top-1/2 border-4 border-transparent transform -translate-x-1 -translate-y-1/2 border-r-gray-900"
               ></div>
             </div>
           </div>
@@ -227,9 +227,9 @@
       <!-- Le Menu Pour Les Screen Mobile -->
       <div class="p-1 sm:hidden">
         <nav
-          class="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-gray-200 sm:hidden"
+          class="fixed right-0 bottom-0 left-0 z-40 bg-white border-t border-gray-200 sm:hidden"
         >
-          <div class="flex items-center justify-around h-16 gap-2 px-2">
+          <div class="flex gap-2 justify-around items-center px-2 h-16">
             <RouterLink
               v-for="(item, index) in filteredMobileMenuItems"
               :key="item.title"
@@ -239,7 +239,7 @@
                 'flex flex-col items-center justify-center rounded-md flex-1 py-2 transition-colors duration-200',
                 item.active ? 'bg-[#fff0fb] text-[#db147f] shadow-sm' : '',
               ]"
-              class="flex items-center justify-center flex-1 gap-1 px-2 py-2 text-sm font-medium rounded-md cursor-pointer"
+              class="flex flex-1 gap-1 justify-center items-center px-2 py-2 text-sm font-medium rounded-md cursor-pointer"
             >
               <div class="relative">
                 <component :is="item.icon" class="w-6 h-5" />
@@ -248,7 +248,7 @@
 
             <button
               @click="toggleUserMenu"
-              class="flex flex-col items-center justify-center flex-1 py-2 text-gray-400"
+              class="flex flex-col flex-1 justify-center items-center py-2 text-gray-400"
             >
               <Menu
                 class="w-5 h-6 transition-colors duration-200 group-hover:h-4 group-hover:w-4"
@@ -265,13 +265,13 @@
       <AppOvarleyBottom @close-modal="toggleUserMenu" :isOpen="isUserMenuOpen">
         <div class="">
           <div
-            class="fixed bottom-0 left-0 right-0 transition-transform duration-300 ease-out transform bg-white shadow-xl rounded-t-2xl"
+            class="fixed right-0 bottom-0 left-0 bg-white rounded-t-2xl shadow-xl transition-transform duration-300 ease-out transform"
           >
             <div class="flex justify-center pt-3 pb-2">
               <div class="w-12 h-1 bg-gray-300 rounded-full"></div>
             </div>
 
-            <div class="px-4 py-4 overflow-y-auto max-h-96">
+            <div class="overflow-y-auto px-4 py-4 max-h-96">
 
               <!-- Menu Items -->
               <div class="space-y-2">
@@ -280,9 +280,9 @@
                   :key="item.title"
                   :to="getOverlayRouteLink(item)"
                   @click="toggleUserMenu"
-                  class="flex items-center px-4 py-2 transition-colors duration-200 rounded-lg hover:bg-gray-50"
+                  class="flex items-center px-4 py-2 rounded-lg transition-colors duration-200 hover:bg-gray-50"
                 >
-                  <div class="flex items-center justify-center w-8 h-8 mr-3">
+                  <div class="flex justify-center items-center mr-3 w-8 h-8">
                     <component :is="item.icon" class="w-5 h-5 text-gray-600" />
                   </div>
                   <span class="text-sm font-medium text-gray-900">{{
@@ -301,11 +301,11 @@
               <!-- Mobile User Profile Section -->
               <div class="pt-4 mt-4 border-t border-gray-100">
                 <!-- User Info Header -->
-                <div class="flex items-center gap-3 p-3 mb-4 rounded-lg bg-gray-50">
+                <div class="flex gap-3 items-center p-3 mb-4 bg-gray-50 rounded-lg">
                   <img
                     :src="userDetail.avatarUrl"
                     alt="Profile"
-                    class="object-cover w-12 h-12 border rounded-full border-slate-300"
+                    class="object-cover w-12 h-12 rounded-full border border-slate-300"
                   />
                   <div>
                     <p class="text-sm font-medium text-gray-900">{{ userDetail.fullName }}</p>
@@ -317,9 +317,9 @@
                 <div class="space-y-2">
                   <button
                     @click="GotoViewProfile"
-                    class="flex items-center w-full px-4 py-3 text-sm text-gray-700 transition-colors rounded-lg hover:bg-gray-50"
+                    class="flex items-center px-4 py-3 w-full text-sm text-gray-700 rounded-lg transition-colors hover:bg-gray-50"
                   >
-                    <svg class="w-5 h-5 mr-3 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg class="mr-3 w-5 h-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                     </svg>
                     Mon Profil
@@ -327,9 +327,9 @@
                   
                   <button
                     @click="goToDashboard"
-                    class="flex items-center w-full px-4 py-3 text-sm text-gray-700 transition-colors rounded-lg hover:bg-gray-50"
+                    class="flex items-center px-4 py-3 w-full text-sm text-gray-700 rounded-lg transition-colors hover:bg-gray-50"
                   >
-                    <svg class="w-5 h-5 mr-3 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg class="mr-3 w-5 h-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z" />
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5a2 2 0 012-2h4a2 2 0 012 2v6H8V5z" />
                     </svg>
@@ -339,9 +339,9 @@
                   <!-- Mobile Logout Button -->
                   <button
                     @click="handleLogout"
-                    class="flex items-center w-full px-4 py-3 pt-4 mt-4 text-sm text-red-600 transition-colors border-t border-gray-200 rounded-lg hover:bg-red-50"
+                    class="flex items-center px-4 py-3 pt-4 mt-4 w-full text-sm text-red-600 rounded-lg border-t border-gray-200 transition-colors hover:bg-red-50"
                   >
-                    <svg class="w-5 h-5 mr-3 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg class="mr-3 w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                     </svg>
                     Se déconnecter
@@ -523,11 +523,11 @@ onUnmounted(() => {
   document.removeEventListener("click", handleClickOutside);
 });
 
-// Définition des menus de base (sans les liens dynamiques)
+// Définition des menus de base (admin)
 const baseMenuItems = [
   {
     icon: Home,
-    title: "Dashboard",
+    title: "Accueil",
     routeName: "admin_dashboard",
     active: true,
     badge: null,
@@ -535,7 +535,7 @@ const baseMenuItems = [
   },
   {
     icon: Users2Icon,
-    title: "Users",
+    title: "Utilisateurs",
     routeName: "admin_users",
     active: false,
     badge: 3,
@@ -543,7 +543,7 @@ const baseMenuItems = [
   },
   {
     icon: Building2,
-    title: "Conpanies",
+    title: "Sociétés",
     routeName: "admin_companies",
     active: false,
     badge: null,
@@ -554,7 +554,7 @@ const baseMenuItems = [
 const baseMobileMenuItems = [
   {
     icon: Home,
-    title: "Dashboard",
+    title: "Accueil",
     routeName: "admin_dashboard",
     active: true,
     badge: null,
@@ -562,7 +562,7 @@ const baseMobileMenuItems = [
   },
   {
     icon: Users2Icon,
-    title: "Users",
+    title: "Utilisateurs",
     routeName: "admin_users",
     active: false,
     badge: 3,
@@ -570,7 +570,7 @@ const baseMobileMenuItems = [
   },
   {
     icon: Building2,
-    title: "Conpanies",
+    title: "Sociétés",
     routeName: "admin_companies",
     active: false,
     badge: null,
@@ -579,7 +579,7 @@ const baseMobileMenuItems = [
 ];
 
 const baseOverlayMenuItems = [
-  
+  // Ajouter ici si besoin d'autres menus overlay
 ];
 
 // Fonction pour générer le lien de route avec les paramètres appropriés

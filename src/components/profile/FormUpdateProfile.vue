@@ -2,11 +2,11 @@
   <div class="bg-white rounded-md max-h-[90vh] mx-[5px] flex flex-col">
     <!-- Header -->
     <div class="p-6 text-center border-b border-gray-200">
-      <h3 class="text-xl font-semibold text-gray-900">Basic Information</h3>
+      <h3 class="text-xl font-semibold text-gray-900">Informations de base</h3>
       <p class="mt-1 text-gray-600">
         {{ !userProfile.account 
-          ? "Complete your information to create your profile" 
-          : "Update your personal information" 
+          ? "Complétez vos informations pour créer votre profil" 
+          : "Mettez à jour vos informations personnelles" 
         }}
       </p>
     </div>
@@ -26,10 +26,10 @@
           </div>
           <div class="ml-3">
             <p class="text-sm font-medium text-yellow-800">
-              Profile Incomplete
+              Profil incomplet
             </p>
             <p class="text-sm text-yellow-700">
-              Please complete all required fields to create your profile.
+              Veuillez compléter tous les champs obligatoires pour créer votre profil.
             </p>
           </div>
         </div>
@@ -65,7 +65,7 @@
         <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div class="relative">
             <label for="firstName" class="block mb-2 text-sm font-medium text-gray-700">
-              First Name <span class="text-red-500">*</span>
+              Prénom <span class="text-red-500">*</span>
             </label>
             <input
               id="firstName"
@@ -87,7 +87,7 @@
 
           <div class="relative">
             <label for="lastName" class="block mb-2 text-sm font-medium text-gray-700">
-              Last Name <span class="text-red-500">*</span>
+              Nom <span class="text-red-500">*</span>
             </label>
             <input
               id="lastName"
@@ -112,7 +112,7 @@
         <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div class="relative">
             <label for="phoneNumber" class="block mb-2 text-sm font-medium text-gray-700">
-              Phone Number <span class="text-red-500">*</span>
+              Numéro de téléphone <span class="text-red-500">*</span>
             </label>
             <input
               id="phoneNumber"
@@ -135,7 +135,7 @@
 
           <div class="relative">
             <label for="dob" class="block mb-2 text-sm font-medium text-gray-700">
-              Date of Birth <span class="text-red-500">*</span>
+              Date de naissance <span class="text-red-500">*</span>
             </label>
             <input
               id="dob"
@@ -160,12 +160,12 @@
         <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div class="relative">
             <label for="country" class="block mb-2 text-sm font-medium text-gray-700">
-              Country
+              Pays
             </label>
             <input
               id="country"
               v-model="formData.country"
-              placeholder="Cameroon, Nigeria, Ghana..."
+              placeholder="Cameroun, Nigeria, Ghana..."
               :class="[
                 'w-full px-4 py-2 transition-colors border rounded-md outline-none focus:ring-2 focus:ring-[#e4097f]',
                 formErrors.country?.length ? 'border-red-300' : 'border-gray-300'
@@ -181,7 +181,7 @@
 
           <div class="relative">
             <label for="city" class="block mb-2 text-sm font-medium text-gray-700">
-              City
+              Ville
             </label>
             <input
               id="city"
@@ -204,12 +204,12 @@
         <!-- Address -->
         <div class="relative">
           <label for="address" class="block mb-2 text-sm font-medium text-gray-700">
-            Full Address
+            Adresse complète
           </label>
           <input
             id="address"
             v-model="formData.address.title"
-            placeholder="123 Main St, Yaoundé, Cameroon"
+            placeholder="123 Rue Principale, Yaoundé, Cameroun"
             :class="[
               'w-full px-4 py-2 transition-colors border rounded-md outline-none focus:ring-2 focus:ring-[#e4097f]',
               formErrors.address?.length ? 'border-red-300' : 'border-gray-300'
@@ -227,7 +227,7 @@
         <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div class="relative">
             <label for="firstLangage" class="block mb-2 text-sm font-medium text-gray-700">
-              First Language <span class="text-red-500">*</span>
+              Langue principale <span class="text-red-500">*</span>
             </label>
             <select
               id="firstLangage"
@@ -238,7 +238,7 @@
               ]"
               required
             >
-              <option value="">Select your first language</option>
+              <option value="">Sélectionnez votre langue principale</option>
               <option
                 v-for="language in languesProfessionnelles"
                 :key="language"
@@ -257,7 +257,7 @@
 
           <div class="relative">
             <label for="secondLangage" class="block mb-2 text-sm font-medium text-gray-700">
-              Second Language
+              Langue secondaire
             </label>
             <select
               id="secondLangage"
@@ -267,7 +267,7 @@
                 formErrors.secondLangage?.length ? 'border-red-300' : 'border-gray-300'
               ]"
             >
-              <option value="">Select your second language</option>
+              <option value="">Sélectionnez votre langue secondaire</option>
               <option
                 v-for="language in languesProfessionnelles"
                 :key="language"
@@ -294,7 +294,7 @@
         @click="$emit('close')"
         class="px-6 py-2 text-gray-700 rounded-md border border-gray-300 transition-colors hover:bg-gray-100"
       >
-        Cancel
+        Annuler
       </button>
       
       <button
@@ -317,7 +317,7 @@
           <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
           <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
         </svg>
-        {{ isSubmitting ? 'Processing...' : (userProfile.account ? 'Update Profile' : 'Create Profile') }}
+        {{ isSubmitting ? 'Traitement...' : (userProfile.account ? 'Mettre à jour le profil' : 'Créer le profil') }}
       </button>
     </div>
   </div>
@@ -400,7 +400,7 @@ const validateForm = () => {
   
   requiredFields.forEach(field => {
     if (!formData[field] || formData[field].toString().trim() === '') {
-      formErrors.value[field] = [`${field.charAt(0).toUpperCase() + field.slice(1)} is required`];
+      formErrors.value[field] = [`${field.charAt(0).toUpperCase() + field.slice(1)} est requis`];
       isValid = false;
     }
   });
@@ -408,7 +408,7 @@ const validateForm = () => {
   // Email validation
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (formData.email && !emailRegex.test(formData.email)) {
-    formErrors.value.email = ['Please enter a valid email address'];
+    formErrors.value.email = ['Veuillez entrer une adresse email valide'];
     isValid = false;
   }
 

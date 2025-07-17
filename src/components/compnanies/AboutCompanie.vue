@@ -3,7 +3,7 @@
         <div class="space-y-8 lg:col-span-2">
             <div class="p-6 bg-white rounded-lg">
                 <h2 class="mb-4 text-xl font-semibold text-gray-900">
-                    About {{ company?.name }} 
+                    À propos de {{ company?.name }} 
                 </h2>
                 <div class="prose prose-gray max-w-none">
                     <p class="mb-4 leading-relaxed text-gray-700">
@@ -13,20 +13,20 @@
             </div>
 
             <div class="p-6 border rounded-lg">
-                <h3 class="mb-4 font-semibold text-gray-900">Company Info</h3>
+                <h3 class="mb-4 font-semibold text-gray-900">Informations de l'entreprise</h3>
                 <div class="space-y-4">
                     <div class="flex justify-between">
-                        <span class="text-gray-600">Industry</span>
+                        <span class="text-gray-600">Secteur</span>
                         <span class="font-medium text-gray-900">{{
                             company?.industry
                             }}</span>
                     </div>
                     <div class="flex justify-between">
-                        <span class="text-gray-600">Company size</span>
-                        <span class="font-medium text-gray-900"> {{ employees?.length }} employees</span>
+                        <span class="text-gray-600">Taille de l'entreprise</span>
+                        <span class="font-medium text-gray-900"> {{ employees?.length }} employés</span>
                     </div>
                     <div class="flex justify-between">
-                        <span class="text-gray-600">Register Since</span>
+                        <span class="text-gray-600">Inscription depuis</span>
                         <span class="font-medium text-gray-900">{{ moment( company?.createdAt ).format('MMM Do YYYY')}}</span>
                     </div>
                    
@@ -36,15 +36,15 @@
             <div class="p-6 bg-white border rounded-lg">
                 <div class="inline-flex ">
                     <MapPinIcon class="flex-shrink-0 w-4 h-4 mt-1 mr-3 text-gray-400" />
-                    <h3 class="mb-4 mr-3 text-lg font-semibold text-gray-900 ">Locations </h3>
+                    <h3 class="mb-4 mr-3 text-lg font-semibold text-gray-900 ">Localisations </h3>
                 </div>
                     <div  class="flex items-start">
                         <div>
                             <div class="font-medium text-gray-900">
-                             <span class="pr-4 font-semibold">Country :</span>   {{ company?.country }}
+                             <span class="pr-4 font-semibold">Pays :</span>   {{ company?.country }}
                             </div>
                             <div class="font-medium text-gray-900">
-                               <span  class="pr-4 font-semibold">City :</span>  {{ company?.city }}
+                               <span  class="pr-4 font-semibold">Ville :</span>  {{ company?.city }}
                             </div>
 
                             <div class="text-sm text-gray-600">
@@ -56,19 +56,19 @@
 
             <div class="flex justify-between border divide-x rounded-lg table-stats">
                 <div class="flex items-center gap-2 p-6 ">
-                    Teams Members
+                    Membres de l'équipe
                     <span class="text-2xl font-bold ">
                         {{ detail.stats.members }}
                     </span>
                 </div>
                 <div class="flex items-center gap-2 p-6 ">
-                    Active Jobs
+                    Offres d'emploi actives
                     <span class="text-2xl font-bold ">
                         {{ detail.stats.jobs }}
                     </span>
                 </div>
                 <div class="flex items-center gap-2 p-6 ">
-                    Publish News 
+                    Publier des actualités 
                     <span class="text-2xl font-bold ">
                         {{ detail.stats.posts }}
                     </span>
@@ -76,7 +76,7 @@
             </div>
             <div class="flex flex-col ">
                 <h3 class="text-lg">
-                    Ours Team 
+                    Notre équipe 
                 </h3>
                 <div class="grid grid-cols-1 gap-6 mt-8 md:grid-cols-2 lg:grid-cols-4">
                     <TeamMemberCard v-for="member in companieMembers" :key="member" :member="member" />
@@ -103,7 +103,7 @@
             />
             <!-- <div class=""> -->
                <button  class="w-full p-2 bg-[#db147f]  text-white " @click="$emit('view-more')">
-                View Mores ...
+                Voir plus ...
                </button>
             <!-- </div> -->
         </div>

@@ -11,10 +11,10 @@
             <div class="container px-4 py-6 mx-auto">
                 <div class="flex items-center justify-between mb-4">
                     <h2 class="text-lg font-bold text-gray-700 uppercase">
-                        Companies & Workers
+                        Entreprises & Travailleurs
                     </h2>
                     <div class="text-sm text-gray-600">
-                        {{ filteredCompanies.length }} of {{ companies?.data?.length || 0 }} companies
+                        {{ filteredCompanies.length }} sur {{ companies?.data?.length || 0 }} entreprises
                     </div>
                 </div>
 
@@ -34,16 +34,16 @@
                         <Building2 class="lg:w-20 lg:h-20 sm:w-14 sm:h-14 text-[#e4097f]" />
                         <div class="pt-8">
                             <h2 class="mb-4 text-2xl">
-                                No Companies Found
+                                Aucune entreprise trouvée
                             </h2>
                             <p class="mb-4 text-gray-600">
-                                Try adjusting your search criteria or clear filters
+                                Essayez d'ajuster vos critères de recherche ou réinitialisez les filtres
                             </p>
                             <button 
                                 @click="clearFilters"
                                 class="bg-[#e4097f] text-white px-6 py-2 rounded font-medium hover:bg-[#c4087a] transition-colors duration-200"
                             >
-                                Clear Filters
+                                Réinitialiser les filtres
                             </button>
                         </div>
                     </div>
@@ -54,7 +54,7 @@
                         <Building2 class="lg:w-20 lg:h-20 sm:w-14 sm:h-14 text-[#e4097f]" />
                         <div class="pt-8">
                             <h2 class="text-2xl">
-                                Oups There is No Companies Found Now
+                                Oups, aucune entreprise trouvée pour le moment
                             </h2>
                         </div>
                     </div>
@@ -62,7 +62,7 @@
                         @click="router.push({name:'login'})"
                         class="bg-[#e4097f] mt-8 text-white px-6 py-2 rounded font-medium hover:bg-[#c4087a] transition-colors duration-200"
                     >
-                        Be The First Company
+                        Soyez la première entreprise
                     </button>
                 </div>
             </div>

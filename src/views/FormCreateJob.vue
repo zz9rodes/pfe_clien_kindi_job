@@ -41,7 +41,7 @@
               <input
                 v-model="jobData.title"
                 type="text"
-                placeholder="Ex: Développeur Frontend Senior, Chef de projet..."
+                placeholder="Ex : Développeur Frontend Senior, Chef de projet..."
                 class="w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#db147f] focus:border-[#db147f]"
                 required
               />

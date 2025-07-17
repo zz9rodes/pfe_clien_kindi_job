@@ -1,7 +1,7 @@
 <template>
   <div class="sticky w-64 p-6 mx-2 bg-white border border-gray-100 shadow-lg ounded-xl top-6">
     <div class="flex items-center justify-between mb-8">
-      <h3 class="text-xl font-bold text-gray-900">Filter Jobs</h3>
+      <h3 class="text-xl font-bold text-gray-900">Filtrer les offres d'emploi</h3>
       <div class="flex items-center space-x-2">
         <!-- Badge showing total active filters -->
         <span v-if="activeFiltersCount > 0" class="bg-[#e4097f] text-[8px] text-white px-2 py-1 rounded-full size-[18px] flex justify-center items-center">
@@ -9,14 +9,14 @@
         </span>
         <button @click="clearAllFilters"
           class="text-sm text-[#00a3e0] hover:text-[#00a3e0]/80 font-medium transition-colors">
-          Clear All
+          Vider tout
         </button>
       </div>
     </div>
 
     <div class="mb-6">
       <button @click="toggleSection('location')" class="flex items-center justify-between w-full mb-4 group">
-        <h4 class="font-semibold text-gray-900 group-hover:text-[#e4097f] transition-colors">Location</h4>
+        <h4 class="font-semibold text-gray-900 group-hover:text-[#e4097f] transition-colors">Localisation</h4>
         <div class="flex items-center">
           <span v-if="dataFilter.filters.location.length > 0" class="bg-[#e4097f] text-white text-[8px] px-2 py-1 rounded-full size-[18px] flex justify-center items-center mr-2">
             {{ dataFilter.filters.location.length }}
@@ -50,14 +50,14 @@
           </div>
         </label>
         <button class="text-[#00a3e0] text-sm font-medium hover:text-[#00a3e0]/80 transition-colors">
-          +{{ dataFilter.locations.length - 5 }} more locations
+          +{{ dataFilter.locations.length - 5 }} autres localisations
         </button>
       </div>
     </div>
 
     <div class="mb-6">
       <button @click="toggleSection('category')" class="flex items-center justify-between w-full mb-4 group">
-        <h4 class="font-semibold text-gray-900 group-hover:text-[#e4097f] transition-colors">Category</h4>
+        <h4 class="font-semibold text-gray-900 group-hover:text-[#e4097f] transition-colors">Catégorie</h4>
         <div class="flex items-center">
           <span v-if="dataFilter.filters.category.length > 0" class="bg-[#e4097f] text-white text-[8px] px-2 py-1 rounded-full size-[18px] flex justify-center items-center mr-2">
             {{ dataFilter.filters.category.length }}
@@ -91,14 +91,14 @@
           </div>
         </label>
         <button class="text-[#00a3e0] text-sm font-medium hover:text-[#00a3e0]/80 transition-colors">
-          +10 more categories
+          +10 autres catégories
         </button>
       </div>
     </div>
 
     <div class="mb-6">
       <button @click="toggleSection('salary')" class="flex items-center justify-between w-full mb-4 group">
-        <h4 class="font-semibold text-gray-900 group-hover:text-[#e4097f] transition-colors">Salary Range</h4>
+        <h4 class="font-semibold text-gray-900 group-hover:text-[#e4097f] transition-colors">Tranche de salaire</h4>
         <div class="flex items-center">
           <span v-if="isSalaryFiltered" class="bg-[#e4097f] text-white text-[8px] px-2 py-1 rounded-full size-[18px] flex justify-center items-center mr-2">
             1
@@ -135,7 +135,7 @@
 
     <div class="mb-6">
       <button @click="toggleSection('jobType')" class="flex items-center justify-between w-full mb-4 group">
-        <h4 class="font-semibold text-gray-900 group-hover:text-[#e4097f] transition-colors">Job Type</h4>
+        <h4 class="font-semibold text-gray-900 group-hover:text-[#e4097f] transition-colors">Type de contrat</h4>
         <div class="flex items-center">
           <span v-if="dataFilter.filters.jobType.length > 0" class="bg-[#e4097f] text-white text-[8px] px-2 py-1 rounded-full size-[18px] flex justify-center items-center mr-2">
             {{ dataFilter.filters.jobType.length }}
@@ -167,7 +167,7 @@
 
     <div class="mb-6">
       <button @click="toggleSection('gender')" class="flex items-center justify-between w-full mb-4 group">
-        <h4 class="font-semibold text-gray-900 group-hover:text-[#e4097f] transition-colors">Gender</h4>
+        <h4 class="font-semibold text-gray-900 group-hover:text-[#e4097f] transition-colors">Sexe</h4>
         <div class="flex items-center">
           <span v-if="dataFilter.filters.gender.length > 0" class="bg-[#e4097f] text-white text-[8px] px-2 py-1 rounded-full size-[18px] flex justify-center items-center mr-2">
             {{ dataFilter.filters.gender.length }}
@@ -225,7 +225,7 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
               d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
           </svg>
-          Apply ({{ activeFiltersCount }})
+          Appliquer ({{ activeFiltersCount }})
         </button>
       </div>
   </div>

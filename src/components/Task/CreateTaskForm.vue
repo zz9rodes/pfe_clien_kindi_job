@@ -20,7 +20,7 @@
 
           <div>
             <label class="block mb-1 text-sm font-medium text-gray-700">Nom de la tâche *</label>
-            <input v-model="taskData.name" type="text" placeholder="Ex: Développer l'interface utilisateur"
+            <input v-model="taskData.name" type="text" placeholder="Ex : Développer l'interface utilisateur"
               class="w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#db147f] focus:border-[#db147f]"
               required />
           </div>

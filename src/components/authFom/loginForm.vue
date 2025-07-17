@@ -71,11 +71,10 @@
           <!-- Text Content -->
           <div class="space-y-4">
             <h1 class="text-3xl font-bold leading-tight text-gray-900">
-              Find your dream job and boost your professional career
+              Trouvez votre emploi de rêve et développez votre carrière professionnelle
             </h1>
             <p class="text-lg leading-relaxed text-gray-600">
-              We connect talent with the best opportunities, providing a modern
-              and personalized job search experience for candidates and.
+              Nous connectons les talents aux meilleures opportunités, offrant une expérience de recherche d'emploi moderne et personnalisée pour les candidats et.
             </p>
           </div>
         </div>
@@ -85,13 +84,13 @@
           <a
             href="#"
             class="text-gray-600 transition-colors hover:text-gray-900"
-            >Privacy Policy</a
+            >Politique de confidentialité</a
           >
           <span class="text-gray-400">•</span>
           <a
             href="#"
             class="text-gray-600 transition-colors hover:text-gray-900"
-            >Terms of Use</a
+            >Conditions d'utilisation</a
           >
         </div>
       </div>
@@ -102,8 +101,8 @@
       <div class="space-y-8 w-full max-w-md">
         <!-- Header -->
         <div class="space-y-2 text-center">
-          <h2 class="text-3xl font-bold text-gray-900">Hello !</h2>
-          <p class="text-gray-600">Log in to continue</p>
+          <h2 class="text-3xl font-bold text-gray-900">Bonjour !</h2>
+          <p class="text-gray-600">Connectez-vous pour continuer</p>
         </div>
 
         <!-- Form -->
@@ -127,7 +126,7 @@
               for="password"
               class="block text-sm font-medium text-gray-700"
             >
-              Password <span class="text-red-500">*</span>
+              Mot de passe <span class="text-red-500">*</span>
             </label>
             <div class="relative">
               <input
@@ -152,7 +151,7 @@
           <div class="text-right">
 
             <router-link :to="{name:'password_forgot'}" class="text-sm font-medium hover:text-[#e4097f]">
-                            Forgot your password ?
+                            Mot de passe oublié ?
             </router-link>
           </div>
 
@@ -183,7 +182,7 @@
                   />
                 </svg>
               </div>
-              <span class="ml-3 text-sm text-gray-700"> Remember me </span>
+              <span class="ml-3 text-sm text-gray-700"> Se souvenir de moi </span>
             </label>
           </div>
 
@@ -196,9 +195,9 @@
           </button>
 
           <div class="text-sm text-start">
-            <span class="text-gray-600">don't have an account ? </span>
+            <span class="text-gray-600">Vous n'avez pas de compte ? </span>
              <router-link :to="{name:'home'}"  class="p-1 font-medium text-[#e4097f] hover:bg-[#e4097f] hover:text-white">
-                            Go Home
+                            Accueil
             </router-link>
           </div>
         </div>

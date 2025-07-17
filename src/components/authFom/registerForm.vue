@@ -46,11 +46,10 @@
           <!-- Text Content -->
           <div class="space-y-4">
             <h1 class="text-3xl font-bold leading-tight text-gray-900">
-              Join the community of ambitious professionals
+              Rejoignez la communauté des professionnels ambitieux
             </h1>
             <p class="text-lg leading-relaxed text-gray-600">
-              Create your profile in minutes and access thousands of job
-              opportunities tailored to your skills and aspirations.
+              Créez votre profil en quelques minutes et accédez à des milliers d'opportunités d'emploi adaptées à vos compétences et aspirations.
             </p>
           </div>
         </div>
@@ -67,8 +66,8 @@
     <div class="flex items-center justify-center flex-1 p-8 bg-white">
       <div class="w-full max-w-md space-y-8">
         <div class="space-y-2 text-center">
-          <h2 class="text-3xl font-bold text-gray-900">Create your account</h2>
-          <p class="text-gray-600">Step {{ currentStep }} / {{ totalSteps }}</p>
+          <h2 class="text-3xl font-bold text-gray-900">Créer votre compte</h2>
+          <p class="text-gray-600">Étape {{ currentStep }} / {{ totalSteps }}</p>
         </div>
 
         <!-- Step Content -->
@@ -77,10 +76,10 @@
           <div v-if="currentStep === 1" class="space-y-6">
             <div class="text-center">
               <h3 class="text-xl font-semibold text-gray-900">
-                Basic Information
+                Informations de base
               </h3>
               <p class="mt-1 text-gray-600">
-                Let's start with your personal information
+                Commençons par vos informations personnelles
               </p>
             </div>
             <div class="relative space-y-2">
@@ -97,7 +96,7 @@
             <div class="grid grid-cols-2 gap-4">
               <div class="relative space-y-2">
                 <label for="firstName" class="block text-sm font-medium text-gray-700">
-                  First Name <span class="text-red-500">*</span>
+                  Prénom <span class="text-red-500">*</span>
                 </label>
                 <input id="firstName" v-model="formData.firstName" placeholder="John"
                   class="w-full px-4 py-2 transition-colors border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-[#e4097f]"
@@ -107,7 +106,7 @@
               </div>
               <div class="relative space-y-2">
                 <label for="lastName" class="block text-sm font-medium text-gray-700">
-                  Last Name <span class="text-red-500">*</span>
+                  Nom <span class="text-red-500">*</span>
                 </label>
                 <input id="lastName" v-model="formData.lastName" placeholder="Doe"
                   class="w-full px-4 py-2 transition-colors border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-[#e4097f]"
@@ -119,7 +118,7 @@
             </div>
             <div class="relative space-y-2">
               <label for="phoneNumber" class="block text-sm font-medium text-gray-700">
-                Phone Number <span class="text-red-500">*</span>
+                Numéro de téléphone <span class="text-red-500">*</span>
               </label>
               <input id="phoneNumber" v-model="formData.phoneNumber" type="tel" placeholder="+1234567890"
                 class="w-full px-4 py-2 transition-colors border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-[#e4097f]"
@@ -129,7 +128,7 @@
             </div>
             <div class="relative space-y-2">
               <label for="dob" class="block text-sm font-medium text-gray-700">
-                Date of Birth <span class="text-red-500">*</span>
+                Date de naissance <span class="text-red-500">*</span>
               </label>
               <input id="dob" v-model="formData.dob" type="date"
                 class="w-full px-4 py-2 transition-colors border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-[#e4097f]"
@@ -143,13 +142,13 @@
           <div v-if="currentStep === 2" class="space-y-6">
             <div class="text-center">
               <h3 class="text-xl font-semibold text-gray-900">
-                Professional Profile
+                Profil professionnel
               </h3>
-              <p class="mt-1 text-gray-600">Help us get to know you better</p>
+              <p class="mt-1 text-gray-600">Aidez-nous à mieux vous connaître</p>
             </div>
             <div class="relative space-y-2">
               <label for="city" class="block text-sm font-medium text-gray-700">
-                Country
+                Pays
               </label>
               <input id="city" v-model="formData.country" placeholder="Yaoundé, Douala, Bamenda..."
                 class="w-full px-4 py-2 transition-colors border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-[#e4097f]" />
@@ -159,7 +158,7 @@
             </div>
             <div class="relative space-y-2">
               <label for="city" class="block text-sm font-medium text-gray-700">
-                City
+                Ville
               </label>
               <input id="city" v-model="formData.city" placeholder="Yaoundé, Douala, Bamenda..."
                 class="w-full px-4 py-2 transition-colors border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-[#e4097f]" />
@@ -169,7 +168,7 @@
             </div>
             <div class="relative space-y-2">
               <label for="address" class="block text-sm font-medium text-gray-700">
-                Full Address
+                Adresse complète
               </label>
               <input id="address" v-model="formData.location.title" placeholder="123 Main St, Yaoundé, Cameroon"
                 class="w-full px-4 py-2 transition-colors border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-[#e4097f]" />
@@ -179,12 +178,12 @@
             </div>
             <div class="relative space-y-2">
               <label for="firstLangage" class="block text-sm font-medium text-gray-700">
-                First Language <span class="text-red-500">*</span>
+                Première langue <span class="text-red-500">*</span>
               </label>
               <select id="firstLangage" v-model="formData.firstLangage"
                 class="w-full px-4 py-2 transition-colors border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-[#e4097f]"
                 required>
-                <option value="">Select your first language</option>
+                <option value="">Sélectionnez votre première langue</option>
                 <option v-for="language in languesProfessionnelles" :key="language" :value="language">
                   {{ language }}
                 </option>
@@ -194,11 +193,11 @@
             </div>
             <div class="relative space-y-2">
               <label for="secondLangage" class="block text-sm font-medium text-gray-700">
-                Second Language
+                Deuxième langue
               </label>
               <select id="secondLangage" v-model="formData.secondLangage"
                 class="w-full px-4 py-2 transition-colors border border-gray-300 rounded-md outline-none focus:ring-2 focus:ring-[#e4097f]">
-                <option value="">Select your second language</option>
+                <option value="">Sélectionnez votre deuxième langue</option>
                 <option v-for="language in languesProfessionnelles" :key="language" :value="language">
                   {{ language }}
                 </option>
@@ -211,12 +210,12 @@
           <!-- Step 3: Security -->
           <div v-if="currentStep === 3" class="space-y-6">
             <div class="text-center">
-              <h3 class="text-xl font-semibold text-gray-900">Security</h3>
-              <p class="mt-1 text-gray-600">Create a secure password</p>
+              <h3 class="text-xl font-semibold text-gray-900">Sécurité</h3>
+              <p class="mt-1 text-gray-600">Créez un mot de passe sécurisé</p>
             </div>
             <div class="relative space-y-2">
               <label for="password" class="block text-sm font-medium text-gray-700">
-                Password <span class="text-red-500">*</span>
+                Mot de passe <span class="text-red-500">*</span>
               </label>
               <div class="relative">
                 <input id="password" v-model="formData.password" :type="showPassword ? 'text' : 'password'"
@@ -235,7 +234,7 @@
             </div>
             <div class="relative space-y-2">
               <label for="confirmPassword" class="block text-sm font-medium text-gray-700">
-                Confirm Password <span class="text-red-500">*</span>
+                Confirmer le mot de passe <span class="text-red-500">*</span>
               </label>
               <div class="relative">
                 <input id="confirmPassword" v-model="formData.confirmPassword"
@@ -253,24 +252,24 @@
             </div>
             <div class="p-6 rounded-md bg-gray-50">
               <h4 class="mb-3 text-sm font-medium text-gray-900">
-                Password Criteria:
+                Critères du mot de passe :
               </h4>
               <ol class="space-y-2 text-sm text-gray-600">
                 <li class="flex items-start">
                   <span
                     class="bg-pink-100 text-[#e4097f] rounded-full w-5 h-5 flex items-center justify-center text-xs font-medium mr-3 mt-0.5 flex-shrink-0">1</span>
-                  At least 8 characters
+                  Au moins 8 caractères
 
                 </li>
                 <li class="flex items-start">
                   <span
                     class="bg-pink-100 text-[#e4097f] rounded-full w-5 h-5 flex items-center justify-center text-xs font-medium mr-3 mt-0.5 flex-shrink-0">2</span>
-                  One uppercase and one lowercase letter
+                  Une majuscule et une minuscule
                 </li>
                 <li class="flex items-start">
                   <span
                     class="bg-pink-100 text-[#e4097f] rounded-full w-5 h-5 flex items-center justify-center text-xs font-medium mr-3 mt-0.5 flex-shrink-0">3</span>
-                  One number and one special character
+                  Un chiffre et un caractère spécial
                 </li>
               </ol>
             </div>
@@ -282,50 +281,50 @@
               <div class="flex items-center justify-center w-16 h-16 mx-auto mb-4 bg-[#e4097f] rounded-full">
                 <Check class="w-8 h-8 text-white" />
               </div>
-              <h3 class="text-xl font-semibold text-gray-900">Almost Done!</h3>
-              <p class="mt-1 text-gray-600">Review your information</p>
+              <h3 class="text-xl font-semibold text-gray-900">Presque terminé !</h3>
+              <p class="mt-1 text-gray-600">Vérifiez vos informations</p>
             </div>
             <div class="p-6 space-y-4 rounded-md bg-gray-50">
               <div class="flex justify-between">
-                <span class="text-sm font-medium text-gray-700">Full Name:</span>
+                <span class="text-sm font-medium text-gray-700">Nom complet :</span>
                 <span class="text-sm text-gray-900">{{ formData.firstName }} {{ formData.lastName }}</span>
               </div>
               <div class="flex justify-between">
-                <span class="text-sm font-medium text-gray-700">Email:</span>
+                <span class="text-sm font-medium text-gray-700">Email :</span>
                 <span class="text-sm text-gray-900">{{ formData.email }}</span>
               </div>
               <div class="flex justify-between">
-                <span class="text-sm font-medium text-gray-700">Country:</span>
+                <span class="text-sm font-medium text-gray-700">Pays :</span>
                 <span class="text-sm text-gray-900">{{
-                  formData.country || "Not specified"
+                  formData.country || "Non spécifié"
                 }}</span>
               </div>
               <div class="flex justify-between">
-                <span class="text-sm font-medium text-gray-700">City:</span>
+                <span class="text-sm font-medium text-gray-700">Ville :</span>
                 <span class="text-sm text-gray-900">{{
-                  formData.city || "Not specified"
+                  formData.city || "Non spécifié"
                 }}</span>
               </div>
               <div class="flex justify-between">
-                <span class="text-sm font-medium text-gray-700">Address:</span>
+                <span class="text-sm font-medium text-gray-700">Adresse :</span>
                 <span class="text-sm text-gray-900">{{
-                  formData.location.title || "Not specified"
+                  formData.location.title || "Non spécifié"
                 }}</span>
               </div>
               <div class="flex justify-between">
-                <span class="text-sm font-medium text-gray-700">First Language:</span>
+                <span class="text-sm font-medium text-gray-700">Première langue :</span>
                 <span class="text-sm text-gray-900">{{
-                  formData.firstLangage || "Not specified"
+                  formData.firstLangage || "Non spécifié"
                 }}</span>
               </div>
               <div class="flex justify-between">
-                <span class="text-sm font-medium text-gray-700">Second Language:</span>
+                <span class="text-sm font-medium text-gray-700">Deuxième langue :</span>
                 <span class="text-sm text-gray-900">{{
-                  formData.secondLangage || "Not specified"
+                  formData.secondLangage || "Non spécifié"
                 }}</span>
               </div>
               <div class="flex justify-between">
-                <span class="text-sm font-medium text-gray-700">Location (Lat, Long):</span>
+                <span class="text-sm font-medium text-gray-700">Localisation (Lat, Long) :</span>
                 <span class="text-sm text-gray-900">{{ formData.location.lat }},
                   {{ formData.location.long }}</span>
               </div>
@@ -345,10 +344,10 @@
                     </svg>
                   </div>
                   <label for="terms" class="ml-3 text-sm text-gray-700">
-                    I accept the
-                    <a href="#" class="font-medium text-[#e4097f]">terms of use</a>
-                    and
-                    <a href="#" class="font-medium text-[#e4097f]">Privacy Policy</a>
+                    J'accepte les
+                    <a href="#" class="font-medium text-[#e4097f]">conditions d'utilisation</a>
+                    et
+                    <a href="#" class="font-medium text-[#e4097f]">la politique de confidentialité</a>
                   </label>
                 </label>
               </div>
@@ -367,8 +366,7 @@
                     </svg>
                   </div>
                   <label for="newsletter" class="ml-2 text-sm text-gray-700">
-                    I would like to receive job offers and career advice by
-                    email
+                    Je souhaite recevoir des offres d'emploi et des conseils carrière par email
                   </label>
                 </label>
               </div>
@@ -380,25 +378,25 @@
             <button type="button" @click="prevStep" :disabled="currentStep === 1"
               class="flex items-center px-6 py-2 text-gray-700 transition-colors border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
               <ArrowLeft class="w-4 h-4 mr-2" />
-              Prev
+              Précédent
             </button>
             <button v-if="currentStep < totalSteps" type="button" @click="nextStep"
               class="flex items-center px-6 py-2 font-semibold text-white transition-colors rounded-md bg-[#e4097f] hover:bg-[#e4097f]">
-              Next
+              Suivant
               <ArrowRight class="w-4 h-4 ml-2" />
             </button>
             <button v-else type="button" @click="handleSubmit" :disabled="isLoading || !acceptTerms"
               class="flex items-center px-6 py-2 font-semibold text-white transition-colors rounded-md bg-[#e4097f] disabled:opacity-50 disabled:cursor-not-allowed">
-              {{ isLoading ? "Processing..." : "Create my account" }}
+              {{ isLoading ? "Traitement..." : "Créer mon compte" }}
             </button>
           </div>
           <!-- Login Link -->
           <div class="pt-4 text-sm text-center">
-            <span class="text-gray-600">Already have an account? </span>
+            <span class="text-gray-600">Vous avez déjà un compte ? </span>
 
             <router-link :to="{ name: 'login' }"
               class="p-1 font-medium text-[#e4097f] hover:bg-[#e4097f] hover:text-white">
-              Log in
+              Se connecter
             </router-link>
           </div>
         </div>
