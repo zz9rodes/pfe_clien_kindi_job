@@ -36,16 +36,16 @@
           :to="{ name: 'companies' }"
           class="text-gray-700 hover:text-[#e4097f] text-sm font-medium transition-colors"
         >
-          Companies
+          Entreprises
         </router-link>
         <router-link
           :to="{ name: 'jobs' }"
           class="text-gray-700 hover:text-[#e4097f] text-sm font-medium flex items-center transition-colors"
         >
-          Jobs
+          Emplois
           <span
             class="ml-1 bg-[#00a3e0] text-white text-xs px-2 py-0.5 rounded-full"
-            >New!</span
+            >Nouveau!</span
           >
         </router-link>
         <router-link
@@ -53,7 +53,7 @@
           href="#"
           class="text-gray-700 hover:text-[#e4097f] text-sm font-medium transition-colors"
         >
-          Talens
+          Talents
         </router-link>
       </nav>
 
@@ -63,7 +63,7 @@
           @click="toggleOpenModal"
           class="bg-[#00a3e0] hover:bg-[#0090c7] text-white text-sm font-medium px-4 py-2 rounded transition-colors"
         >
-          Your Account - It's Free
+          Votre compte - C'est gratuit
         </button>
         <button
           v-if="!isAuthentified"
@@ -73,7 +73,7 @@
             :to="{ name: 'login' }"
             class="flex items-center w-full h-full gap-1 px-4 py-2"
           >
-            Log In
+            Se connecter
           </router-link>
         </button>
 
@@ -143,7 +143,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z" />
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5a2 2 0 012-2h4a2 2 0 012 2v6H8V5z" />
                   </svg>
-                  Dashboard
+                  Tableau de bord
                 </button>
 
                
@@ -209,17 +209,17 @@
             :to="{ name: 'companies' }"
             class="block text-gray-700 hover:text-[#e4097f] text-sm font-medium py-2 transition-colors"
           >
-            Companies
+            Entreprises
           </router-link>
           <router-link
             @click="toggleMobileMenu"
             :to="{ name: 'jobs' }"
             class="text-gray-700 hover:text-[#e4097f] text-sm font-medium flex items-center transition-colors"
           >
-            Jobs
+            Emplois
             <span
               class="ml-1 bg-[#00a3e0] text-white text-xs px-2 py-0.5 rounded-full"
-              >New!</span
+              >Nouveau!</span
             >
           </router-link>
           <router-link
@@ -228,7 +228,7 @@
             href="#"
             class="block text-gray-700 hover:text-[#e4097f] text-sm font-medium py-2 transition-colors"
           >
-            Talens
+            Talents
           </router-link>
         </nav>
 
@@ -238,7 +238,7 @@
               @click="toggleOpenModal"
               class="w-full bg-[#00a3e0] hover:bg-[#0090c7] text-white text-sm font-medium px-4 py-2 rounded transition-colors"
             >
-              Your Account - It's Free
+              Votre compte - C'est gratuit
             </button>
             <button
               @click="closeMobileMenu"
@@ -248,7 +248,7 @@
                 :to="{ name: 'login' }"
                 class="flex items-center justify-center h-full min-w-full gap-1 px-4 py-2"
               >
-                Log In
+                Se connecter
               </router-link>
             </button>
           </div>
@@ -288,7 +288,7 @@
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z" />
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5a2 2 0 012-2h4a2 2 0 012 2v6H8V5z" />
                 </svg>
-                Dashboard
+                Tableau de bord
               </button>
 
 

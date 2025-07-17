@@ -6,7 +6,7 @@
     <!-- Header -->
     <div class="sticky top-0 z-10 flex items-center justify-between p-6 bg-white border-b border-gray-100">
       <div class="flex items-center gap-4">
-        <h3 class="text-xl font-bold text-gray-900">Registration Email</h3>
+        <h3 class="text-xl font-bold text-gray-900">E-mail d'inscription</h3>
         <span v-if="activeFiltersCount > 0"
           class="bg-[#e4097f] text-[8px] text-white px-2 py-1 rounded-full size-[18px] flex justify-center items-center">
           {{ activeFiltersCount }}
@@ -27,7 +27,7 @@
     <div class="p-6">
       <div class="">
         <label for="account_type" class="block mb-3 text-sm font-medium text-gray-700">
-          Account Type : <span class="text-red-500">*</span>
+          Type de compte : <span class="text-red-500">*</span>
         </label>
         <div class="flex flex-wrap gap-2 mb-4">
           <button v-for="category in categories" :key="category" @click="handleCategoryClick(category)" :class="[
@@ -45,7 +45,7 @@
             <label for="email" class="block text-sm font-medium text-gray-700">
               Email <span class="text-red-500">*</span>
             </label>
-            <input id="email" v-model="email" type="email" placeholder="example-mail@demo.com"
+            <input id="email" v-model="email" type="email" placeholder="exemple-mail@demo.com"
               class="w-full px-4 py-2 transition-colors border border-gray-300 rounded-md focus:ring-2 focus:ring-[#e4097f] outline-none"
               required />
           </div>
@@ -55,7 +55,7 @@
       <div class="pt-6 mt-6 border-t border-gray-100">
         <button @click="handleSubmit"
           class="w-full bg-[#e4097f] text-white py-2 px-6 rounded-md font-semibold hover:shadow-lg hover:scale transition-all duration-200 flex items-center justify-center gap-2">
-          Send Email
+          Envoyer l'e-mail
         </button>
       </div>
     </div>

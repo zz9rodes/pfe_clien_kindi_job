@@ -3,7 +3,7 @@
     <!-- Header -->
     <div class="sticky top-0 z-10 flex items-center justify-between p-6 bg-white border-b border-gray-100">
       <div class="flex items-center gap-4">
-        <h3 class="text-xl font-bold text-gray-900">Sign Contract</h3>
+        <h3 class="text-xl font-bold text-gray-900">Signer le contrat</h3>
         <span v-if="activeFiltersCount > 0"
           class="bg-[#e4097f] text-[8px] text-white px-2 py-1 rounded-full size-[18px] flex justify-center items-center">
           {{ activeFiltersCount }}
@@ -28,7 +28,7 @@
          
           <div class="space-y-2">
             <label for="password" class="block text-sm font-medium text-gray-700">
-              Password <span class="text-red-500">*</span>
+              Mot de passe <span class="text-red-500">*</span>
             </label>
             <input id="password" v-model="Aggrement.password" type="password" placeholder="*********"
               class="w-full px-4 py-2 transition-colors border border-gray-300 rounded-md focus:ring-2 focus:ring-[#e4097f] outline-none"
@@ -39,7 +39,7 @@
            <div class="space-y-4">
                 <div>
                   <label class="block mb-1 text-sm font-medium text-gray-700"
-                    >Signature Associer Au Contract
+                    >Signature associée au contrat
                     <span class="text-red-500">*</span></label
                   >
                   <CustomSelect
@@ -83,9 +83,9 @@
                     </svg>
                   </div>
                   <label for="terms" class="ml-3 text-sm text-gray-700">
-                    I accept the
+                    J'accepte les
                     <span  class="font-medium text-[#e4097f]"
-                      >terms </span
+                      >termes </span
                     >
                    
                   </label>
@@ -98,7 +98,7 @@
       <div class="pt-6 mt-6 border-t border-gray-100">
         <button type="submit" 
           class="w-full bg-[#e4097f] text-white py-2 px-6 rounded-md font-semibold hover:shadow-lg hover:scale transition-all duration-200 flex items-center justify-center gap-2">
-          Confirm
+          Confirmer
         </button>
       </div>
     </div>

@@ -27,7 +27,7 @@ const chartOptions = ref({
     },
     title: {
       display: false,
-      text: 'Jobs by Industry',
+      text: 'Emplois par secteur',
     },
     tooltip: {
       callbacks: {

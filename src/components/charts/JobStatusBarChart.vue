@@ -27,7 +27,7 @@ const chartOptions = ref({
     },
     title: {
       display: false,
-      text: 'Job Status Overview',
+      text: "Aperçu de l'état des travaux",
     },
     tooltip: {
       callbacks: {

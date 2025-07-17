@@ -45,11 +45,11 @@
         </div>
        <div class="overflow-x-auto bg-yello-500">
          <div class="grid grid-cols-5 border-b border-gray-200 ">
-            <div class="px-6 py-3 text-sm font-bold text-gray-700">Name</div>
-            <div class="px-6 py-3 text-sm font-bold text-gray-700">Registration Number</div>
-            <div class="py-3 text-sm font-bold text-gray-700 ">Cover Image</div>
-            <div class="px-6 py-3 text-sm font-bold text-left text-gray-700">Last updated</div>
-            <div class="flex items-center justify-center px-6 py-3 font-bold text-left text-gray-700">Status</div>
+            <div class="px-6 py-3 text-sm font-bold text-gray-700">Nom</div>
+            <div class="px-6 py-3 text-sm font-bold text-gray-700">Numéro d'enregistrement</div>
+            <div class="py-3 text-sm font-bold text-gray-700 ">Image de couverture</div>
+            <div class="px-6 py-3 text-sm font-bold text-left text-gray-700">Dernière mise à jour</div>
+            <div class="flex items-center justify-center px-6 py-3 font-bold text-left text-gray-700">Statut</div>
         </div>
 
         <div @click.prevent="ViewVersion(version.id)"  v-for="version in versions" :key="version.id" class="grid grid-cols-5 border-b border-gray-200 cursor-pointer">
@@ -69,7 +69,7 @@
                         'px-2 py-1 text-xs font-medium rounded-full',
                         !version.status ? 'text-gray-600 hover:bg-gray-100 hover:text-gray-800' : 'bg-[#fff0fb] text-[#db147f] shadow-sm'
                     ]">
-                        {{ version.status ? "Activated" : "Unactive" }}
+                        {{ version.status ? "Activé" : "Inactif" }}
                     </span>
                 </div>
             </div>
