@@ -108,14 +108,14 @@ import { useRouter } from 'vue-router'
 const router=useRouter()
 // Hero content data
 const heroData = ref({
-  title: "Find Your Dream Job Today",
-  subtitle: "Join millions of professionals worldwide using KINDIJOB to discover amazing career opportunities and connect with top companies.",
+  title: "Trouvez l'emploi de vos rêves dès aujourd'hui",
+  subtitle: "Rejoignez des millions de professionnels dans le monde qui utilisent KINDIJOB pour découvrir des opportunités de carrière exceptionnelles et se connecter avec les meilleures entreprises.",
   primaryButton: {
-    text: "Get Started",
+    text: "Commencer",
     action: "login"
   },
   secondaryButton: {
-    text: "Browse jobs",
+    text: "Voir les offres",
     action: "about"
   }
 })
@@ -166,10 +166,10 @@ const avatars = ref([
 
 // Stats data
 const stats = ref([
-  { number: "50K+", label: "Active Users" },
-  { number: "1K+", label: "Companies" },
-  { number: "10K+", label: "Jobs Posted" },
-  { number: "95%", label: "Success Rate" }
+  { number: "50K+", label: "Utilisateurs actifs" },
+  { number: "1K+", label: "Entreprises" },
+  { number: "10K+", label: "Offres publiées" },
+  { number: "95%", label: "Taux de réussite" }
 ])
 
 // Event handlers

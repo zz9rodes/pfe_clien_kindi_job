@@ -14,7 +14,7 @@
       <div
         class="sticky top-0 z-10 flex items-center justify-between p-6 bg-white border-b border-gray-100 font-suse"
       >
-        <h3 class="text-xl font-bold text-gray-900">Apply for A Job</h3>
+        <h3 class="text-xl font-bold text-gray-900">Appliquer pour un poste</h3>
         <button
         type="button"
           @click.prevent.stop="toggleOpenModal"
@@ -38,17 +38,17 @@
 
       <div class="px-6 py-4 font-suse">
         <p class="text-center">
-          Have you applied for
-          <span class="font-bold">{{ jobOffer.title }}</span> job at
+          Avez-vous déjà postulé pour
+          <span class="font-bold">{{ jobOffer.title }}</span> chez
           <span class="font-bold">{{
             jobOffer.company.activeDetails.name
           }}</span
           >?
         </p>
-        <p class="my-8 text-xl font-bold">What happens if you confirm ?</p>
+        <p class="my-8 text-xl font-bold">Que se passe-t-il si vous confirmez ?</p>
         <ul class="mt-2 text-left list-disc list-inside">
-          <li>Your application will be sent to the employer.</li>
-          <li>You may receive a confirmation email.</li>
+          <li>Votre candidature sera envoyée à l'employeur.</li>
+          <li>Vous pouvez recevoir un email de confirmation.</li>
         </ul>
 
         <textarea
@@ -68,13 +68,13 @@
             @click.prevent="toggleOpenModal"
             class="flex items-center justify-center gap-2 px-6 py-2 font-semibold text-gray-700 transition-all duration-200 bg-gray-200 rounded hover:shadow-lg hover:scale-105"
           >
-            Cancel
+            Annuler
           </button>
           <button
             type="submit"
             class="bg-[#e4097f] text-white py-2 px-6 rounded font-semibold hover:shadow-lg hover:scale-105 transition-all duration-200 flex items-center justify-center gap-2"
           >
-            Confirm
+            Confirmer
           </button>
         </div>
       </div>
@@ -168,7 +168,7 @@
                         v-if="jobOffer.yearsExperience"
                         class="px-3 py-1 text-sm font-medium text-gray-800 bg-gray-100 rounded-full"
                       >
-                        {{ jobOffer.yearsExperience }}+ years of experience
+                        {{ jobOffer.yearsExperience }}+ années d'expérience
                       </span>
                     </div>
                   </div>
@@ -180,7 +180,7 @@
                     @click="applyToJob"
                     class="px-8 py-2 font-semibold text-white transition-colors bg-[#db147f] rounded hover:bg-[#b3126b] disabled:bg-gray-400 disabled:cursor-not-allowed"
                   >
-                    Apply now
+                    Postuler maintenant
                   </button>
 
                   <div class="flex items-center gap-1">
@@ -195,14 +195,14 @@
               @click.stop="HandleCopyLink"
               class="absolute top-0 right-0 p-1 text-white transition-opacity duration-500 ease-in-out bg-pink-500 cursor-pointer rounded-tr-md"
             >
-              copy job
+              copier le lien
             </div>
           </div>
 
           <!-- Job Description -->
           <div class="p-4 bg-white border border-gray-200 rounded-md">
             <h2 class="mb-6 text-2xl font-bold text-gray-900">
-              Job Description
+              Description du poste
             </h2>
             <div class="prose prose-gray max-w-none">
               <p class="leading-relaxed text-gray-700 whitespace-pre-wrap">
@@ -216,7 +216,7 @@
             v-if="jobOffer.details && jobOffer.details.length"
             class="p-4 bg-white border border-gray-200 rounded-md"
           >
-            <h2 class="mb-6 text-2xl font-bold text-gray-900">Job Details</h2>
+            <h2 class="mb-6 text-2xl font-bold text-gray-900">Détails du poste</h2>
             <div class="space-y-6">
               <div v-for="(detail, index) in jobOffer.details" :key="index">
                 <h3 class="mb-3 text-lg font-semibold text-gray-900">
@@ -244,7 +244,7 @@
             class="p-4 bg-white border border-gray-200 rounded-md"
           >
             <h2 class="mb-6 text-2xl font-bold text-gray-900">
-              Required Skills
+              Compétences requises
             </h2>
             <div class="flex flex-wrap gap-2">
               <span
@@ -263,7 +263,7 @@
             class="p-4 bg-white border border-gray-200 rounded-md"
           >
             <h2 class="mb-6 text-2xl font-bold text-gray-900">
-              Recruitment Process
+              Processus de recrutement
             </h2>
             <div class="space-y-6">
               <div
@@ -299,7 +299,7 @@
             v-if="jobOffer.stepsValidation && jobOffer.stepsValidation.length"
             class="p-4 bg-white border border-gray-200 rounded-md"
           >
-            <h2 class="mb-6 text-2xl font-bold text-gray-900">Process Steps</h2>
+            <h2 class="mb-6 text-2xl font-bold text-gray-900">Étapes de validation</h2>
             <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
               <div
                 v-for="(step, index) in jobOffer.stepsValidation"
@@ -327,17 +327,17 @@
           <!-- Quick Info -->
           <div class="p-6 bg-white border border-gray-200 rounded-md">
             <h3 class="mb-4 text-lg font-semibold text-gray-900">
-              Key Information
+              Informations clés
             </h3>
             <div class="space-y-4">
               <div class="flex items-center justify-between">
-                <span class="text-gray-600">Industry</span>
+                <span class="text-gray-600">Secteur</span>
                 <span class="font-medium text-gray-900">{{
                   jobOffer.industries
                 }}</span>
               </div>
               <div class="flex items-center justify-between">
-                <span class="text-gray-600">Job Type</span>
+                <span class="text-gray-600">Type de poste</span>
                 <span class="font-medium text-gray-900">{{
                   getJobTypeLabel(jobOffer.jobType)
                 }}</span>
@@ -346,22 +346,22 @@
                 v-if="jobOffer.yearsExperience"
                 class="flex items-center justify-between"
               >
-                <span class="text-gray-600">Experience</span>
+                <span class="text-gray-600">Expérience</span>
                 <span class="font-medium text-gray-900"
-                  >{{ jobOffer.yearsExperience }}+ years</span
+                  >{{ jobOffer.yearsExperience }}+ années</span
                 >
               </div>
               <div
                 v-if="jobOffer.lastDate"
                 class="flex items-center justify-between"
               >
-                <span class="text-gray-600">Deadline</span>
+                <span class="text-gray-600">Date limite</span>
                 <span class="font-medium text-gray-900">{{
                   formatDate(jobOffer.lastDate)
                 }}</span>
               </div>
               <div class="flex items-center justify-between">
-                <span class="text-gray-600">Gender</span>
+                <span class="text-gray-600">Genre</span>
                 <span class="font-medium text-gray-900">{{
                   getGenderLabel(jobOffer.gender)
                 }}</span>
@@ -372,7 +372,7 @@
           <!-- Company Info -->
           <div class="p-6 bg-white border border-gray-200 rounded-md">
             <h3 class="mb-4 text-lg font-semibold text-gray-900">
-              About the Company
+              À propos de l'entreprise
             </h3>
             <div class="flex items-center gap-3 mb-4">
               <div
@@ -394,18 +394,18 @@
             <div class="flex flex-wrap gap-4">
               <div>
                 <h4 class="font-semibold text-gray-900">
-                  {{ jobOffer.company.activeDetails.name || "Company" }}
+                  {{ jobOffer.company.activeDetails.name || "Entreprise" }}
                 </h4>
                 <p class="text-sm text-gray-600">{{ jobOffer.industries }}</p>
               </div>
               <div>
-                <h4 class="font-semibold text-gray-900">Admin</h4>
+                <h4 class="font-semibold text-gray-900">Administrateur</h4>
                 <p class="text-sm text-gray-600">
                   {{ jobOffer.company.admin.firstName }}
                   {{ jobOffer.company.admin.lastName }}
                 </p>
                 <p class="text-sm text-gray-600">
-                  {{ jobOffer.company.admin.country }} ,<span>Tel: </span
+                  {{ jobOffer.company.admin.country }} ,<span>Tél: </span
                   >{{ jobOffer.company.admin.phoneNumber }}
                 </p>
               </div>
@@ -415,13 +415,13 @@
               type="button"
               class="w-full mt-3 py-2 font-medium text-white transition-colors bg-[#db147f] rounded"
             >
-              View company
+              Voir l'entreprise
             </button>
           </div>
 
           <div class="p-6 bg-white border border-gray-200 rounded-md">
             <h3 class="mb-4 text-lg font-semibold text-gray-900">
-              Similar Offers
+              Offres similaires
             </h3>
             <div class="space-y-4">
               <div
@@ -507,19 +507,19 @@ const jobOffer = ref(null);
 const similarJobs = ref([
   {
     id: 1,
-    title: "React Developer",
+    title: "Développeur React",
     company: "StartupTech",
     location: "Paris",
   },
   {
     id: 2,
-    title: "Frontend Developer",
+    title: "Développeur Frontend",
     company: "DigitalCorp",
     location: "Lyon",
   },
   {
     id: 3,
-    title: "Vue.js Developer",
+    title: "Développeur Vue.js",
     company: "WebAgency",
     location: "Remote",
   },
@@ -534,7 +534,7 @@ const applyToJob = async () => {
   hasApplied.value = true;
 
   if (!(await auth.isAuthentificated())) {
-    notyf.error("You Need To Be Login");
+    notyf.error("Vous devez être connecté pour postuler");
     router.push({ name: "login" });
 
     return;
@@ -553,32 +553,33 @@ const getCompanyInitials = (companyName) => {
     .slice(0, 2);
 };
 
+// Traduction des labels de type de poste, statut, genre, etc. en français
 const getJobTypeLabel = (jobType) => {
   const labels = {
-    FULL_TIME: "Full-time",
-    PART_TIME: "Part-time",
-    CONTRACT: "Contract",
+    FULL_TIME: "Temps plein",
+    PART_TIME: "Temps partiel",
+    CONTRACT: "Contrat",
     FREELANCE: "Freelance",
-    INTERNSHIP: "Internship",
+    INTERNSHIP: "Stage",
   };
   return labels[jobType] || jobType;
 };
 
 const getStatusLabel = (status) => {
   const labels = {
-    DRAFT: "Draft",
-    ACTIVE: "Active",
-    PAUSED: "Paused",
-    CLOSED: "Closed",
+    DRAFT: "Brouillon",
+    ACTIVE: "Actif",
+    PAUSED: "En pause",
+    CLOSED: "Fermé",
   };
   return labels[status] || status;
 };
 
 const getGenderLabel = (gender) => {
   const labels = {
-    ANY: "All",
-    MALE: "Male",
-    FEMALE: "Female",
+    ANY: "Tous",
+    MALE: "Homme",
+    FEMALE: "Femme",
   };
   return labels[gender] || gender;
 };
@@ -646,7 +647,7 @@ const HandleCopyLink = () => {
     .writeText(textLink)
     .then(() => {
       console.log("Texte copié :", textLink);
-      notyf.success("job copied");
+      notyf.success("offre copiée");
     })
     .catch((err) => {
       console.error("Erreur lors de la copie :", err);

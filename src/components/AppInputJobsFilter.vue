@@ -204,24 +204,23 @@ const showMoreCategories = ref(false);
 const currentPlaceholderIndex = ref(0);
 
 const categories = ref([
-  { id: 'all', name: 'All Job Types', icon: BriefcaseIcon },
+  { id: 'all', name: 'Tous les types d\'emploi', icon: BriefcaseIcon },
   { id: 'cdi', name: 'CDI', icon: ClockIcon },
-  { id: 'internship', name: 'Internship', icon: GraduationCapIcon },
+  { id: 'internship', name: 'Stage', icon: GraduationCapIcon },
   { id: 'freelance', name: 'Freelance', icon: UserIcon }
 ]);
 
 const placeholders = [
-  'Search by job title, industry, or skills',
-  'Find your dream job...',
-  'Search by company, role, or location',
-  'Discover new opportunities'
+  'Recherchez par intitulé de poste, secteur ou compétences',
+  'Trouvez l\'emploi de vos rêves...',
+  'Recherchez par entreprise, rôle ou lieu',
+  'Découvrez de nouvelles opportunités'
 ];
 
-
 const stats = ref({
-  activeJobs: '2.5K',
+  activeJobs: '2,5K',
   companies: '500',
-  lastUpdate: '2 hours ago'
+  lastUpdate: 'il y a 2 heures'
 });
 
 const currentPlaceholder = computed(() => {

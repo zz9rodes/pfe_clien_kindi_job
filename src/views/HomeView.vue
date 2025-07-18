@@ -33,17 +33,17 @@ import AppModal from '@/components/globales/AppModal.vue'
 import UseLocation from '@/components/globales/UseLocation.vue'
 import heroSection from '@/components/globales/heroSection.vue'
 
-// State
+// État
 const isLocationDialogOpen = ref(false)
 const isRequestingLocation = ref(false)
 const locationPermission = ref(null)
 
-// Methods
+// Méthodes
 const checkLocationPermission = async () => {
   try {
     // Vérifier si la géolocalisation est supportée
     if (!navigator.geolocation) {
-      console.warn('Géolocalisation non supportée par ce navigateur')
+      console.warn('La géolocalisation n\'est pas supportée par ce navigateur')
       return
     }
 
@@ -68,7 +68,7 @@ const checkLocationPermission = async () => {
       isLocationDialogOpen.value = true
     }
   } catch (error) {
-    console.error('Erreur lors de la vérification des permissions:', error)
+    console.error('Erreur lors de la vérification des permissions :', error)
     // En cas d'erreur, afficher le modal par sécurité
     isLocationDialogOpen.value = true
   }
@@ -81,8 +81,8 @@ const handleLocationAccept = async () => {
     await getCurrentLocation()
     closeLocationDialog()
   } catch (error) {
-    console.error('Erreur lors de la demande de géolocalisation:', error)
-    // Optionnel: afficher un message d'erreur à l'utilisateur
+    console.error('Erreur lors de la demande de géolocalisation :', error)
+    // Optionnel : afficher un message d'erreur à l'utilisateur
   } finally {
     isRequestingLocation.value = false
   }
@@ -98,7 +98,7 @@ const getCurrentLocation = () => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const { latitude, longitude } = position.coords
-        console.log('Position obtenue:', { latitude, longitude })
+        console.log('Position obtenue :', { latitude, longitude })
         
         // Ici vous pouvez stocker la position ou l'utiliser selon vos besoins
         // Par exemple, la sauvegarder dans un store Pinia ou localStorage
@@ -107,7 +107,7 @@ const getCurrentLocation = () => {
         resolve({ latitude, longitude })
       },
       (error) => {
-        console.error('Erreur de géolocalisation:', error.message)
+        console.error('Erreur de géolocalisation :', error.message)
         reject(error)
       },
       {
@@ -123,7 +123,7 @@ const closeLocationDialog = () => {
   isLocationDialogOpen.value = false
 }
 
-// Lifecycle
+// Cycle de vie
 onMounted(() => {
   checkLocationPermission()
 })

@@ -5,7 +5,7 @@
     <div class="flex items-center justify-between mb-8">
       <div>
         <h1 class="text-xl font-bold text-gray-900 sm:text-3xl">
-          All Projects
+          Tous les projets
         </h1>
       </div>
       <button
@@ -35,7 +35,7 @@
       >
         <div class="flex items-center gap-2 px-3 py-2 bg-gradient-to-r from-[#db147f] to-[#c4087a] text-white rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer">
           <Edit class="w-4 h-4" />
-          <span class="text-sm font-medium">Edit</span>
+          <span class="text-sm font-medium">Modifier</span>
         </div>
       </div>
 
@@ -127,7 +127,7 @@
             <div class="flex items-center gap-1 px-2 py-1 bg-gray-100 rounded-full group-hover:bg-[#e4097f]/10 transition-colors duration-300">
               <UsersIcon class="w-3 h-3 text-gray-500 group-hover:text-[#e4097f] transition-colors duration-300" />
               <span class="text-xs font-medium text-gray-600 group-hover:text-[#e4097f] transition-colors duration-300">
-                {{ project.membersList.length }} members
+                {{ project.membersList.length }} membres
               </span>
             </div>
           </div>

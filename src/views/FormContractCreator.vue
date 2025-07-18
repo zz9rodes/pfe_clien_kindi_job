@@ -29,7 +29,7 @@
               :disabled="isSaving"
               class="px-6 py-2 font-medium text-white transition-colors bg-[#db147f] rounded-lg hover:bg-[#db147f] disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {{ isSaving ? "Publish..." : "Publish" }}
+              {{ isSaving ? "Publication..." : "Publier" }}
             </button>
           </div>
 

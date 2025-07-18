@@ -1,5 +1,5 @@
 <template>
-  <div class="container px-4 mx-auto mt-8">
+  <div class="container px-1 mx-auto mt-8">
     <div class="relative shadow-lg bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-3xl">
       <!-- Background Decorative Elements -->
       <div class="absolute inset-0 overflow-hidden">
@@ -17,7 +17,7 @@
                 :key="category.id"
                 @click="handleCategoryClick(category)"
                 :class="[
-                  'group relative px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 transform hover:scale-105',
+                  'group relative px-3 py-2 rounded-full text-sm font-medium transition-all duration-300 transform hover:scale-105',
                   activeCategory === category.id
                     ? 'bg-gradient-to-r from-[#e4097f] to-[#c8076f] text-white shadow-lg shadow-[#e4097f]/25'
                     : 'text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 hover:border-[#e4097f] hover:text-[#e4097f] hover:shadow-md'
@@ -45,7 +45,7 @@
             <!-- Title with Animation -->
             <h1 
               v-if="showTitle" 
-              class="flex-1 mb-8 text-3xl font-bold lg:text-7xl animate-fade-in"
+              class="flex-1 mb-8 text-xl font-bold lg:text-2xl animate-fade-in"
             >
               <span class="text-[#e4097f] animate-pulse">Discover</span> 
               <span class="text-[#00a3e0] ml-2">Companies</span>
@@ -64,34 +64,10 @@
                   @focus="isKeywordsFocused = true"
                   @blur="isKeywordsFocused = false"
                   placeholder="Search by company name or industry"
-                  class="w-full h-12 lg:h-14 pl-6 pr-4 text-base bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-l-full rounded-r-full sm:rounded-r-none border-r-0 sm:border-r-0 focus:outline-none focus:ring-2 focus:ring-[#e4097f] focus:border-[#e4097f] transition-all duration-300 placeholder-gray-500 dark:placeholder-gray-400 dark:text-white"
+                  class="w-full h-8 lg:h-10 pl-6 pr-4 text-base bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-l-full rounded-r-full sm:rounded-r-none border-r-0 sm:border-r-0 focus:outline-none focus:ring-2 focus:ring-[#e4097f] focus:border-[#e4097f] transition-all duration-300 placeholder-gray-500 dark:placeholder-gray-400 dark:text-white"
                 />
                 
-                <!-- Search suggestions dropdown -->
-                <Transition name="dropdown">
-                  <div 
-                    v-if="isKeywordsFocused && searchSuggestions.length > 0"
-                    class="absolute left-0 right-0 z-50 mt-2 overflow-y-auto bg-white border border-gray-200 rounded-lg shadow-lg top-full dark:bg-gray-700 dark:border-gray-600 max-h-60"
-                  >
-                    <div 
-                      v-for="(suggestion, index) in searchSuggestions" 
-                      :key="index"
-                      @click="selectSuggestion(suggestion)"
-                      class="flex items-center gap-3 px-4 py-3 transition-colors duration-200 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-600"
-                    >
-                      <BuildingIcon class="w-4 h-4 text-gray-400" />
-                      <span class="text-gray-700 dark:text-gray-300">{{ suggestion }}</span>
-                    </div>
-                  </div>
-                </Transition>
-
-                <!-- Loading indicator -->
-                <div 
-                  v-if="isLoading"
-                  class="absolute transform -translate-y-1/2 right-4 top-1/2"
-                >
-                  <div class="animate-spin rounded-full h-5 w-5 border-b-2 border-[#e4097f]"></div>
-                </div>
+                               
               </div>
 
               <!-- Location Input -->
@@ -100,7 +76,7 @@
                   v-model="localFilters.location" 
                   @input="updateFilters"
                   placeholder="City, state or country"
-                  class="w-full h-12 lg:h-14 pl-6 pr-4 text-base bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-l-full rounded-r-full sm:rounded-r-none sm:rounded-l-none border-r-0 sm:border-r-0 focus:outline-none focus:ring-2 focus:ring-[#e4097f] focus:border-[#e4097f] transition-all duration-300 placeholder-gray-500 dark:placeholder-gray-400 dark:text-white"
+                  class="w-full h-8 lg:h-10 pl-6 pr-4 text-base bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-l-full rounded-r-full sm:rounded-r-none sm:rounded-l-none border-r-0 sm:border-r-0 focus:outline-none focus:ring-2 focus:ring-[#e4097f] focus:border-[#e4097f] transition-all duration-300 placeholder-gray-500 dark:placeholder-gray-400 dark:text-white"
                 />
                 <MapPinIcon class="absolute w-5 h-5 text-gray-400 transform -translate-y-1/2 right-4 top-1/2" />
               </div>
@@ -111,7 +87,7 @@
               <button
                 type="submit"
                 :disabled="isLoading"
-                class="group relative h-12 lg:h-14 px-6 mr-3 bg-gradient-to-r from-[#e4097f] to-[#c8076f] hover:from-[#c8076f] hover:to-[#a8065f] text-white rounded-r-full sm:rounded-l-none rounded-l-full transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl"
+                class="group relative h-8 lg:h-10 px-6 mr-3 bg-gradient-to-r from-[#e4097f] to-[#c8076f] hover:from-[#c8076f] hover:to-[#a8065f] text-white rounded-r-full sm:rounded-l-none rounded-l-full transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl"
               >
                 <SearchIcon class="w-5 h-5 transition-transform duration-300 group-hover:scale-110" />
                 

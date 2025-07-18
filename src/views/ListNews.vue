@@ -8,7 +8,7 @@
       <div class="pt-8 space-y-4">
         <div @click="toggleOpenModal('form')" class="p-2 text-white bg-[#e4097f] text-center border btn-add-post cursor-pointer">
             <button>
-                New Post
+                Nouvelle publication
             </button>
         </div>
         <article
@@ -123,7 +123,7 @@
               v-if="post.commentCount > 0"
               class="mt-1 text-sm text-gray-500"
             >
-              Afficher les {{ post.commentCount }} commentaires
+              Voir les {{ post.commentCount }} commentaires
             </button>
 
             <!-- Top Comments -->
@@ -156,7 +156,7 @@
               class="flex-1 text-sm border-none outline-none focus:ring-0"
             />
             <button @click="toggleOpenModal('comment')" class="text-sm font-semibold text-blue-500 opacity-150">
-              Show
+              Afficher
             </button>
           </div>
         </article>

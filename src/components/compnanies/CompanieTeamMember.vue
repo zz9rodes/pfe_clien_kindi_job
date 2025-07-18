@@ -144,8 +144,8 @@ const auth=useAuthStore()
 const route=useRoute()
 
 const tabLabels = {
-  send: "Sent Invitations",
-  accepted: "Approved Members",
+  send: "Invitations envoyées",
+  accepted: "Membres approuvés",
 };
 
 const statuses = ["send", "accepted"];

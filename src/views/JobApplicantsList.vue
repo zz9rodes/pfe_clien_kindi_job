@@ -83,10 +83,10 @@
               {{ getJobStatusLabel(jobData?.status) }}
             </span>
             <span class="text-sm text-gray-500">
-              {{ jobData?.yearsExperience }}+ ans d'expérience requis
+              {{ jobData?.yearsExperience }}+ an(s) d'expérience requis
             </span>
             <span class="text-sm text-gray-500">
-              Date limite: {{ formatDate(jobData?.lastDate) }}
+              Date limite : {{ formatDate(jobData?.lastDate) }}
             </span>
           </div>
         </div>
@@ -156,6 +156,7 @@
                 </span>
               </div>
             </div>
+            <!-- {{ applicant }} -->
             <div class="flex-1 min-w-0">
               <h3 class="text-sm font-medium text-gray-900 truncate">
                 {{ getApplicantName(applicant) }}

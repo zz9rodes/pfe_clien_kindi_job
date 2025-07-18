@@ -4,11 +4,11 @@
   <div class="flex min-h-screen">
     <!-- Left Side - Brand Section -->
     <div
-      class="hidden relative bg-gradient-to-br from-amber-50 to-orange-100 lg:flex lg:w-2/5"
+      class="relative hidden bg-gradient-to-br from-amber-50 to-orange-100 lg:flex lg:w-2/5"
     >
-      <div class="flex flex-col justify-between p-12 w-full">
+      <div class="flex flex-col justify-between w-full p-12">
         <!-- Illustration and Content -->
-        <div class="flex flex-col flex-1 justify-center space-y-8">
+        <div class="flex flex-col justify-center flex-1 space-y-8">
           <!-- Illustration -->
           <div class="flex justify-center">
             <div class="relative">
@@ -16,30 +16,30 @@
               <div class="relative w-80 h-80">
                 <!-- Background elements -->
                 <div
-                  class="absolute inset-0 bg-gradient-to-br from-purple-100 to-blue-100 rounded-full opacity-20"
+                  class="absolute inset-0 rounded-full bg-gradient-to-br from-purple-100 to-blue-100 opacity-20"
                 ></div>
 
                 <!-- Job search elements -->
                 <div
-                  class="flex absolute top-8 left-8 justify-center items-center w-16 h-16 bg-white rounded-md shadow-lg transform rotate-12"
+                  class="absolute flex items-center justify-center w-16 h-16 transform bg-white rounded-md shadow-lg top-8 left-8 rotate-12"
                 >
                   <Search class="w-8 h-8 text-purple-600" />
                 </div>
 
                 <div
-                  class="flex absolute right-12 top-16 justify-center items-center w-20 h-14 bg-white rounded-md shadow-lg transform -rotate-6"
+                  class="absolute flex items-center justify-center w-20 transform bg-white rounded-md shadow-lg right-12 top-16 h-14 -rotate-6"
                 >
                   <Users class="w-8 h-8 text-blue-600" />
                 </div>
 
                 <div
-                  class="flex absolute left-12 bottom-20 justify-center items-center bg-white rounded-md shadow-lg transform rotate-6 w-18 h-18"
+                  class="absolute flex items-center justify-center transform bg-white rounded-md shadow-lg left-12 bottom-20 rotate-6 w-18 h-18"
                 >
                   <Target class="w-8 h-8 text-green-600" />
                 </div>
 
                 <div
-                  class="flex absolute right-8 bottom-8 justify-center items-center w-16 h-16 bg-white rounded-md shadow-lg transform -rotate-12"
+                  class="absolute flex items-center justify-center w-16 h-16 transform bg-white rounded-md shadow-lg right-8 bottom-8 -rotate-12"
                 >
                   <TrendingUp class="w-8 h-8 text-orange-600" />
                 </div>
@@ -71,11 +71,10 @@
           <!-- Text Content -->
           <div class="space-y-4">
             <h1 class="text-3xl font-bold leading-tight text-gray-900">
-              Find your dream job and boost your professional career
+              Find your dream job and develop your professional career
             </h1>
             <p class="text-lg leading-relaxed text-gray-600">
-              We connect talent with the best opportunities, providing a modern
-              and personalized job search experience for candidates and.
+              We connect talent with the best opportunities, offering a modern and personalized job search experience for candidates and.
             </p>
           </div>
         </div>
@@ -98,11 +97,11 @@
     </div>
 
     <!-- Right Side - Login Form -->
-    <div class="flex flex-1 justify-center items-center p-8 bg-white">
-      <div class="space-y-8 w-full max-w-md">
+    <div class="flex items-center justify-center flex-1 p-8 bg-white">
+      <div class="w-full max-w-md space-y-8">
         <!-- Header -->
         <div class="space-y-2 text-center">
-          <h2 class="text-3xl font-bold text-gray-900">Hello !</h2>
+          <h2 class="text-3xl font-bold text-gray-900">Hello!</h2>
           <p class="text-gray-600">Log in to continue</p>
         </div>
 
@@ -141,7 +140,7 @@
               <button
                 type="button"
                 @click="showPassword = !showPassword"
-                class="absolute right-3 top-1/2 text-gray-400 transform -translate-y-1/2 hover:text-gray-600"
+                class="absolute text-gray-400 transform -translate-y-1/2 right-3 top-1/2 hover:text-gray-600"
               >
                 <EyeOff v-if="showPassword" class="w-5 h-5" />
                 <Eye v-else class="w-5 h-5" />
@@ -152,7 +151,7 @@
           <div class="text-right">
 
             <router-link :to="{name:'password_forgot'}" class="text-sm font-medium hover:text-[#e4097f]">
-                            Forgot your password ?
+                            Forgot your password?
             </router-link>
           </div>
 
@@ -192,13 +191,13 @@
             :disabled="isLoading"
             class="w-full px-4 py-2 font-semibold text-white transition-colors rounded-md bg-[#e4097f] hover:bg-[#e4097f] focus:ring-2 focus:ring-[#e4097f] focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {{ isLoading ? "Connexion..." : "Se connecter" }}
+            {{ isLoading ? "Connecting..." : "Log in" }}
           </button>
 
           <div class="text-sm text-start">
-            <span class="text-gray-600">don't have an account ? </span>
+            <span class="text-gray-600">Don't have an account? </span>
              <router-link :to="{name:'home'}"  class="p-1 font-medium text-[#e4097f] hover:bg-[#e4097f] hover:text-white">
-                            Go Home
+                            Home
             </router-link>
           </div>
         </div>
@@ -208,7 +207,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
 const auth = useAuthStore()
@@ -255,13 +254,40 @@ const handleSubmit = async () => {
   
   if (data?.success) {
     // Vérifie si l'utilisateur est admin
+    console.log(data?.data)
+    
+    
     const user = data.data?.user || auth.user;
-    if (user && user.isAdmin) {
-      router.push({ name: 'admin_profile' }); // Redirige vers la page admin
-    } else {
-      router.push({ name: 'profile' }); // Redirige vers la page utilisateur classique
+    console.log("isAdmin : ",user.isAdmin)
+    if(user.account){
+      if (user && user.isAdmin) {
+        router.push({ name: 'admin_profile' }); // Redirige vers la page admin
+      } else {
+        console.log("on est entrer ici")
+        router.push({ name: 'profile' }); // Redirige vers la page utilisateur classique
+      }
+
+      return
+    }
+    else{
+      console.log(" pas de account ")
+      router.push({ name: 'fill_account' });
+      
+      return
     }
   }
-
 }
+
+
+onMounted(()=>{
+  if(auth.user){
+    if(auth.user.isAdmin){
+          router.push({name:"admin_dashboard"})
+
+    }
+    else{
+        router.push({name:"user_dashboard"})
+    }
+  }
+})
 </script>

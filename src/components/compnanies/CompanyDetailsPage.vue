@@ -22,7 +22,7 @@
           >
           <textarea
             v-model="desapproveMessage"
-            placeholder="Décrivez les raisons du Reject de cette Version"
+            placeholder="Décrivez les raisons du rejet de cette version"
             rows="3"
             class="w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-[#db147f] focus:border-[#db147f]"
           ></textarea>
@@ -212,7 +212,7 @@
               <MapPinIcon class="w-4 h-4 mr-4" />
               <div>
                 <p class="text-sm text-gray-500">Adresse</p>
-                <p class="text-gray-900">{{ company.address }}</p>
+                <p class="text-gray-900">{{ company.address?.title }}</p>
               </div>
             </div>
           </div>
@@ -235,7 +235,7 @@
                 d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
               />
             </svg>
-            Admin Details
+            Détails de l'administrateur
           </h2>
 
           <div class="space-y-4">
@@ -246,7 +246,7 @@
             />
 
             <div>
-              <p class="mb-1 text-sm text-gray-500">Full Name</p>
+              <p class="mb-1 text-sm text-gray-500">Nom complet</p>
               <p class="text-gray-900">
                 {{ admin.firstName }} {{ admin.lastName }}
               </p>

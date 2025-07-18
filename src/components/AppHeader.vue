@@ -17,23 +17,23 @@
 
       <nav class="items-center hidden space-x-6 md:flex">
         <a href="#" class="text-gray-700 hover:text-[#e4097f] text-sm font-medium transition-colors">
-          Search
+          Rechercher
         </a>
         <a href="#" class="text-gray-700 hover:text-[#e4097f] text-sm font-medium flex items-center transition-colors">
-          Jobs
-          <span class="ml-1 bg-[#00a3e0] text-white text-xs px-2 py-0.5 rounded-full">New!</span>
+          Emplois
+          <span class="ml-1 bg-[#00a3e0] text-white text-xs px-2 py-0.5 rounded-full">Nouveau!</span>
         </a>
         <a href="#" class="text-gray-700 hover:text-[#e4097f] text-sm font-medium transition-colors">
-          About Us
+          À propos de nous
         </a>
       </nav>
 
       <div class="items-center hidden space-x-4 md:flex">
         <button v-if="!isAuthentified" class="bg-[#00a3e0] hover:bg-[#0090c7] text-white text-sm font-medium px-4 py-2 rounded transition-colors">
-          Your Account - It's Free
+          Votre compte - C'est gratuit
         </button>
         <button v-if="!isAuthentified" class="bg-[#e4097f] hover:bg-[#c8076f] text-white text-sm font-medium px-4 py-2 rounded transition-colors">
-          Log In
+          Se connecter
         </button>
         
         <a href="#" v-if="isAuthentified" class="text-gray-600 hover:text-[#e4097f] transition-colors">
@@ -47,7 +47,7 @@
       <button 
         @click="toggleMobileMenu" 
         class="flex items-center justify-center w-8 h-8 text-gray-700 md:hidden hover:text-[#e4097f] transition-colors"
-        aria-label="Toggle mobile menu"
+        aria-label="Basculer le menu mobile"
       >
         <svg v-if="!isMobileMenuOpen" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="3" y1="6" x2="21" y2="6"></line>
@@ -73,7 +73,7 @@
               @click="closeMobileMenu"
               class="block text-gray-700 hover:text-[#e4097f] text-sm font-medium py-2 transition-colors"
             >
-              Search
+              Rechercher
             </a>
             <a 
               href="#" 
@@ -81,8 +81,8 @@
               class="block text-gray-700 hover:text-[#e4097f] text-sm font-medium py-2 transition-colors"
             >
               <div class="flex items-center">
-                Jobs
-                <span class="ml-2 bg-[#00a3e0] text-white text-xs px-2 py-0.5 rounded-full">New!</span>
+                Emplois
+                <span class="ml-2 bg-[#00a3e0] text-white text-xs px-2 py-0.5 rounded-full">Nouveau!</span>
               </div>
             </a>
             <a 
@@ -90,7 +90,7 @@
               @click="closeMobileMenu"
               class="block text-gray-700 hover:text-[#e4097f] text-sm font-medium py-2 transition-colors"
             >
-              About Us
+              À propos de nous
             </a>
           </nav>
 
@@ -100,13 +100,13 @@
                 @click="closeMobileMenu"
                 class="w-full bg-[#00a3e0] hover:bg-[#0090c7] text-white text-sm font-medium px-4 py-3 rounded transition-colors"
               >
-                Your Account - It's Free
+                Votre compte - C'est gratuit
               </button>
               <button 
                 @click="closeMobileMenu"
                 class="w-full bg-[#e4097f] hover:bg-[#c8076f] text-white text-sm font-medium px-4 py-3 rounded transition-colors"
               >
-                Log In
+                Se connecter
               </button>
             </div>
             
@@ -120,7 +120,7 @@
                   <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
                   <circle cx="12" cy="7" r="4"></circle>
                 </svg>
-                <span class="text-sm font-medium">Profile</span>
+                <span class="text-sm font-medium">Profil</span>
               </a>
             </div>
           </div>

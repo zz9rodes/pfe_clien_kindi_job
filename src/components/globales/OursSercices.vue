@@ -1,6 +1,6 @@
 <template>
   <div class="container px-4 mx-auto mt-16">
-    <h2 class="mb-6 text-2xl font-bold text-gray-900 dark:text-white">Ours Services</h2>
+    <h2 class="mb-6 text-2xl font-bold text-gray-900 dark:text-white">Nos Services</h2>
 
     <div class="grid overflow-hidden text-gray-600 border border-gray-100 divide-x divide-y divide-gray-100 dark:divide-gray-700 rounded-3xl dark:border-gray-700 sm:grid-cols-2 lg:grid-cols-4 lg:divide-y-0 xl:grid-cols-4">
       <div 
@@ -37,7 +37,7 @@
             class="flex cursor-pointer items-center justify-between group-hover:text-[#e4097f] transition-colors duration-300"
             @click.prevent="handleReadMore(service)"
           >
-            <span class="text-sm font-medium">start now</span>
+            <span class="text-sm font-medium">commencer</span>
             <svg 
               xmlns="http://www.w3.org/2000/svg" 
               viewBox="0 0 24 24" 
@@ -60,23 +60,23 @@
 <script setup>
 const services = [
   {
-    title: 'Find Your Jobs',
-    description: 'Discover job opportunities near you with detailed offers and quick access to applications.',
+    title: 'Trouvez votre emploi',
+    description: 'Découvrez des opportunités d\'emploi près de chez vous avec des offres détaillées et un accès rapide aux candidatures.',
     image: 'https://cdn-icons-png.flaticon.com/512/4341/4341139.png'
   },
   {
-    title: 'Electronic Contract Signature',
-    description: 'Sign your contracts online securely and instantly, with full legal validity.',
+    title: 'Signature électronique de contrat',
+    description: 'Signez vos contrats en ligne de manière sécurisée et instantanée, avec une pleine validité légale.',
     image: 'https://cdn-icons-png.flaticon.com/512/4341/4341134.png'
   },
   {
-    title: 'Project And Task Management',
-    description: 'Plan, assign and track all your projects and tasks in one collaborative dashboard.',
+    title: 'Gestion de projets et de tâches',
+    description: 'Planifiez, assignez et suivez tous vos projets et tâches sur un tableau de bord collaboratif unique.',
     image: 'https://cdn-icons-png.flaticon.com/512/4341/4341160.png'
   },
   {
-    title: 'Recruitment System (RH)',
-    description: 'Manage recruitment, candidate tracking and onboarding seamlessly in one integrated solution.',
+    title: 'Système de recrutement (RH)',
+    description: 'Gérez le recrutement, le suivi des candidats et l\'intégration facilement dans une solution intégrée.',
     image: 'https://cdn-icons-png.flaticon.com/512/4341/4341025.png'
   }
 ]

@@ -5,8 +5,8 @@
     <main class="flex-1 bg-gray-50">
       <div class="container px-4 py-6 mx-auto">
         <h1 class="mb-10 text-4xl font-bold text-gray-900">
-          <span class="text-[#e4097f]">Plateform</span> 
-          <span class="text-[#00a3e0]"> Statistics</span>
+          <span class="text-[#e4097f]">Statistiques</span> 
+          <span class="text-[#00a3e0]">de la plateforme</span>
         </h1>
 
         <!-- <div v-if="stats"  class="grid grid-cols-1 gap-6 pt-8 mb-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">

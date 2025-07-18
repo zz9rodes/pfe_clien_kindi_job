@@ -209,7 +209,7 @@
                 @click.stop="GoToPreview(contract)"
                 class="flex-1 px-3 py-2 text-sm font-medium text-gray-700 transition-colors bg-gray-100 rounded-lg hover:bg-gray-200"
               >
-                Voir détails
+                Voir les détails
               </button>
             </div>
           </div>

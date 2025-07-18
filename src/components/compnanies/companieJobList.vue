@@ -39,7 +39,7 @@
               class="new-job flex gap-1 bg-[#db147f] text-white rounded-md px-3 py-2"
             >
               <Plus />
-              <span>New Job</span>
+              <span>Nouveau travail</span>
             </button>
           </div>
     <div class="p-6">
@@ -61,7 +61,7 @@
             <button
               class="px-3 absolute top-0 right-0 z-10 py-1 bg-[#db147f] text-white rounded-tr-md hover:bg-[#c1136e] transition-colors"
             >
-              edit
+              modifier
             </button>
           </div>
 
@@ -100,7 +100,7 @@
             <button
               class="bottom-0 z-10 px-3 py-1 text-white transition-colors right-20 "
             >
-              {{ job.applies.length  }} applies
+              {{ job.applies.length  }} candidatures
             </button>
           </div>
         </div>
@@ -128,7 +128,7 @@
 
           <button
           v-if="isAdmin && activeTab=='OPEN'"
-            @click="GoToCreateJob()"
+            @click="GoToNewCreateJob()"
             class="inline-flex items-center px-4 py-2 text-sm font-medium text-white transition-colors bg-[#db147f] rounded-lg hover:bg-[#c1136e]"
           >
             <Plus class="w-4 h-4 mr-2" />

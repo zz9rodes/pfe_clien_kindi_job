@@ -3,16 +3,16 @@
       <div class="container px-4 mx-auto">
         <div class="grid grid-cols-2 gap-8 md:grid-cols-4">
           <div>
-            <h3 class="mb-4 font-semibold">About KindiJob</h3>
+            <h3 class="mb-4 font-semibold">À propos de KindiJob</h3>
             <ul class="space-y-2">
               <li>
                 <a href="#" class="text-sm text-gray-400 hover:text-white">
-                  Our Story
+                  Notre histoire
                 </a>
               </li>
               <li>
                 <a href="#" class="text-sm text-gray-400 hover:text-white">
-                  How It Works
+                  Comment ça marche
                 </a>
               </li>
               <li>
@@ -22,85 +22,85 @@
               </li>
               <li>
                 <a href="#" class="text-sm text-gray-400 hover:text-white">
-                  Contact Us
+                  Contactez-nous
                 </a>
               </li>
             </ul>
           </div>
 
           <div>
-            <h3 class="mb-4 font-semibold">For Parents</h3>
+            <h3 class="mb-4 font-semibold">Pour les parents</h3>
             <ul class="space-y-2">
               <li>
                 <a href="#" class="text-sm text-gray-400 hover:text-white">
-                  Find ChildJob
+                  Trouver un job pour enfant
                 </a>
               </li>
               <li>
                 <a href="#" class="text-sm text-gray-400 hover:text-white">
-                  Subsidy Calculator
+                  Calculateur de subventions
                 </a>
               </li>
               <li>
                 <a href="#" class="text-sm text-gray-400 hover:text-white">
-                  Waitlist Management
+                  Gestion de la liste d'attente
                 </a>
               </li>
               <li>
                 <a href="#" class="text-sm text-gray-400 hover:text-white">
-                  Parent Resources
+                  Ressources pour les parents
                 </a>
               </li>
             </ul>
           </div>
 
           <div>
-            <h3 class="mb-4 font-semibold">For Providers</h3>
+            <h3 class="mb-4 font-semibold">Pour les fournisseurs</h3>
             <ul class="space-y-2">
               <li>
                 <a href="#" class="text-sm text-gray-400 hover:text-white">
-                  Claim Your Centre
+                  Réclamez votre centre
                 </a>
               </li>
               <li>
                 <a href="#" class="text-sm text-gray-400 hover:text-white">
-                  Provider Dashboard
+                  Tableau de bord du fournisseur
                 </a>
               </li>
               <li>
                 <a href="#" class="text-sm text-gray-400 hover:text-white">
-                  Marketing Tools
+                  Outils de marketing
                 </a>
               </li>
               <li>
                 <a href="#" class="text-sm text-gray-400 hover:text-white">
-                  Provider Resources
+                  Ressources pour les fournisseurs
                 </a>
               </li>
             </ul>
           </div>
 
           <div>
-            <h3 class="mb-4 font-semibold">Legal</h3>
+            <h3 class="mb-4 font-semibold">Légal</h3>
             <ul class="space-y-2">
               <li>
                 <a href="#" class="text-sm text-gray-400 hover:text-white">
-                  Terms of Service
+                  Conditions d'utilisation
                 </a>
               </li>
               <li>
                 <a href="#" class="text-sm text-gray-400 hover:text-white">
-                  Privacy Policy
+                  Politique de confidentialité
                 </a>
               </li>
               <li>
                 <a href="#" class="text-sm text-gray-400 hover:text-white">
-                  Cookie Policy
+                  Politique en matière de cookies
                 </a>
               </li>
               <li>
                 <a href="#" class="text-sm text-gray-400 hover:text-white">
-                  Accessibility
+                  Accessibilité
                 </a>
               </li>
             </ul>
@@ -119,7 +119,7 @@
                 </div>
               </div>
             </a>
-            <p class="mt-2 text-sm text-gray-400">© 2023 KindiJob. All rights reserved.</p>
+            <p class="mt-2 text-sm text-gray-400">© 2023 KindiJob. Tous droits réservés.</p>
           </div>
 
           <div class="flex space-x-6">

@@ -21,9 +21,9 @@
             Back 
           </button>
           <div class="flex gap-3 ">
-                  <button
+            <button
                   v-if="versions.length>0"
-            :disabled="versions.length<=0 ? true : fasse"
+            :disabled="versions.length<=0 ? true : false"
             :class=" versions.length<=0 ? ' cursor-not-allowed bg-[#d1abbe]' :' cursor-pointer bg-[#db147f]' "
             @click="ViewsDetails(versions[0].slug)"
             class="px-4 py-2 font-medium text-white transition-colors rounded-lg"
@@ -46,6 +46,7 @@
         </div>
 
         <!-- Title -->
+         {{ versions.length }} rodes ici
         <div class="p-6 mb-6">
           <h1 class="text-xl font-bold text-gray-900">{{ versions.length <= 0 ? 'Companie Request' :'Companie Versions' }}</h1>
         </div>

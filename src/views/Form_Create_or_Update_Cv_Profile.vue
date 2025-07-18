@@ -33,14 +33,14 @@
       >
         <UsersIcon class="w-8 h-8 mx-auto mb-4 text-gray-400 sm:h-16 sm:w-16" />
         <h3 class="mb-2 font-medium text-gray-900 text-md sm:text-lg">
-          No Companie Found
+          Aucune entreprise trouvée
         </h3>
         <p class="mb-4 text-gray-600">You haven't added any Cv Profile</p>
         <button
             @click="showCreateForm = true"
           class="bg-[#db147f] text-white px-6 py-2 rounded-lg hover:bg-[#c01370] transition-colors"
         >
-          <span class="hidden sm:block">Create Your Cv Now</span>
+          <span class="hidden sm:block">Créer votre CV maintenant</span>
           <Plus class="sm:hidden" />
         </button>
         </div>

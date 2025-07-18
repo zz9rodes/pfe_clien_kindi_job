@@ -6,7 +6,7 @@
       class="sticky top-0 z-10 flex items-center justify-between p-6 bg-white border-b border-gray-100"
     >
       <div class="flex items-center gap-4">
-        <h3 class="text-xl font-bold text-gray-900">Invite Users</h3>
+        <h3 class="text-xl font-bold text-gray-900">Inviter des utilisateurs</h3>
         <span
           v-if="activeFiltersCount > 0"
           class="bg-[#e4097f] text-[8px] text-white px-2 py-1 rounded-full size-[18px] flex justify-center items-center"
@@ -51,7 +51,7 @@
                 id="email"
                 v-model="email"
                 type="email"
-                placeholder="example-mail@demo.com"
+                placeholder="exemple-mail@demo.com"
                 class="w-full px-4 py-2 transition-colors border border-gray-300 rounded-md focus:ring-2 focus:ring-[#e4097f] outline-none"
                 required
               />
@@ -59,7 +59,7 @@
                 id="role"
                 v-model="role"
                 type="text"
-                placeholder="user role"
+                placeholder="Rôle de l'utilisateur"
                 class="w-full px-4 py-2 transition-colors border border-gray-300 rounded-md focus:ring-2 focus:ring-[#e4097f] outline-none"
                 required
               />
@@ -70,7 +70,7 @@
                   :options="permissions"
                   option-label="label"
                   option-value="id"
-                  placeholder="Choisissez des pays..."
+                  placeholder="Choisissez des autorisations..."
                   @change="handleChange"
                 />
               </div>
@@ -83,7 +83,7 @@
             type="submit"
             class="w-full bg-[#e4097f] text-white py-2 px-6 rounded-md font-semibold hover:shadow-lg hover:scale transition-all duration-200 flex items-center justify-center gap-2"
           >
-            Invite
+            Inviter
           </button>
         </div>
       </div>

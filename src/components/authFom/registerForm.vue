@@ -49,8 +49,7 @@
               Join the community of ambitious professionals
             </h1>
             <p class="text-lg leading-relaxed text-gray-600">
-              Create your profile in minutes and access thousands of job
-              opportunities tailored to your skills and aspirations.
+              Create your profile in minutes and access thousands of job opportunities tailored to your skills and aspirations.
             </p>
           </div>
         </div>
@@ -270,7 +269,7 @@
                 <li class="flex items-start">
                   <span
                     class="bg-pink-100 text-[#e4097f] rounded-full w-5 h-5 flex items-center justify-center text-xs font-medium mr-3 mt-0.5 flex-shrink-0">3</span>
-                  One number and one special character
+                  A number and a special character
                 </li>
               </ol>
             </div>
@@ -282,8 +281,8 @@
               <div class="flex items-center justify-center w-16 h-16 mx-auto mb-4 bg-[#e4097f] rounded-full">
                 <Check class="w-8 h-8 text-white" />
               </div>
-              <h3 class="text-xl font-semibold text-gray-900">Almost Done!</h3>
-              <p class="mt-1 text-gray-600">Review your information</p>
+              <h3 class="text-xl font-semibold text-gray-900">Almost done!</h3>
+              <p class="mt-1 text-gray-600">Check your information</p>
             </div>
             <div class="p-6 space-y-4 rounded-md bg-gray-50">
               <div class="flex justify-between">
@@ -348,7 +347,7 @@
                     I accept the
                     <a href="#" class="font-medium text-[#e4097f]">terms of use</a>
                     and
-                    <a href="#" class="font-medium text-[#e4097f]">Privacy Policy</a>
+                    <a href="#" class="font-medium text-[#e4097f]">the privacy policy</a>
                   </label>
                 </label>
               </div>
@@ -367,8 +366,7 @@
                     </svg>
                   </div>
                   <label for="newsletter" class="ml-2 text-sm text-gray-700">
-                    I would like to receive job offers and career advice by
-                    email
+                    I would like to receive job offers and career advice by email
                   </label>
                 </label>
               </div>
@@ -380,7 +378,7 @@
             <button type="button" @click="prevStep" :disabled="currentStep === 1"
               class="flex items-center px-6 py-2 text-gray-700 transition-colors border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
               <ArrowLeft class="w-4 h-4 mr-2" />
-              Prev
+              Previous
             </button>
             <button v-if="currentStep < totalSteps" type="button" @click="nextStep"
               class="flex items-center px-6 py-2 font-semibold text-white transition-colors rounded-md bg-[#e4097f] hover:bg-[#e4097f]">
@@ -408,7 +406,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed,onMounted } from "vue";
 import {
   Eye,
   EyeOff,
@@ -430,6 +428,7 @@ import {
 import { useAuthStore } from "@/stores/auth";
 import { useRouter,useRoute } from "vue-router";
 import AppModal from "../globales/AppModal.vue";
+import { accountTypes } from "@/helpers/Enum";
 const router=useRouter()
 const route=useRoute()
 
@@ -653,4 +652,27 @@ async function fetchLocationInfo(lat, lng) {
     console.error("Error fetching location data:", error);
   }
 }
+
+
+
+onMounted(()=>{
+  if(auth.user){
+    
+    if(auth.user.isAdmin){
+          router.push({name:"admin_dashboard"})
+
+    }
+    else{
+        router.push({name:"user_dashboard"})
+    }
+  }
+
+  else{
+
+    if(accountTypes!='companies' && accountTypes!="personnal"){
+      router.push({name:"home"})
+    }
+  }
+})
+
 </script>

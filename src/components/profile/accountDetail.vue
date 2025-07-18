@@ -116,6 +116,14 @@
             </div>
           </div>
 
+           <div>
+            <label class="block mb-2 text-sm font-medium tracking-wide text-gray-500 uppercase">
+              Titre professionelle</label>
+            <p class="px-2 text-lg font-semibold text-gray-900 bg-pink-400 border rounded-2xl contents">
+              {{ userAccount.account?.roles || "non reseigner" }}
+            </p>
+          </div>
+
           <div>
             <label class="block mb-2 text-sm font-medium tracking-wide text-gray-500 uppercase">Date de
               naissance</label>
