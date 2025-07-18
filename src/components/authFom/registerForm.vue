@@ -406,7 +406,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed,onMounted } from "vue";
 import {
   Eye,
   EyeOff,
@@ -428,6 +428,7 @@ import {
 import { useAuthStore } from "@/stores/auth";
 import { useRouter,useRoute } from "vue-router";
 import AppModal from "../globales/AppModal.vue";
+import { accountTypes } from "@/helpers/Enum";
 const router=useRouter()
 const route=useRoute()
 
@@ -651,4 +652,27 @@ async function fetchLocationInfo(lat, lng) {
     console.error("Error fetching location data:", error);
   }
 }
+
+
+
+onMounted(()=>{
+  if(auth.user){
+    
+    if(auth.user.isAdmin){
+          router.push({name:"admin_dashboard"})
+
+    }
+    else{
+        router.push({name:"user_dashboard"})
+    }
+  }
+
+  else{
+
+    if(accountTypes!='companies' && accountTypes!="personnal"){
+      router.push({name:"home"})
+    }
+  }
+})
+
 </script>

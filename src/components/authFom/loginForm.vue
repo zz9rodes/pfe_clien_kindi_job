@@ -207,7 +207,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
 const auth = useAuthStore()
@@ -275,8 +275,19 @@ const handleSubmit = async () => {
       
       return
     }
-   
   }
-
 }
+
+
+onMounted(()=>{
+  if(auth.user){
+    if(auth.user.isAdmin){
+          router.push({name:"admin_dashboard"})
+
+    }
+    else{
+        router.push({name:"user_dashboard"})
+    }
+  }
+})
 </script>
