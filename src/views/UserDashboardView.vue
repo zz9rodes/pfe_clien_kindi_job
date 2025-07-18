@@ -35,7 +35,7 @@
             <DashboardStatCard title="Company Projects" :value="accountStats.company.projects?.length || 0" icon="FolderIcon" color="purple" />
             <DashboardStatCard title="Company Contracts" :value="accountStats.company.contracts?.length || 0" icon="FileTextIcon" color="orange" />
             <DashboardStatCard title="Company Agreements" :value="accountStats.company.agreements || 0" icon="HandshakeIcon" color="teal" />
-            <DashboardStatCard title="Company Guests" :value="accountStats.company.guests?.length || 0" icon="UsersIcon" color="red" />
+            <DashboardStatCard title="Team Member" :value="accountStats.company.guests?.length || 0" icon="UsersIcon" color="red" />
           </div>
 
           <!-- Charts for company data -->

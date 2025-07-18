@@ -112,6 +112,7 @@
         >
           Rejeter
         </button>
+        {{ company.status }}
         <button
           :disabled="company.status == 'approved' ? true : false"
           :class="
@@ -212,7 +213,7 @@
               <MapPinIcon class="w-4 h-4 mr-4" />
               <div>
                 <p class="text-sm text-gray-500">Adresse</p>
-                <p class="text-gray-900">{{ company.address }}</p>
+                <p class="text-gray-900">{{ company.address?.title }}</p>
               </div>
             </div>
           </div>

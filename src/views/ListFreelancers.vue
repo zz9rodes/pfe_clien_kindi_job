@@ -1,5 +1,7 @@
 <template>
   <div class="container px-4 py-8 mx-auto mt-24">
+      <AppModal :isLoader="true" :isOpen="isOpenLoaderModale" />
+
     <AppInputFilterFreelancer 
       :filters="savedFilters" 
       @update:filters="handleFiltersUpdate"
@@ -59,16 +61,23 @@ import { UserIcon } from 'lucide-vue-next';
 import { useAuthStore } from '@/stores/auth';
 import { Notyf } from 'notyf';
 import 'notyf/notyf.min.css';
+import AppModal from '@/components/globales/AppModal.vue';
 
 const router = useRouter();
 const route = useRoute();
 const auth = useAuthStore();
 const notyf = new Notyf({ position: { x: 'right', y: 'top' }, duration: 3000 });
 
+const isOpenLoaderModale = ref(false)
+
 const listfreelancers = ref([]);
 const savedFilters = ref({
   keywords: ''
 });
+
+const toggleOpenLoaderModal = () => {
+    isOpenLoaderModale.value = !isOpenLoaderModale.value
+}
 
 const filteredFreelancers = computed(() => {
   if (!listfreelancers.value?.length) return [];
@@ -85,7 +94,7 @@ const filteredFreelancers = computed(() => {
         freelancer.city?.toLowerCase().includes(keywords) ||
         freelancer.country?.toLowerCase().includes(keywords) ||
         freelancer.firstLangage?.toLowerCase().includes(keywords) ||
-        freelancer.secondLangage?.toLowerCase().includes(keywords) ||
+        freelancer.roles?.toLowerCase().includes(keywords) ||
         competences.includes(keywords)
       );
     });
@@ -99,6 +108,7 @@ const hasActiveFilters = computed(() => {
 });
 
 const initFetchFreelancers = async () => {
+  toggleOpenLoaderModal()
   try {
     const response = await auth.api('GET', '/accounts/extern/all', null, false);
     if (response.success) {
@@ -111,6 +121,7 @@ const initFetchFreelancers = async () => {
     console.error('Error fetching freelancers:', error);
     notyf.error('An error occurred while fetching freelancers');
   }
+  toggleOpenLoaderModal()
 };
 
 const viewProfile = (freelancer) => {

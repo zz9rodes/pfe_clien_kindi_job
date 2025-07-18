@@ -23,27 +23,7 @@
       <main class="flex-1 bg-gray-50">
         <div class="container px-4 py-6 mx-auto">
           <div class="flex items-center justify-between mb-4">
-            <h2 class="hidden text-lg font-bold text-gray-700 uppercase sm:block">
-              Recommended for you
-            </h2>
-            <div id="pagination-bar" class="flex gap-2">
-              <button 
-                :disabled="!jobs?.meta?.previousPageUrl" 
-                :class="!jobs?.meta?.previousPageUrl ? 'cursor-not-allowed' : 'cursor-pointer hover:bg-pink-500 hover:text-white'" 
-                class="px-3 py-1 border rounded-md"
-                @click="fetchPage(jobs?.meta?.previousPageUrl)"
-              >
-                Prev
-              </button>
-              <button 
-                :disabled="!jobs?.meta?.nextPageUrl" 
-                :class="!jobs?.meta?.nextPageUrl ? 'cursor-not-allowed' : 'cursor-pointer hover:bg-pink-500 hover:text-white'" 
-                class="px-3 py-1 border rounded-md"
-                @click="fetchPage(jobs?.meta?.nextPageUrl)"
-              >
-                Next
-              </button>
-            </div>
+            
           </div>
 
           <div v-if="filteredJobs?.length" class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">

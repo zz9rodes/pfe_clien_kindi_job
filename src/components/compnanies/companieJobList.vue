@@ -128,7 +128,7 @@
 
           <button
           v-if="isAdmin && activeTab=='OPEN'"
-            @click="GoToCreateJob()"
+            @click="GoToNewCreateJob()"
             class="inline-flex items-center px-4 py-2 text-sm font-medium text-white transition-colors bg-[#db147f] rounded-lg hover:bg-[#c1136e]"
           >
             <Plus class="w-4 h-4 mr-2" />
