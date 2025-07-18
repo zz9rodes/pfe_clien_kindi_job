@@ -12,11 +12,11 @@
     </div>
 
     <!-- Content -->
-    <div class="overflow-auto flex-1">
+    <div class="flex-1 overflow-auto">
       <!-- No Account Warning -->
       <div 
         v-if="!userProfile.account" 
-        class="p-4 mx-6 mt-6 bg-yellow-50 rounded-md border border-yellow-200"
+        class="p-4 mx-6 mt-6 border border-yellow-200 rounded-md bg-yellow-50"
       >
         <div class="flex items-center">
           <div class="flex-shrink-0">
@@ -36,7 +36,7 @@
       </div>
 
       <!-- Form -->
-      <form @submit.prevent="handleSubmit" class="p-6 space-y-6">
+      <form @submit.prevent="handleSubmitLoginProfile" class="p-6 space-y-6">
         <!-- Email Field -->
         <div class="relative">
           <label for="email" class="block mb-2 text-sm font-medium text-gray-700">
@@ -55,7 +55,7 @@
           />
           <span
             v-if="formErrors.email?.length"
-            class="absolute left-0 -bottom-5 text-sm text-red-600"
+            class="absolute left-0 text-sm text-red-600 -bottom-5"
           >
             {{ formErrors.email[0] }}
           </span>
@@ -79,7 +79,7 @@
             />
             <span
               v-if="formErrors.firstName?.length"
-              class="absolute left-0 -bottom-5 text-sm text-red-600"
+              class="absolute left-0 text-sm text-red-600 -bottom-5"
             >
               {{ formErrors.firstName[0] }}
             </span>
@@ -101,7 +101,7 @@
             />
             <span
               v-if="formErrors.lastName?.length"
-              class="absolute left-0 -bottom-5 text-sm text-red-600"
+              class="absolute left-0 text-sm text-red-600 -bottom-5"
             >
               {{ formErrors.lastName[0] }}
             </span>
@@ -127,7 +127,7 @@
             />
             <span
               v-if="formErrors.phoneNumber?.length"
-              class="absolute left-0 -bottom-5 text-sm text-red-600"
+              class="absolute left-0 text-sm text-red-600 -bottom-5"
             >
               {{ formErrors.phoneNumber[0] }}
             </span>
@@ -149,7 +149,7 @@
             />
             <span
               v-if="formErrors.dob?.length"
-              class="absolute left-0 -bottom-5 text-sm text-red-600"
+              class="absolute left-0 text-sm text-red-600 -bottom-5"
             >
               {{ formErrors.dob[0] }}
             </span>
@@ -173,7 +173,7 @@
             />
             <span
               v-if="formErrors.country?.length"
-              class="absolute left-0 -bottom-5 text-sm text-red-600"
+              class="absolute left-0 text-sm text-red-600 -bottom-5"
             >
               {{ formErrors.country[0] }}
             </span>
@@ -194,7 +194,7 @@
             />
             <span
               v-if="formErrors.city?.length"
-              class="absolute left-0 -bottom-5 text-sm text-red-600"
+              class="absolute left-0 text-sm text-red-600 -bottom-5"
             >
               {{ formErrors.city[0] }}
             </span>
@@ -217,7 +217,7 @@
           />
           <span
             v-if="formErrors.address?.length"
-            class="absolute left-0 -bottom-5 text-sm text-red-600"
+            class="absolute left-0 text-sm text-red-600 -bottom-5"
           >
             {{ formErrors.address[0] }}
           </span>
@@ -249,7 +249,7 @@
             </select>
             <span
               v-if="formErrors.firstLangage?.length"
-              class="absolute left-0 -bottom-5 text-sm text-red-600"
+              class="absolute left-0 text-sm text-red-600 -bottom-5"
             >
               {{ formErrors.firstLangage[0] }}
             </span>
@@ -278,7 +278,7 @@
             </select>
             <span
               v-if="formErrors.secondLangage?.length"
-              class="absolute left-0 -bottom-5 text-sm text-red-600"
+              class="absolute left-0 text-sm text-red-600 -bottom-5"
             >
               {{ formErrors.secondLangage[0] }}
             </span>
@@ -288,18 +288,18 @@
     </div>
 
     <!-- Footer -->
-    <div class="flex justify-between items-center p-6 bg-gray-50 border-t border-gray-200">
+    <div   class="flex items-center justify-between p-6 border-t border-gray-200 bg-gray-50">
       <button
         type="button"
         @click="$emit('close')"
-        class="px-6 py-2 text-gray-700 rounded-md border border-gray-300 transition-colors hover:bg-gray-100"
+        class="px-6 py-2 text-gray-700 transition-colors border border-gray-300 rounded-md hover:bg-gray-100"
       >
         Cancel
       </button>
       
       <button
         type="button"
-        @click="handleSubmit"
+        @click="handleSubmitLoginProfile"
         :disabled="isSubmitting"
         :class="[
           'flex items-center px-6 py-2 font-semibold text-white transition-colors rounded-md',
@@ -310,7 +310,7 @@
       >
         <svg 
           v-if="isSubmitting" 
-          class="mr-2 w-4 h-4 animate-spin" 
+          class="w-4 h-4 mr-2 animate-spin" 
           fill="none" 
           viewBox="0 0 24 24"
         >
@@ -320,6 +320,7 @@
         {{ isSubmitting ? 'Processing...' : (userProfile.account ? 'Update Profile' : 'Create Profile') }}
       </button>
     </div>
+    
   </div>
 </template>
 
@@ -335,6 +336,11 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  isLogin:{
+    type: Boolean,
+    required: false,
+    default:true
+  }
 });
 
 const emit = defineEmits(['close', 'success', 'error']);
@@ -344,6 +350,9 @@ const auth = useAuthStore();
 
 // Reactive Data
 const isSubmitting = ref(false);
+
+console.log(props.accountProfile)
+console.log(props.accountProfile.email)
 
 const userProfile = ref({
   id: props.accountProfile.id || '',
@@ -415,7 +424,7 @@ const validateForm = () => {
   return isValid;
 };
 
-const handleSubmit = async () => {
+const handleSubmitLoginProfile = async () => {
   if (!validateForm()) {
     return;
   }

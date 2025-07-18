@@ -4,11 +4,11 @@
   <div class="flex min-h-screen">
     <!-- Left Side - Brand Section -->
     <div
-      class="hidden relative bg-gradient-to-br from-amber-50 to-orange-100 lg:flex lg:w-2/5"
+      class="relative hidden bg-gradient-to-br from-amber-50 to-orange-100 lg:flex lg:w-2/5"
     >
-      <div class="flex flex-col justify-between p-12 w-full">
+      <div class="flex flex-col justify-between w-full p-12">
         <!-- Illustration and Content -->
-        <div class="flex flex-col flex-1 justify-center space-y-8">
+        <div class="flex flex-col justify-center flex-1 space-y-8">
           <!-- Illustration -->
           <div class="flex justify-center">
             <div class="relative">
@@ -16,30 +16,30 @@
               <div class="relative w-80 h-80">
                 <!-- Background elements -->
                 <div
-                  class="absolute inset-0 bg-gradient-to-br from-purple-100 to-blue-100 rounded-full opacity-20"
+                  class="absolute inset-0 rounded-full bg-gradient-to-br from-purple-100 to-blue-100 opacity-20"
                 ></div>
 
                 <!-- Job search elements -->
                 <div
-                  class="flex absolute top-8 left-8 justify-center items-center w-16 h-16 bg-white rounded-md shadow-lg transform rotate-12"
+                  class="absolute flex items-center justify-center w-16 h-16 transform bg-white rounded-md shadow-lg top-8 left-8 rotate-12"
                 >
                   <Search class="w-8 h-8 text-purple-600" />
                 </div>
 
                 <div
-                  class="flex absolute right-12 top-16 justify-center items-center w-20 h-14 bg-white rounded-md shadow-lg transform -rotate-6"
+                  class="absolute flex items-center justify-center w-20 transform bg-white rounded-md shadow-lg right-12 top-16 h-14 -rotate-6"
                 >
                   <Users class="w-8 h-8 text-blue-600" />
                 </div>
 
                 <div
-                  class="flex absolute left-12 bottom-20 justify-center items-center bg-white rounded-md shadow-lg transform rotate-6 w-18 h-18"
+                  class="absolute flex items-center justify-center transform bg-white rounded-md shadow-lg left-12 bottom-20 rotate-6 w-18 h-18"
                 >
                   <Target class="w-8 h-8 text-green-600" />
                 </div>
 
                 <div
-                  class="flex absolute right-8 bottom-8 justify-center items-center w-16 h-16 bg-white rounded-md shadow-lg transform -rotate-12"
+                  class="absolute flex items-center justify-center w-16 h-16 transform bg-white rounded-md shadow-lg right-8 bottom-8 -rotate-12"
                 >
                   <TrendingUp class="w-8 h-8 text-orange-600" />
                 </div>
@@ -98,8 +98,8 @@
     </div>
 
     <!-- Right Side - Login Form -->
-    <div class="flex flex-1 justify-center items-center p-8 bg-white">
-      <div class="space-y-8 w-full max-w-md">
+    <div class="flex items-center justify-center flex-1 p-8 bg-white">
+      <div class="w-full max-w-md space-y-8">
         <!-- Header -->
         <div class="space-y-2 text-center">
           <h2 class="text-3xl font-bold text-gray-900">Hello !</h2>
@@ -141,7 +141,7 @@
               <button
                 type="button"
                 @click="showPassword = !showPassword"
-                class="absolute right-3 top-1/2 text-gray-400 transform -translate-y-1/2 hover:text-gray-600"
+                class="absolute text-gray-400 transform -translate-y-1/2 right-3 top-1/2 hover:text-gray-600"
               >
                 <EyeOff v-if="showPassword" class="w-5 h-5" />
                 <Eye v-else class="w-5 h-5" />
@@ -255,12 +255,28 @@ const handleSubmit = async () => {
   
   if (data?.success) {
     // Vérifie si l'utilisateur est admin
+    console.log(data?.data)
+    
+    
     const user = data.data?.user || auth.user;
-    if (user && user.isAdmin) {
-      router.push({ name: 'admin_profile' }); // Redirige vers la page admin
-    } else {
-      router.push({ name: 'profile' }); // Redirige vers la page utilisateur classique
+    console.log("isAdmin : ",user.isAdmin)
+    if(user.account){
+      if (user && user.isAdmin) {
+        router.push({ name: 'admin_profile' }); // Redirige vers la page admin
+      } else {
+        console.log("on est entrer ici")
+        router.push({ name: 'profile' }); // Redirige vers la page utilisateur classique
+      }
+
+      return
     }
+    else{
+      console.log(" pas de account ")
+      router.push({ name: 'fill_account' });
+      
+      return
+    }
+   
   }
 
 }
