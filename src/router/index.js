@@ -51,6 +51,7 @@ import GuestProjectManagement from "@/views/GuestProjectManagement.vue";
 import CompaniesGuestList from "@/views/CompaniesGuest.vue";
 import AdminListUsersView from "@/views/AdminListUsersView.vue";
 import DashboardView from "@/views/DashboardView.vue";
+import UserWithoutAccount from "@/views/UserWithoutAccount.vue";
 import UserDashboardView from "@/views/UserDashboardView.vue";
 
 const router = createRouter({
@@ -308,6 +309,11 @@ const router = createRouter({
       path: "/auth/login",
       name: "login",
       component: LoginForm,
+    },
+    {
+      path: "/auth/fill-account",
+      name: "fill_account",
+      component: UserWithoutAccount,
     },
     {
       path: "/auth/:type/register",
