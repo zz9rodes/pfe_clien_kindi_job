@@ -112,7 +112,6 @@
         >
           Rejeter
         </button>
-        {{ company.status }}
         <button
           :disabled="company.status == 'approved' ? true : false"
           :class="
