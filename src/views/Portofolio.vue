@@ -2,82 +2,63 @@
   <AppModal :isOpen="isModalOpen" :isLoader="true"></AppModal>
   <div class="min-h-screen bg-gray-50" v-if="userAccount">
     <!-- Header Section -->
-    <header class="relative py-16 bg-white">
-      <!-- Bouton d'impression en haut à droite -->
-      <button
-        @click="downloadPDF"
-        class="absolute flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 transition-all duration-200 bg-white border border-gray-300 rounded-lg shadow-sm top-4 right-4 hover:bg-gray-50 hover:shadow-md print:hidden"
-      >
-        <svg
-          class="w-4 h-4"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"
-          ></path>
-        </svg>
-        Imprimer
-      </button>
+  <header class="relative py-16 overflow-hidden bg-white">
+    <!-- Background Decorative Elements (subtle, matching theme) -->
+    <div class="absolute inset-0 overflow-hidden">
+      <div class="absolute -top-8 -right-8 w-48 h-48 bg-[#e4097f]/5 rounded-full blur-3xl"></div>
+      <div class="absolute -bottom-8 -left-8 w-64 h-64 bg-[#00a3e0]/5 rounded-full blur-3xl"></div>
+    </div>
 
-      <div class="max-w-4xl px-6 mx-auto text-center">
-        <!-- Profile Image -->
-        <div
-         
-          class="relative inline-block mb-6 avatar"
-        >
-          <img
-           v-if="userAccount.avatarUrl"
-            :src="
-              userAccount.avatarUrl || '/placeholder.svg?height=120&width=120'
-            "
-            :alt="userAccount.firstName"
-            class="object-cover mx-auto border-4 border-white rounded-full shadow-lg h-28 w-28"
-          />
-           <UserIcon
-          class="text-gray-600 bg-gray-300 border-4 border-white rounded-full shadow-lg h-28 w-28"
-          v-else
+    <!-- Print Button -->
+    <button
+      @click="downloadPDF"
+      class="absolute z-10 flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 transition-all duration-200 bg-white border border-gray-300 rounded-lg shadow-sm top-4 right-4 hover:bg-gray-50 hover:shadow-md print:hidden"
+    >
+      <PrinterIcon class="w-4 h-4" />
+      Imprimer
+    </button>
+
+    <div class="relative z-0 max-w-4xl px-6 mx-auto text-center">
+      <!-- Profile Image -->
+      <div class="relative inline-block mb-6 group">
+        <img
+          v-if="userAccount.avatarUrl"
+          :src="userAccount.avatarUrl"
+          :alt="userAccount.firstName"
+          class="object-cover w-32 h-32 mx-auto transition-transform duration-300 border-4 border-white rounded-full shadow-lg group-hover:scale-105"
         />
-          <button
-            class="absolute flex items-center justify-center w-6 h-6 text-gray-500 bg-green-300 rounded-full top-2 right-2 hover:bg-gray-300"
-          >
-            <!-- <XIcon class="w-3 h-3" /> -->
-          </button>
-        </div>
-
-        <!-- Name and Title -->
-        <h1 class="mb-2 text-4xl font-bold text-gray-900">
-          {{ userAccount.firstName }} {{ userAccount.lastName }}
-        </h1>
-        <h1 class="mb-2 text-xl font-bold text-gray-900">
-          {{ moment().diff(moment(userAccount.dob), "years") }} Years Old
-        </h1>
-        <h1
-          class="flex justify-center gap-2 mb-2 text-xl font-bold text-gray-900"
-        >
-          <GlobeIcon />
-          <span>
-            {{ userAccount.country }}
-          </span>
-          <span>
-            {{ userAccount.city }}
-          </span>
-        </h1>
-        <p class="max-w-2xl mx-auto mb-6 text-gray-600">{{ cvInfo.bio }}</p>
-
-        <!-- Status Badge -->
-        <div
-          class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-gray-900 rounded-full rotate-[-3deg] cursor-pointer"
-        >
-          <div class="w-2 h-2 mr-2 bg-green-400 rounded-full"></div>
-          Available For Work
-        </div>
+        <UserIcon
+          v-else
+          class="w-32 h-32 p-4 text-gray-500 transition-transform duration-300 bg-gray-200 border-4 border-white rounded-full shadow-lg group-hover:scale-105"
+        />
+        <!-- Subtle glow effect on hover -->
+        <div class="absolute inset-0 rounded-full bg-gradient-to-br from-[#e4097f]/20 to-[#00a3e0]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl -z-10"></div>
       </div>
-    </header>
+
+      <!-- Name and Title -->
+      <h1 class="mb-2 text-5xl font-extrabold leading-tight text-gray-900">
+        {{ userAccount.firstName }} {{ userAccount.lastName }}
+      </h1>
+      <p class="mt-2 mb-4 text-xl font-semibold text-[#00a3e0]">
+        {{ userAccount.roles }}
+        <!-- {{ moment().diff(moment(userAccount.dob), "years") }} Years Old -->
+      </p>
+
+      <!-- Location -->
+      <div class="flex items-center justify-center gap-2 mb-4 text-lg text-gray-600">
+        <MapPinIcon class="w-5 h-5 text-gray-500" />
+        <span>{{ userAccount.city }}, {{ userAccount.country }}</span>
+      </div>
+
+      <!-- Status Badge -->
+      <div
+        class="inline-flex items-center px-5 py-2 text-sm font-medium text-white bg-gradient-to-r from-[#e4097f] to-[#c8076f] rounded-full shadow-md transform -rotate-1 transition-all duration-300 hover:rotate-0 hover:scale-105 cursor-pointer"
+      >
+        <div class="w-2.5 h-2.5 mr-2 bg-green-300 rounded-full animate-pulse"></div>
+        Available For Work
+      </div>
+    </div>
+  </header>
 
     <!-- Portfolio Gallery -->
     <!-- <section
@@ -98,6 +79,17 @@
     </section> -->
 
     <div class="max-w-4xl px-6 pb-16 mx-auto">
+
+      <section
+        v-if="cvInfo.bio "
+        class="mt-2 "
+      >
+        <h2 class="mb-1 text-2xl font-bold text-gray-900">Bio</h2>
+            <div class="flex-1 pb-8">
+              <p class="mb-6 text-gray-600 ">{{ cvInfo.bio }}</p>
+            </div>
+      </section>
+
       <!-- Experience Section -->
       <section
         v-if="cvInfo.workExperiences && cvInfo.workExperiences.length"
@@ -324,6 +316,8 @@ import {
   InstagramIcon,
   GlobeIcon,
   MailIcon,
+  PrinterIcon,
+  MapPinIcon,
 } from "lucide-vue-next";
 import { ref, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";

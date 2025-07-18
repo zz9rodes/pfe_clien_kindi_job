@@ -223,7 +223,7 @@
           </span>
         </div>
 
-        <!-- Language Fields -->
+        <!-- roles Fields -->
         <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div class="relative">
             <label for="firstLangage" class="block mb-2 text-sm font-medium text-gray-700">
@@ -283,6 +283,28 @@
               {{ formErrors.secondLangage[0] }}
             </span>
           </div>
+        </div>
+
+          <div class="relative">
+          <label for="address" class="block mb-2 text-sm font-medium text-gray-700">
+           Roles
+          </label>
+
+          <input
+            id="address"
+            v-model="formData.roles"
+            placeholder="Ingenieur de conception BTP"
+            :class="[
+              'w-full px-4 py-2 transition-colors border rounded-md outline-none focus:ring-2 focus:ring-[#e4097f]',
+              formErrors?.roles?.length ? 'border-red-300' : 'border-gray-300'
+            ]"
+          />
+          <span
+            v-if="formErrors.roles"
+            class="absolute left-0 text-sm text-red-600 -bottom-5"
+          >
+            {{ formErrors.roles[0] }}
+          </span>
         </div>
       </form>
     </div>
@@ -375,6 +397,7 @@ const formData = reactive({
   frontIdCard: userProfile.value.account?.frontIdCard || '',
   backIdCard: userProfile.value.account?.backIdCard || '',
   accountType: userProfile.value.account?.accountType || 'personnal',
+  roles:userProfile.value.account?.roles || ''
 });
 
 const formErrors = ref({
@@ -388,6 +411,7 @@ const formErrors = ref({
   address: [],
   firstLangage: [],
   secondLangage: [],
+  roles:[]
 });
 
 // Computed
@@ -463,6 +487,12 @@ const handleSubmitLoginProfile = async () => {
       if (response.success) {
         emit('success', { type: 'update', data: response.data });
         emit('close');
+
+        const updatedUser=auth.user
+
+        updatedUser.account=response.data
+        
+        auth.setUser(updatedUser)
       }
     }
 

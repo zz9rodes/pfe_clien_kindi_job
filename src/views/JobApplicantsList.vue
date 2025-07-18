@@ -156,6 +156,7 @@
                 </span>
               </div>
             </div>
+            <!-- {{ applicant }} -->
             <div class="flex-1 min-w-0">
               <h3 class="text-sm font-medium text-gray-900 truncate">
                 {{ getApplicantName(applicant) }}

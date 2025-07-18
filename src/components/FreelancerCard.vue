@@ -38,7 +38,7 @@
           {{ freelancer?.firstName }} {{ freelancer?.lastName }}
         </h3>
         <p class="text-[#00a3e0] text-sm font-medium">
-          {{ freelancer?.cvProfiles?.bio ?? "Available for Job" }}
+          {{ freelancer?.roles ?? "Available for Job" }}
         </p>
       </div>
 
