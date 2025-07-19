@@ -504,11 +504,14 @@ const fetchManagers = async () => {
     const response = await auth.api('GET', `/companies/${companyId}/guests`, null, false)
     if (response.success) {
       response.data.forEach((guest) => {
-        let manager = {
+        if(guest.accept){
+            let manager = {
           id: guest?.id,
           firstName: guest?.account?.firstName + " " + guest?.account?.lastName || "",
+         }
+          managers.value.push(manager)
         }
-        managers.value.push(manager)
+      
       })
     }
   } catch (error) {

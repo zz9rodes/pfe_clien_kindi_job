@@ -326,8 +326,16 @@ const processText = (text) => {
 };
 
 const toggleOpenModal = () => {
+  console.log("ici")
   if (props.isLive) {
+
+    console.log("on est bien dans le ifi")
+    console.log("avant ca vallais ",isModalOpen.value)
+    
     isModalOpen.value = !isModalOpen.value;
+
+    console.log("maintenant ca vaut ",isModalOpen.value)
+
   }
 };
 

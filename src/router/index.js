@@ -142,7 +142,7 @@ const router = createRouter({
           name: "admin_users",
           component: AdminListUsersView,
         },
-         {
+        {
           path: "dashboard",
           name: "admin_dashboard",
           component: DashboardView,
@@ -153,7 +153,7 @@ const router = createRouter({
           component: CompanyDetailsPage,
           props: { showAction: false, isVersion: true },
         },
-         {
+        {
           path: "companie_request/:companyId/details",
           name: "admin_companie_details",
           component: CompanyDetailsPage,

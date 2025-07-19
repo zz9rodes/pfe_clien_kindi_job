@@ -10,7 +10,7 @@
     <!-- Profile Header -->
     <div class="flex flex-col mb-8 sm:flex-row sm:items-center sm:justify-between lg:mb-10">
       <div>
-        <h1 class="mb-2 text-3xl font-bold text-gray-900 lg:text-4xl">My Profile</h1>
+        <h1 class="mb-2 text-3xl font-bold text-gray-900 lg:text-4xl">Mon Profile</h1>
         <p class="text-gray-600">Gérez vos informations personnelles et préférences</p>
       </div>
       <button @click="toggleOpenModal()"
@@ -20,7 +20,7 @@
             d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
           </path>
         </svg>
-        Edit Profile
+        Editer Mon Profile
       </button>
     </div>
 

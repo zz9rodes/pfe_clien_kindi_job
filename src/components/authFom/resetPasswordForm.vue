@@ -65,13 +65,13 @@
           <!-- Text Content -->
           <div class="space-y-4">
             <h1 class="text-3xl font-bold leading-tight text-gray-900">
-              {{ emailSent ? "Check Your Email" : "Secure Password Recovery" }}
+              {{ emailSent ? "Vérifiez votre email" : "Récupération sécurisée du mot de passe" }}
             </h1>
             <p class="text-lg leading-relaxed text-gray-600">
               {{
                 emailSent
-                  ? "We’ve sent recovery instructions to your email address."
-                  : "Don’t worry! We’ll help you regain access to your account securely."
+                  ? "Nous avons envoyé les instructions de récupération à votre adresse email."
+                  : "Ne vous inquiétez pas ! Nous vous aiderons à retrouver l'accès à votre compte en toute sécurité."
               }}
             </p>
           </div>
@@ -82,13 +82,13 @@
           <a
             href="#"
             class="text-gray-600 transition-colors hover:text-gray-900"
-            >Privacy Policy</a
+            >Politique de confidentialité</a
           >
           <span class="text-gray-400">•</span>
           <a
             href="#"
             class="text-gray-600 transition-colors hover:text-gray-900"
-            >Terms of Use</a
+            >Conditions d'utilisation</a
           >
         </div>
       </div>
@@ -103,8 +103,8 @@
             >
               <CheckCircle class="w-10 h-10 text-green-600" />
             </div>
-            <h2 class="text-3xl font-bold text-gray-900">Email Sent!</h2>
-            <p class="text-gray-600">Recovery instructions sent</p>
+            <h2 class="text-3xl font-bold text-gray-900">Email envoyé !</h2>
+            <p class="text-gray-600">Instructions de récupération envoyées</p>
           </div>
 
           <div class="space-y-6">
@@ -113,12 +113,12 @@
                 <Mail class="w-6 h-6 text-blue-600 mt-0.5 flex-shrink-0" />
                 <div>
                   <p class="text-sm font-medium text-blue-900">
-                    Check Your Inbox
+                    Vérifiez votre boîte de réception
                   </p>
                   <p class="mt-1 text-sm text-blue-700">
-                    An email has been sent to
-                    <strong>{{ formData.email }}</strong> with instructions to
-                    reset your password.
+                    Un email a été envoyé à
+                    <strong>{{ formData.email }}</strong> avec les instructions pour
+                    réinitialiser votre mot de passe.
                   </p>
                 </div>
               </div>
@@ -126,7 +126,7 @@
 
             <div class="p-4 border rounded-md bg-amber-50">
               <h4 class="mb-2 text-sm font-medium text-amber-900">
-                Can't Find the Email?
+                Vous ne trouvez pas l'email ?
               </h4>
               <ul class="space-y-2 text-sm text-amber-700">
                 <li class="flex items-start">
@@ -134,21 +134,21 @@
                     class="bg-amber-200  text-amber-800 rounded-full w-5 h-5 flex items-center justify-center text-xs font-medium mr-3 mt-0.5 flex-shrink-0"
                     >1</span
                   >
-                  Check your spam or junk folder
+                  Vérifiez votre dossier spam ou indésirable
                 </li>
                 <li class="flex items-start">
                   <span
                     class="bg-amber-200 text-amber-800 rounded-full w-5 h-5 flex items-center justify-center text-xs font-medium mr-3 mt-0.5 flex-shrink-0"
                     >2</span
                   >
-                  Ensure the email address is correct
+                  Assurez-vous que l'adresse email est correcte
                 </li>
                 <li class="flex items-start">
                   <span
                     class="bg-amber-200 text-amber-800  w-5 h-5 rounded-full items-center justify-center text-xs font-medium mr-3 mt-0.5 flex-shrink-0"
                     >3</span
                   >
-                  The email may take a few minutes to arrive
+                  L'email peut prendre quelques minutes à arriver
                 </li>
               </ul>
             </div>
@@ -162,7 +162,7 @@
               >
                 <router-link>
                   <ArrowLeft class="w-4 h-4 mr-2" />
-                  Back to Login
+                  Retour à la connexion
                 </router-link>
               </button>
             </div>
@@ -172,9 +172,9 @@
         <!-- Initial Form State -->
         <div v-else class="space-y-8">
           <div class="space-y-2 text-center">
-            <h2 class="text-3xl font-bold text-gray-900">Forgot Password?</h2>
+            <h2 class="text-3xl font-bold text-gray-900">Mot de passe oublié ?</h2>
             <p class="text-gray-600">
-              Enter your work email to receive recovery instructions
+              Entrez votre email professionnel pour recevoir les instructions de récupération
             </p>
           </div>
 
@@ -184,7 +184,7 @@
                 for="confirm"
                 class="block text-sm font-medium text-gray-700"
               >
-                Password <span class="text-red-500">*</span>
+                Mot de passe <span class="text-red-500">*</span>
               </label>
               <input
                 id="confirm"
@@ -202,7 +202,7 @@
                 for="confirmPassword"
                 class="block text-sm font-medium text-gray-700"
               >
-                Confirm password <span class="text-red-500">*</span>
+                Confirmer le mot de passe <span class="text-red-500">*</span>
               </label>
               <input
                 id="confirmPassword"
@@ -219,7 +219,7 @@
               :disabled="isLoading || !formData.password  ||!formData.confirmPassword"
               class="w-full px-6 py-2 font-semibold text-white transition-colors rounded-md bg-[#e4097f] hover:bg-[#d10871] disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {{ isLoading ? "Processing..." : "Send Instructions" }}
+              {{ isLoading ? "Traitement..." : "Envoyer les instructions" }}
             </button>
 
             <div class="text-center">
@@ -232,14 +232,14 @@
                   class="flex items-center gap-1"
                 >
                   <ArrowLeft class="w-4 h-4 mr-2" />
-                  Back to Login
+                  Retour à la connexion
                 </router-link>
               </button>
             </div>
 
             <div class="p-6 rounded-md bg-gray-50">
               <h4 class="mb-3 text-sm font-medium text-gray-900">
-                Password Criteria:
+                Critères du mot de passe :
               </h4>
               <ol class="space-y-2 text-sm text-gray-600">
                 <li class="flex items-start">
@@ -247,7 +247,7 @@
                     class="bg-pink-100 text-[#e4097f] rounded-full w-5 h-5 flex items-center justify-center text-xs font-medium mr-3 mt-0.5 flex-shrink-0"
                     >1</span
                   >
-                  At least 8 characters
+                  Au moins 8 caractères
 
                 </li>
                 <li class="flex items-start">
@@ -255,14 +255,14 @@
                     class="bg-pink-100 text-[#e4097f] rounded-full w-5 h-5 flex items-center justify-center text-xs font-medium mr-3 mt-0.5 flex-shrink-0"
                     >2</span
                   >
-                  One uppercase and one lowercase letter
+                  Une lettre majuscule et une lettre minuscule
                 </li>
                 <li class="flex items-start">
                   <span
                     class="bg-pink-100 text-[#e4097f] rounded-full w-5 h-5 flex items-center justify-center text-xs font-medium mr-3 mt-0.5 flex-shrink-0"
                     >3</span
                   >
-                  One number and one special character
+                  Un chiffre et un caractère spécial
                 </li>
                </ol>
             </div>

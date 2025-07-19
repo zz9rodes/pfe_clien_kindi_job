@@ -669,7 +669,9 @@ onMounted(()=>{
 
   else{
 
-    if(accountTypes!='companies' && accountTypes!="personnal"){
+    console.log("accountTypes : ",accountTypes)
+
+    if(route.params.type!='companies' && route.params.type!="personnal"){
       router.push({name:"home"})
     }
   }
