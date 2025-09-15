@@ -20,29 +20,29 @@
 
     <div class="relative z-0 max-w-4xl px-6 mx-auto text-center">
       <!-- Profile Image -->
-      <div class="relative inline-block mb-6 group">
+      <div class="relative inline-block mb-4 group">
         <img
           v-if="userAccount.avatarUrl"
           :src="userAccount.avatarUrl"
           :alt="userAccount.firstName"
-          class="object-cover w-32 h-32 mx-auto transition-transform duration-300 border-4 border-white rounded-full shadow-lg group-hover:scale-105"
+          class="object-cover mx-auto transition-transform duration-300 border-4 border-white rounded-full shadow-lg h-28 w-28 group-hover:scale-105"
         />
         <UserIcon
           v-else
-          class="w-32 h-32 p-4 text-gray-500 transition-transform duration-300 bg-gray-200 border-4 border-white rounded-full shadow-lg group-hover:scale-105"
+          class="p-4 text-gray-500 transition-transform duration-300 bg-gray-200 border-4 border-white rounded-full shadow-lg w-28 h-28 group-hover:scale-105"
         />
         <!-- Subtle glow effect on hover -->
         <div class="absolute inset-0 rounded-full bg-gradient-to-br from-[#e4097f]/20 to-[#00a3e0]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl -z-10"></div>
       </div>
 
       <!-- Name and Title -->
-      <h1 class="mb-2 text-5xl font-extrabold leading-tight text-gray-900">
+      <h1 class="mb-1 text-3xl font-extrabold leading-tight text-gray-900">
         {{ userAccount.firstName }} {{ userAccount.lastName }}
       </h1>
-      <p class="mt-2 mb-4 text-xl font-semibold text-[#00a3e0]">
-        {{ userAccount.roles }}
+      <!-- <p class="mt-2 mb-4 text-xl font-semibold text-[#00a3e0]"> -->
+        <!-- {{ userAccount.roles }} -->
         <!-- {{ moment().diff(moment(userAccount.dob), "years") }} Years Old -->
-      </p>
+      <!-- </p> -->
 
       <!-- Location -->
       <div class="flex items-center justify-center gap-2 mb-4 text-lg text-gray-600">
@@ -51,12 +51,12 @@
       </div>
 
       <!-- Status Badge -->
-      <div
+      <!-- <div
         class="inline-flex items-center px-5 py-2 text-sm font-medium text-white bg-gradient-to-r from-[#e4097f] to-[#c8076f] rounded-full shadow-md transform -rotate-1 transition-all duration-300 hover:rotate-0 hover:scale-105 cursor-pointer"
       >
         <div class="w-2.5 h-2.5 mr-2 bg-green-300 rounded-full animate-pulse"></div>
         Available For Work
-      </div>
+      </div> -->
     </div>
   </header>
 
@@ -78,7 +78,7 @@
       </div>
     </section> -->
 
-    <div class="max-w-4xl px-6 pb-16 mx-auto">
+    <div class="max-w-4xl px-6 pb-8 mx-auto">
 
       <section
         v-if="cvInfo.bio "
@@ -93,7 +93,7 @@
       <!-- Experience Section -->
       <section
         v-if="cvInfo.workExperiences && cvInfo.workExperiences.length"
-        class="mb-16"
+        class="mb-8"
       >
         <h2 class="mb-8 text-2xl font-bold text-gray-900">Experience</h2>
         <div class="space-y-8">

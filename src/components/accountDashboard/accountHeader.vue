@@ -3,7 +3,7 @@
     <div class="flex items-center justify-between">
       <div class="relative flex-[1] flex gap-3">
         <div class="hidden sm:block">
-          <span class="text-[#e4097f] font-bold text-xl tracking-tight font-nunito">KINDI🎁</span>
+          <span class="text-[#e4097f] font-bold text-xl tracking-tight font-nunito">NTENGTIO🤑</span>
           <div class="inline-flex items-center">
             <span class="text-[#00a3e0] font-nunito font-bold text-xl tracking-tight">JOB
             </span>
